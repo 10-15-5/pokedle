@@ -7,7 +7,7 @@
     "build": "vite build",
     "lint": "eslint . --ext .vue,.js,.jsx,.cjs,.mjs --fix --ignore-path .gitignore",
     "client": "vite --host",
-    "dev": "vite",
+    "dev": "npm install && npm run start",
     "dev-fast": "npm run start",
     "preview": "vite preview",
     "server": "nodemon dev-server/index.js",
