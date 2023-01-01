@@ -1,5 +1,5 @@
 <template>
-	<v-app>
+	<v-app id="app">
 		<v-main>
 			<div class="container">
 				<div class="header-container">
@@ -11,21 +11,29 @@
 				<div>
 					<v-text-field
 						label="Type pokemon name"
-                        outlined
+						outlined
 						class="guess-field solo"
-                                    solo-inverted
-
+						solo-inverted
 					></v-text-field>
 				</div>
-                
 			</div>
-            
 		</v-main>
-        
+        <square-container></square-container>
+		<!-- <HomeView /> -->
 	</v-app>
 </template>
 
 <script>
+import HomeView from './views/HomeView.vue';
+import SquareContainer from './views/SquareContainer.vue';
+
+export default {
+    name: 'App',
+    components: {
+        HomeView,
+        SquareContainer
+    }
+};
 </script>
 
 <style>
