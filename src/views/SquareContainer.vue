@@ -1,12 +1,20 @@
 <template>
-    <div class="content">
-        <SquareContent :color="'green'" :text="'fire'" />
-        <SquareContent :color="'red'" :text="'water'" />
-    </div>
+	<div class="content">
+		<SquareContent :guessResult="'CorrectGuess'" :guessText="'fire'" />
+		<SquareContent
+			:guessResult="'PartlyCorrectGuess'"
+			:guessText="'water'"
+		/>
+        <SquareContent
+			:guessResult="'WrongGuess'"
+			:guessText="'Fully evolved'"
+		/>
+	</div>
 </template>
 
 <script>
 import SquareContent from './SquareContent.vue';
+import {guessState} from '../constants.js';
 
 export default {
     components:{
@@ -17,10 +25,8 @@ export default {
 </script>
 
 <style>
-
 .content {
-    display: flex;
-    gap: 10px;
+	display: flex;
+	gap: 10px;
 }
-
 </style>

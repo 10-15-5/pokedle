@@ -1,35 +1,43 @@
 <template>
-  <div class="square-content" :style="{ background: color }">
-    <p>{{text}}</p>
-  </div>
+	<div class="square-content" :style="{ background: getColor }">
+		<p>{{ guessText }}</p>
+	</div>
 </template>
 
 <script>
+import {guessState} from '../constants.js';
 export default {
     props: {
-        color: {
+        guessResult: {
             required: true,
-            type: String, //TODO: enum for true, false, partially true
+            type: String,
         },
-        text: {
+        guessText: {
             required: true,
             type: String,
         }
     },
+    computed: {
+        getColor () {
+            switch(this.guessResult) {
+                case guessState.CorrectGuess:
+                   return "greenyellow";
+                case guessState.PartlyCorrectGuess:
+                    return "orange";
+                default:
+                    return "red";
+            }
+        }
+    }
 }
+
 </script>
 
 <style>
 .square-content {
-    width: 60px;
-    height: 60px;;
-}
-
-.green {
-    background: greenyellow;
-}
-
-.red {
-    background: red;
+	width: 60px;
+	height: 60px;
+	border-style: solid;
+	border-color: black;
 }
 </style>
