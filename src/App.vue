@@ -16,9 +16,12 @@
 						solo-inverted
 					></v-text-field>
 				</div>
+				<div>
+                    
+					<square-container></square-container>
+				</div>
 			</div>
 		</v-main>
-        <square-container></square-container>
 		<!-- <HomeView /> -->
 	</v-app>
 </template>
@@ -49,7 +52,6 @@ export default {
 }
 
 .title {
-	margin-top: 20px;
 	color: white;
 }
 
@@ -67,6 +69,7 @@ export default {
 	align-items: center;
 	flex-direction: column;
 	text-align: center;
+	gap: 10px;
 	width: 100%;
 	height: 100%;
 }

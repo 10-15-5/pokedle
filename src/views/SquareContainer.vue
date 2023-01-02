@@ -1,20 +1,15 @@
 <template>
 	<div class="content">
+        <SquareContent :guessPokemon="'charizard'" />
 		<SquareContent :guessResult="'CorrectGuess'" :guessText="'fire'" />
-		<SquareContent
-			:guessResult="'PartlyCorrectGuess'"
-			:guessText="'water'"
-		/>
-        <SquareContent
-			:guessResult="'WrongGuess'"
-			:guessText="'Fully evolved'"
-		/>
+		<SquareContent :guessResult="'WrongGuess'" :guessText="'water'" />
+		<SquareContent :guessResult="'PartlyCorrectGuess'" :guessText="'Fully evolved'" />
+		<SquareContent :guessResult="'WrongGuess'" :guessText="'gen 1'" />
 	</div>
 </template>
 
 <script>
 import SquareContent from './SquareContent.vue';
-import {guessState} from '../constants.js';
 
 export default {
     components:{

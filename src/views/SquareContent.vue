@@ -1,6 +1,17 @@
 <template>
-	<div class="square-content" :style="{ background: getColor }">
-		<p>{{ guessText }}</p>
+	<div
+		class="square-content container"
+		:style="{ 'background-color': getColor }"
+	>
+		<div v-if="guessResult">
+			<p>{{ guessText }}</p>
+		</div>
+		<div v-else>
+			<img
+				:src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + guessPokemon + '.png'"
+				alt=""
+			/>
+		</div>
 	</div>
 </template>
 
@@ -9,12 +20,13 @@ import {guessState} from '../constants.js';
 export default {
     props: {
         guessResult: {
-            required: true,
             type: String,
         },
         guessText: {
-            required: true,
             type: String,
+        },
+        guessPokemon: {
+            type: String
         }
     },
     computed: {
@@ -24,8 +36,10 @@ export default {
                    return "greenyellow";
                 case guessState.PartlyCorrectGuess:
                     return "orange";
-                default:
+                case guessState.WrongGuess:
                     return "red";
+                default:
+                     return "black";
             }
         }
     }
@@ -33,7 +47,7 @@ export default {
 
 </script>
 
-<style>
+<style scoped>
 .square-content {
 	width: 60px;
 	height: 60px;
