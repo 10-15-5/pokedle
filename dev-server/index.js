@@ -9,7 +9,7 @@ dotenv.config();
 const app = express();
 
 // For parsing application/json
-app.use(express.json())
+app.use(express.json());
 
 app.get('/', (req, res) => {
     res.status(200);
