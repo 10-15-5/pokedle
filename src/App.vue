@@ -17,7 +17,7 @@
                         v-model="searchTerm"
                         class="p-3 mb-0.5 w-full border border-gray-300 rounded"
                     >
-                    <ul
+                    <ul id="search-dropdown"
                         v-if="searchPokemonNames.length"
                         class="w-full rounded bg-white border border-gray-300 px-4 py-2 space-y-1 absolute z-10"
                     >
@@ -45,6 +45,10 @@ import pokemonData from './assets/pokemon.json';
 import { computed, ref } from 'vue';
 
 export default {
+    components: {
+        HomeView,
+        SquareContainer
+    },
     setup() {
         let searchTerm = ref('');
         const pokemonNames = pokemonData.map((pokemonInfo) => pokemonInfo.Name);
@@ -83,7 +87,7 @@ export default {
             selectPokemonName,
             selectedPokemonName,
         }
-    }
+    },
 }
 
 </script>
@@ -94,9 +98,12 @@ export default {
     max-width: 250px;
 }
 
+#search-dropdown {
+    position: relative;
+}
+
 .guess-field {
     background: white;
-    width: 300px;
     height: 25px;
     margin-top: 20px;
 }
