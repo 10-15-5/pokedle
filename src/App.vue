@@ -21,9 +21,6 @@
                         v-if="searchPokemonNames.length"
                         class="w-full rounded bg-white border border-gray-300 px-4 py-2 space-y-1 absolute z-10"
                     >
-                        <li class="px-1 pt-1 pb-2 font-bold border-b border-gray-200"> Showing {{
-                            searchPokemonNames.length
-                        }} of {{ pokemonNames.length }} </li>
                         <li
                             v-for="pokemonName in searchPokemonNames"
                             :key="pokemonName"
@@ -65,7 +62,7 @@ export default {
             return pokemonNames.filter(name => {
                 if (
                     name.toLowerCase().startsWith(searchTerm.value.toLowerCase())
-                    && matches < 5 //TODO: constant
+                    && matches < 5
                 ) {
                     matches++;
                     return name
@@ -100,6 +97,7 @@ export default {
 .guess-field {
     background: white;
     width: 300px;
+    height: 25px;
     margin-top: 20px;
 }
 
