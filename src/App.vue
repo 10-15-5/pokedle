@@ -9,18 +9,16 @@
         <div>
           <h1 class="title">Guess todays pokemon!</h1>
         </div>
-        <div class="mb-10">
+        <div class="guess-field">
           <v-text-field label="Type pokemon name"
                         variant="solo"
-                        class="guess-field"
                         v-model="searchTerm" />
-          <ul id="search-dropdown"
-              v-if="searchPokemonNames.length"
-              class="bg-white px-4 py-2">
-            <li v-for="pokemonName in searchPokemonNames"
-                :key="pokemonName"
-                @click="selectPokemonName(pokemonName)"> {{ pokemonName }} </li>
-          </ul>
+          <v-card class="search-dropdown"
+                  v-if="searchPokemonNames.length">
+            <v-list-item v-for="pokemonName in searchPokemonNames"
+                         :key="pokemonName"
+                         @click="selectPokemonName(pokemonName)">{{ pokemonName }}</v-list-item>
+          </v-card>
         </div>
         <div>
           <square-container></square-container>
@@ -91,17 +89,14 @@ export default {
   max-width: 250px;
 }
 
-#search-dropdown {
-  position: relative;
-  margin-top: 40px;
+.search-dropdown {
+  margin-top: -22px;
 }
 
 .guess-field {
-  background: white;
   height: 5%;
   width: 25%;
   min-width: 200px;
-  margin-top: 20px;
 }
 
 .title {
@@ -122,7 +117,7 @@ export default {
   align-items: center;
   flex-direction: column;
   text-align: center;
-  gap: 10px;
+  gap: 5%;
   width: 100%;
   height: 100%;
 }
