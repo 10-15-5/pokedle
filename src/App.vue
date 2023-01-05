@@ -9,9 +9,11 @@
         <div>
           <h1 class="title">Guess todays pokemon!</h1>
         </div>
-        <div class="guess-field">
-          <input label="Type pokemon name"
-                 v-model="searchTerm">
+        <div class="mb-10">
+          <v-text-field label="Type pokemon name"
+                        variant="solo"
+                        class="guess-field"
+                        v-model="searchTerm" />
           <ul id="search-dropdown"
               v-if="searchPokemonNames.length"
               class="bg-white px-4 py-2">
@@ -38,7 +40,7 @@ import { computed, ref } from 'vue';
 export default {
   components: {
     HomeView,
-    SquareContainer
+    SquareContainer,
   },
   setup() {
     let searchTerm = ref('');
@@ -91,11 +93,14 @@ export default {
 
 #search-dropdown {
   position: relative;
+  margin-top: 40px;
 }
 
 .guess-field {
   background: white;
-  height: 25px;
+  height: 5%;
+  width: 25%;
+  min-width: 200px;
   margin-top: 20px;
 }
 
