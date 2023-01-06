@@ -9,16 +9,11 @@
         <div>
           <h1 class="title">Guess todays pokemon!</h1>
         </div>
-        <div class="guess-field">
-          <v-text-field label="Type pokemon name"
-                        variant="solo"
-                        v-model="searchTerm" />
-          <v-card class="search-dropdown"
-                  v-if="searchPokemonNames.length">
-            <v-list-item v-for="pokemonName in searchPokemonNames"
-                         :key="pokemonName"
-                         @click="selectPokemonName(pokemonName)">{{ pokemonName }}</v-list-item>
-          </v-card>
+        <div class="search-dropdown">
+          <the-search-drop-down 
+          :pokemonNames="pokemonNames"
+          @some-event="submitGuess"
+          />
         </div>
         <div>
           <square-container></square-container>
@@ -32,53 +27,31 @@
 <script>
 import HomeView from './views/HomeView.vue';
 import SquareContainer from './views/SquareContainer.vue';
+import TheSearchDropDown from './views/TheSearchDropDown.vue';
 import pokemonData from './assets/pokemon.json';
-import { computed, ref } from 'vue';
 
 export default {
   components: {
     HomeView,
     SquareContainer,
+    TheSearchDropDown
   },
   setup() {
-    let searchTerm = ref('');
-    const pokemonNames = pokemonData.map((pokemonInfo) => pokemonInfo.Name);
-    let selectedPokemonName = ref('');
-
-    const searchPokemonNames = computed(() => {
-      if (searchTerm.value === '') {
-        return [];
+    let pokemonNames = pokemonData.map((pokemonInfo) => pokemonInfo.Name);
+    const pokemonToGuess = "Charizard";
+    const submitGuess = (guess) => {
+      if(guess===pokemonToGuess) {
+        console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + pokemonToGuess);
+      } else {
+        console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
       }
-
-      console.log("call to searchPokemonNames")
-
-      let matches = 0
-
-      return pokemonNames.filter(name => {
-        if (
-          name.toLowerCase().startsWith(searchTerm.value.toLowerCase())
-          && matches < 5
-        ) {
-          matches++;
-          return name
-        }
-      });
-    });
-
-    const selectPokemonName = (pokemonName) => {
-      selectedPokemonName.value = pokemonName;
-      searchTerm.value = '';
-      console.log("select: " + selectedPokemonName.value)
     }
 
     return {
-      searchTerm,
-      pokemonNames,
-      searchPokemonNames,
-      selectPokemonName,
-      selectedPokemonName,
+      submitGuess,
+      pokemonNames
     }
-  },
+  }
 }
 
 </script>
@@ -90,10 +63,6 @@ export default {
 }
 
 .search-dropdown {
-  margin-top: -22px;
-}
-
-.guess-field {
   height: 5%;
   width: 25%;
   min-width: 200px;
