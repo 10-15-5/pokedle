@@ -6,16 +6,19 @@
           <v-img src="/src/assets/title.png"
                  class="title-img" />
         </div>
-        <h1 class="title">Guess todays pokemon!</h1>
-        <the-search-drop-down class="search-field"
-                              :pokemonNames="state.pokemonNames"
-                              @some-event="submitGuess" />
-        <v-list class="bg-red">
-          <v-list-subheader>Your guesses</v-list-subheader>
-          <v-list-item v-for="(guess, i) in state.guesses"
-                       :key="i"
-                       :value="guess"> {{ guess }} </v-list-item>
-        </v-list>
+        <div>
+          <h1 class="title">Guess todays pokemon!</h1>
+        </div>
+        <div class="search-field">
+          <search-field :pokemonNames="state.pokemonNames"
+                                @some-event="submitGuess" />
+          <v-list class="guess-container">
+            <v-list-subheader>Your guesses</v-list-subheader>
+            <v-list-item v-for="(guess, i) in state.guesses"
+                         :key="i"
+                         :value="guess"> {{ guess }} </v-list-item>
+          </v-list>
+        </div>
         <!-- <square-container></square-container> -->
       </div>
     </v-main>
@@ -25,7 +28,7 @@
 
 <script setup>
 import SquareContainer from './views/SquareContainer.vue';
-import TheSearchDropDown from './views/TheSearchDropDown.vue';
+import SearchField from './views/SearchField.vue';
 import pokemonData from './assets/pokemon.json';
 import { ref } from 'vue';
 
@@ -51,6 +54,10 @@ const submitGuess = (guess) => {
 </script>
 
 <style>
+.guess-container {
+  background-color: aqua;
+}
+
 .search-field {
   height: 5%;
   width: 25%;
@@ -76,7 +83,7 @@ const submitGuess = (guess) => {
   flex-direction: column;
   justify-content: center;
   gap: 5%;
-  width: 100%;
+  width: auto;
   height: 100%;
 }
 

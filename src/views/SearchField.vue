@@ -1,16 +1,14 @@
 <template>
-  <div class="guess-field">
     <v-text-field label="Type pokemon name"
                   variant="solo"
                   v-model="searchTerm"
                   @keypress.enter="$emit('someEvent', selectedPokemonName)" />
-    <v-card class="search-dropdown"
+    <v-card class="mt-n6"
             v-if="searchPokemonNames.length">
       <v-list-item v-for="pokemonName in searchPokemonNames"
                    :key="pokemonName"
                    @click="selectPokemonName(pokemonName)">{{ pokemonName }}</v-list-item>
     </v-card>
-  </div>
 </template>
 
 <script setup>
@@ -51,9 +49,4 @@ const selectPokemonName = (pokemonName) => {
 </script>
 
 <style>
-.search-dropdown {
-  margin-top: -22px;
-  position: relative;
-  z-index: 10;
-}
 </style>
