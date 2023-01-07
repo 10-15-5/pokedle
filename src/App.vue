@@ -38,18 +38,23 @@ const state = ref({
 })
 const pokemonToGuess = "Charizard";
 const submitGuess = (guess) => {
-  if (guess === pokemonToGuess) {
+
+  if (guess.toLowerCase() === pokemonToGuess.toLowerCase()) {
     console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + pokemonToGuess);
   } else {
     console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
   }
+
   state.value.pokemonNames = state.value.pokemonNames.filter(e => {
-    if (e === guess) {
-      state.value.guesses.push(guess);
+    if (e.toLowerCase() === guess.toLowerCase()) {
+      state.value.guesses.push(e);
       console.log(state.value.guesses)
     }
     else return true;
   });
+
+
+  
 }
 </script>
 

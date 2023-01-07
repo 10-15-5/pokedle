@@ -1,14 +1,16 @@
 <template>
+  <div>
     <v-text-field label="Type pokemon name"
                   variant="solo"
                   v-model="searchTerm"
-                  @keypress.enter="$emit('someEvent', selectedPokemonName)" />
+                  @keypress.enter="$emit('someEvent', searchTerm)" />
     <v-card class="mt-n6"
             v-if="searchPokemonNames.length">
       <v-list-item v-for="pokemonName in searchPokemonNames"
                    :key="pokemonName"
                    @click="selectPokemonName(pokemonName)">{{ pokemonName }}</v-list-item>
     </v-card>
+  </div>
 </template>
 
 <script setup>
@@ -49,4 +51,5 @@ const selectPokemonName = (pokemonName) => {
 </script>
 
 <style>
+
 </style>
