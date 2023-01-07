@@ -9,13 +9,20 @@
         <div>
           <h1 class="title">Guess todays pokemon!</h1>
         </div>
-        <div class="search-dropdown">
-          <the-search-drop-down :pokemonNames="state.pokemonNames"
+        <div>
+          <the-search-drop-down class="search-field"
+          :pokemonNames="state.pokemonNames"
                                 @some-event="submitGuess" />
         </div>
         <div>
-          <square-container></square-container>
-        </div>
+            <v-list class="bg-red">
+              <v-list-subheader>Your guesses</v-list-subheader>
+              <v-list-item v-for="(guess, i) in state.guesses"
+                           :key="i"
+                           :value="guess"> {{ guess }} </v-list-item>
+            </v-list>
+            <!-- <square-container></square-container> -->
+          </div>
       </div>
     </v-main>
     <!-- <HomeView /> -->
@@ -55,7 +62,7 @@ const submitGuess = (guess) => {
   max-width: 250px;
 }
 
-.search-dropdown {
+.search-field {
   height: 5%;
   width: 25%;
   min-width: 200px;

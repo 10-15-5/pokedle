@@ -54,5 +54,6 @@ const selectPokemonName = (pokemonName) => {
 .search-dropdown {
   margin-top: -22px;
   position: relative;
+  z-index: 10;
 }
 </style>
