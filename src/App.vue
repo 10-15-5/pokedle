@@ -18,7 +18,9 @@
             <v-list-subheader>Your guesses</v-list-subheader>
             <v-list-item v-for="(guess, i) in state.guesses"
                          :key="i"
-                         :value="guess"> {{ guess }} </v-list-item>
+                         :value="guess">
+              <square-container :pokemon-data="getPokemonDataFromName(guess)" />
+            </v-list-item>
           </v-list>
         </div>
         <!-- <square-container></square-container> -->
@@ -56,6 +58,11 @@ const submitGuess = (guess) => {
   });
 
 }
+
+const getPokemonDataFromName = (guess) => pokemonData.find(e => {
+  return e.Name === guess
+});
+
 </script>
 
 <style>
