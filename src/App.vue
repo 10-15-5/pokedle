@@ -11,7 +11,9 @@
         </div>
         <div class="search-field">
           <search-field :pokemonNames="state.pokemonNames"
-                                @some-event="submitGuess" />
+                        @some-event="submitGuess" />
+        </div>
+        <div>
           <v-list class="guess-container">
             <v-list-subheader>Your guesses</v-list-subheader>
             <v-list-item v-for="(guess, i) in state.guesses"
@@ -53,8 +55,6 @@ const submitGuess = (guess) => {
     else return true;
   });
 
-
-  
 }
 </script>
 
@@ -67,6 +67,7 @@ const submitGuess = (guess) => {
   height: 5%;
   width: 25%;
   min-width: 200px;
+  z-index: 1;
 }
 
 .title {
@@ -76,6 +77,7 @@ const submitGuess = (guess) => {
 .title-img {
   transition: transform 0.2s;
   min-width: 250px;
+
 }
 
 .title-img:hover {
@@ -86,7 +88,6 @@ const submitGuess = (guess) => {
   display: flex;
   align-items: center;
   flex-direction: column;
-  justify-content: center;
   gap: 5%;
   width: auto;
   height: 100%;
