@@ -10,10 +10,8 @@
           <h1 class="title">Guess todays pokemon!</h1>
         </div>
         <div class="search-dropdown">
-          <the-search-drop-down 
-          :pokemonNames="pokemonNames"
-          @some-event="submitGuess"
-          />
+          <the-search-drop-down :pokemonNames="pokemonNames"
+                                @some-event="submitGuess" />
         </div>
         <div>
           <square-container></square-container>
@@ -24,36 +22,22 @@
   </v-app>
 </template>
 
-<script>
+<script setup>
 import HomeView from './views/HomeView.vue';
 import SquareContainer from './views/SquareContainer.vue';
 import TheSearchDropDown from './views/TheSearchDropDown.vue';
 import pokemonData from './assets/pokemon.json';
 
-export default {
-  components: {
-    HomeView,
-    SquareContainer,
-    TheSearchDropDown
-  },
-  setup() {
-    let pokemonNames = pokemonData.map((pokemonInfo) => pokemonInfo.Name);
-    const pokemonToGuess = "Charizard";
-    const submitGuess = (guess) => {
-      if(guess===pokemonToGuess) {
-        console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + pokemonToGuess);
-      } else {
-        console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
-      }
-    }
-
-    return {
-      submitGuess,
-      pokemonNames
-    }
+let pokemonNames = pokemonData.map((pokemonInfo) => pokemonInfo.Name);
+const pokemonToGuess = "Charizard";
+const submitGuess = (guess) => {
+  if (guess === pokemonToGuess) {
+    console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + pokemonToGuess);
+  } else {
+    //console.log(pokemonNames);
+    console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
   }
 }
-
 </script>
 
 <style>
