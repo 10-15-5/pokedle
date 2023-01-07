@@ -2,27 +2,21 @@
   <v-app id="app">
     <v-main>
       <div class="container">
-        <div class="header-container">
+        <div>
           <v-img src="/src/assets/title.png"
-                 class="title-img"></v-img>
+                 class="title-img" />
         </div>
-        <div>
-          <h1 class="title">Guess todays pokemon!</h1>
-        </div>
-        <div>
-          <the-search-drop-down class="search-field"
-          :pokemonNames="state.pokemonNames"
-                                @some-event="submitGuess" />
-        </div>
-        <div>
-            <v-list class="bg-red">
-              <v-list-subheader>Your guesses</v-list-subheader>
-              <v-list-item v-for="(guess, i) in state.guesses"
-                           :key="i"
-                           :value="guess"> {{ guess }} </v-list-item>
-            </v-list>
-            <!-- <square-container></square-container> -->
-          </div>
+        <h1 class="title">Guess todays pokemon!</h1>
+        <the-search-drop-down class="search-field"
+                              :pokemonNames="state.pokemonNames"
+                              @some-event="submitGuess" />
+        <v-list class="bg-red">
+          <v-list-subheader>Your guesses</v-list-subheader>
+          <v-list-item v-for="(guess, i) in state.guesses"
+                       :key="i"
+                       :value="guess"> {{ guess }} </v-list-item>
+        </v-list>
+        <!-- <square-container></square-container> -->
       </div>
     </v-main>
     <!-- <HomeView /> -->
@@ -57,11 +51,6 @@ const submitGuess = (guess) => {
 </script>
 
 <style>
-.header-container {
-  width: 80%;
-  max-width: 250px;
-}
-
 .search-field {
   height: 5%;
   width: 25%;
@@ -74,6 +63,7 @@ const submitGuess = (guess) => {
 
 .title-img {
   transition: transform 0.2s;
+  min-width: 250px;
 }
 
 .title-img:hover {
@@ -82,10 +72,9 @@ const submitGuess = (guess) => {
 
 .container {
   display: flex;
-  justify-content: center;
   align-items: center;
   flex-direction: column;
-  text-align: center;
+  justify-content: center;
   gap: 5%;
   width: 100%;
   height: 100%;
