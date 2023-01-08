@@ -37,13 +37,13 @@ import pokemonData from './assets/pokemon.json';
 import { ref } from 'vue';
 
 const state = ref({
-  pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.Name),
+  pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name),
   guesses: [],
 })
-const pokemonToGuess = "Charizard";
+const pokemonToGuess = "charizard";
 const submitGuess = (guess) => {
 
-  if (guess.toLowerCase() === pokemonToGuess.toLowerCase()) {
+  if (guess.toLowerCase() === pokemonToGuess) {
     console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + pokemonToGuess);
   } else {
     console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
@@ -60,7 +60,7 @@ const submitGuess = (guess) => {
 }
 
 const getPokemonDataFromName = (guess) => pokemonData.find(e => {
-  return e.Name === guess
+  return e.name === guess
 });
 
 </script>

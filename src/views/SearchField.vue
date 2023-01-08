@@ -34,7 +34,7 @@ const searchPokemonNames = computed(() => {
 
   return props.pokemonNames.filter(name => {
     if (
-      name.toLowerCase().startsWith(searchTerm.value.toLowerCase())
+      name.startsWith(searchTerm.value.toLowerCase())
       && matches < 5
     ) {
       matches++;
