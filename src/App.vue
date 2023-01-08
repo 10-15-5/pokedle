@@ -40,7 +40,7 @@ import { ref } from 'vue';
 import { guessState } from './constants.js';
 
 const state = ref({
-  pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name),
+  pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
   guesses: [],
 });
 const correctFields = pokemonData[Math.floor(Math.random()*pokemonData.length)];
@@ -83,6 +83,7 @@ const getGuessResults = (pokemonName) => {
   return result;
 }
 
+//TODO: Should eventually be handled on the backend
 const submitGuess = (guess) => {
 
   if (guess.toLowerCase() === pokemonToGuess) {
@@ -90,10 +91,11 @@ const submitGuess = (guess) => {
   } else {
     console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
   }
-
+  let guessRemovedFromList = false;
   state.value.pokemonNames = state.value.pokemonNames.filter(e => {
-    if (e.toLowerCase() === guess.toLowerCase()) {
+    if (!guessRemovedFromList && e.startsWith(guess)) {
       state.value.guesses.push(e);
+      guessRemovedFromList = true;
     }
     else return true;
   });
