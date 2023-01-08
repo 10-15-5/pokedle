@@ -18,7 +18,6 @@ import { guessFieldTitles } from '../constants.js';
   justify-content: center;
   gap: 10px;
   width: 100%;
-  margin: 0px 10px 0px 10px;
 }
 
 .square-content {

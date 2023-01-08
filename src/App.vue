@@ -15,7 +15,6 @@
         </div>
         <div>
           <v-list class="guess-container">
-            <v-list-subheader>Your guesses</v-list-subheader>
             <SquareContentHeader/>
             <v-list-item v-for="(guess, i) in state.guesses"
                          :key="i"
