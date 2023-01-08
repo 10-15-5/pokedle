@@ -86,7 +86,7 @@ const getGuessResults = (pokemonName) => {
 const submitGuess = (guess) => {
 
   if (guess.toLowerCase() === pokemonToGuess) {
-    console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + pokemonToGuess);
+    console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
   } else {
     console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
   }
@@ -94,7 +94,6 @@ const submitGuess = (guess) => {
   state.value.pokemonNames = state.value.pokemonNames.filter(e => {
     if (e.toLowerCase() === guess.toLowerCase()) {
       state.value.guesses.push(e);
-      console.log(state.value.guesses)
     }
     else return true;
   });

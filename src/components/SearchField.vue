@@ -27,8 +27,6 @@ const searchPokemonNames = computed(() => {
     return [];
   }
 
-  console.log("call to searchPokemonNames")
-  console.log(props.pokemonNames.length)
   let matches = 0
 
   return props.pokemonNames.filter(name => {
@@ -44,7 +42,6 @@ const searchPokemonNames = computed(() => {
 
 const selectPokemonName = (pokemonName) => {
   searchTerm.value = pokemonName;
-  console.log("select: " + pokemonName)
 }
 
 const clearSearchField = () => {
