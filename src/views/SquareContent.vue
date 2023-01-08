@@ -48,6 +48,9 @@ export default {
 </script>
 
 <style scoped>
+img {
+  width: 100%;
+}
 .square-content {
 	width: 60px;
 	height: 60px;
