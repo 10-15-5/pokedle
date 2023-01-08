@@ -3,7 +3,7 @@
     <v-text-field label="Type pokemon name"
                   variant="solo"
                   v-model="searchTerm"
-                  @keypress.enter="$emit('someEvent', searchTerm)" />
+                  @keypress.enter="[$emit('someEvent', searchTerm), clearSearchField()]" />
     <v-card class="mt-n6"
             v-if="searchPokemonNames.length">
       <v-list-item v-for="pokemonName in searchPokemonNames"
@@ -44,9 +44,17 @@ const searchPokemonNames = computed(() => {
 });
 
 const selectPokemonName = (pokemonName) => {
+
   selectedPokemonName.value = pokemonName;
   searchTerm.value = pokemonName;
   console.log("select: " + selectedPokemonName.value)
+}
+
+const clearSearchField = () => {
+  if (props.pokemonNames.includes(searchTerm.value)) {
+    searchTerm.value = "";
+    selectedPokemonName.value = "";
+  }
 }
 </script>
 

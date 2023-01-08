@@ -95,7 +95,6 @@ const getGuessResults = (pokemonName) => {
     if (data.type2 === correctFields.type1) result.type2.guessState = guessState.PartlyCorrectGuess;
   }
 
-  console.log(result)
   return result;
 }
 
