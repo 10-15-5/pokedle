@@ -8,13 +8,23 @@
             v-if="searchPokemonNames.length">
       <v-list-item v-for="pokemonName in searchPokemonNames"
                    :key="pokemonName"
-                   @click="selectPokemonName(pokemonName)">{{ pokemonName }}</v-list-item>
-    </v-card>
+                   :value="pokemonName"
+                   @click="selectPokemonName(pokemonName)"
+                   >
+        <div class="search-suggestion-dropdown">
+          <img class="mt-2"
+               :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + removeSpecialCharactersExceptDashFromString(pokemonName) + '.png'"
+               alt="" />
+          {{ pokemonName }}
+        </div>
+      </v-list-item>
+  </v-card>
   </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue';
+import {removeSpecialCharactersExceptDashFromString} from '../helpers.js';
 
 const props = defineProps({
   pokemonNames: Object,
@@ -52,5 +62,14 @@ const clearSearchField = () => {
 </script>
 
 <style>
+img {
+  width: 35px;
+}
 
+.search-suggestion-dropdown {
+  display: flex;
+  gap: 10%;
+  justify-content: left;
+  align-items: center;
+}
 </style>

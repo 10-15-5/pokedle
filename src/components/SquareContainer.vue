@@ -14,15 +14,11 @@
 
 <script setup>
 import SquareContent from './SquareContent.vue';
+import {removeSpecialCharactersExceptDashFromString} from '../helpers.js';
 const props = defineProps({
   pokemonName: String,
   guessResults: Object
 });
-
-const removeSpecialCharactersExceptDashFromString = (text) => {
-  return text.replace(/[^-\w\s]/gi, '');
-}
-
 </script>
 
 <style>
