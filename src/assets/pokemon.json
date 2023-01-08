@@ -449,7 +449,7 @@
   },
   {
     "number": 29,
-    "name": "nidoran♀",
+    "name": "nidoran-m",
     "type1": "poison",
     "type2": "",
     "total": 275,
@@ -497,7 +497,7 @@
   },
   {
     "number": 32,
-    "name": "nidoran♂",
+    "name": "nidoran-f",
     "type1": "poison",
     "type2": "",
     "total": 273,

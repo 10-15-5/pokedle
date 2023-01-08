@@ -44,22 +44,6 @@ const state = ref({
 });
 const correctFields = pokemonData[Math.floor(Math.random()*pokemonData.length)];
 const pokemonToGuess = correctFields.name;
-//{
-//   "number": 229,
-//     "name": "houndoom",
-//     "type1": "dark",
-//     "type2": "fire",
-//     "total": 500,
-//     "hp": 75,
-//     "attack": 90,
-//     "defense": 50,
-//     "sp-atk": 110,
-//     "sp-def": 80,
-//     "speed": 95,
-//     "generation": 2,
-//     "legendary": "false",
-//     "evolutions": true
-// };
 
 //TODO: Should eventually be handled on the backend
 const getGuessResults = (pokemonName) => {

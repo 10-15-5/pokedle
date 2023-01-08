@@ -4,7 +4,7 @@
             :key="i"
             :value="result">
       <SquareContent v-if="result.name"
-      :pokemon="removeSpecialCharactersFromString(result.name)"/>
+      :pokemon="removeSpecialCharactersExceptDashFromString(result.name)"/>
       <SquareContent v-else
       :guessResult="result.guessState"
                      :guessText="result.text" />
@@ -19,8 +19,9 @@ const props = defineProps({
   pokemonName: String,
   guessResults: Object
 });
-const removeSpecialCharactersFromString = (text) => {
-  return text.replace(/[^\w\s]/gi, '');
+
+const removeSpecialCharactersExceptDashFromString = (text) => {
+  return text.replace(/[^-\w\s]/gi, '');
 }
 
 </script>
