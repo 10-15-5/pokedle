@@ -11,9 +11,9 @@
         </div>
         <div class="search-field">
           <search-field :pokemonNames="state.pokemonNames"
-                        @some-event="submitGuess" />
+                        @submit-guess="submitGuess" />
         </div>
-        <div>
+        <div v-if="state.guesses.length">
           <v-list class="guess-container">
             <SquareContentHeader/>
             <v-list-item v-for="(guess, i) in state.guesses"

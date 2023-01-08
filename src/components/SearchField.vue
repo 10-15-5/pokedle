@@ -3,7 +3,7 @@
     <v-text-field label="Type pokemon name"
                   variant="solo"
                   v-model="searchTerm"
-                  @keypress.enter="[$emit('someEvent', searchTerm), clearSearchField()]" />
+                  @keypress.enter="[$emit('submitGuess', searchTerm), clearSearchField()]" />
     <v-card class="mt-n6"
             v-if="searchPokemonNames.length">
       <v-list-item v-for="pokemonName in searchPokemonNames"
