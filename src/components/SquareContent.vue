@@ -14,7 +14,7 @@
 
 <script setup>
 import { guessState } from '../constants.js';
-import {computed} from 'vue'
+import { computed } from 'vue'
 
 const props = defineProps({
   guessResult: String,
@@ -31,7 +31,7 @@ const getColor = computed(() => {
     case guessState.WrongGuess:
       return "red";
     default:
-      return "black";
+      return "transparent";
   }
 });
 </script>
@@ -39,6 +39,8 @@ const getColor = computed(() => {
 <style scoped>
 img {
   width: 100%;
+  background-image: url("../assets/pokecenter-box-background.png");
+  background-size: contain;
 }
 
 .square-content {
