@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-        <SquareContent :guessPokemon="pokemonData.Name.toLowerCase()" />
+        <SquareContent :pokemon="removeSpecialCharactersFromString(pokemonData.Name).toLowerCase()" />
 		<SquareContent :guessResult="'CorrectGuess'" :guessText="'fire'" />
 		<SquareContent :guessResult="'WrongGuess'" :guessText="'water'" />
 		<SquareContent :guessResult="'PartlyCorrectGuess'" :guessText="'Fully evolved'" />
@@ -12,8 +12,11 @@
 import SquareContent from './SquareContent.vue';
 
 const props = defineProps({
-  pokemonData: String
+  pokemonData: Object
 });
+const removeSpecialCharactersFromString = (text) => {
+  return text.replace(/[^\w\s]/gi, '');
+}
 
 </script>
 

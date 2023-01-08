@@ -8,7 +8,7 @@
 		</div>
 		<div v-else>
 			<img
-				:src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + guessPokemon + '.png'"
+				:src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + pokemon + '.png'"
 				alt=""
 			/>
 		</div>
@@ -25,7 +25,7 @@ export default {
         guessText: {
             type: String,
         },
-        guessPokemon: {
+        pokemon: {
             type: String
         }
     },

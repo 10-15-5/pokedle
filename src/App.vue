@@ -106,4 +106,11 @@ main {
   background-size: cover;
   background-color: black;
 }
+
+/* .v-application__wrap {
+    background-color: black;
+    background-image: url("./src/assets/background.jpg");
+    background-repeat: no-repeat;
+    height: 100%;
+  } */
 </style>
