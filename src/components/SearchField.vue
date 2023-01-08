@@ -21,7 +21,6 @@ const props = defineProps({
 });
 
 let searchTerm = ref('');
-let selectedPokemonName = ref('');
 
 const searchPokemonNames = computed(() => {
   if (searchTerm.value === '') {
@@ -44,16 +43,13 @@ const searchPokemonNames = computed(() => {
 });
 
 const selectPokemonName = (pokemonName) => {
-
-  selectedPokemonName.value = pokemonName;
   searchTerm.value = pokemonName;
-  console.log("select: " + selectedPokemonName.value)
+  console.log("select: " + pokemonName)
 }
 
 const clearSearchField = () => {
   if (props.pokemonNames.includes(searchTerm.value)) {
     searchTerm.value = "";
-    selectedPokemonName.value = "";
   }
 }
 </script>
