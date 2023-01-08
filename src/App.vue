@@ -16,6 +16,7 @@
         <div>
           <v-list class="guess-container">
             <v-list-subheader>Your guesses</v-list-subheader>
+            <SquareContentHeader/>
             <v-list-item v-for="(guess, i) in state.guesses"
                          :key="i"
                          :value="guess">
@@ -33,6 +34,7 @@
 
 <script setup>
 import SquareContainer from './components/SquareContainer.vue';
+import SquareContentHeader from './components/SquareContentHeader.vue';
 import SearchField from './components/SearchField.vue';
 import pokemonData from './assets/pokemon.json';
 import { ref } from 'vue';
@@ -104,7 +106,7 @@ const submitGuess = (guess) => {
 
 <style>
 .guess-container {
-  background-color: lightskyblue;
+  background-color: transparent;
 }
 
 .search-field {

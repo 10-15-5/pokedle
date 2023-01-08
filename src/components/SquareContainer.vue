@@ -14,7 +14,7 @@
 
 <script setup>
 import SquareContent from './SquareContent.vue';
-
+import SquareContentHeader from './SquareContentHeader.vue';
 const props = defineProps({
   pokemonName: String,
   guessResults: Object
