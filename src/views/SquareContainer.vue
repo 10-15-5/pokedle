@@ -1,6 +1,6 @@
 <template>
 	<div class="content">
-        <SquareContent :guessPokemon="'charizard'" />
+        <SquareContent :guessPokemon="pokemonData.Name.toLowerCase()" />
 		<SquareContent :guessResult="'CorrectGuess'" :guessText="'fire'" />
 		<SquareContent :guessResult="'WrongGuess'" :guessText="'water'" />
 		<SquareContent :guessResult="'PartlyCorrectGuess'" :guessText="'Fully evolved'" />
@@ -8,14 +8,12 @@
 	</div>
 </template>
 
-<script>
+<script setup>
 import SquareContent from './SquareContent.vue';
 
-export default {
-    components:{
-        SquareContent,
-    }
-}
+const props = defineProps({
+  pokemonData: String
+});
 
 </script>
 
