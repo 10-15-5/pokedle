@@ -32,8 +32,8 @@
 </template>
 
 <script setup>
-import SquareContainer from './views/SquareContainer.vue';
-import SearchField from './views/SearchField.vue';
+import SquareContainer from './components/SquareContainer.vue';
+import SearchField from './components/SearchField.vue';
 import pokemonData from './assets/pokemon.json';
 import { ref } from 'vue';
 import { guessState } from './constants.js';
