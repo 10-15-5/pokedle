@@ -19,7 +19,8 @@
             <v-list-item v-for="(guess, i) in state.guesses"
                          :key="i"
                          :value="guess">
-              <square-container :pokemon-data="getPokemonDataFromName(guess)" />
+              <square-container :pokemonName="guess"
+                                :guessResults="getGuessResults(guess)" />
             </v-list-item>
           </v-list>
         </div>
@@ -35,12 +36,69 @@ import SquareContainer from './views/SquareContainer.vue';
 import SearchField from './views/SearchField.vue';
 import pokemonData from './assets/pokemon.json';
 import { ref } from 'vue';
+import { guessState } from './constants.js';
 
 const state = ref({
   pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name),
   guesses: [],
-})
-const pokemonToGuess = "charizard";
+});
+
+const pokemonToGuess = "houndoom";
+const correctFields = {
+  "number": 229,
+    "name": "houndoom",
+    "type1": "dark",
+    "type2": "fire",
+    "total": 500,
+    "hp": 75,
+    "attack": 90,
+    "defense": 50,
+    "sp-atk": 110,
+    "sp-def": 80,
+    "speed": 95,
+    "generation": 2,
+    "legendary": "false",
+    "evolutions": true
+};
+
+//TODO: Should eventually be handled on the backend
+const getGuessResults = (pokemonName) => {
+  const data = pokemonData.find(e => e.name === pokemonName);
+  const result = {
+    name: {
+      name: pokemonName,
+      guessState: guessState.None
+    },
+    type1: {
+      text: data.type1,
+      guessState: data.type1 === correctFields.type1 ? guessState.CorrectGuess : guessState.WrongGuess,
+    },
+    type2: {
+      text: !data.type2 ? "None" : data.type2 ,
+      guessState: data.type2 === correctFields.type2 ? guessState.CorrectGuess : guessState.WrongGuess
+    },
+    evolutions: {
+      text: '' + data.evolutions,
+      guessState: data.evolutions === correctFields.evolutions ? guessState.CorrectGuess : guessState.WrongGuess
+    },
+    generation: {
+      text: "Gen " + data.generation,
+      guessState: data.generation === correctFields.generation ? guessState.CorrectGuess : guessState.WrongGuess
+    },
+  }
+
+  if (
+    result.type1.guessState !== guessState.CorrectGuess &&
+    result.type2.guessState !== guessState.CorrectGuess
+  ) {
+    if (data.type1 === correctFields.type2) result.type1.guessState = guessState.PartlyCorrectGuess;
+    if (data.type2 === correctFields.type1) result.type2.guessState = guessState.PartlyCorrectGuess;
+  }
+
+  console.log(result)
+  return result;
+}
+
 const submitGuess = (guess) => {
 
   if (guess.toLowerCase() === pokemonToGuess) {
@@ -59,15 +117,11 @@ const submitGuess = (guess) => {
 
 }
 
-const getPokemonDataFromName = (guess) => pokemonData.find(e => {
-  return e.name === guess
-});
-
 </script>
 
 <style>
 .guess-container {
-  background-color: aqua;
+  background-color: lightskyblue;
 }
 
 .search-field {

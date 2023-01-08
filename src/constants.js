@@ -1,7 +1,8 @@
 const guessState = {
     CorrectGuess: "CorrectGuess",
     PartlyCorrectGuess: "PartlyCorrectGuess",
-    WrongGuess: "WrongGuess"
+    WrongGuess: "WrongGuess",
+    None: "None"
 }
 
 export {
