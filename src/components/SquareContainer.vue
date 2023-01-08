@@ -4,7 +4,7 @@
             :key="i"
             :value="result">
       <SquareContent v-if="result.name"
-      :pokemon="result.name"/>
+      :pokemon="removeSpecialCharactersFromString(result.name)"/>
       <SquareContent v-else
       :guessResult="result.guessState"
                      :guessText="result.text" />

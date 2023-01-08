@@ -12,22 +12,18 @@
   </div>
 </template>
 
-<script>
+<script setup>
 import { guessState } from '../constants.js';
+import {computed} from 'vue'
+
 const props = defineProps({
-  guessResult: {
-    type: String,
-        },
-  guessText: {
-    type: String,
-        },
-  pokemon: {
-    type: String
-  }
+  guessResult: String,
+  guessText: String,
+  pokemon: String
 });
-  
-const getColor = () => {
-  switch (this.guessResult) {
+
+const getColor = computed(() => {
+  switch (props.guessResult) {
     case guessState.CorrectGuess:
       return "greenyellow";
     case guessState.PartlyCorrectGuess:
@@ -37,20 +33,12 @@ const getColor = () => {
     default:
       return "black";
   }
-}
-
-
+});
 </script>
 
 <style scoped>
 img {
   width: 100%;
-}
-
-.guess-text {
-  display: flex;
-  justify-content: center;
-  align-items: center;
 }
 
 .square-content {
