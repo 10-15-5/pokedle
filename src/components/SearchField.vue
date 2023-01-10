@@ -55,7 +55,6 @@ const selectPokemonName = (pokemonName) => {
 }
 
 const clearSearchField = () => {
-  console.log(searchPokemonNames.value)
   if (searchPokemonNames.value.length>0) {
     searchTerm.value = "";
   }

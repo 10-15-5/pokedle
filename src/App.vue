@@ -29,6 +29,7 @@
         <!-- <square-container></square-container> -->
       </div>
     </v-main>
+    <v-btn @click="revealPokemon">reveal secret pokemon</v-btn>
     <!-- <HomeView /> -->
   </v-app>
 </template>
@@ -91,21 +92,30 @@ const getGuessResults = (pokemonName) => {
 
 //TODO: Should eventually be handled on the backend
 const submitGuess = (guess) => {
+  if(!guess) return;
 
-  if (guess.toLowerCase() === pokemonToGuess) {
-    console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
-  } else {
-    console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
-  }
   let guessRemovedFromList = false;
   state.value.pokemonNames = state.value.pokemonNames.filter(e => {
-    if (!guessRemovedFromList && e.startsWith(guess)) {
+    if (!guessRemovedFromList && e.startsWith(guess.toLowerCase())) {
       state.value.guesses.unshift(e);
       guessRemovedFromList = true;
     }
     else return true;
   });
 
+  if(!guessRemovedFromList) return;
+
+  guess = state.value.guesses[0];
+  if (guess === pokemonToGuess) {
+    console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
+  } else {
+    console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
+  }
+
+}
+
+const revealPokemon = () => {
+  console.log(pokemonToGuess);
 }
 
 </script>
