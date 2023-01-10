@@ -24,13 +24,14 @@ import { guessFieldTitles } from '../constants.js';
   width: 60px;
   display: flex;
   justify-content: center;
-  border-bottom: 2px solid white;
+  border-bottom: 2px solid rgb(0, 0, 0);
   align-items: center;
+  color: rgb(0, 0, 0);
 }
 
 p {
-  font-size: small;
-  color: white;
-  font-weight: 500;
+  font-size: smaller;
+  color: rgb(0, 0, 0);
+  font-weight: bolder;
 }
 </style>

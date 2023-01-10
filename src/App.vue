@@ -4,13 +4,13 @@
       <div class="container">
         <div>
           <v-img src="/src/assets/title.png"
-                 class="title-img" />
+                 class="title-img mt-8" />
         </div>
         <!-- <div>
           <h1 class="title">Guess todays pokemon!</h1>
         </div> -->
         <div>
-        <div class="search-field">
+        <div class="search-field mt-8">
           <search-field :pokemonNames="state.pokemonNames"
                         @submit-guess="submitGuess" />
         </div>
@@ -120,14 +120,10 @@ const submitGuess = (guess) => {
   z-index: 1;
 }
 
-.title {
-  color: black;
-  font-size: xxx-large;
-}
-
 .title-img {
   transition: transform 0.2s;
-  min-width: 250px;
+  min-width: 300px;
+  -webkit-filter: drop-shadow(0px 0px 20px rgb(255, 255, 255));
 }
 
 .title-img:hover {
@@ -138,7 +134,6 @@ const submitGuess = (guess) => {
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 50%;
   width: auto;
 }
 
