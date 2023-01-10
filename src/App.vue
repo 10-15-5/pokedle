@@ -6,9 +6,10 @@
           <v-img src="/src/assets/title.png"
                  class="title-img" />
         </div>
-        <div>
+        <!-- <div>
           <h1 class="title">Guess todays pokemon!</h1>
-        </div>
+        </div> -->
+        <div>
         <div class="search-field">
           <search-field :pokemonNames="state.pokemonNames"
                         @submit-guess="submitGuess" />
@@ -24,6 +25,7 @@
             </v-list-item>
           </v-list>
         </div>
+      </div>
         <!-- <square-container></square-container> -->
       </div>
     </v-main>
@@ -111,19 +113,21 @@ const submitGuess = (guess) => {
 
 .search-field {
   height: 5%;
-  width: 25%;
+  width: 100%;
   min-width: 200px;
+  padding-left: 20px;
+  padding-right: 20px;
   z-index: 1;
 }
 
 .title {
-  color: white;
+  color: black;
+  font-size: xxx-large;
 }
 
 .title-img {
   transition: transform 0.2s;
   min-width: 250px;
-
 }
 
 .title-img:hover {
@@ -134,15 +138,14 @@ const submitGuess = (guess) => {
   display: flex;
   align-items: center;
   flex-direction: column;
-  gap: 5%;
+  gap: 50%;
   width: auto;
-  height: 100%;
 }
 
 main {
-  background-image: url("./assets/background.jpg");
-  background-repeat: no-repeat;
-  background-size: cover;
+  background-image: url("./assets/background-white.jpg");
+  background-repeat: repeat;
+  background-size: 100%;
   background-color: black;
 }
 
