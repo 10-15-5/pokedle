@@ -100,7 +100,7 @@ const submitGuess = (guess) => {
   let guessRemovedFromList = false;
   state.value.pokemonNames = state.value.pokemonNames.filter(e => {
     if (!guessRemovedFromList && e.startsWith(guess)) {
-      state.value.guesses.push(e);
+      state.value.guesses.unshift(e);
       guessRemovedFromList = true;
     }
     else return true;
