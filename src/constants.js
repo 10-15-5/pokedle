@@ -10,7 +10,8 @@ const guessFieldTitles = {
   Type1: "Type 1",
   Type2: "Type 2",
   Evolutions: "Evolutions",
-  Generation: "Generation"
+  EvolutionLevel: "Evolution Level",
+  Generation: "Generation",
 }
 
 export {

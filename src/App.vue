@@ -68,6 +68,10 @@ const getGuessResults = (pokemonName) => {
       text: '' + data.evolutions,
       guessState: data.evolutions === correctFields.evolutions ? guessState.CorrectGuess : guessState.WrongGuess
     },
+    evolutionLevel: {
+      text: '' + data.evolutionState,
+      guessState: data.evolutionState === correctFields.evolutionState ? guessState.CorrectGuess : guessState.WrongGuess
+    },
     generation: {
       text: "Gen " + data.generation,
       guessState: data.generation === correctFields.generation ? guessState.CorrectGuess : guessState.WrongGuess
