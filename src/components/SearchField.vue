@@ -4,13 +4,13 @@
                   class="search-field"
                   variant="solo"
                   v-model="searchTerm"
-                  @keypress.enter="[$emit('submitGuess', searchTerm), clearSearchField()]" />
+                  @keypress.enter="submitGuess(searchTerm)" />
     <v-card class="mt-n6 search-suggestion-dropdown"
             v-if="searchPokemonNames.length">
       <v-list-item v-for="pokemonName in searchPokemonNames"
                    :key="pokemonName"
                    :value="pokemonName"
-                   @click="selectPokemonName(pokemonName)"
+                   @click="submitGuess(pokemonName)"
                    >
         <div class="search-suggestions">
           <img class="mt-2"
@@ -30,6 +30,7 @@ import {removeSpecialCharactersExceptDashFromString} from '../helpers.js';
 const props = defineProps({
   pokemonNames: Object,
 });
+const emit = defineEmits(['submitGuess'])
 
 let searchTerm = ref('');
 
@@ -51,15 +52,11 @@ const searchPokemonNames = computed(() => {
   });
 });
 
-const selectPokemonName = (pokemonName) => {
-  searchTerm.value = pokemonName;
+const submitGuess = (pokemonName) => {
+  searchTerm.value = "";
+  emit('submitGuess', pokemonName);
 }
 
-const clearSearchField = () => {
-  if (searchPokemonNames.value.length>0) {
-    searchTerm.value = "";
-  }
-}
 </script>
 
 <style scoped>
