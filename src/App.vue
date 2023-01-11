@@ -120,18 +120,14 @@ const revealPokemon = () => {
 
 </script>
 
-<style>
+<style scoped>
 .guess-container {
   background-color: transparent;
 }
 
 .search-field {
-  height: 5%;
-  width: 100%;
-  min-width: 200px;
-  padding-left: 20px;
-  padding-right: 20px;
-  z-index: 1;
+  display: flex;
+  justify-content: center;
 }
 
 .title-img {

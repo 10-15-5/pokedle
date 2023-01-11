@@ -1,17 +1,18 @@
 <template>
   <div>
     <v-text-field label="Type pokemon name"
+                  class="search-field"
                   variant="solo"
                   v-model="searchTerm"
                   @keypress.enter="[$emit('submitGuess', searchTerm), clearSearchField()]" />
-    <v-card class="mt-n6"
+    <v-card class="mt-n6 search-suggestion-dropdown"
             v-if="searchPokemonNames.length">
       <v-list-item v-for="pokemonName in searchPokemonNames"
                    :key="pokemonName"
                    :value="pokemonName"
                    @click="selectPokemonName(pokemonName)"
                    >
-        <div class="search-suggestion-dropdown">
+        <div class="search-suggestions">
           <img class="mt-2"
                :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + removeSpecialCharactersExceptDashFromString(pokemonName) + '.png'"
                alt="" />
@@ -61,15 +62,28 @@ const clearSearchField = () => {
 }
 </script>
 
-<style>
+<style scoped>
 img {
   width: 35px;
 }
 
-.search-suggestion-dropdown {
+.search-field {
+}
+
+.search-suggestions {
   display: flex;
   gap: 10%;
   justify-content: left;
   align-items: center;
 }
+
+.search-suggestion-dropdown {
+  position: absolute;
+  z-index: 2;
+}
+
+.search-field, .search-suggestion-dropdown {
+  width: 200px;
+}
+
 </style>
