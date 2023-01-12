@@ -38,7 +38,7 @@
 import SquareContainer from './components/SquareContainer.vue';
 import SquareContentHeader from './components/SquareContentHeader.vue';
 import SearchField from './components/SearchField.vue';
-import pokemonData from './assets/pokemon.json';
+import pokemonData from './data/pokemonData-v2.json';
 import { ref } from 'vue';
 import { guessState } from './constants.js';
 
@@ -65,13 +65,13 @@ const getGuessResults = (pokemonName) => {
       text: !data.type2 ? "None" : data.type2 ,
       guessState: data.type2 === correctFields.type2 ? guessState.CorrectGuess : guessState.WrongGuess
     },
-    evolutions: {
-      text: '' + data.evolutions,
-      guessState: data.evolutions === correctFields.evolutions ? guessState.CorrectGuess : guessState.WrongGuess
-    },
     evolutionLevel: {
       text: '' + data.evolutionState,
       guessState: data.evolutionState === correctFields.evolutionState ? guessState.CorrectGuess : guessState.WrongGuess
+    },
+    isFullyEvolved: {
+      text: '' + data.isFullyEvolved,
+      guessState: data.isFullyEvolved === correctFields.isFullyEvolved ? guessState.CorrectGuess : guessState.WrongGuess
     },
     generation: {
       text: "Gen " + data.generation,
