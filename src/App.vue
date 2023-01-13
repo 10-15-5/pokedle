@@ -10,26 +10,29 @@
           <h1 class="title">Guess todays pokemon!</h1>
         </div> -->
         <div>
-        <div class="search-field mt-8">
-          <search-field :pokemonNames="state.pokemonNames"
-                        @submit-guess="submitGuess" />
+          <div class="search-field mt-8">
+            <search-field :pokemonNames="state.pokemonNames"
+                          @submit-guess="submitGuess" />
+          </div>
+          <div v-if="state.guesses.length">
+            <v-list class="guess-container">
+              <SquareContentHeader />
+              <v-list-item v-for="(guess, i) in state.guesses"
+                           :key="i"
+                           :value="guess">
+                <square-container :pokemonName="guess"
+                                  :guessResults="getGuessResults(guess)" />
+              </v-list-item>
+            </v-list>
+          </div>
         </div>
-        <div v-if="state.guesses.length">
-          <v-list class="guess-container">
-            <SquareContentHeader/>
-            <v-list-item v-for="(guess, i) in state.guesses"
-                         :key="i"
-                         :value="guess">
-              <square-container :pokemonName="guess"
-                                :guessResults="getGuessResults(guess)" />
-            </v-list-item>
-          </v-list>
-        </div>
-      </div>
         <!-- <square-container></square-container> -->
       </div>
     </v-main>
-    <v-btn @click="revealPokemon">reveal secret pokemon</v-btn>
+    <div class="game-button-container">
+      <v-btn @click="revealPokemon">reveal secret pokemon</v-btn>
+      <v-btn @click="resetGame">reset game</v-btn>
+    </div>
     <!-- <HomeView /> -->
   </v-app>
 </template>
@@ -39,19 +42,24 @@ import SquareContainer from './components/SquareContainer.vue';
 import SquareContentHeader from './components/SquareContentHeader.vue';
 import SearchField from './components/SearchField.vue';
 import pokemonData from './data/pokemonData-v2.json';
-import { ref } from 'vue';
+import { onMounted, ref, computed } from 'vue';
 import { guessState } from './constants.js';
 
 const state = ref({
   pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
   guesses: [],
 });
-const correctFields = pokemonData[Math.floor(Math.random()*pokemonData.length)];
-const pokemonToGuess = correctFields.name;
+let secretPokemon;
+let pokemonToGuess;
 
 //TODO: Should eventually be handled on the backend
 const getGuessResults = (pokemonName) => {
+
+  console.log("PokemonName " + pokemonName);
   const data = pokemonData.find(e => e.name === pokemonName);
+
+  if (!data) throw Error("No pokemon data found");
+
   const result = {
     name: {
       name: pokemonName,
@@ -59,23 +67,23 @@ const getGuessResults = (pokemonName) => {
     },
     type1: {
       text: data.type1,
-      guessState: data.type1 === correctFields.type1 ? guessState.CorrectGuess : guessState.WrongGuess,
+      guessState: data.type1 === secretPokemon.type1 ? guessState.CorrectGuess : guessState.WrongGuess,
     },
     type2: {
-      text: !data.type2 ? "None" : data.type2 ,
-      guessState: data.type2 === correctFields.type2 ? guessState.CorrectGuess : guessState.WrongGuess
+      text: !data.type2 ? "None" : data.type2,
+      guessState: data.type2 === secretPokemon.type2 ? guessState.CorrectGuess : guessState.WrongGuess
     },
     evolutionLevel: {
       text: '' + data.evolutionState,
-      guessState: data.evolutionState === correctFields.evolutionState ? guessState.CorrectGuess : guessState.WrongGuess
+      guessState: data.evolutionState === secretPokemon.evolutionState ? guessState.CorrectGuess : guessState.WrongGuess
     },
     isFullyEvolved: {
       text: '' + data.isFullyEvolved,
-      guessState: data.isFullyEvolved === correctFields.isFullyEvolved ? guessState.CorrectGuess : guessState.WrongGuess
+      guessState: data.isFullyEvolved === secretPokemon.isFullyEvolved ? guessState.CorrectGuess : guessState.WrongGuess
     },
     generation: {
       text: "Gen " + data.generation,
-      guessState: data.generation === correctFields.generation ? guessState.CorrectGuess : guessState.WrongGuess
+      guessState: data.generation === secretPokemon.generation ? guessState.CorrectGuess : guessState.WrongGuess
     },
   }
 
@@ -83,8 +91,8 @@ const getGuessResults = (pokemonName) => {
     result.type1.guessState !== guessState.CorrectGuess &&
     result.type2.guessState !== guessState.CorrectGuess
   ) {
-    if (data.type1 === correctFields.type2) result.type1.guessState = guessState.PartlyCorrectGuess;
-    if (data.type2 === correctFields.type1) result.type2.guessState = guessState.PartlyCorrectGuess;
+    if (data.type1 === secretPokemon.type2) result.type1.guessState = guessState.PartlyCorrectGuess;
+    if (data.type2 === secretPokemon.type1) result.type2.guessState = guessState.PartlyCorrectGuess;
   }
 
   return result;
@@ -92,18 +100,20 @@ const getGuessResults = (pokemonName) => {
 
 //TODO: Should eventually be handled on the backend
 const submitGuess = (guess) => {
-  if(!guess) return;
+  if (!guess) return;
 
   let guessRemovedFromList = false;
   state.value.pokemonNames = state.value.pokemonNames.filter(e => {
     if (!guessRemovedFromList && e.startsWith(guess.toLowerCase())) {
       state.value.guesses.unshift(e);
+      console.log("e: " + e)
+      addGuessesToLocalStorage(state.value.guesses);
       guessRemovedFromList = true;
     }
     else return true;
   });
 
-  if(!guessRemovedFromList) return;
+  if (!guessRemovedFromList) return;
 
   guess = state.value.guesses[0];
   if (guess === pokemonToGuess) {
@@ -114,15 +124,52 @@ const submitGuess = (guess) => {
 
 }
 
+const addGuessesToLocalStorage = (guesses) => {
+  localStorage.setItem('guesses', JSON.stringify(guesses));
+}
+
+const loadDataFromLocalStorage = onMounted(() => {
+  const loadedSecretPokemon = localStorage.getItem('secretPokemon');
+
+  if (loadedSecretPokemon) {
+    secretPokemon = JSON.parse(loadedSecretPokemon);
+    pokemonToGuess = secretPokemon.name;
+  } else {
+    secretPokemon = pokemonData[Math.floor(Math.random() * pokemonData.length)];
+    localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
+    pokemonToGuess=secretPokemon.name;
+  }
+
+  const loadedGuesses = localStorage.getItem('guesses');
+  if (loadedGuesses) {
+    state.value.guesses = JSON.parse(loadedGuesses);
+    console.log(state.value.pokemonNames)
+    console.log(state.value.guesses);
+    state.value.pokemonNames.filter(e => state.value.guesses.find(k => k === e));
+    console.log(state.value.pokemonNames)
+  }
+});
+
 const revealPokemon = () => {
   console.log(pokemonToGuess);
+}
+
+const resetGame = () => {
+  localStorage.clear();
+  location.reload();
 }
 
 </script>
 
 <style scoped>
+.game-button-container {
+  display: flex;
+  justify-content: center;
+}
+
 .guess-container {
   background-color: transparent;
+  margin-bottom: 50%;
 }
 
 .search-field {
