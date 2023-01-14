@@ -6944,6 +6944,7 @@
     "generation": 3,
     "legendary": "true",
     "evolutions": false,
-    "evolutionState": 1
+    "evolutionState": 1,
+    "isFullyEvolved": true
   }
 ]
