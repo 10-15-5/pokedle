@@ -18,7 +18,7 @@
             <v-list class="guess-container">
               <SquareContentHeader />
               <v-list-item v-for="(guess, i) in state.guesses"
-                           :key="i"
+                           :key="guess"
                            :value="guess">
                 <square-container :pokemonName="guess"
                                   :guessResults="getGuessResults(guess)" />
@@ -42,13 +42,14 @@ import SquareContainer from './components/SquareContainer.vue';
 import SquareContentHeader from './components/SquareContentHeader.vue';
 import SearchField from './components/SearchField.vue';
 import pokemonData from './data/pokemonData-v2.json';
-import { onMounted, ref, computed } from 'vue';
+import { onMounted, ref, computed, reactive } from 'vue';
 import { guessState } from './constants.js';
 
-const state = ref({
+const state = reactive({
   pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
   guesses: [],
 });
+
 let secretPokemon;
 let pokemonToGuess;
 
@@ -103,19 +104,20 @@ const submitGuess = (guess) => {
   if (!guess) return;
 
   let guessRemovedFromList = false;
-  state.value.pokemonNames = state.value.pokemonNames.filter(e => {
+  const updatedPokemonNames = state.pokemonNames.filter(e => {
     if (!guessRemovedFromList && e.startsWith(guess.toLowerCase())) {
-      state.value.guesses.unshift(e);
-      console.log("e: " + e)
-      addGuessesToLocalStorage(state.value.guesses);
+      state.guesses.unshift(e);
+      console.log("You guessed: " + e)
+      addGuessesToLocalStorage(state.guesses);
       guessRemovedFromList = true;
     }
     else return true;
   });
 
   if (!guessRemovedFromList) return;
-
-  guess = state.value.guesses[0];
+  state.pokemonNames = updatedPokemonNames;
+  
+  guess = state.guesses[0];
   if (guess === pokemonToGuess) {
     console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
   } else {
@@ -128,7 +130,7 @@ const addGuessesToLocalStorage = (guesses) => {
   localStorage.setItem('guesses', JSON.stringify(guesses));
 }
 
-const loadDataFromLocalStorage = onMounted(() => {
+onMounted(() => {
   const loadedSecretPokemon = localStorage.getItem('secretPokemon');
 
   if (loadedSecretPokemon) {
@@ -142,9 +144,9 @@ const loadDataFromLocalStorage = onMounted(() => {
 
   const loadedGuesses = localStorage.getItem('guesses');
   if (loadedGuesses) {
-    state.value.guesses = JSON.parse(loadedGuesses);
-    state.value.pokemonNames = state.value.pokemonNames.filter(pokemon => {
-      for (const guessedPokemon of state.value.guesses) {
+    state.guesses = JSON.parse(loadedGuesses);
+    state.pokemonNames = state.pokemonNames.filter(pokemon => {
+      for (const guessedPokemon of state.guesses) {
         if(guessedPokemon === pokemon) return false;
       }
       return true;
