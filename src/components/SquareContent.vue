@@ -6,7 +6,7 @@
     </div>
     <div v-else>
       <img class="mt-2"
-           :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + pokemon + '.png'"
+           :src="'https://img.pokemondb.net/sprites/ruby-sapphire/' + pokemonColor + '/' + pokemon + '.png'"
            alt="" />
     </div>
   </div>
@@ -14,13 +14,20 @@
 
 <script setup>
 import { guessState } from '../constants.js';
-import { computed } from 'vue'
+import { computed } from 'vue';
 
 const props = defineProps({
   guessResult: String,
   guessText: String,
   pokemon: String
 });
+
+const getShiny = () => {
+  const random = Math.random()*100;
+  return random <8 ? 'shiny' : 'normal';
+}
+
+const pokemonColor = getShiny();
 
 const getColor = computed(() => {
   switch (props.guessResult) {
