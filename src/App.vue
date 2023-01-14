@@ -143,10 +143,12 @@ const loadDataFromLocalStorage = onMounted(() => {
   const loadedGuesses = localStorage.getItem('guesses');
   if (loadedGuesses) {
     state.value.guesses = JSON.parse(loadedGuesses);
-    console.log(state.value.pokemonNames)
-    console.log(state.value.guesses);
-    state.value.pokemonNames.filter(e => state.value.guesses.find(k => k === e));
-    console.log(state.value.pokemonNames)
+    state.value.pokemonNames = state.value.pokemonNames.filter(pokemon => {
+      for (const guessedPokemon of state.value.guesses) {
+        if(guessedPokemon === pokemon) return false;
+      }
+      return true;
+    })
   }
 });
 
