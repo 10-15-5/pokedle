@@ -48,13 +48,12 @@ img {
   width: 100%;
   background-image: url("../assets/pokecenter-box-background.png");
   background-size: contain;
+  background-color: white;
 }
 
 .square-content {
   width: 60px;
   height: 60px;
-  border-style: solid;
-  border-color: black;
   display: flex;
   justify-content: center;
   align-items: center;
