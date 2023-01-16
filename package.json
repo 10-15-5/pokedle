@@ -9,7 +9,7 @@
     "dev": "npm install && npm run start",
     "dev-fast": "npm run start",
     "start": "concurrently 'npm run server' 'npm run client'",
-    "server": "nodemon dev-server/index.js",
+    "server": "go run ./dev-server/",
     "client": "vite --host",
     "preview": "vite preview"
   },

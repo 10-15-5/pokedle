@@ -41,7 +41,7 @@
 import SquareContainer from './components/SquareContainer.vue';
 import SquareContentHeader from './components/SquareContentHeader.vue';
 import SearchField from './components/SearchField.vue';
-import pokemonData from './data/pokemonData-v2.json';
+import pokemonData from '../dev-server/data/pokemonData-v2.json';
 import { onMounted, ref, computed, reactive } from 'vue';
 import { guessState } from './constants.js';
 
