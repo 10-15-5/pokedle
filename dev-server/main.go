@@ -11,6 +11,8 @@ import (
 func main() {
 	router := gin.Default()
 
+	SetupMongoDB()
+
 	//curl http://localhost:3000/api/submit-guess --include --header "Content-Type: application/json" --request "GET" --data '"squirtle"'
 	api := router.Group("/api")
 	{
