@@ -62,9 +62,7 @@ func SubmitGuess(name string) {
 		log.Fatal("Error during Unmarshal(): ", err)
 	}
 
-	fmt.Printf("Pokemons : %+v\n", pokemons)
-
 	for i := 0; i < 10; i++ {
-		fmt.Printf("Pokemon name: %v\n", pokemons[i].name)
+		fmt.Printf("Pokemon name: %v\n", pokemons[i].Name)
 	}
 }
