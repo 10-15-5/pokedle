@@ -29,9 +29,13 @@ func StartMongoDB() *mongo.Client {
 	}
 
 	mongoClient, err := mongo.Connect(context.Background(), options.Client().ApplyURI(uri))
-
 	if err != nil {
 		log.Fatal(err)
+	}
+
+	err = mongoClient.Ping(context.Background(), nil)
+	if err != nil {
+		log.Fatal("can't verify a connection.")
 	}
 
 	log.Println("Connected to MongoDB")
