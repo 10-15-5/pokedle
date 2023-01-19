@@ -2,8 +2,11 @@ package main
 
 import (
 	"log"
+	"os"
 
+	"github.com/gabr0236/pokedle/dev-server/database"
 	"github.com/gabr0236/pokedle/dev-server/routes"
+
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 )
@@ -16,8 +19,12 @@ func main() {
 
 	routes.SetupRoutes(router)
 
+	database.StartMongoDB()
+
+	defer database.CloseMongoDB()
 	// client = data.InitDB()
 	// defer client.Disconnect(context.Background())
 
-	router.Run("localhost:3000")
+	port := os.Getenv("SERVER_PORT")
+	router.Run("localhost:" + port)
 }

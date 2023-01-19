@@ -12,7 +12,7 @@ import (
 func SubmitGuess(name string) {
 	fmt.Printf("Name passed to SubmitGuess: %v\n", name)
 
-	content, err := os.ReadFile("./data/pokemonData-v2.json")
+	content, err := os.ReadFile("./database/pokemonData-v2.json")
 
 	if err != nil {
 		log.Fatal("Error when opening file: ", err)
