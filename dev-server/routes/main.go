@@ -14,10 +14,10 @@ func SetupRoutes(router *gin.Engine) {
 		api.GET("/submit-guess", controllers.SubmitGuess)
 	}
 
-	// curl http://localhost:3000/ping --include --header "Content-Type: application/json" --request "GET"
-	router.GET("/ping", func(c *gin.Context) {
+	// curl http://localhost:3000/health --include --header "Content-Type: application/json" --request "GET"
+	router.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "pong",
+			"message": "Server is running...",
 		})
 	})
 }
