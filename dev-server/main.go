@@ -2,9 +2,12 @@ package main
 
 import (
 	"log"
+	"math/rand"
 	"os"
+	"time"
 
 	"github.com/gabr0236/pokedle/dev-server/database"
+	"github.com/gabr0236/pokedle/dev-server/jobs"
 	"github.com/gabr0236/pokedle/dev-server/routes"
 
 	"github.com/gin-gonic/gin"
@@ -24,6 +27,9 @@ func main() {
 	defer database.CloseMongoDB()
 	// client = data.InitDB()
 	// defer client.Disconnect(context.Background())
+
+	rand.Seed(time.Now().UnixNano()) //seed rand to get diffrent values
+	jobs.StartJobs()
 
 	port := os.Getenv("SERVER_PORT")
 	router.Run("localhost:" + port)
