@@ -49,3 +49,11 @@ func CloseMongoDB() {
 		panic(err)
 	}
 }
+
+// func GetCollection(name string) *mongo.Collection {
+// 	return mongoClient.Database(dbName).Collection(name)
+// }
+
+func GetMongoClient() *mongo.Client {
+	return mongoClient
+}

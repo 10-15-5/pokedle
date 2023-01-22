@@ -1,25 +1,38 @@
 package jobs
 
 import (
+	"context"
 	"fmt"
 	"math/rand"
 
 	"github.com/gabr0236/pokedle/dev-server/database"
+	"github.com/gabr0236/pokedle/dev-server/repository"
 	"github.com/robfig/cron"
 )
 
 func StartJobs() {
 	c := cron.New()
 	updateSecretPokemonJob(c)
-
-	//stops scheduler, does not stop running jobs
 	c.Start()
 }
 
 func updateSecretPokemonJob(c *cron.Cron) {
-	c.AddFunc("@every 3s", func() {
+	c.AddFunc("@every 5s", func() {
 		fmt.Println("Enter job")
 		pokemonData := database.GetPokemonData()
-		fmt.Println(pokemonData[rand.Intn(len(pokemonData))])
-	}) //47:52
+		randomPokemon := pokemonData[rand.Intn(len(pokemonData))]
+		fmt.Println(randomPokemon)
+
+		mongoClient := database.GetMongoClient()
+
+		r := repository.GetRepository(mongoClient)
+		fmt.Println("GetRepository Successfull")
+
+		result, err := r.InsertNewPokemon(context.TODO(), randomPokemon)
+		if err != nil {
+			fmt.Println("Error when inserting pokemon")
+		}
+
+		fmt.Println("Pokemon inserted. DocumentId is:", result)
+	})
 }

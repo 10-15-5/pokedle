@@ -23,10 +23,7 @@ func main() {
 	routes.SetupRoutes(router)
 
 	database.StartMongoDB()
-
 	defer database.CloseMongoDB()
-	// client = data.InitDB()
-	// defer client.Disconnect(context.Background())
 
 	rand.Seed(time.Now().UnixNano()) //seed rand to get diffrent values
 	jobs.StartJobs()
