@@ -32,7 +32,7 @@ func SubmitGuess(name string) {
 		log.Fatal("Error during Unmarshal(): ", err)
 	}
 
-	mongoClient := database.StartMongoDB()
+	mongoClient := database.GetMongoDBClient()
 
 	collection := mongoClient.Database("Dev").Collection("pokemons")
 

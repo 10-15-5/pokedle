@@ -10,7 +10,8 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-const collectionName = "Pokemon"
+// TODO: in const file?
+const collectionName = "pokemons"
 
 type PokemonRepository interface {
 	InsertNewPokemon(ctx context.Context, pokemon models.Pokemon) (bson.M, error)

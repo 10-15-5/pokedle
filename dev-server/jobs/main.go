@@ -23,7 +23,7 @@ func updateSecretPokemonJob(c *cron.Cron) {
 		randomPokemon := pokemonData[rand.Intn(len(pokemonData))]
 		fmt.Println(randomPokemon)
 
-		mongoClient := database.GetMongoClient()
+		mongoClient := database.GetMongoDBClient()
 
 		r := repository.GetRepository(mongoClient)
 		fmt.Println("GetRepository Successfull")

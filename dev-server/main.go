@@ -1,6 +1,7 @@
 package main
 
 import (
+	"context"
 	"log"
 	"math/rand"
 	"os"
@@ -22,8 +23,8 @@ func main() {
 
 	routes.SetupRoutes(router)
 
-	database.StartMongoDB()
-	defer database.CloseMongoDB()
+	mongoClient := database.GetMongoDBClient()
+	defer mongoClient.Disconnect(context.TODO())
 
 	rand.Seed(time.Now().UnixNano()) //seed rand to get diffrent values
 	jobs.StartJobs()

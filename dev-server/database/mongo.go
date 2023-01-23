@@ -9,10 +9,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
-var mongoClient *mongo.Client
-var dbName = ""
-
-func StartMongoDB() *mongo.Client {
+func GetMongoDBClient() *mongo.Client {
 
 	uri := os.Getenv("MONGODB_URI")
 
@@ -24,8 +21,6 @@ func StartMongoDB() *mongo.Client {
 
 	if database == "" {
 		log.Fatal("You must set your 'DATABASE' environmental variable.")
-	} else {
-		dbName = database
 	}
 
 	mongoClient, err := mongo.Connect(context.Background(), options.Client().ApplyURI(uri))
@@ -40,20 +35,5 @@ func StartMongoDB() *mongo.Client {
 
 	log.Println("Connected to MongoDB")
 
-	return mongoClient
-}
-
-func CloseMongoDB() {
-	err := mongoClient.Disconnect(context.Background())
-	if err != nil {
-		panic(err)
-	}
-}
-
-// func GetCollection(name string) *mongo.Collection {
-// 	return mongoClient.Database(dbName).Collection(name)
-// }
-
-func GetMongoClient() *mongo.Client {
 	return mongoClient
 }
