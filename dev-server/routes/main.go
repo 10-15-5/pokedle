@@ -13,7 +13,9 @@ func SetupRoutes(router *gin.Engine) {
 		// curl http://localhost:3000/api/submit-guess --include --header "Content-Type: application/json" --request "GET" --data '"squirtle"'
 		api.GET("/submit-guess", controllers.SubmitGuess)
 		// curl http://localhost:3000/api/secretPokemon --include --header "Content-Type: application/json" --request "GET"
-		api.GET("/secretPokemon", controllers.GetSecretPokemon)
+		api.GET("/secret-pokemon", controllers.GetSecretPokemon)
+
+		api.POST("/secret-pokemon", controllers.UpdateDailySecretPokemon)
 	}
 
 	// curl http://localhost:3000/health --include --header "Content-Type: application/json" --request "GET"

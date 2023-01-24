@@ -22,7 +22,7 @@ type pokemonRepository struct {
 	client mongo.Client
 }
 
-func GetRepository(mongoClient *mongo.Client) *pokemonRepository {
+func GetPokemonRepository(mongoClient *mongo.Client) *pokemonRepository {
 	r := &pokemonRepository{
 		client: *mongoClient,
 	}

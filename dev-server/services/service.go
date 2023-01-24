@@ -1,4 +1,4 @@
-package jobs
+package services
 
 import (
 	"context"
@@ -10,7 +10,32 @@ import (
 	"github.com/gabr0236/pokedle/dev-server/repository"
 )
 
-func updateDailySecretPokemon() {
+func SubmitGuess(guess models.Pokemon) {
+
+	// mongoClient := database.GetMongoDBClient()
+
+	// r := repository.GetPokemonRepository(mongoClient)
+
+	// secretPokemon, err := r.FindCurrentSecretPokemon(context.TODO())
+
+	// if err != nil {
+	// 	panic(err)
+	// }
+
+	// var result models.Pokemon
+
+}
+
+func GetSecretPokemon() (models.Pokemon, error) {
+
+	mongoClient := database.GetMongoDBClient()
+
+	r := repository.GetPokemonRepository(mongoClient)
+
+	return r.FindCurrentSecretPokemon(context.TODO())
+}
+
+func UpdateDailySecretPokemon() error {
 	fmt.Println("Enter updateDailySecretPokemon")
 
 	pokemonData := database.GetPokemonData()
@@ -21,7 +46,7 @@ func updateDailySecretPokemon() {
 		panic("Missing pokemonData or mongoClient")
 	}
 
-	r := repository.GetRepository(mongoClient)
+	r := repository.GetPokemonRepository(mongoClient)
 	fmt.Println("GetRepository Successfull")
 
 	recentSecretPokemons, err := r.FindRecentSecretPokemons(context.TODO(), 30)
@@ -55,4 +80,6 @@ func updateDailySecretPokemon() {
 	}
 
 	fmt.Println("Pokemon inserted. DocumentId is:", result)
+
+	return err
 }

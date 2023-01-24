@@ -1,6 +1,7 @@
 package jobs
 
 import (
+	"github.com/gabr0236/pokedle/dev-server/services"
 	"github.com/robfig/cron"
 )
 
@@ -12,6 +13,6 @@ func StartJobs() {
 
 func updateSecretPokemonJob(c *cron.Cron) {
 	c.AddFunc("@every 1h", func() {
-		updateDailySecretPokemon()
+		services.UpdateDailySecretPokemon()
 	})
 }
