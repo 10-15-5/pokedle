@@ -41,6 +41,18 @@ func (r *pokemonRepository) InsertNewPokemon(ctx context.Context, pokemon models
 	return result, err
 }
 
+func (r *pokemonRepository) FindCurrentSecretPokemon(ctx context.Context) (models.Pokemon, error) {
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+
+	options := options.FindOne().SetSort(bson.D{{"_id", -1}})
+
+	var secretPokemon models.Pokemon
+
+	err := coll.FindOne(ctx, bson.D{}, options).Decode(&secretPokemon)
+
+	return secretPokemon, err
+}
+
 func (r *pokemonRepository) FindRecentSecretPokemons(ctx context.Context, limit int) ([]models.Pokemon, error) {
 
 	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)

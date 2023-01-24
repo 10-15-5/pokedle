@@ -11,7 +11,7 @@ func StartJobs() {
 }
 
 func updateSecretPokemonJob(c *cron.Cron) {
-	c.AddFunc("@every 5s", func() {
+	c.AddFunc("@every 1h", func() {
 		updateDailySecretPokemon()
 	})
 }

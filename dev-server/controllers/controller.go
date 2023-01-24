@@ -19,3 +19,15 @@ func SubmitGuess(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, name)
 }
+
+func GetSecretPokemon(c *gin.Context) {
+	secretPokemon, err := services.GetSecretPokemon()
+
+	if err != nil {
+		c.AbortWithStatus(500)
+	}
+
+	c.BindJSON(&secretPokemon)
+
+	c.IndentedJSON(http.StatusOK, secretPokemon)
+}

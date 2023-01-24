@@ -9,6 +9,7 @@ import (
 
 	"github.com/gabr0236/pokedle/dev-server/database"
 	"github.com/gabr0236/pokedle/dev-server/models"
+	"github.com/gabr0236/pokedle/dev-server/repository"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -57,4 +58,13 @@ func SubmitGuess(name string) {
 	// 	fmt.Printf("Pokemon name: %v\n", pokemons[i].Name)
 	// 	fmt.Printf("Pokemon name: %v\n", pokemons[i])
 	// }
+}
+
+func GetSecretPokemon() (models.Pokemon, error) {
+
+	mongoClient := database.GetMongoDBClient()
+
+	r := repository.GetRepository(mongoClient)
+
+	return r.FindCurrentSecretPokemon(context.TODO())
 }
