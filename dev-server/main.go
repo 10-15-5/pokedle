@@ -10,6 +10,7 @@ import (
 	"github.com/gabr0236/pokedle/dev-server/database"
 	"github.com/gabr0236/pokedle/dev-server/jobs"
 	"github.com/gabr0236/pokedle/dev-server/routes"
+	"github.com/gin-contrib/cors"
 
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
@@ -20,6 +21,14 @@ func main() {
 		log.Println("No .env file found")
 	}
 	router := gin.Default()
+
+	router.Use(cors.New(cors.Config{
+		AllowOrigins: []string{os.Getenv("CLIENT_URL")},
+		AllowMethods: []string{"GET", "POST"},
+		// AllowHeaders:     []string{"Origin"},
+		// ExposeHeaders:    []string{"Content-Length"},
+		AllowCredentials: true,
+	}))
 
 	routes.SetupRoutes(router)
 
