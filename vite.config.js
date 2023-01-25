@@ -10,16 +10,19 @@ import vuetify from 'vite-plugin-vuetify'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-		vue(),
-		vuetify({ autoImport: true }),
-	],
-  resolve: {
-    alias: {
-      "@": fileURLToPath(new URL("./src", import.meta.url)),
+    define: {
+        BUILD_API_URL: JSON.stringify(process.env.SERVER_API_URL || '/api')
     },
-  },
-  server: {
-    port: process.env.CLIENT_PORT,
-  }
+    plugins: [
+        vue(),
+        vuetify({ autoImport: true }),
+    ],
+    resolve: {
+        alias: {
+            "@": fileURLToPath(new URL("./src", import.meta.url)),
+        },
+    },
+    server: {
+        port: process.env.CLIENT_PORT,
+    }
 });

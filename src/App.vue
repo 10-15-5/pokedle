@@ -44,6 +44,7 @@ import SearchField from './components/SearchField.vue';
 import pokemonData from '../dev-server/database/pokemonData-v2.json';
 import { onMounted, ref, computed, reactive } from 'vue';
 import { guessState } from './constants.js';
+import { getSecretPokemon } from './services/service';
 
 const state = reactive({
   pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
@@ -154,8 +155,10 @@ onMounted(() => {
   }
 });
 
-const revealPokemon = () => {
+const revealPokemon = async () => {
   console.log(pokemonToGuess);
+  const backendResponse = await getSecretPokemon();
+  console.log(`Backend Response: ${backendResponse}`)
 }
 
 const resetGame = () => {
