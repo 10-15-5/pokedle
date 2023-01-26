@@ -1,10 +1,11 @@
-# test-project
+# Pokedle
 
-This template should help get you started developing with Vue 3 in Vite.
+Test your traine knowledge!
 
 ## Recommended IDE Setup
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+[VSCode](https://code.visualstudio.com/) 
+[Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) 
 
 ## Customize configuration
 
@@ -12,13 +13,13 @@ See [Vite Configuration Reference](https://vitejs.dev/config/).
 
 ## Run
 
-### With setup
+### With download/install of node packages
 
 ```sh
 npm run dev
 ```
 
-### Without setup
+### Without download/install of node packages
 
 ```sh
 npm run dev-fast

@@ -1,6 +1,6 @@
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 const require = createRequire(import.meta.url); // construct the require method
-const pokemonData = require('../src/data/pokemonData-v1.json');
+const pokemonData = require('../client/data/pokemonData-v1.json');
 import fs from 'fs';
 
 const saveAsJsonTest = async () => {
@@ -18,7 +18,7 @@ const saveAsJsonTest = async () => {
   }
   const jsonData = JSON.stringify(pokemonData);
 
-  fs.writeFile("./src/data/pokemon-v2.json", jsonData, (err) => {
+  fs.writeFile("./client/data/pokemon-v2.json", jsonData, (err) => {
     if (err) {
       console.log("Error");
       console.log(err);

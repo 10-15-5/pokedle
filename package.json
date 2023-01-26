@@ -9,7 +9,7 @@
     "dev": "npm install && npm run start",
     "dev-fast": "npm run start",
     "start": "concurrently 'npm run server' 'npm run client'",
-    "server": "(cd ./dev-server; air)",
+    "server": "(cd ./server; air)",
     "client": "vite --host",
     "preview": "vite preview"
   },
