@@ -2,6 +2,7 @@ package main
 
 import (
 	"context"
+	"fmt"
 	"log"
 	"math/rand"
 	"os"
@@ -20,6 +21,7 @@ func main() {
 	if err := godotenv.Load("../.env"); err != nil {
 		log.Println("No .env file found")
 	}
+
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{

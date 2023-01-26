@@ -12,7 +12,7 @@ func StartJobs() {
 }
 
 func updateSecretPokemonJob(c *cron.Cron) {
-	c.AddFunc("@every 1h", func() {
+	c.AddFunc("0 00 * * *", func() {
 		services.UpdateDailySecretPokemon()
 	})
 }

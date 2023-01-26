@@ -55,7 +55,6 @@ let secretPokemon;
 
 const getGuessResults = (pokemonName) => {
 
-    console.log("PokemonName " + pokemonName);
     const data = pokemonData.find(e => e.name === pokemonName);
 
     if (!data) throw Error("No pokemon data found");
