@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"log"
 	"net/http"
 
 	"github.com/gabr0236/pokedle/dev-server/services"
@@ -28,15 +27,11 @@ func GetSecretPokemon(c *gin.Context) {
 		c.AbortWithStatus(500)
 	}
 
-	err = c.BindJSON(&secretPokemon)
-	if err != nil {
-		log.Fatal(err)
-	}
 	c.IndentedJSON(http.StatusOK, secretPokemon)
 }
 
-func UpdateDailySecretPokemon(c *gin.Context) {
-	err := services.UpdateDailySecretPokemon()
+func NewSecretPokemon(c *gin.Context) {
+	err := services.NewSecretPokemon()
 
 	if err != nil {
 		c.AbortWithStatus(500)

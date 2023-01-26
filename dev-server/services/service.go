@@ -35,6 +35,35 @@ func GetSecretPokemon() (models.Pokemon, error) {
 	return r.FindCurrentSecretPokemon(context.TODO())
 }
 
+func NewSecretPokemon() error {
+	pokemonData := database.GetPokemonData()
+
+	currentSecretPokemon, err := GetSecretPokemon()
+
+	if err != nil {
+		return err
+	}
+
+	containsRandomPokemon := true
+
+	var randomPokemon models.Pokemon
+
+	for containsRandomPokemon {
+		randomPokemon = pokemonData[rand.Intn(len(pokemonData))]
+		fmt.Println(randomPokemon)
+
+		containsRandomPokemon = randomPokemon.Name == currentSecretPokemon.Name
+	}
+
+	mongoClient := database.GetMongoDBClient()
+
+	r := repository.GetPokemonRepository(mongoClient)
+
+	_, err = r.InsertNewPokemon(context.TODO(), randomPokemon)
+
+	return err
+}
+
 func UpdateDailySecretPokemon() error {
 	fmt.Println("Enter updateDailySecretPokemon")
 

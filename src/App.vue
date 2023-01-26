@@ -42,9 +42,9 @@ import SquareContainer from './components/SquareContainer.vue';
 import SquareContentHeader from './components/SquareContentHeader.vue';
 import SearchField from './components/SearchField.vue';
 import pokemonData from '../dev-server/database/pokemonData-v2.json';
-import { onMounted, ref, computed, reactive, onBeforeMount } from 'vue';
+import { onMounted, reactive } from 'vue';
 import { guessState } from './constants.js';
-import { getSecretPokemon } from './services/service';
+import { getSecretPokemon, newSecretPokemon } from './services/service';
 
 const state = reactive({
     pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
@@ -130,10 +130,6 @@ const addGuessesToLocalStorage = (guesses) => {
     localStorage.setItem('guesses', JSON.stringify(guesses));
 }
 
-onBeforeMount(() => {
-
-});
-
 const loadSecretPokemon = () => {
     const loadedSecretPokemon = localStorage.getItem('secretPokemon');
     secretPokemon = JSON.parse(loadedSecretPokemon);
@@ -185,8 +181,9 @@ const revealPokemon = async () => {
     console.log(backendResponse.data)
 }
 
-const resetGame = () => {
+const resetGame = async () => {
     localStorage.clear();
+    await newSecretPokemon();
     location.reload();
 }
 
