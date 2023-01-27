@@ -9,29 +9,30 @@
                 <!-- <div>
           <h1 class="title">Guess todays pokemon!</h1>
         </div> -->
-                <div>
-                    <div class="search-field mt-8">
-                        <search-field :pokemonNames="state.pokemonNames"
-                                      @submit-guess="submitGuess" />
-                    </div>
-                    <div v-if="state.guesses.length">
-                        <v-list class="guess-container">
-                            <SquareContentHeader />
-                            <v-list-item v-for="(guess, i) in state.guesses"
-                                         :key="guess"
-                                         :value="guess">
-                                <square-container :pokemonName="guess"
-                                                  :guessResults="getGuessResults(guess)" />
-                            </v-list-item>
-                        </v-list>
-                    </div>
+                <div v-if="!isGameWon"
+                     class="search-field mt-8">
+                    <search-field :pokemonNames="state.pokemonNames"
+                                  @submit-guess="submitGuess" />
                 </div>
-                <!-- <square-container></square-container> -->
+                <GameWinContainer v-else />
+                <div v-if="state.guesses.length">
+                    <v-list class="guess-container">
+                        <SquareContentHeader />
+                        <v-list-item v-for="(guess, i) in state.guesses"
+                                     :key="guess"
+                                     :value="guess">
+                            <square-container :pokemonName="guess"
+                                              :guessResults="getGuessResults(guess)" />
+                        </v-list-item>
+                    </v-list>
+                </div>
             </div>
+            <!-- <square-container></square-container> -->
         </v-main>
         <div class="game-button-container">
             <v-btn @click="revealPokemon">reveal secret pokemon</v-btn>
-            <v-btn @click="resetGame">reset game</v-btn>
+            <v-btn @click="newGame">new game</v-btn>
+            <v-btn @click="resetGame">resetGame game</v-btn>
         </div>
         <!-- <HomeView /> -->
     </v-app>
@@ -40,16 +41,19 @@
 <script setup>
 import SquareContainer from './components/SquareContainer.vue';
 import SquareContentHeader from './components/SquareContentHeader.vue';
+import GameWinContainer from './components/GameWinContainer.vue';
 import SearchField from './components/SearchField.vue';
 import pokemonData from '../server/database/pokemonData-v2.json';
-import { onMounted, reactive } from 'vue';
+import { onMounted, reactive, ref } from 'vue';
 import { guessState } from './constants.js';
 import { getSecretPokemon, newSecretPokemon } from './services/service';
 
+//Use ref here? https://github.com/vuejs/docs/issues/801#issuecomment-757587022
 const state = reactive({
     pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
     guesses: [],
 });
+const isGameWon = ref(false)
 
 let secretPokemon;
 
@@ -117,6 +121,8 @@ const submitGuess = (guess) => {
 
     guess = state.guesses[0];
     if (guess === secretPokemon.name) {
+        isGameWon.value = true
+        localStorage.setItem('isGameWon', 'true')
         console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
     } else {
         console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
@@ -136,6 +142,17 @@ const loadSecretPokemon = () => {
 const loadGuesses = () => {
     const loadedGuesses = localStorage.getItem('guesses');
     if (loadedGuesses) state.guesses = JSON.parse(loadedGuesses);
+}
+
+const loadIsGameWon = () => {
+    const loadedIsGameWon = localStorage.getItem('isGameWon');
+    if (loadedIsGameWon === "true") {
+        isGameWon.value = true;
+    }
+    else {
+        localStorage.setItem('isGameWon', "false")
+        isGameWon.value = false
+    }
 }
 
 const removeGuessesFromSelection = () => {
@@ -165,11 +182,12 @@ onMounted(async () => {
     if (dayOfLastUpdate && parseInt(dayOfLastUpdate) == new Date().getUTCDate()) {
         loadSecretPokemon();
         loadGuesses();
+        loadIsGameWon();
         removeGuessesFromSelection();
     } else {
+        localStorage.clear();
         setNewDate();
         await setNewSecretPokemon();
-        clearGuesses();
     }
 });
 
@@ -179,9 +197,14 @@ const revealPokemon = async () => {
     console.log(backendResponse.data)
 }
 
-const resetGame = async () => {
+const newGame = async () => {
     localStorage.clear();
     await newSecretPokemon();
+    location.reload();
+}
+
+const resetGame = async () => {
+    localStorage.clear();
     location.reload();
 }
 
@@ -218,6 +241,7 @@ const resetGame = async () => {
     align-items: center;
     flex-direction: column;
     width: auto;
+    row-gap: 16px;
 }
 
 main {
