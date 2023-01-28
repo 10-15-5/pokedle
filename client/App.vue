@@ -6,22 +6,21 @@
                     <v-img src="/client/assets/title.png"
                            class="title-img mt-8" />
                 </div>
-                
                 <div v-if="!isGameWon"
                      class="search-field mt-8">
                     <SearchField :pokemonNames="state.pokemonNames"
-                                  @submit-guess="submitGuess" />
+                                 @submit-guess="submitGuess" />
                 </div>
                 <GameWinContainer v-else
                                   :pokemon="state.guesses[0]" />
                 <div v-if="state.guesses.length"
                      class="guess-container">
-                    <SquareContentHeader class="mb-n1"/>
+                    <SquareContentHeader class="mb-n1" />
                     <v-card v-for="(guess, i) in state.guesses"
                             :key="guess"
                             :value="guess">
                         <SquareContainer :pokemonName="guess"
-                                          :guessResults="getGuessResults(guess)" />
+                                         :guessResults="getGuessResults(guess)" />
                     </v-card>
                 </div>
             </div>
@@ -248,16 +247,9 @@ const resetGame = async () => {
 }
 
 main {
-    background-image: url("./assets/background-white.jpg");
-    background-repeat: repeat;
-    background-size: 100%;
-    background-color: black;
-}
-
-/* .v-application__wrap {
-    background-color: black;
-    background-image: url("./client/assets/background.jpg");
+    background-image: url("./client/assets/background-white.jpg");
+    background-size: cover;
     background-repeat: no-repeat;
-    height: 100%;
-  } */
+    background-attachment: fixed;
+}
 </style>
