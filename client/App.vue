@@ -14,17 +14,17 @@
                     <search-field :pokemonNames="state.pokemonNames"
                                   @submit-guess="submitGuess" />
                 </div>
-                <GameWinContainer v-else :pokemon="state.guesses[0]" />
-                <div v-if="state.guesses.length">
-                    <v-list class="guess-container">
-                        <SquareContentHeader />
-                        <v-list-item v-for="(guess, i) in state.guesses"
-                                     :key="guess"
-                                     :value="guess">
-                            <square-container :pokemonName="guess"
-                                              :guessResults="getGuessResults(guess)" />
-                        </v-list-item>
-                    </v-list>
+                <GameWinContainer v-else
+                                  :pokemon="state.guesses[0]" />
+                <div v-if="state.guesses.length"
+                     class="guess-container">
+                    <SquareContentHeader class="mb-n3" />
+                    <v-card v-for="(guess, i) in state.guesses"
+                            :key="guess"
+                            :value="guess">
+                        <square-container :pokemonName="guess"
+                                          :guessResults="getGuessResults(guess)" />
+                    </v-card>
                 </div>
             </div>
             <!-- <square-container></square-container> -->
@@ -219,6 +219,11 @@ const resetGame = async () => {
 .guess-container {
     background-color: transparent;
     margin-bottom: 50%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
 }
 
 .search-field {
@@ -228,7 +233,7 @@ const resetGame = async () => {
 
 .title-img {
     transition: transform 0.2s;
-    min-width: 300px;
+    min-width: 230px;
     -webkit-filter: drop-shadow(0px 0px 20px rgb(255, 255, 255));
 }
 

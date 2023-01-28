@@ -3,7 +3,7 @@
         <v-card-title class="card-title">Victory!</v-card-title>
         <v-card-text class="card-text">You guessed: {{pokemon}}</v-card-text>
         <SquareContent :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"/>
-        <v-card-text class="card-text">Next pokemon will appear at:  {{ " " +hoursRemaining + ":" + minRemaining + ":" + secRemaining }}</v-card-text>
+        <v-card-text class="card-text">Next pokemon will appear in:  {{ " " +hoursRemaining + ":" + minRemaining + ":" + secRemaining }}</v-card-text>
     </v-card>
 </template>
 
