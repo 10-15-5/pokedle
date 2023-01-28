@@ -1,9 +1,9 @@
 <template>
-    <v-card class="card">
-        <v-card-title class="card-title">Victory!</v-card-title>
-        <v-card-text class="card-text">You guessed: {{ pokemon }}</v-card-text>
+    <v-card class="card-container" variant="outlined">
+        <v-card-title class="title">VICTORY!</v-card-title>
+        <v-card-text class="card-text">You Guessed: {{ pokemon }}</v-card-text>
         <SquareContent :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)" />
-        <v-card-text class="card-text">Next pokemon will appear in: {{
+        <v-card-text class="card-smaller-text">Next Pokemon Will Appear In: {{
             " " +hoursRemaining + ":" + minRemaining + ":" +
                 secRemaining
         }}</v-card-text>
@@ -48,9 +48,7 @@ setInterval(() => {
 </script>
 
 <style scoped>
-.card {
-    width: 280px;
-    height: 200px;
+.card-container {
     background-color: white;
     display: flex;
     flex-direction: column;
@@ -59,14 +57,19 @@ setInterval(() => {
     padding: 12px;
 }
 
-.card-text,
-.card-title {
+.card-text, .title, .card-smaller-text {
     font-family: pkmEmerald;
 }
 
-.card-text {}
+.card-text {
+    font-size: 18px;
+}
 
-.card-title {
+.card-smaller-text {
+    font-size: 14px;
+}
+.title {
+    font-size: 32px;
     color: rgb(34, 153, 0);
 }
 </style>

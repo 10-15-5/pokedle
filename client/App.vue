@@ -16,7 +16,7 @@
                                   :pokemon="state.guesses[0]" />
                 <div v-if="state.guesses.length"
                      class="guess-container">
-                    <SquareContentHeader class="mb-n3" />
+                    <SquareContentHeader />
                     <v-card v-for="(guess, i) in state.guesses"
                             :key="guess"
                             :value="guess">
