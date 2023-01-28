@@ -1,20 +1,39 @@
 <template>
     <v-card class="card">
-        <v-card-title>Victory!</v-card-title>
-        <v-card-text>You guessed: Baltoy</v-card-text>
-        <v-card-text>Time left:{{ getMSRemaining() }}</v-card-text>
+        <v-card-title class="card-title">Victory!</v-card-title>
+        <v-card-text class="card-text">You guessed: Baltoy</v-card-text>
+        
+        <v-card-text class="card-text">Time left: {{ hoursRemaining + ":" + minRemaining + ":" + secRemaining }}</v-card-text>
     </v-card>
 </template>
 
 <script setup>
-    import { ref } from 'vue';
-    const countdownTimer = ref("Time remaining");
+    import { onMounted, ref } from 'vue';
+    const secRemaining  =ref("")
+    const minRemaining  =ref("")
+    const hoursRemaining  =ref("")
+    const secondsRemaining = ref(0)
 
-    const getMSRemaining = () => {
-       const date = new Date(new Date().setHours(0, 0, 0))
-       date.setDate(date.getDate() + 1);
-       return date.getTime()-Date.now();
+
+    const setSecRemaining = () => {
+        const countDownToDate = new Date(new Date().setHours(0, 0, 0));
+        countDownToDate.setDate(countDownToDate.getDate() + 1);
+        secondsRemaining.value = Math.floor((countDownToDate.getTime()-Date.now())/1000);
     }
+
+    onMounted(() => {
+        setSecRemaining();
+    });
+
+    setInterval(() => {
+        secondsRemaining.value--;
+        const sec = Math.floor(secondsRemaining.value%60);
+        const min = Math.floor((secondsRemaining.value/60)%60);
+        const hours = Math.floor((secondsRemaining.value/(60*60))%60);
+        secRemaining.value = sec < 10 ? "0" + sec : "" + sec;
+        minRemaining.value = min < 10 ? "0" + min : "" + min;
+        hoursRemaining.value = hours < 10 ? "0" + hours : "" + hours;
+    }, 1000)
 
 </script>
 
@@ -28,6 +47,19 @@
     flex-direction: column;
     justify-content: center;
     align-items: center;
+    padding: 8px;
 }
+
+.card-text, .card-title{
+    font-family: pkmEmerald;
+}
+
+.card-text{
+}
+
+.card-title{
+    color: rgb(34, 153, 0), 
+}
+
 
 </style>
