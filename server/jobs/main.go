@@ -12,7 +12,7 @@ func StartJobs() {
 }
 
 func updateSecretPokemonJob(c *cron.Cron) {
-	c.AddFunc("0 00 * * *", func() {
+	c.AddFunc("0 0 * * *", func() {
 		services.UpdateDailySecretPokemon()
 	})
 }

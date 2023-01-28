@@ -1,14 +1,21 @@
 <template>
     <v-card class="card">
         <v-card-title class="card-title">Victory!</v-card-title>
-        <v-card-text class="card-text">You guessed: Baltoy</v-card-text>
-        
-        <v-card-text class="card-text">Time left: {{ hoursRemaining + ":" + minRemaining + ":" + secRemaining }}</v-card-text>
+        <v-card-text class="card-text">You guessed: {{pokemon}}</v-card-text>
+        <SquareContent :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"/>
+        <v-card-text class="card-text">Next pokemon will appear at:  {{ " " +hoursRemaining + ":" + minRemaining + ":" + secRemaining }}</v-card-text>
     </v-card>
 </template>
 
 <script setup>
     import { onMounted, ref } from 'vue';
+    import SquareContent from './SquareContent.vue';
+    import { removeSpecialCharactersExceptDashFromString } from '../helpers';
+
+    const props = defineProps({
+        pokemon: String
+    })
+
     const secRemaining  =ref("")
     const minRemaining  =ref("")
     const hoursRemaining  =ref("")
@@ -40,14 +47,14 @@
 <style scoped>
 
 .card {
-    width: 360px;
+    width: 280px;
     height: 200px;
     background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 8px;
+    padding: 12px;
 }
 
 .card-text, .card-title{
@@ -58,7 +65,7 @@
 }
 
 .card-title{
-    color: rgb(34, 153, 0), 
+    color: rgb(34, 153, 0);
 }
 
 

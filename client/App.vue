@@ -14,7 +14,7 @@
                     <search-field :pokemonNames="state.pokemonNames"
                                   @submit-guess="submitGuess" />
                 </div>
-                <GameWinContainer v-else />
+                <GameWinContainer v-else :pokemon="state.guesses[0]" />
                 <div v-if="state.guesses.length">
                     <v-list class="guess-container">
                         <SquareContentHeader />

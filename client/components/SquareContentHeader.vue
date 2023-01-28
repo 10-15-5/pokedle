@@ -31,8 +31,8 @@ import { guessFieldTitles } from '../constants.js';
 }
 
 p {
-    font-size: smaller;
+    font-size: 14px;
     color: rgb(0, 0, 0);
-    font-weight: bolder;
+    font-family: pkmEmerald;
 }
 </style>
