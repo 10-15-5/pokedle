@@ -6,12 +6,10 @@
                     <v-img src="/client/assets/title.png"
                            class="title-img mt-8" />
                 </div>
-                <!-- <div>
-          <h1 class="title">Guess todays pokemon!</h1>
-        </div> -->
+                
                 <div v-if="!isGameWon"
                      class="search-field mt-8">
-                    <search-field :pokemonNames="state.pokemonNames"
+                    <SearchField :pokemonNames="state.pokemonNames"
                                   @submit-guess="submitGuess" />
                 </div>
                 <GameWinContainer v-else
@@ -22,7 +20,7 @@
                     <v-card v-for="(guess, i) in state.guesses"
                             :key="guess"
                             :value="guess">
-                        <square-container :pokemonName="guess"
+                        <SquareContainer :pokemonName="guess"
                                           :guessResults="getGuessResults(guess)" />
                     </v-card>
                 </div>

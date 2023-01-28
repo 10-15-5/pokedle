@@ -1,6 +1,6 @@
 <template>
   <v-card class="content" variant="outlined">
-    <v-card v-for="(result, i) in guessResults"
+    <div v-for="(result, i) in guessResults"
             :key="i"
             :value="result"
             >
@@ -9,7 +9,7 @@
       <SquareContent v-else
       :guessResult="result.guessState"
                      :guessText="result.text" />
-    </v-card>
+    </div>
 </v-card>
 </template>
 
@@ -27,9 +27,8 @@ const props = defineProps({
   display: flex;
   flex-direction: row;
   justify-content: center;
-  gap: 6px;
-  width: 100%;
+  gap: 8px;
+  padding: 8px 0 8px 8px;
   background-color: rgb(255, 255, 255, .9);
-  padding: 8px;
 }
 </style>

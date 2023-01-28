@@ -1,51 +1,53 @@
 <template>
     <v-card class="card">
         <v-card-title class="card-title">Victory!</v-card-title>
-        <v-card-text class="card-text">You guessed: {{pokemon}}</v-card-text>
-        <SquareContent :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"/>
-        <v-card-text class="card-text">Next pokemon will appear in:  {{ " " +hoursRemaining + ":" + minRemaining + ":" + secRemaining }}</v-card-text>
+        <v-card-text class="card-text">You guessed: {{ pokemon }}</v-card-text>
+        <SquareContent :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)" />
+        <v-card-text class="card-text">Next pokemon will appear in: {{
+            " " +hoursRemaining + ":" + minRemaining + ":" +
+                secRemaining
+        }}</v-card-text>
     </v-card>
 </template>
 
 <script setup>
-    import { onMounted, ref } from 'vue';
-    import SquareContent from './SquareContent.vue';
-    import { removeSpecialCharactersExceptDashFromString } from '../helpers';
+import { onMounted, ref } from 'vue';
+import SquareContent from './SquareContent.vue';
+import { removeSpecialCharactersExceptDashFromString } from '../helpers';
 
-    const props = defineProps({
-        pokemon: String
-    })
+const props = defineProps({
+    pokemon: String
+})
 
-    const secRemaining  =ref("")
-    const minRemaining  =ref("")
-    const hoursRemaining  =ref("")
-    const secondsRemaining = ref(0)
+const secRemaining = ref("")
+const minRemaining = ref("")
+const hoursRemaining = ref("")
+const secondsRemaining = ref(0)
 
 
-    const setSecRemaining = () => {
-        const countDownToDate = new Date(new Date().setHours(0, 0, 0));
-        countDownToDate.setDate(countDownToDate.getDate() + 1);
-        secondsRemaining.value = Math.floor((countDownToDate.getTime()-Date.now())/1000);
-    }
+const setSecRemaining = () => {
+    const countDownToDate = new Date(new Date().setHours(0, 0, 0));
+    countDownToDate.setDate(countDownToDate.getDate() + 1);
+    secondsRemaining.value = Math.floor((countDownToDate.getTime() - Date.now()) / 1000);
+}
 
-    onMounted(() => {
-        setSecRemaining();
-    });
+onMounted(() => {
+    setSecRemaining();
+});
 
-    setInterval(() => {
-        secondsRemaining.value--;
-        const sec = Math.floor(secondsRemaining.value%60);
-        const min = Math.floor((secondsRemaining.value/60)%60);
-        const hours = Math.floor((secondsRemaining.value/(60*60))%60);
-        secRemaining.value = sec < 10 ? "0" + sec : "" + sec;
-        minRemaining.value = min < 10 ? "0" + min : "" + min;
-        hoursRemaining.value = hours < 10 ? "0" + hours : "" + hours;
-    }, 1000)
+setInterval(() => {
+    secondsRemaining.value--;
+    const sec = Math.floor(secondsRemaining.value % 60);
+    const min = Math.floor((secondsRemaining.value / 60) % 60);
+    const hours = Math.floor((secondsRemaining.value / (60 * 60)) % 60);
+    secRemaining.value = sec < 10 ? "0" + sec : "" + sec;
+    minRemaining.value = min < 10 ? "0" + min : "" + min;
+    hoursRemaining.value = hours < 10 ? "0" + hours : "" + hours;
+}, 1000)
 
 </script>
 
 <style scoped>
-
 .card {
     width: 280px;
     height: 200px;
@@ -57,16 +59,14 @@
     padding: 12px;
 }
 
-.card-text, .card-title{
+.card-text,
+.card-title {
     font-family: pkmEmerald;
 }
 
-.card-text{
-}
+.card-text {}
 
-.card-title{
+.card-title {
     color: rgb(34, 153, 0);
 }
-
-
 </style>

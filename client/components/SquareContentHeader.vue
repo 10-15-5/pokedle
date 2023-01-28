@@ -16,8 +16,8 @@ import { guessFieldTitles } from '../constants.js';
     display: flex;
     flex-direction: row;
     justify-content: center;
-    gap: 6px;
-    padding: 8px;
+    gap: 8px;
+    padding: 8px 0 8px 8px;
     background-color: rgb(255, 255, 255, .9);
 }
 
