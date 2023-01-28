@@ -81,6 +81,14 @@ const getGuessResults = (pokemonName) => {
             text: '' + data.isFullyEvolved,
             guessState: data.isFullyEvolved === secretPokemon.isFullyEvolved ? guessState.CorrectGuess : guessState.WrongGuess
         },
+        color: {
+            text: data.color,
+            guessState: data.color === secretPokemon.color ? guessState.CorrectGuess : guessState.WrongGuess
+        },
+        habitat: {
+            text: data.habitat,
+            guessState: data.habitat === secretPokemon.habitat ? guessState.CorrectGuess : guessState.WrongGuess
+        },
         generation: {
             text: "Gen " + data.generation,
             guessState: data.generation === secretPokemon.generation ? guessState.CorrectGuess : guessState.WrongGuess

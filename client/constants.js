@@ -11,6 +11,8 @@ const guessFieldTitles = {
   Type2: "Type 2",
   EvolutionLevel: "Evolution Level",
   Evolutions: "Fully Evolved",
+  Color: "Color",
+  Habitat: "Habitat",
   Generation: "Generation",
 }
 

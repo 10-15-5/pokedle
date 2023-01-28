@@ -7,4 +7,6 @@ type Pokemon struct {
 	Generation     int    `json:"generation"`
 	EvolutionState int    `json:"evolutionState"`
 	IsFullyEvolved string `json:"isFullyEvolved"`
+	Habitat        string `json:"habitat"`
+	Color          string `json:"color"`
 }
