@@ -45,12 +45,12 @@ func NewSecretPokemon() error {
 
 	_, err = r.InsertNewPokemon(context.TODO(), randomPokemon)
 
+	fmt.Println("SecretPokemon Updated.")
+
 	return err
 }
 
 func UpdateDailySecretPokemon() error {
-	fmt.Println("Enter updateDailySecretPokemon")
-
 	pokemonData := database.GetPokemonData()
 
 	mongoClient := database.GetMongoDBClient()
@@ -60,7 +60,6 @@ func UpdateDailySecretPokemon() error {
 	}
 
 	r := repository.GetPokemonRepository(mongoClient)
-	fmt.Println("GetRepository Successfull")
 
 	recentSecretPokemons, err := r.FindRecentSecretPokemons(context.TODO(), 30)
 
@@ -87,12 +86,12 @@ func UpdateDailySecretPokemon() error {
 		containsRandomPokemon = containsPokemonName(randomPokemon.Name, recentSecretPokemons)
 	}
 
-	result, err := r.InsertNewPokemon(context.TODO(), randomPokemon)
+	_, err = r.InsertNewPokemon(context.TODO(), randomPokemon)
 	if err != nil {
 		fmt.Println("Error when inserting pokemon")
 	}
 
-	fmt.Println("Pokemon inserted. DocumentId is:", result)
+	fmt.Println("SecretPokemon Updated.")
 
 	return err
 }

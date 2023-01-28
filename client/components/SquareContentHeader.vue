@@ -1,5 +1,5 @@
 <template>
-    <v-card class="content">
+    <v-card class="content" variant="outlined">
         <p v-for="(fieldTitle) in guessFieldTitles"
            :key="fieldTitle"
            :value="fieldTitle"
@@ -16,13 +16,14 @@ import { guessFieldTitles } from '../constants.js';
     display: flex;
     flex-direction: row;
     justify-content: center;
+    background-color: white;
     gap: 8px;
     padding: 8px 0 8px 8px;
-    background-color: rgb(255, 255, 255, .9);
 }
 
 .square-content {
     width: 60px;
+    height: 40px;
     display: flex;
     justify-content: center;
     border-bottom: 2px solid rgb(0, 0, 0);
@@ -32,6 +33,7 @@ import { guessFieldTitles } from '../constants.js';
 
 p {
     font-size: 14px;
+    font-weight: bolder;
     color: rgb(0, 0, 0);
     font-family: pkmEmerald;
 }
