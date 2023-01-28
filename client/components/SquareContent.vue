@@ -65,8 +65,9 @@ img {
 .text-content{
     padding: 4px 0px 0px 2px;
 }
+
 p {
     font-family: pkmEmerald;
-    font-size: 20px;
+    font-size: 16px;
 }
 </style>
