@@ -1,86 +1,89 @@
 <template>
-  <div>
-    <v-text-field label="Type pokemon name"
-                  class="search-field"
-                  variant="solo"
-                  v-model="searchTerm"
-                  @keypress.enter="submitGuess(searchTerm)" />
-    <v-card class="mt-n6 search-suggestion-dropdown"
-            v-if="searchPokemonNames.length">
-      <v-list-item v-for="pokemonName in searchPokemonNames"
-                   :key="pokemonName"
-                   :value="pokemonName"
-                   @click="submitGuess(pokemonName)"
-                   >
-        <div class="search-suggestions">
-          <img class="mt-2"
-               :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + removeSpecialCharactersExceptDashFromString(pokemonName) + '.png'"
-               alt="" />
-          {{ pokemonName }}
-        </div>
-      </v-list-item>
-  </v-card>
-  </div>
+    <div>
+        <v-text-field label="Type pokemon name"
+                      class="search-field"
+                      variant="outlined"
+                      hide-details
+                      v-model="searchTerm"
+                      @keypress.enter="submitGuess(searchTerm)" />
+        <v-card class="search-suggestion-dropdown"
+                v-if="searchPokemonNames.length">
+            <v-list-item v-for="pokemonName in searchPokemonNames"
+                         :key="pokemonName"
+                         :value="pokemonName"
+                         @click="submitGuess(pokemonName)">
+                <div class="search-suggestions">
+                    <img class="mt-2"
+                         :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + removeSpecialCharactersExceptDashFromString(pokemonName) + '.png'"
+                         alt="" /> {{ pokemonName }}
+                </div>
+            </v-list-item>
+        </v-card>
+    </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue';
-import {removeSpecialCharactersExceptDashFromString} from '../helpers.js';
+import { removeSpecialCharactersExceptDashFromString } from '../helpers.js';
 
 const props = defineProps({
-  pokemonNames: Object,
+    pokemonNames: Object,
 });
 const emit = defineEmits(['submitGuess'])
 
 let searchTerm = ref('');
 
 const searchPokemonNames = computed(() => {
-  if (searchTerm.value === '') {
-    return [];
-  }
-
-  let matches = 0
-
-  return props.pokemonNames.filter(name => {
-    if (
-      name.startsWith(searchTerm.value.toLowerCase())
-      && matches < 5
-    ) {
-      matches++;
-      return name
+    if (searchTerm.value === '') {
+        return [];
     }
-  });
+
+    let matches = 0
+
+    return props.pokemonNames.filter(name => {
+        if (
+            name.startsWith(searchTerm.value.toLowerCase())
+            && matches < 5
+        ) {
+            matches++;
+            return name
+        }
+    });
 });
 
 const submitGuess = (pokemonName) => {
-  searchTerm.value = "";
-  emit('submitGuess', pokemonName);
+    searchTerm.value = "";
+    emit('submitGuess', pokemonName);
 }
 
 </script>
 
 <style scoped>
 img {
-  width: 35px;
+    width: 35px;
 }
 
 .search-field {
+    background: white;
+    font-family: pkmEmerald;
+    font-weight: 600;
+    border-radius: 4px;
 }
 
 .search-suggestions {
-  display: flex;
-  gap: 10%;
-  justify-content: left;
-  align-items: center;
+    display: flex;
+    gap: 10%;
+    justify-content: left;
+    align-items: center;
 }
 
 .search-suggestion-dropdown {
-  position: absolute;
-  z-index: 2;
+    position: absolute;
+    z-index: 2;
 }
 
-.search-field, .search-suggestion-dropdown {
-  width: 200px;
+.search-field,
+.search-suggestion-dropdown {
+    width: 200px;
 }
-
 </style>
