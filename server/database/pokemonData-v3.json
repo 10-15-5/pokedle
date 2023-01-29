@@ -4141,7 +4141,7 @@
     },
     {
         "number": 208,
-        "name": "Steelix",
+        "name": "steelix",
         "type1": "Steel",
         "type2": "Ground",
         "total": 510,
@@ -7521,7 +7521,7 @@
     },
     {
         "number": 377,
-        "name": "regiRock",
+        "name": "regirock",
         "type1": "Rock",
         "type2": "",
         "total": 580,
@@ -7541,7 +7541,7 @@
     },
     {
         "number": 378,
-        "name": "regIce",
+        "name": "regice",
         "type1": "Ice",
         "type2": "",
         "total": 580,
@@ -7561,7 +7561,7 @@
     },
     {
         "number": 379,
-        "name": "regiSteel",
+        "name": "registeel",
         "type1": "Steel",
         "type2": "",
         "total": 580,
