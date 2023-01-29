@@ -17,9 +17,12 @@ import (
 )
 
 func main() {
+	//TODO: this will not work with docker, although somehow env's are still set? 🤨
 	if err := godotenv.Load("../.env"); err != nil {
 		log.Println("No .env file found")
 	}
+
+	log.Println("ENV TEST: GET SERVER PORT: " + os.Getenv("SERVER_PORT"))
 
 	router := gin.Default()
 
@@ -40,5 +43,5 @@ func main() {
 	jobs.StartJobs()
 
 	port := os.Getenv("SERVER_PORT")
-	router.Run("localhost:" + port)
+	router.Run(":" + port)
 }
