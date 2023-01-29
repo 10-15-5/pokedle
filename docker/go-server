@@ -1,0 +1,18 @@
+# syntax=docker/dockerfile:1
+
+#to create/update image from root: docker build -t dockerservertag -f docker/go-server .
+#to run container: docker run dockerservertag:latest
+FROM golang:1.19.5-alpine
+
+WORKDIR /app
+RUN echo "TEST"
+
+COPY /server/ /app/server/
+COPY .env /app
+
+RUN cd /app/server && go mod download
+RUN cd /app/server && go build -o /out
+
+EXPOSE 3000
+
+CMD [ "/out" ]

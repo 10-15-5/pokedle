@@ -1,0 +1,10 @@
+.git
+.vscode
+.gitignore
+.eslintrc
+.dockerignore
+README.md
+Docker*
+k8*
+**/node_modules
+
