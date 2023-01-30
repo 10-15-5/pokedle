@@ -11,7 +11,7 @@ import (
 
 func GetPokemonData() []models.Pokemon {
 
-	content, err := os.ReadFile("./database/pokemonData-v3.json")
+	content, err := os.ReadFile("./database/pokemonData-v4.json")
 
 	if err != nil {
 		log.Fatal("Error when opening file: ", err)

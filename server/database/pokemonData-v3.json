@@ -577,7 +577,7 @@
         "evolutionState": 1,
         "isFullyEvolved": "No",
         "habitat": "grassland",
-        "color": "blue"
+        "color": "purple"
     },
     {
         "number": 30,
@@ -637,7 +637,7 @@
         "evolutionState": 1,
         "isFullyEvolved": "No",
         "habitat": "grassland",
-        "color": "purple"
+        "color": "blue"
     },
     {
         "number": 33,
@@ -2335,7 +2335,7 @@
         "legendary": "No",
         "evolutions": "Yes",
         "evolutionState": 2,
-        "isFullyEvolved": "Yes",
+        "isFullyEvolved": "No",
         "habitat": "sea",
         "color": "blue"
     },

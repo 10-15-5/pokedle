@@ -1,7 +1,7 @@
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 const require = createRequire(import.meta.url); // construct the require method
 const pokemonSpeciesData = require('./pokemonSpecies.json');
-const pokemonData = require('../server/database/pokemonData-v3.json');
+const pokemonData = require('../server/database/pokemonData-v2.json');
 import fs from 'fs';
 import axios from "axios";
 

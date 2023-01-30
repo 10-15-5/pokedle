@@ -83,5 +83,6 @@ const getColor = computed(() => {
 p {
     font-family: pkmEmerald;
     font-size: 16px;
+    text-transform: capitalize;
 }
 </style>
