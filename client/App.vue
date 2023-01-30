@@ -2,15 +2,11 @@
     <v-app id="app">
         <v-main>
             <div class="container">
-                <div>
-                    <v-img src="/client/assets/title.png"
-                           class="title-img mt-8" />
-                </div>
-                <div v-if="!isGameWon"
-                     class="search-field mt-8">
-                    <SearchField :pokemonNames="state.pokemonNames"
-                                 @submit-guess="submitGuess" />
-                </div>
+                <v-img src="/client/assets/title.png"
+                       class="title-img mt-4" />
+                <SearchField v-if="!isGameWon"
+                             :pokemonNames="state.pokemonNames"
+                             @submit-guess="submitGuess" />
                 <GameWinContainer v-else
                                   :pokemon="state.guesses[0]" />
                 <div v-if="state.guesses.length"
@@ -20,7 +16,7 @@
                             :key="guess"
                             :value="guess">
                         <SquareContainer :pokemonName="guess"
-                                         :guessResults="getGuessResults(guess)" />
+                                         :guessResult="getGuessResults(guess)" />
                     </v-card>
                 </div>
             </div>
@@ -86,7 +82,7 @@ const getGuessResults = (pokemonName) => {
             guessState: data.color === secretPokemon.color ? guessState.CorrectGuess : guessState.WrongGuess
         },
         habitat: {
-            text: data.habitat,
+            habitat: data.habitat,
             guessState: data.habitat === secretPokemon.habitat ? guessState.CorrectGuess : guessState.WrongGuess
         },
         generation: {
@@ -229,11 +225,6 @@ const resetGame = async () => {
     align-items: center;
     justify-content: center;
     gap: 8px;
-}
-
-.search-field {
-    display: flex;
-    justify-content: center;
 }
 
 .title-img {

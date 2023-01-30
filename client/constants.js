@@ -16,7 +16,20 @@ const guessFieldTitles = {
   Generation: "Generation",
 }
 
+const Habitats = {
+    WatersEdge: "waters-edge",
+    Cave: "cave",
+    Rare: "rare",
+    Sea: "sea",
+    Urban: "urban",
+    Grassland: "grassland",
+    Mountain: "mountain",
+    Forest: "forest",
+    RoughTerrain: "rough-terrain",
+}
+
 export {
     guessState,
-    guessFieldTitles
+    guessFieldTitles,
+    Habitats
 }
