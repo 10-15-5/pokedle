@@ -59,6 +59,7 @@ setInterval(() => {
 
 .card-text, .title, .card-smaller-text {
     font-family: pkmEmerald;
+    text-transform: capitalize;
 }
 
 .card-text {
