@@ -63,9 +63,10 @@ const getColor = computed(() => {
 }
 
 .pokemon-habitat {
-    width: 75px;
-    overflow: hidden;
-    background-size: cover;
+    width: 100%;
+    border-style: solid;
+    border-radius: 60%;
+    border-width: 1px;
 }
 .square-content {
     width: 60px;

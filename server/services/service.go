@@ -46,7 +46,6 @@ func NewSecretPokemon() error {
 	_, err = r.InsertNewPokemon(context.TODO(), randomPokemon)
 
 	fmt.Println("SecretPokemon Updated.")
-
 	return err
 }
 

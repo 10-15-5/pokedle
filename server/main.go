@@ -27,7 +27,7 @@ func main() {
 	router := gin.Default()
 
 	router.Use(cors.New(cors.Config{
-		AllowOrigins:     []string{os.Getenv("CLIENT_URL"), "http://192.168.0.137:8000"},
+		AllowOrigins:     []string{os.Getenv("CLIENT_URL")},
 		AllowMethods:     []string{"GET", "POST"},
 		AllowHeaders:     []string{"Origin"},
 		ExposeHeaders:    []string{"Content-Length"},
