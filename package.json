@@ -11,13 +11,15 @@
     "start": "concurrently 'npm run server' 'npm run client'",
     "server": "(cd ./server; air)",
     "client": "vite --host",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "node-version": "node -v"
   },
   "dependencies": {
     "@mdi/font": "5.9.55",
     "axios": "^1.2.4",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "node": "18.13.0",
     "roboto-fontface": "*",
     "vue": "^3.2.45",
     "vue-router": "^4.1.6",
