@@ -1,0 +1,22 @@
+# syntax=docker/dockerfile:1
+
+#to create/update image from root:
+#    docker build -t pokedle-client -f docker/vue-client .
+#to run container:
+#   docker run --env-file .env --publish 8000:8000 pokedle-client:latest
+FROM node:18.13.0-alpine
+WORKDIR /app
+
+COPY /client/ /app/client/
+COPY package.json ./
+COPY index.html ./
+COPY vite.config.js ./
+# need to make sure relative file paths are correct, could use env to change path 
+#   but this would create discrepency between prod/dev
+COPY /server/database/pokemonData-v4.json /app/server/database/
+
+RUN npm i
+
+EXPOSE 8000
+
+CMD ["npm", "run", "client"]
