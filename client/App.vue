@@ -36,7 +36,7 @@ import SquareContainer from './components/SquareContainer.vue';
 import SquareContentHeader from './components/SquareContentHeader.vue';
 import GameWinContainer from './components/GameWinContainer.vue';
 import SearchField from './components/SearchField.vue';
-import pokemonData from '../server/database/pokemonData-v4.json';
+import pokemonData from '../server/data/pokemonData-v4.json';
 import { onMounted, reactive, ref } from 'vue';
 import { guessState } from './constants.js';
 import { getSecretPokemon, newSecretPokemon } from './services/service';

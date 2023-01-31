@@ -13,7 +13,7 @@ COPY index.html ./
 COPY vite.config.js ./
 # need to make sure relative file paths are correct, could use env to change path 
 #   but this would create discrepency between prod/dev
-COPY /server/database/pokemonData-v4.json /app/server/database/
+COPY /server/data/pokemonData-v4.json /app/server/data/
 
 RUN npm i
 

@@ -1,4 +1,4 @@
-package database
+package data
 
 import (
 	"encoding/json"
@@ -11,7 +11,7 @@ import (
 
 func GetPokemonData() []models.Pokemon {
 
-	content, err := os.ReadFile("./pokemonData-v4.json")
+	content, err := os.ReadFile("./data/pokemonData-v4.json")
 
 	if err != nil {
 		log.Fatal("Error when opening file: ", err)

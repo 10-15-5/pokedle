@@ -5,14 +5,14 @@ import (
 	"fmt"
 	"math/rand"
 
-	"github.com/gabr0236/pokedle/server/database"
+	"github.com/gabr0236/pokedle/server/data"
 	"github.com/gabr0236/pokedle/server/models"
 	"github.com/gabr0236/pokedle/server/repository"
 )
 
 func GetSecretPokemon() (models.Pokemon, error) {
 
-	mongoClient := database.GetMongoDBClient()
+	mongoClient := data.GetMongoDBClient()
 
 	r := repository.GetPokemonRepository(mongoClient)
 
@@ -20,7 +20,7 @@ func GetSecretPokemon() (models.Pokemon, error) {
 }
 
 func NewSecretPokemon() error {
-	pokemonData := database.GetPokemonData()
+	pokemonData := data.GetPokemonData()
 
 	currentSecretPokemon, err := GetSecretPokemon()
 
@@ -39,7 +39,7 @@ func NewSecretPokemon() error {
 		containsRandomPokemon = randomPokemon.Name == currentSecretPokemon.Name
 	}
 
-	mongoClient := database.GetMongoDBClient()
+	mongoClient := data.GetMongoDBClient()
 
 	r := repository.GetPokemonRepository(mongoClient)
 
@@ -50,9 +50,9 @@ func NewSecretPokemon() error {
 }
 
 func UpdateDailySecretPokemon() error {
-	pokemonData := database.GetPokemonData()
+	pokemonData := data.GetPokemonData()
 
-	mongoClient := database.GetMongoDBClient()
+	mongoClient := data.GetMongoDBClient()
 
 	if pokemonData == nil || mongoClient == nil {
 		panic("Missing pokemonData or mongoClient")

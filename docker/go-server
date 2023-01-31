@@ -9,7 +9,7 @@ FROM golang:1.19.5-alpine
 WORKDIR /app
 
 COPY /server/ /app/server/
-COPY /server/database/pokemonData-v4.json /app/
+COPY /server/data/pokemonData-v4.json /app/data/
 
 
 RUN cd /app/server && go mod download

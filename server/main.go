@@ -7,7 +7,7 @@ import (
 	"os"
 	"time"
 
-	"github.com/gabr0236/pokedle/server/database"
+	"github.com/gabr0236/pokedle/server/data"
 	"github.com/gabr0236/pokedle/server/jobs"
 	"github.com/gabr0236/pokedle/server/routes"
 	"github.com/gin-contrib/cors"
@@ -36,7 +36,7 @@ func main() {
 
 	routes.SetupRoutes(router)
 
-	mongoClient := database.GetMongoDBClient()
+	mongoClient := data.GetMongoDBClient()
 	defer mongoClient.Disconnect(context.TODO())
 
 	rand.Seed(time.Now().UnixNano()) //seed rand to get diffrent values
