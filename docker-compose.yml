@@ -1,0 +1,14 @@
+services:
+#To run: docker-compose -f docker-compose.yml up
+  client:
+    image: pokedle-client:latest
+    ports:
+      - 8000:8000
+    env_file:
+      - .env
+  server:
+    image: pokedle-server:latest
+    ports:
+      - 3000:3000
+    env_file:
+      - .env
