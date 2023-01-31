@@ -10,7 +10,8 @@
         <div v-if="habitat">
             <img class="mt-2 pokemon-habitat"
                  :src="getHabitatImage(habitat)"
-                 alt="" />
+                 :title="`${habitat}`"
+                 :alt="`${habitat}`" />
         </div>
         <div v-else-if="guessResult"
              class="text-content">
@@ -84,5 +85,13 @@ p {
     font-family: pkmEmerald;
     font-size: 16px;
     text-transform: capitalize;
+}
+/* capitalize alt text*/
+img {
+    text-transform: capitalize;  
+}
+
+img:hover {
+    
 }
 </style>
