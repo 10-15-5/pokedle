@@ -175,8 +175,6 @@ const setNewSecretPokemon = async () => {
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 }
 
-const clearGuesses = () => localStorage.setItem('guesses', "");
-
 onMounted(async () => {
     const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
 

@@ -1,4 +1,7 @@
 <template>
+    <v-icon v-if="pokemon && pokemonColor==='shiny'"
+            class="star-icon"
+            icon="mdi-star"/>
     <v-card class="square-content elevation-0"
             variant="outlined"
             :style="{ 'background-color': getColor }">
@@ -80,6 +83,13 @@ const getColor = computed(() => {
 
 .text-content {
     padding: 4px 0px 0px 2px;
+}
+
+.star-icon {
+    color: rgb(255, 217, 0);
+    position: absolute;
+    z-index: 1;
+    margin: -6px 0px 0px 42px;
 }
 
 p {
