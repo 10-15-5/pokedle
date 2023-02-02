@@ -86,7 +86,7 @@ const getColor = computed(() => {
 }
 
 .star-icon {
-    color: rgb(255, 217, 0);
+    color: rgb(249, 194, 53);
     position: absolute;
     z-index: 1;
     margin: -6px 0px 0px 42px;

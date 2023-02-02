@@ -8,16 +8,21 @@
                       @keypress.enter="submitGuess(searchTerm)" />
         <v-card class="search-suggestion-dropdown"
                 v-if="searchPokemonNames.length">
-            <v-list-item v-for="pokemonName in searchPokemonNames"
-                         :key="pokemonName"
-                         :value="pokemonName"
-                         @click="submitGuess(pokemonName)">
-                <div class="search-suggestions">
-                    <img class="mt-2"
-                         :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + removeSpecialCharactersExceptDashFromString(pokemonName) + '.png'"
-                         alt="" /> {{ pokemonName }}
-                </div>
-            </v-list-item>
+            <v-virtual-scroll :items="searchPokemonNames"
+                              max-height="300"
+                              item-height="48">
+                <template v-slot:default="{ item }">
+                    <v-list-item :title="`${item}`"
+                                 @click="submitGuess(item)"
+                                 class="search-suggestions">
+                        <template v-slot:prepend>
+                            <img class="mt-2"
+                                 :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + removeSpecialCharactersExceptDashFromString(item) + '.png'"
+                                 alt="" />
+                        </template>
+                    </v-list-item>
+                </template>
+            </v-virtual-scroll>
         </v-card>
     </div>
 </template>
@@ -30,25 +35,17 @@ const props = defineProps({
     pokemonNames: Object,
 });
 const emit = defineEmits(['submitGuess'])
-
 let searchTerm = ref('');
 
 const searchPokemonNames = computed(() => {
+    console.log("test")
     if (searchTerm.value === '') {
         return [];
     }
 
-    let matches = 0
-
-    return props.pokemonNames.filter(name => {
-        if (
-            name.startsWith(searchTerm.value.toLowerCase())
-            && matches < 5
-        ) {
-            matches++;
-            return name
-        }
-    });
+    const test = props.pokemonNames.filter(name =>
+        name.startsWith(searchTerm.value.toLowerCase()));
+    return test;
 });
 
 const submitGuess = (pokemonName) => {
