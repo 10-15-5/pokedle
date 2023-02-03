@@ -5,22 +5,26 @@
                       variant="outlined"
                       hide-details
                       v-model="searchTerm"
-                      @keypress.enter="submitGuess(searchTerm)" />
+                      @keypress.enter="submitGuess(searchTerm)"
+                       />
         <v-card class="search-suggestion-dropdown"
+                variant="outlined"
                 v-if="searchPokemonNames.length">
             <v-virtual-scroll :items="searchPokemonNames"
-                              max-height="300"
-                              item-height="48">
+                              max-height="259">
                 <template v-slot:default="{ item }">
-                    <v-list-item :title="`${item}`"
-                                 @click="submitGuess(item)"
+                    <v-list-item @click="submitGuess(item)"
                                  class="search-suggestions">
                         <template v-slot:prepend>
-                            <img class="mt-2"
+                            <img class="ml-2"
                                  :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + removeSpecialCharactersExceptDashFromString(item) + '.png'"
                                  alt="" />
                         </template>
+                        <template v-slot:default>
+                            <p class="ml-1">{{ item }}</p>
+                        </template>
                     </v-list-item>
+                    <v-divider class="suggestion-divider"></v-divider>
                 </template>
             </v-virtual-scroll>
         </v-card>
@@ -38,7 +42,6 @@ const emit = defineEmits(['submitGuess'])
 let searchTerm = ref('');
 
 const searchPokemonNames = computed(() => {
-    console.log("test")
     if (searchTerm.value === '') {
         return [];
     }
@@ -62,21 +65,41 @@ img {
 
 .search-field {
     background: white;
-    font-family: pkmEmerald;
     font-weight: 600;
     border-radius: 4px;
+    opacity: 100%;
+    color: black;
+    
 }
 
 .search-suggestions {
     display: flex;
-    gap: 10%;
+    gap: 14%;
     justify-content: left;
-    align-items: center;
+    padding: 8px;
+}
+
+p {
+    font-family: pkmEmerald;
+    font-size: 16px;
+    text-transform: capitalize;
+}
+
+.suggestion-divider {
+    color: rgb(0, 0, 0);
+    opacity: 100%;
+}
+
+.search-suggestions,
+.search-field {
+    font-family: pkmEmerald;
+    text-transform: capitalize;
 }
 
 .search-suggestion-dropdown {
     position: absolute;
     z-index: 2;
+    background-color: white;
 }
 
 .search-field,
