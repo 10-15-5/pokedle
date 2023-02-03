@@ -6,10 +6,13 @@
                       hide-details
                       v-model="searchTerm"
                       @keypress.enter="submitGuess(searchTerm)"
+                      v-click-outside="onClickOutsideSearchField"
+                      :active="isSearchFieldActive"
+                      @click="isSearchFieldActive = true"
                        />
         <v-card class="search-suggestion-dropdown"
                 variant="outlined"
-                v-if="searchPokemonNames.length">
+                v-if="searchPokemonNames.length && isSearchFieldActive">
             <v-virtual-scroll :items="searchPokemonNames"
                               max-height="259">
                 <template v-slot:default="{ item }">
@@ -38,6 +41,13 @@ import { removeSpecialCharactersExceptDashFromString } from '../helpers.js';
 const props = defineProps({
     pokemonNames: Object,
 });
+
+const isSearchFieldActive = ref(false);
+
+const onClickOutsideSearchField = () => {
+    isSearchFieldActive.value = false;
+}
+
 const emit = defineEmits(['submitGuess'])
 let searchTerm = ref('');
 
