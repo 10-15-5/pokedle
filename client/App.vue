@@ -18,7 +18,7 @@
                             :value="guess">
                         <SquareContainer :pokemonName="guess"
                                          :guessResult="getGuessResults(guess)"
-                                         :color="colors.at(i)" />
+                                         :color="colors.at(state.guesses.length-1-i)" />
                     </v-card>
                 </div>
             </div>
@@ -56,8 +56,7 @@ let secretPokemon;
 
 const getRandomColor = () => {
     const random = Math.random() * 100;
-    return 'shiny'
-    return random < 8 ? 'shiny' : 'normal';
+    return random <= 5 ? 'shiny' : 'normal';
 }
 
 const getGuessResults = (pokemonName) => {
