@@ -8,7 +8,8 @@
                              :pokemonNames="state.pokemonNames"
                              @submit-guess="submitGuess" />
                 <GameWinContainer v-else
-                                  :pokemon="state.guesses[0]" />
+                                  :pokemon="state.guesses[0]"
+                                  :color="colors.at(-1)" />
                 <div v-if="state.guesses.length"
                      class="guess-container">
                     <SquareContentHeader class="mb-n1" />
@@ -16,7 +17,8 @@
                             :key="guess"
                             :value="guess">
                         <SquareContainer :pokemonName="guess"
-                                         :guessResult="getGuessResults(guess)" />
+                                         :guessResult="getGuessResults(guess)"
+                                         :color="colors.at(i)" />
                     </v-card>
                 </div>
             </div>
@@ -46,9 +48,17 @@ const state = reactive({
     pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
     guesses: [],
 });
-const isGameWon = ref(false)
+const isGameWon = ref(false);
+
+let colors = [];
 
 let secretPokemon;
+
+const getRandomColor = () => {
+    const random = Math.random() * 100;
+    return 'shiny'
+    return random < 8 ? 'shiny' : 'normal';
+}
 
 const getGuessResults = (pokemonName) => {
 
@@ -102,38 +112,62 @@ const getGuessResults = (pokemonName) => {
     return result;
 }
 
-//TODO: Should eventually be handled on the backend
-const submitGuess = (guess) => {
-    if (!guess) return;
-
+const removePokemonFromGuessPool = (guess) => {
     let guessRemovedFromList = false;
+    let pokemonName = "";
     const updatedPokemonNames = state.pokemonNames.filter(e => {
         if (!guessRemovedFromList && e.startsWith(guess.toLowerCase())) {
             state.guesses.unshift(e);
+            pokemonName = e;
             console.log("You guessed: " + e)
-            addGuessesToLocalStorage(state.guesses);
             guessRemovedFromList = true;
         }
         else return true;
     });
 
-    if (!guessRemovedFromList) return;
-    state.pokemonNames = updatedPokemonNames;
+    return {
+        pokemonName,
+        updatedPokemonNames,
+    }
+}
 
-    guess = state.guesses[0];
+const decideGame = (guess) => {
     if (guess === secretPokemon.name) {
-        isGameWon.value = true
+        isGameWon.value = true;
         localStorage.setItem('isGameWon', 'true')
         console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
     } else {
         console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
     }
-
 }
 
-const addGuessesToLocalStorage = (guesses) => {
-    localStorage.setItem('guesses', JSON.stringify(guesses));
+const addGuessesToLocalStorage = () => {
+    localStorage.setItem('guesses', JSON.stringify(state.guesses));
 }
+
+const addColorsToLocalStorage = () => {
+    localStorage.setItem('colors', JSON.stringify(colors));
+}
+
+const submitGuess = (guess) => {
+    if (!guess) return;
+
+    const {
+        updatedPokemonNames,
+        pokemonName 
+    } = removePokemonFromGuessPool(guess);
+
+    if (updatedPokemonNames.length >= state.pokemonNames.length) return;
+
+    colors.push(getRandomColor());
+    console.log(colors);
+    state.pokemonNames = updatedPokemonNames;
+    addGuessesToLocalStorage();
+    addColorsToLocalStorage();
+
+    decideGame(pokemonName);
+}
+
 
 const loadSecretPokemon = () => {
     const loadedSecretPokemon = localStorage.getItem('secretPokemon');
@@ -141,8 +175,13 @@ const loadSecretPokemon = () => {
 }
 
 const loadGuesses = () => {
-    const loadedGuesses = localStorage.getItem('guesses');
-    if (loadedGuesses) state.guesses = JSON.parse(loadedGuesses);
+    const guesses = localStorage.getItem('guesses');
+    if (guesses) state.guesses = JSON.parse(guesses);
+}
+
+const loadColors = () => {
+    const loadedColors = localStorage.getItem('colors');
+    if (loadedColors) colors = JSON.parse(loadedColors);
 }
 
 const loadIsGameWon = () => {
@@ -156,7 +195,7 @@ const loadIsGameWon = () => {
     }
 }
 
-const removeGuessesFromSelection = () => {
+const removePokemonsFromGuessPool = () => {
     state.pokemonNames = state.pokemonNames.filter(pokemon => {
         for (const guessedPokemon of state.guesses) {
             if (guessedPokemon === pokemon) return false;
@@ -182,9 +221,10 @@ onMounted(async () => {
 
     if (dayOfLastUpdate && parseInt(dayOfLastUpdate) == new Date().getUTCDate()) {
         loadSecretPokemon();
+        loadColors();
         loadGuesses();
         loadIsGameWon();
-        removeGuessesFromSelection();
+        removePokemonsFromGuessPool();
     } else {
         localStorage.clear();
         setNewDate();
@@ -203,7 +243,7 @@ const newGame = async () => {
     location.reload();
 }
 
-const resetGame = async () => {
+const resetGame = () => {
     localStorage.clear();
     location.reload();
 }

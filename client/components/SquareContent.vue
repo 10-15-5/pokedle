@@ -1,6 +1,6 @@
 <template>
     <div>
-        <div v-if="pokemon && pokemonColor === 'shiny'"
+        <div v-if="pokemon && color === 'shiny'"
              class="star-container">
             <v-icon class="star-icon-background"
                     icon="mdi-star" />
@@ -12,7 +12,7 @@
                 :style="{ 'background-color': getColor }">
             <div v-if="pokemon">
                 <img class="mt-2 pokemon-bg"
-                     :src="'https://img.pokemondb.net/sprites/ruby-sapphire/' + pokemonColor + '/' + pokemon + '.png'"
+                     :src="'https://img.pokemondb.net/sprites/ruby-sapphire/' + color + '/' + pokemon + '.png'"
                      alt="pokemon sprite" />
             </div>
             <div v-if="habitat">
@@ -40,14 +40,8 @@ const props = defineProps({
     guessText: String,
     pokemon: String,
     habitat: String,
+    color: String
 });
-
-const getShiny = () => {
-    const random = Math.random() * 100;
-    return random < 8 ? 'shiny' : 'normal';
-}
-
-const pokemonColor = getShiny();
 
 const getColor = computed(() => {
     switch (props.guessResult) {

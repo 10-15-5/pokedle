@@ -1,11 +1,13 @@
 <template>
-    <v-card class="card-container" variant="outlined">
+    <v-card class="card-container"
+            variant="outlined">
         <v-card-title class="title">VICTORY!</v-card-title>
         <v-card-text class="card-text">You Guessed: {{ pokemon }}</v-card-text>
-        <SquareContent :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)" />
+        <SquareContent :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"
+                       :color="props.color" />
         <v-card-text class="card-smaller-text">Next Pokemon Will Appear In: {{
-            " " +hoursRemaining + ":" + minRemaining + ":" +
-                secRemaining
+            " " +hoursRemaining + ":" + minRemaining
+                + ":" + secRemaining
         }}</v-card-text>
     </v-card>
 </template>
@@ -16,7 +18,8 @@ import SquareContent from './SquareContent.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers';
 
 const props = defineProps({
-    pokemon: String
+    pokemon: String,
+    color: String
 })
 
 const secRemaining = ref("")
@@ -57,7 +60,9 @@ setInterval(() => {
     padding: 8px;
 }
 
-.card-text, .title, .card-smaller-text {
+.card-text,
+.title,
+.card-smaller-text {
     font-family: pkmEmerald;
     text-transform: capitalize;
 }
@@ -69,6 +74,7 @@ setInterval(() => {
 .card-smaller-text {
     font-size: 14px;
 }
+
 .title {
     font-size: 32px;
     color: rgb(34, 153, 0);

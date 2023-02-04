@@ -5,7 +5,8 @@
              :key="i"
              :value="field">
             <SquareContent v-if="field.name"
-                           :pokemon="removeSpecialCharactersExceptDashFromString(field.name)" />
+                           :pokemon="removeSpecialCharactersExceptDashFromString(field.name)"
+                           :color="color" />
             <SquareContent v-else-if="field.habitat"
                            :guessResult="field.guessState"
                            :habitat="field.habitat" />
@@ -21,7 +22,8 @@ import SquareContent from './SquareContent.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers.js';
 const props = defineProps({
     pokemonName: String,
-    guessResult: Object
+    guessResult: Object,
+    color: String,
 });
 </script>
 
