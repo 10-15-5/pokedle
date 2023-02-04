@@ -170,7 +170,9 @@ const setNewDate = () => localStorage
 
 
 const setNewSecretPokemon = async () => {
-    const response = await getSecretPokemon();
+    //TODO: currently we set new secret pokemon every day at 00:00. 
+    // Users will see a random pokemon each, since we rely on this instead of job/CDN
+    const response = await newSecretPokemon();
     secretPokemon = response.data;
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 }
@@ -198,7 +200,6 @@ const revealPokemon = async () => {
 
 const newGame = async () => {
     localStorage.clear();
-    await newSecretPokemon();
     location.reload();
 }
 

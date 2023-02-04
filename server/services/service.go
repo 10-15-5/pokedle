@@ -19,15 +19,7 @@ func GetSecretPokemon() (models.Pokemon, error) {
 	return r.FindCurrentSecretPokemon(context.TODO())
 }
 
-func NewSecretPokemon() error {
-	pokemonData := data.GetPokemonData()
-
-	currentSecretPokemon, err := GetSecretPokemon()
-
-	if err != nil {
-		return err
-	}
-
+func NewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.Pokemon) models.Pokemon {
 	containsRandomPokemon := true
 
 	var randomPokemon models.Pokemon
@@ -43,10 +35,10 @@ func NewSecretPokemon() error {
 
 	r := repository.GetPokemonRepository(mongoClient)
 
-	_, err = r.InsertNewPokemon(context.TODO(), randomPokemon)
+	r.InsertNewPokemon(context.TODO(), randomPokemon)
 
 	fmt.Println("SecretPokemon Updated.")
-	return err
+	return randomPokemon
 }
 
 func UpdateDailySecretPokemon() error {

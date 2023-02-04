@@ -3,6 +3,7 @@ package controllers
 import (
 	"net/http"
 
+	"github.com/gabr0236/pokedle/server/data"
 	"github.com/gabr0236/pokedle/server/services"
 	"github.com/gin-gonic/gin"
 )
@@ -18,11 +19,11 @@ func GetSecretPokemon(c *gin.Context) {
 }
 
 func NewSecretPokemon(c *gin.Context) {
-	err := services.NewSecretPokemon()
+	currentSecretPokemon, _ := services.GetSecretPokemon()
 
-	if err != nil {
-		c.AbortWithStatus(500)
-	}
+	pokemonData := data.GetPokemonData()
 
-	c.Status(200)
+	secretPokemon := services.NewSecretPokemon(currentSecretPokemon, pokemonData)
+
+	c.IndentedJSON(http.StatusOK, secretPokemon)
 }
