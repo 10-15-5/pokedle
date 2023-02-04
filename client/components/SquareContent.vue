@@ -1,26 +1,32 @@
 <template>
-    <v-icon v-if="pokemon && pokemonColor==='shiny'"
-            class="star-icon"
-            icon="mdi-star"/>
-    <v-card class="square-content elevation-0"
-            variant="outlined"
-            :style="{ 'background-color': getColor }">
-        <div v-if="pokemon">
-            <img class="mt-2 pokemon-bg"
-                 :src="'https://img.pokemondb.net/sprites/ruby-sapphire/' + pokemonColor + '/' + pokemon + '.png'"
-                 alt="pokemon sprite" />
+    <div>
+        <div v-if="pokemon && pokemonColor === 'shiny'"
+             class="star-container">
+            <v-icon class="star-icon-background"
+                    icon="mdi-star" />
+            <v-icon class="star-icon"
+                    icon="mdi-star" />
         </div>
-        <div v-if="habitat">
-            <img class="mt-2 pokemon-habitat"
-                 :src="getHabitatImage(habitat)"
-                 :title="`${habitat}`"
-                 :alt="`${habitat}`" />
-        </div>
-        <div v-else-if="guessResult"
-             class="text-content">
-            <p>{{ guessText }}</p>
-        </div>
-    </v-card>
+        <v-card class="square-content elevation-0"
+                variant="outlined"
+                :style="{ 'background-color': getColor }">
+            <div v-if="pokemon">
+                <img class="mt-2 pokemon-bg"
+                     :src="'https://img.pokemondb.net/sprites/ruby-sapphire/' + pokemonColor + '/' + pokemon + '.png'"
+                     alt="pokemon sprite" />
+            </div>
+            <div v-if="habitat">
+                <img class="mt-2 pokemon-habitat"
+                     :src="getHabitatImage(habitat)"
+                     :title="`${habitat}`"
+                     :alt="`${habitat}`" />
+            </div>
+            <div v-else-if="guessResult"
+                 class="text-content">
+                <p>{{ guessText }}</p>
+            </div>
+        </v-card>
+    </div>
 </template>
 
 <script setup>
@@ -71,6 +77,7 @@ const getColor = computed(() => {
     border-radius: 60%;
     border-width: 1px;
 }
+
 .square-content {
     width: 60px;
     height: 60px;
@@ -85,11 +92,29 @@ const getColor = computed(() => {
     padding: 4px 0px 0px 2px;
 }
 
+.star-container {
+    width: 22px;
+    height: 22px;
+    z-index: 1;
+    position: absolute;
+    margin: -8px 0px 0px 46px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .star-icon {
     color: rgb(249, 194, 53);
-    position: absolute;
     z-index: 1;
-    margin: -6px 0px 0px 42px;
+    position: absolute;
+    font-size: 20px;
+}
+
+.star-icon-background {
+    color: black;
+    z-index: 1;
+    position: absolute;
+    font-size: 27px;
 }
 
 p {
@@ -97,12 +122,11 @@ p {
     font-size: 16px;
     text-transform: capitalize;
 }
+
 /* capitalize alt text*/
 img {
-    text-transform: capitalize;  
+    text-transform: capitalize;
 }
 
-img:hover {
-    
-}
+img:hover {}
 </style>
