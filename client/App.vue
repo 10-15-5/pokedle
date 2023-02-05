@@ -17,7 +17,7 @@
                             :key="guess"
                             :value="guess">
                         <SquareContainer :pokemonName="guess"
-                                         :guessResult="getGuessResults(guess)"
+                                         :guessResult="getGuessResults(guess, secretPokemon)"
                                          :color="colors.at(state.guesses.length-1-i)" />
                     </v-card>
                 </div>
@@ -40,7 +40,7 @@ import GameWinContainer from './components/GameWinContainer.vue';
 import SearchField from './components/SearchField.vue';
 import pokemonData from '../server/data/pokemonData-v4.json';
 import { onMounted, reactive, ref } from 'vue';
-import { guessState } from './constants.js';
+import { getGuessResults } from './services/guess';
 import { getSecretPokemon, newSecretPokemon } from './services/service';
 
 //Use ref here? https://github.com/vuejs/docs/issues/801#issuecomment-757587022
@@ -57,58 +57,6 @@ let secretPokemon;
 const getRandomColor = () => {
     const random = Math.random() * 100;
     return random < 5 ? 'shiny' : 'normal';
-}
-
-const getGuessResults = (pokemonName) => {
-
-    const data = pokemonData.find(e => e.name === pokemonName);
-
-    if (!data) throw Error("No pokemon data found");
-
-    const result = {
-        name: {
-            name: pokemonName,
-            guessState: guessState.None
-        },
-        type1: {
-            text: data.type1,
-            guessState: data.type1 === secretPokemon.type1 ? guessState.CorrectGuess : guessState.WrongGuess,
-        },
-        type2: {
-            text: !data.type2 ? "None" : data.type2,
-            guessState: data.type2 === secretPokemon.type2 ? guessState.CorrectGuess : guessState.WrongGuess
-        },
-        evolutionLevel: {
-            text: '' + data.evolutionState,
-            guessState: data.evolutionState === secretPokemon.evolutionState ? guessState.CorrectGuess : guessState.WrongGuess
-        },
-        isFullyEvolved: {
-            text: '' + data.isFullyEvolved,
-            guessState: data.isFullyEvolved === secretPokemon.isFullyEvolved ? guessState.CorrectGuess : guessState.WrongGuess
-        },
-        color: {
-            text: data.color,
-            guessState: data.color === secretPokemon.color ? guessState.CorrectGuess : guessState.WrongGuess
-        },
-        habitat: {
-            habitat: data.habitat,
-            guessState: data.habitat === secretPokemon.habitat ? guessState.CorrectGuess : guessState.WrongGuess
-        },
-        generation: {
-            text: "Gen " + data.generation,
-            guessState: data.generation === secretPokemon.generation ? guessState.CorrectGuess : guessState.WrongGuess
-        },
-    }
-
-    if (
-        result.type1.guessState !== guessState.CorrectGuess &&
-        result.type2.guessState !== guessState.CorrectGuess
-    ) {
-        if (data.type1 === secretPokemon.type2) result.type1.guessState = guessState.PartlyCorrectGuess;
-        if (data.type2 === secretPokemon.type1) result.type2.guessState = guessState.PartlyCorrectGuess;
-    }
-
-    return result;
 }
 
 const removePokemonFromGuessPool = (guess) => {
