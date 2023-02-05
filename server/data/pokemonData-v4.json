@@ -1351,7 +1351,7 @@
         "generation": 1,
         "legendary": "no",
         "evolutionState": 1,
-        "isFullyEvolved": "yes",
+        "isFullyEvolved": "no",
         "habitat": "urban",
         "color": "pink"
     },
@@ -1483,7 +1483,7 @@
         "generation": 1,
         "legendary": "no",
         "evolutionState": 1,
-        "isFullyEvolved": "no",
+        "isFullyEvolved": "yes",
         "habitat": "urban",
         "color": "red"
     },

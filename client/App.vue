@@ -56,7 +56,7 @@ let secretPokemon;
 
 const getRandomColor = () => {
     const random = Math.random() * 100;
-    return random <= 5 ? 'shiny' : 'normal';
+    return random < 5 ? 'shiny' : 'normal';
 }
 
 const getGuessResults = (pokemonName) => {
@@ -118,7 +118,6 @@ const removePokemonFromGuessPool = (guess) => {
         if (!guessRemovedFromList && e.startsWith(guess.toLowerCase())) {
             state.guesses.unshift(e);
             pokemonName = e;
-            console.log("You guessed: " + e)
             guessRemovedFromList = true;
         }
         else return true;
@@ -159,7 +158,6 @@ const submitGuess = (guess) => {
     if (updatedPokemonNames.length >= state.pokemonNames.length) return;
 
     colors.push(getRandomColor());
-    console.log(colors);
     state.pokemonNames = updatedPokemonNames;
     addGuessesToLocalStorage();
     addColorsToLocalStorage();

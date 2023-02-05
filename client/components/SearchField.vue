@@ -69,9 +69,6 @@ const submitGuess = (pokemonName) => {
 </script>
 
 <style scoped>
-.type-input.v-input--is-disabled  >>> fieldset {
-  border-color: rgba(192, 0, 250, 0.986);
-}
 
 img {
     width: 35px;
