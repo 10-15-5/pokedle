@@ -2,20 +2,19 @@
     <div>
         <v-text-field label="Type pokemon name"
                       class="search-field"
-                      variant="outlined"
+                      variant="solo"
                       hide-details
                       v-model="searchTerm"
                       @keypress.enter="submitGuess(searchTerm)"
                       v-click-outside="onClickOutsideSearchField"
                       :active="isSearchFieldActive"
-                      @click="isSearchFieldActive = true"
-                       />
+                      @click="isSearchFieldActive = true" />
         <v-card class="search-suggestion-dropdown"
                 variant="outlined"
                 v-if="searchPokemonNames.length && isSearchFieldActive">
             <v-virtual-scroll :items="searchPokemonNames"
                               max-height="259">
-                <template v-slot:default="{ item }">
+                <template v-slot:default="{ item, index }">
                     <v-list-item @click="submitGuess(item)"
                                  class="search-suggestions">
                         <template v-slot:prepend>
@@ -27,7 +26,8 @@
                             <p class="ml-1">{{ item }}</p>
                         </template>
                     </v-list-item>
-                    <v-divider class="suggestion-divider"></v-divider>
+                    <v-divider v-if="index + 1 < searchPokemonNames.length"
+                               class="suggestion-divider"></v-divider>
                 </template>
             </v-virtual-scroll>
         </v-card>
@@ -69,18 +69,15 @@ const submitGuess = (pokemonName) => {
 </script>
 
 <style scoped>
-
 img {
     width: 35px;
 }
 
 .search-field {
-    background: white;
     font-weight: 600;
-    border-radius: 4px;
-    opacity: 100%;
-    color: black;
-
+    border-style: solid;
+    border-radius: 5px;
+    border-width: 1px;
 }
 
 .search-suggestions {
@@ -111,6 +108,7 @@ p {
     position: absolute;
     z-index: 2;
     background-color: white;
+    margin-top: -1px;
 }
 
 .search-field,
