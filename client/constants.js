@@ -16,6 +16,22 @@ const guessFieldTitles = {
   Generation: "Generation",
 }
 
+const GuessFieldTooltips = {
+    Pokemon: "",
+    Type1: "Primary Typing",
+    Type2: "Secondary Typing If Exists",
+    EvolutionLevel: "Current Evolution Stage; 1, 2 or 3",
+    Evolutions: "Yes or No",
+    Color: "Red, Green, Blue etc.",
+    Habitat: "Sea, Cave, Grasslands etc.",
+    Generation: "Generation 1, 2 or 3",
+  }
+
+  const getGuessFieldTooltipsFromIndex = (index) => {
+    const values = Object.values(GuessFieldTooltips);
+    return values.at(index);
+  }
+
 const Habitats = {
     WatersEdge: "waters-edge",
     Cave: "cave",
@@ -31,5 +47,7 @@ const Habitats = {
 export {
     guessState,
     guessFieldTitles,
-    Habitats
+    Habitats,
+    GuessFieldTooltips,
+    getGuessFieldTooltipsFromIndex
 }

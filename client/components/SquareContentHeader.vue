@@ -1,14 +1,22 @@
 <template>
-    <v-card class="content" variant="outlined">
-        <p v-for="(fieldTitle) in guessFieldTitles"
+    <v-card class="content"
+            variant="outlined">
+        <p v-for="(fieldTitle, _, index) in guessFieldTitles"
            :key="fieldTitle"
            :value="fieldTitle"
-           class="square-content">{{ fieldTitle }}</p>
+           class="square-content">{{ fieldTitle }} 
+           <v-tooltip activator="parent"
+                       location="top"
+                       open-delay="320"
+                       v-if="getGuessFieldTooltipsFromIndex(index)"> {{ getGuessFieldTooltipsFromIndex(index) }}</v-tooltip>
+        </p>
     </v-card>
 </template>
 
 <script setup>
-import { guessFieldTitles } from '../constants.js';
+import { guessFieldTitles, getGuessFieldTooltipsFromIndex } from '../constants.js';
+
+
 </script>
 
 <style scoped>
