@@ -13,7 +13,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onBeforeMount, onMounted, ref } from 'vue';
 import SquareContent from './SquareContent.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers';
 
@@ -34,11 +34,12 @@ const setSecRemaining = () => {
     secondsRemaining.value = Math.floor((countDownToDate.getTime() - Date.now()) / 1000);
 }
 
-onMounted(() => {
+onBeforeMount(() => {
     setSecRemaining();
+    updateTimeRemaining();
 });
 
-setInterval(() => {
+const updateTimeRemaining = () => {
     secondsRemaining.value--;
     const sec = Math.floor(secondsRemaining.value % 60);
     const min = Math.floor((secondsRemaining.value / 60) % 60);
@@ -46,6 +47,9 @@ setInterval(() => {
     secRemaining.value = sec < 10 ? "0" + sec : "" + sec;
     minRemaining.value = min < 10 ? "0" + min : "" + min;
     hoursRemaining.value = hours < 10 ? "0" + hours : "" + hours;
+}
+setInterval(() => {
+    updateTimeRemaining();
 }, 1000)
 
 </script>
