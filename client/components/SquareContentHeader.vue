@@ -4,11 +4,13 @@
         <p v-for="(fieldTitle, _, index) in guessFieldTitles"
            :key="fieldTitle"
            :value="fieldTitle"
-           class="square-content">{{ fieldTitle }} 
-           <v-tooltip activator="parent"
+           class="square-content">{{ fieldTitle }} <v-tooltip class="tooltip"
+                       activator="parent"
                        location="top"
                        open-delay="320"
-                       v-if="getGuessFieldTooltipsFromIndex(index)"> {{ getGuessFieldTooltipsFromIndex(index) }}</v-tooltip>
+                       v-if="getGuessFieldTooltipsFromIndex(index)"> {{
+           getGuessFieldTooltipsFromIndex(index)
+                       }}</v-tooltip>
         </p>
     </v-card>
 </template>
@@ -42,7 +44,10 @@ import { guessFieldTitles, getGuessFieldTooltipsFromIndex } from '../constants.j
 p {
     font-size: 14px;
     font-weight: bolder;
-    color: rgb(0, 0, 0);
+    font-family: pkmEmerald;
+}
+
+.tooltip {
     font-family: pkmEmerald;
 }
 </style>
