@@ -2,8 +2,11 @@
     <v-app id="app">
         <v-main>
             <div class="container">
-                <v-img src="/client/assets/title.png"
-                       class="title-img mt-4" />
+                <div>
+                    <v-img src="/client/assets/title.png"
+                           class="title-img mt-4" />
+                    <HeaderContainer />
+                </div>
                 <SearchField v-if="!isGameWon"
                              :pokemonNames="state.pokemonNames"
                              @submit-guess="submitGuess" />
@@ -18,7 +21,7 @@
                             :value="guess">
                         <SquareContainer :pokemonName="guess"
                                          :guessResult="getGuessResults(guess, secretPokemon)"
-                                         :color="colors.at(state.guesses.length-1-i)" />
+                                         :color="colors.at(state.guesses.length - 1 - i)" />
                     </v-card>
                 </div>
             </div>
@@ -39,6 +42,7 @@ import SquareContentHeader from './components/SquareContentHeader.vue';
 import GameWinContainer from './components/GameWinContainer.vue';
 import SearchField from './components/SearchField.vue';
 import pokemonData from '../server/data/pokemonData-v4.json';
+import HeaderContainer from './components/HeaderContainer.vue';
 import { onMounted, reactive, ref } from 'vue';
 import { getGuessResults } from './services/guess';
 import { getSecretPokemon, newSecretPokemon } from './services/service';
@@ -100,7 +104,7 @@ const submitGuess = (guess) => {
 
     const {
         updatedPokemonNames,
-        pokemonName 
+        pokemonName
     } = removePokemonFromGuessPool(guess);
 
     if (updatedPokemonNames.length >= state.pokemonNames.length) return;
