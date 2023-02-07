@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 
 #to create/update image from root:
-#    docker build -t pokedle-client -f docker/vue-client .
+#    docker build -t gabr0236/pokedle-client -f docker/vue-client .
 #to run container:
 #   docker run --env-file .env --publish 8000:8000 pokedle-client:latest
 FROM node:18.13.0-alpine
