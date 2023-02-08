@@ -68,7 +68,7 @@ const dialogSettings = ref(false);
     margin: 4px;
     background-color: rgb(255, 255, 255);
     border-style: solid;
-    border-width: 1px;
+    border-width: 2px;
     border-radius: 4px;
     justify-content: center;
     align-items: center;

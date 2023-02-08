@@ -69,7 +69,7 @@ const getColor = computed(() => {
     width: 100%;
     border-style: solid;
     border-radius: 60%;
-    border-width: 1px;
+    border-width: 2px;
 }
 
 .square-content {
@@ -80,6 +80,7 @@ const getColor = computed(() => {
     display: flex;
     justify-content: center;
     align-items: center;
+    border-width: 2px;
 }
 
 .text-content {

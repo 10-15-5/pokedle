@@ -77,7 +77,7 @@ img {
     font-weight: 600;
     border-style: solid;
     border-radius: 5px;
-    border-width: 1px;
+    border-width: 2px;
 }
 
 .search-suggestions {

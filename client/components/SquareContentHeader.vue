@@ -29,6 +29,7 @@ import { guessFieldTitles, getGuessFieldTooltipsFromIndex } from '../constants.j
     background-color: white;
     gap: 8px;
     padding: 8px 0 8px 8px;
+    border-width: 2px;
 }
 
 .square-content {
