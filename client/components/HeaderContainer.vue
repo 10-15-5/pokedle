@@ -1,21 +1,24 @@
 <template>
     <div class="header-container">
-        <v-icon class="header-icon"
-                icon="mdi-fire-circle"
-                size="small"></v-icon>
-        <v-icon class="header-icon"
-                icon="mdi-cog"
-                size="small"
-                @click="dialogSettings = true" />
-        <v-icon class="header-icon"
-                icon="mdi-poll"
-                size="small"
-                @click="dialogStatistics = true" />
-        <v-icon class="header-icon"
-                icon="mdi-information-outline"
-                size="small"
-                @click="dialogInfo = true">
-        </v-icon>
+        <div class="header-icon">
+            <p class="fire-emoji">🔥</p>
+        </div>
+        <div class="header-icon"
+             @click="dialogSettings = true">
+            <v-icon icon="mdi-cog"
+                    size="small" />
+        </div>
+        <div class="header-icon"
+             @click="dialogStatistics = true">
+            <v-icon icon="mdi-poll"
+                    size="small" />
+        </div>
+        <div class="header-icon"
+             @click="dialogInfo = true">
+            <v-icon icon="mdi-information-outline"
+                    size="small">
+            </v-icon>
+        </div>
         <v-dialog v-model="dialogSettings">
             <v-card>
                 <v-card-text> SETTINGS DIALOG </v-card-text>
@@ -67,6 +70,9 @@ const dialogSettings = ref(false);
     border-style: solid;
     border-width: 1px;
     border-radius: 4px;
+    justify-content: center;
+    align-items: center;
+    display: flex;
 }
 
 .header-icon:hover {
@@ -79,5 +85,9 @@ const dialogSettings = ref(false);
     flex-direction: row;
     justify-content: center;
     align-items: center;
+}
+
+.fire-emoji{
+    font-size: x-large;
 }
 </style>
