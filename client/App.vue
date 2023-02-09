@@ -30,7 +30,6 @@
         <div class="game-button-container">
             <v-btn @click="revealPokemon">reveal secret pokemon</v-btn>
             <v-btn @click="newGame">new game</v-btn>
-            <v-btn @click="resetGame">resetGame game</v-btn>
         </div>
         <!-- <HomeView /> -->
     </v-app>
@@ -188,11 +187,6 @@ const revealPokemon = async () => {
 }
 
 const newGame = async () => {
-    localStorage.clear();
-    location.reload();
-}
-
-const resetGame = () => {
     localStorage.clear();
     location.reload();
 }

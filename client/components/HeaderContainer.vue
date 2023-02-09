@@ -73,6 +73,7 @@ const dialogSettings = ref(false);
     justify-content: center;
     align-items: center;
     display: flex;
+    transition: all 120ms ease-in-out;
 }
 
 .header-icon:hover {
