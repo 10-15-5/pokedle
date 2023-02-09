@@ -27,7 +27,8 @@
                         </template>
                     </v-list-item>
                     <v-divider v-if="index + 1 < searchPokemonNames.length"
-                               class="suggestion-divider"></v-divider>
+                               class="suggestion-divider"
+                               thickness="2px"></v-divider>
                 </template>
             </v-virtual-scroll>
         </v-card>
@@ -109,6 +110,8 @@ p {
     z-index: 2;
     background-color: white;
     margin-top: -1px;
+    border-width: 2px;
+
 }
 
 .search-field,

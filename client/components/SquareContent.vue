@@ -102,14 +102,14 @@ const getColor = computed(() => {
     color: rgb(249, 194, 53);
     z-index: 1;
     position: absolute;
-    font-size: 20px;
+    font-size: 17px;
 }
 
 .star-icon-background {
     color: black;
     z-index: 1;
     position: absolute;
-    font-size: 27px;
+    font-size: 25px;
 }
 
 p {

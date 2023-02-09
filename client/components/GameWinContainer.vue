@@ -62,6 +62,7 @@ setInterval(() => {
     justify-content: center;
     align-items: center;
     padding: 8px;
+    border-width: 2px;
 }
 
 .card-text,
