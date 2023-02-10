@@ -1,18 +1,20 @@
 <template>
     <v-card class="content"
             variant="outlined">
-        <div v-for="(field, i) in guessResult"
-             :key="i"
+        <div v-for="(field, k, i) in guessResult"
+             :key="k"
              :value="field">
             <SquareContent v-if="field.name"
                            :pokemon="removeSpecialCharactersExceptDashFromString(field.name)"
                            :color="color" />
             <SquareContent v-else-if="field.habitat"
                            :guessResult="field.guessState"
-                           :habitat="field.habitat" />
+                           :habitat="field.habitat"
+                           :flipDelay="i" />
             <SquareContent v-else
                            :guessResult="field.guessState"
-                           :guessText="field.text" />
+                           :guessText="field.text"
+                           :flipDelay="i" />
         </div>
     </v-card>
 </template>

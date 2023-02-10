@@ -7,25 +7,26 @@
             <v-icon class="star-icon"
                     icon="mdi-star" />
         </div>
-        <v-card class="square-content elevation-0"
-                variant="outlined"
-                :style="{ 'background-color': getColor }">
-            <div v-if="pokemon">
-                <img class="mt-2 pokemon-bg"
-                     :src="'https://img.pokemondb.net/sprites/ruby-sapphire/' + color + '/' + pokemon + '.png'"
-                     alt="pokemon sprite" />
+        <div class="square-content">
+            <div class="square-content-inner" :style="{'animation-duration': getDelay }">
+                <v-card class="square-content-front" :style="{ 'background-color': getColor }" variant="outlined">
+                    <img v-if="pokemon"
+                         class="pokemon-bg"
+                         :src="'https://img.pokemondb.net/sprites/ruby-sapphire/' + color + '/' + pokemon + '.png'"
+                         alt="pokemon sprite" />
+                    <img v-if="habitat"
+                         class="pokemon-habitat"
+                         :src="getHabitatImage(habitat)"
+                         :title="`${habitat}`"
+                         :alt="`${habitat}`" />
+                    <p v-else-if="guessResult"
+                       class="text-content">{{ guessText }}</p>
+                </v-card>
+                <v-card class="square-content-back" variant="outlined">
+                    <p>BACK</p>
+                </v-card>
             </div>
-            <div v-if="habitat">
-                <img class="mt-2 pokemon-habitat"
-                     :src="getHabitatImage(habitat)"
-                     :title="`${habitat}`"
-                     :alt="`${habitat}`" />
-            </div>
-            <div v-else-if="guessResult"
-                 class="text-content">
-                <p>{{ guessText }}</p>
-            </div>
-        </v-card>
+        </div>
     </div>
 </template>
 
@@ -40,7 +41,13 @@ const props = defineProps({
     guessText: String,
     pokemon: String,
     habitat: String,
-    color: String
+    color: String,
+    flipDelay: String,
+});
+
+const getDelay = computed(() => {
+    console.log(props.flipDelay)
+    return props.flipDelay + 's';
 });
 
 const getColor = computed(() => {
@@ -72,15 +79,65 @@ const getColor = computed(() => {
     border-width: 2px;
 }
 
+/* The flip card container - set the width and height to
+ whatever you want. We have added the border property to 
+ demonstrate that the flip itself goes out of the box on
+  hover (remove perspective if you don't want the 3D effect */
 .square-content {
     width: 60px;
     height: 60px;
     min-height: 60px;
     min-width: 60px;
+    background-color: transparent;
+    perspective: 1000px;
+    /* Remove this if you don't want the 3D effect */
+}
+
+/* This container is needed to position the front and back side */
+.square-content-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    animation: fadein;
+    transform-style: preserve-3d;
+}
+
+@keyframes fadein {
+    from { transform: rotateY(180deg); }
+    to   { transform: 0; }
+}
+
+/* Do an horizontal flip when you move the mouse over the flip box container */
+/* .square-content:hover .square-content-inner {
+    transform: rotateY(180deg);
+} */
+
+/* Position the front and back side */
+.square-content-front,
+.square-content-back {
+    border-width: 2px;
     display: flex;
     justify-content: center;
     align-items: center;
-    border-width: 2px;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    -webkit-backface-visibility: hidden;
+    /* Safari */
+    backface-visibility: hidden;
+}
+
+/* Style the front side (fallback if image is missing) */
+.square-content-front {
+    color: black;
+}
+
+/* Style the back side */
+.square-content-back {
+    background-color: dodgerblue;
+    color: black;
+    transform: rotateY(180deg);
 }
 
 .text-content {
@@ -122,6 +179,4 @@ p {
 img {
     text-transform: capitalize;
 }
-
-img:hover {}
 </style>
