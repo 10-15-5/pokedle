@@ -1,10 +1,10 @@
 # syntax=docker/dockerfile:1
 
 #to create/update image from root:
-#    docker build -t gabr0236/pokedle-server -f docker/go-server .
+#    docker build --platform linux/x86_64 -t gabr0236/pokedle-server -f docker/go-server .
 
 #to run container:
-#   docker run --env-file .env --publish 3000:3000 pokedle-server:latest
+#   docker run --env-file .env --publish 3000:3000 gabr0236/pokedle-server:latest
 FROM golang:1.19.5-alpine
 
 WORKDIR /app
