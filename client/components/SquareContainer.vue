@@ -10,11 +10,11 @@
             <SquareContent v-else-if="field.habitat"
                            :guessResult="field.guessState"
                            :habitat="field.habitat"
-                           :flipDelay="i" />
+                           :flipDelay="i-1" />
             <SquareContent v-else
                            :guessResult="field.guessState"
                            :guessText="field.text"
-                           :flipDelay="i" />
+                           :flipDelay="i-1" />
         </div>
     </v-card>
 </template>

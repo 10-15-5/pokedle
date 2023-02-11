@@ -7,9 +7,13 @@
             <v-icon class="star-icon"
                     icon="mdi-star" />
         </div>
-        <div class="square-content">
-            <div class="square-content-inner" :style="{'animation-duration': getDelay }">
-                <v-card class="square-content-front" :style="{ 'background-color': getColor }" variant="outlined">
+        <VueFlip class="square-content"
+                 v-model="isCardFaceDown"
+                 transition="1s">
+            <template v-slot:front>
+                <v-card class="square-content-front"
+                        :style="{ 'background-color': getColor }"
+                        variant="outlined">
                     <img v-if="pokemon"
                          class="pokemon-bg"
                          :src="'https://img.pokemondb.net/sprites/ruby-sapphire/' + color + '/' + pokemon + '.png'"
@@ -22,19 +26,23 @@
                     <p v-else-if="guessResult"
                        class="text-content">{{ guessText }}</p>
                 </v-card>
-                <v-card class="square-content-back" variant="outlined">
+            </template>
+            <template v-slot:back>
+                <v-card class="square-content-back"
+                        variant="outlined">
                     <p>BACK</p>
                 </v-card>
-            </div>
-        </div>
+            </template>
+        </VueFlip>
     </div>
 </template>
 
 <script setup>
 //getHabitatImage(habitat)
 import { guessState } from '../constants.js';
-import { computed } from 'vue';
+import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { getHabitatImage } from '../services/assets.js';
+import { VueFlip } from 'vue-flip';
 
 const props = defineProps({
     guessResult: String,
@@ -42,12 +50,18 @@ const props = defineProps({
     pokemon: String,
     habitat: String,
     color: String,
-    flipDelay: String,
+    flipDelay: Number,
+});
+const isCardFaceDown = ref(true);
+
+onBeforeMount(() => {
+    if(props.flipDelay===undefined) isCardFaceDown.value = false;
 });
 
-const getDelay = computed(() => {
-    console.log(props.flipDelay)
-    return props.flipDelay + 's';
+onMounted(() => {
+    setTimeout(() => {
+        isCardFaceDown.value = false;
+    }, props.flipDelay * 350);
 });
 
 const getColor = computed(() => {
@@ -88,30 +102,8 @@ const getColor = computed(() => {
     height: 60px;
     min-height: 60px;
     min-width: 60px;
-    background-color: transparent;
     perspective: 1000px;
-    /* Remove this if you don't want the 3D effect */
 }
-
-/* This container is needed to position the front and back side */
-.square-content-inner {
-    position: relative;
-    width: 100%;
-    height: 100%;
-    text-align: center;
-    animation: fadein;
-    transform-style: preserve-3d;
-}
-
-@keyframes fadein {
-    from { transform: rotateY(180deg); }
-    to   { transform: 0; }
-}
-
-/* Do an horizontal flip when you move the mouse over the flip box container */
-/* .square-content:hover .square-content-inner {
-    transform: rotateY(180deg);
-} */
 
 /* Position the front and back side */
 .square-content-front,
@@ -128,16 +120,10 @@ const getColor = computed(() => {
     backface-visibility: hidden;
 }
 
-/* Style the front side (fallback if image is missing) */
-.square-content-front {
-    color: black;
-}
-
 /* Style the back side */
 .square-content-back {
     background-color: dodgerblue;
     color: black;
-    transform: rotateY(180deg);
 }
 
 .text-content {
