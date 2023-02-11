@@ -9,11 +9,11 @@
                 </div>
                 <SearchField v-if="!isGameWon"
                              :pokemonNames="state.pokemonNames"
-                             
                              @submit-guess="submitGuess" />
                 <GameWinContainer v-else
                                   :pokemon="state.guesses[0]"
                                   :color="colors.at(-1)" />
+                <DailyGamesWonContainer />
                 <div v-if="state.guesses.length"
                      class="guess-container">
                     <SquareContentHeader class="mb-n1" />
@@ -43,6 +43,7 @@ import GameWinContainer from './components/GameWinContainer.vue';
 import SearchField from './components/SearchField.vue';
 import pokemonData from '../server/data/pokemonData-v4.json';
 import HeaderContainer from './components/HeaderContainer.vue';
+import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
 import { onMounted, reactive, ref } from 'vue';
 import { getGuessResults } from './services/guess';
 import { getSecretPokemon, newSecretPokemon, updateDailyGamesWonCount } from './services/service';
@@ -84,7 +85,7 @@ const removePokemonFromGuessPool = (guess) => {
 
 const decideGame = (guess) => {
     if (guess === secretPokemon.name) {
-        isSearchFieldDisabled.value=true;
+        isSearchFieldDisabled.value = true;
 
         //Wait for all cards to flip
         setTimeout(() => {
@@ -92,7 +93,7 @@ const decideGame = (guess) => {
             localStorage.setItem('isGameWon', 'true')
             console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
             updateDailyGamesWonCount();
-        }, 2750); 
+        }, 2750);
     } else {
         console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
     }
@@ -107,7 +108,7 @@ const addColorsToLocalStorage = () => {
 }
 
 const submitGuess = (guess) => {
-    if (!guess || isSearchFieldDisabled.value) return;
+    if (!guess || isSearchFieldDisabled.value) return;
 
     const {
         updatedPokemonNames,

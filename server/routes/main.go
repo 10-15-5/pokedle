@@ -20,7 +20,7 @@ func SetupRoutes(router *gin.Engine) {
 		// curl http://localhost:3000/api/games-won --include --header "Content-Type: application/json" --request "POST"
 		api.POST("/games-won", controllers.UpdateCurrentDailyStatsWithGamesWon)
 
-		api.GET("/dailyStats/:date", controllers.GetDailyStats)
+		api.GET("/daily-stats/:date", controllers.GetDailyStats)
 	}
 
 	// curl http://localhost:3000/health --include --header "Content-Type: application/json" --request "GET"
