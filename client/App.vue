@@ -45,7 +45,7 @@ import pokemonData from '../server/data/pokemonData-v4.json';
 import HeaderContainer from './components/HeaderContainer.vue';
 import { onMounted, reactive, ref } from 'vue';
 import { getGuessResults } from './services/guess';
-import { getSecretPokemon, newSecretPokemon } from './services/service';
+import { getSecretPokemon, newSecretPokemon, updateDailyGamesWonCount } from './services/service';
 
 //Use ref here? https://github.com/vuejs/docs/issues/801#issuecomment-757587022
 const state = reactive({
@@ -91,6 +91,7 @@ const decideGame = (guess) => {
             isGameWon.value = true;
             localStorage.setItem('isGameWon', 'true')
             console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
+            updateDailyGamesWonCount();
         }, 2750); 
     } else {
         console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");

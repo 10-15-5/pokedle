@@ -27,3 +27,16 @@ func NewSecretPokemon(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, secretPokemon)
 }
+
+func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
+	//TODO: add guard so single user cant spam this
+	err := services.UpdateCurrentDailyStatsWithGamesWon()
+
+	if err != nil {
+		c.AbortWithStatus(500)
+	}
+
+	c.JSON(200, gin.H{
+		"message": "Games Won Updated",
+	})
+}

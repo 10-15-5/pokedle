@@ -4,17 +4,19 @@ import (
 	"context"
 	"fmt"
 	"math/rand"
+	"time"
 
 	"github.com/gabr0236/pokedle/server/data"
 	"github.com/gabr0236/pokedle/server/models"
-	"github.com/gabr0236/pokedle/server/repository"
+	"github.com/gabr0236/pokedle/server/repository/dailyStats"
+	"github.com/gabr0236/pokedle/server/repository/secretPokemon"
 )
 
 func GetSecretPokemon() (models.Pokemon, error) {
 
 	mongoClient := data.GetMongoDBClient()
 
-	r := repository.GetPokemonRepository(mongoClient)
+	r := secretPokemon.GetPokemonRepository(mongoClient)
 
 	return r.FindCurrentSecretPokemon(context.TODO())
 }
@@ -33,7 +35,7 @@ func NewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.
 
 	mongoClient := data.GetMongoDBClient()
 
-	r := repository.GetPokemonRepository(mongoClient)
+	r := secretPokemon.GetPokemonRepository(mongoClient)
 
 	r.InsertNewPokemon(context.TODO(), randomPokemon)
 
@@ -50,7 +52,7 @@ func UpdateDailySecretPokemon() error {
 		panic("Missing pokemonData or mongoClient")
 	}
 
-	r := repository.GetPokemonRepository(mongoClient)
+	r := secretPokemon.GetPokemonRepository(mongoClient)
 
 	recentSecretPokemons, err := r.FindRecentSecretPokemons(context.TODO(), 30)
 
@@ -83,6 +85,19 @@ func UpdateDailySecretPokemon() error {
 	}
 
 	fmt.Println("SecretPokemon Updated.")
+
+	return err
+}
+
+func UpdateCurrentDailyStatsWithGamesWon() error {
+	mongoClient := data.GetMongoDBClient()
+	r := dailyStats.GetPokemonRepository(mongoClient)
+
+	currentTime := time.Now()
+
+	currentDate := currentTime.Format("2006-01-02")
+
+	err := r.UpdateDailyGuessCount(context.TODO(), currentDate)
 
 	return err
 }
