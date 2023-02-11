@@ -9,6 +9,7 @@ import (
 
 func SetupRoutes(router *gin.Engine) {
 
+	//TODO: split routes
 	api := router.Group("/api")
 	{
 		// curl http://localhost:3000/api/secret-pokemons --include --header "Content-Type: application/json" --request "GET"
@@ -18,6 +19,8 @@ func SetupRoutes(router *gin.Engine) {
 
 		// curl http://localhost:3000/api/games-won --include --header "Content-Type: application/json" --request "POST"
 		api.POST("/games-won", controllers.UpdateCurrentDailyStatsWithGamesWon)
+
+		api.GET("/dailyStats/:date", controllers.GetDailyStats)
 	}
 
 	// curl http://localhost:3000/health --include --header "Content-Type: application/json" --request "GET"

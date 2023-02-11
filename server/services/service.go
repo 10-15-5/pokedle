@@ -101,3 +101,12 @@ func UpdateCurrentDailyStatsWithGamesWon() error {
 
 	return err
 }
+
+func GetDailyStats(date string) (models.DailyStats, error) {
+	mongoClient := data.GetMongoDBClient()
+	r := dailyStats.GetPokemonRepository(mongoClient)
+
+	dailyStats, err := r.GetDailyStats(context.TODO(), date)
+
+	return dailyStats, err
+}

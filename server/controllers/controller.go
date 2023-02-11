@@ -40,3 +40,15 @@ func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
 		"message": "Games Won Updated",
 	})
 }
+
+func GetDailyStats(c *gin.Context) {
+
+	dailyStats, err := services.GetDailyStats(c.Param("date"))
+
+	if err != nil {
+		c.AbortWithStatus(500)
+	}
+
+	c.IndentedJSON(http.StatusOK, dailyStats)
+
+}

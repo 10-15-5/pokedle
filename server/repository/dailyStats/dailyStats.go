@@ -4,6 +4,7 @@ import (
 	"context"
 	"os"
 
+	"github.com/gabr0236/pokedle/server/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
@@ -33,4 +34,13 @@ func (r *dailyStatsRepository) UpdateDailyGuessCount(ctx context.Context, date s
 	_, err := coll.UpdateOne(context.Background(), filter, update, options)
 
 	return err
+}
+
+func (r *dailyStatsRepository) GetDailyStats(ctx context.Context, date string) (models.DailyStats, error) {
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+
+	var result models.DailyStats
+	err := coll.FindOne(context.Background(), bson.D{{"date", date}}).Decode(&result)
+
+	return result, err
 }
