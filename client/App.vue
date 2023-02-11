@@ -9,6 +9,7 @@
                 </div>
                 <SearchField v-if="!isGameWon"
                              :pokemonNames="state.pokemonNames"
+                             
                              @submit-guess="submitGuess" />
                 <GameWinContainer v-else
                                   :pokemon="state.guesses[0]"
@@ -52,6 +53,7 @@ const state = reactive({
     guesses: [],
 });
 const isGameWon = ref(false);
+const isSearchFieldDisabled = ref(false);
 
 let colors = [];
 
@@ -82,9 +84,14 @@ const removePokemonFromGuessPool = (guess) => {
 
 const decideGame = (guess) => {
     if (guess === secretPokemon.name) {
-        isGameWon.value = true;
-        localStorage.setItem('isGameWon', 'true')
-        console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
+        isSearchFieldDisabled.value=true;
+
+        //Wait for all cards to flip
+        setTimeout(() => {
+            isGameWon.value = true;
+            localStorage.setItem('isGameWon', 'true')
+            console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
+        }, 2750); 
     } else {
         console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
     }
@@ -99,7 +106,7 @@ const addColorsToLocalStorage = () => {
 }
 
 const submitGuess = (guess) => {
-    if (!guess) return;
+    if (!guess || isSearchFieldDisabled.value) return;
 
     const {
         updatedPokemonNames,
