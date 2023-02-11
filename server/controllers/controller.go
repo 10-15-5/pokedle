@@ -28,8 +28,9 @@ func NewSecretPokemon(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, secretPokemon)
 }
 
+// Dont allow for param/payload here for security reasons
 func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
-	//TODO: add guard so single user cant spam this
+	//TODO: add guard so single user cant spam this, use user cookie to identify, maybe even IP identification
 	err := services.UpdateCurrentDailyStatsWithGamesWon()
 
 	if err != nil {

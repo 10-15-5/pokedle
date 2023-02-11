@@ -13,12 +13,13 @@
                 variant="outlined"
                 v-if="searchPokemonNames.length && isSearchFieldActive">
             <v-virtual-scroll :items="searchPokemonNames"
-                              max-height="259">
+                              max-height="260"
+                              item-height="52">
                 <template v-slot:default="{ item, index }">
                     <v-list-item @click="submitGuess(item)"
                                  class="search-suggestions">
                         <template v-slot:prepend>
-                            <img class="ml-2"
+                            <img class="sprite-img ml-2"
                                  :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + removeSpecialCharactersExceptDashFromString(item) + '.png'"
                                  alt="" />
                         </template>
@@ -70,8 +71,9 @@ const submitGuess = (pokemonName) => {
 </script>
 
 <style scoped>
-img {
+.sprite-img {
     width: 35px;
+    height: 35px;
 }
 
 .search-field {
