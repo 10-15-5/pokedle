@@ -9,7 +9,9 @@
         </div>
         <VueFlip class="square-content"
                  v-model="isCardFaceDown"
-                 transition="1s">
+                 transition="1s"
+                 width="60px"
+                 height="60px">
             <template v-slot:front>
                 <v-card class="square-content-front"
                         :style="{ 'background-color': getColor }"
@@ -96,19 +98,6 @@ const getColor = computed(() => {
     border-width: 2px;
 }
 
-/* The flip card container - set the width and height to
- whatever you want. We have added the border property to 
- demonstrate that the flip itself goes out of the box on
-  hover (remove perspective if you don't want the 3D effect */
-.square-content {
-    width: 60px;
-    height: 60px;
-    min-height: 60px;
-    min-width: 60px;
-    perspective: 1000px;
-}
-
-/* Position the front and back side */
 .square-content-front,
 .square-content-back {
     border-width: 2px;
