@@ -30,7 +30,10 @@
             <template v-slot:back>
                 <v-card class="square-content-back"
                         variant="outlined">
-                    <p>BACK</p>
+                        <img
+                        class="pokemon-bg"
+                         :src="'./client/assets/pokemon-cardback.jpg'"
+                         alt="pokemon sprite" />
                 </v-card>
             </template>
         </VueFlip>
@@ -123,7 +126,8 @@ const getColor = computed(() => {
 /* Style the back side */
 .square-content-back {
     background-color: dodgerblue;
-    color: black;
+    color: rgb(40, 37, 128);
+    border-width: 3px;
 }
 
 .text-content {
