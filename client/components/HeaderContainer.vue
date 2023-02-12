@@ -19,9 +19,11 @@
                     size="small">
             </v-icon>
         </div>
-        <v-dialog v-model="dialogSettings">
+        <v-dialog class="dialog-content"
+                  v-model="dialogSettings">
             <v-card>
-                <v-card-text> SETTINGS DIALOG </v-card-text>
+                <v-card-title class="dialog-text">SETTINGS</v-card-title>
+                <v-card-text class="dialog-text">Coming Soon...</v-card-text>
                 <v-card-actions>
                     <v-btn color="primary"
                            block
@@ -29,9 +31,11 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <v-dialog v-model="dialogStatistics">
+        <v-dialog class="dialog-content"
+                  v-model="dialogStatistics">
             <v-card>
-                <v-card-text> STATISTICS DIALOG </v-card-text>
+                <v-card-title class="dialog-text">STATISTICS</v-card-title>
+                <v-card-text class="dialog-text">Coming Soon...</v-card-text>
                 <v-card-actions>
                     <v-btn color="primary"
                            block
@@ -39,9 +43,15 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
-        <v-dialog v-model="dialogInfo">
+        <v-dialog class="dialog-content"
+                  v-model="dialogInfo">
             <v-card>
-                <v-card-text>INFO DIALOG</v-card-text>
+                <v-card-title class="dialog-text">About</v-card-title>
+                <v-card-text class="dialog-text">Welcome to the world of POKEMéN! <br> Every day a wild secret POKéMON
+                    will be hiding and its your job as a POKéMON TRAINER to catch (guess) it! </v-card-text>
+                <v-card-text class="dialog-text">• Reset time <br> • Inspired by<br /> • Contact for removal/credit of
+                    background image<br /> • Suggestion<br /> • Bugs<br /> • Feedback<br />
+                </v-card-text>
                 <v-card-actions>
                     <v-btn color="primary"
                            block
@@ -76,6 +86,14 @@ const dialogSettings = ref(false);
     transition: all 120ms ease-in-out;
 }
 
+.dialog-text {
+    font-family: pkmEmerald;
+}
+
+.dialog-content {
+    width: 500px;
+}
+
 .header-icon:hover {
     transform: scale(1.1);
     cursor: pointer;
@@ -85,10 +103,9 @@ const dialogSettings = ref(false);
     display: flex;
     flex-direction: row;
     justify-content: center;
-    align-items: center;
 }
 
-.fire-emoji{
+.fire-emoji {
     font-size: x-large;
 }
 </style>

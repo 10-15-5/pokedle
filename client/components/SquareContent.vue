@@ -57,6 +57,7 @@ const props = defineProps({
     color: String,
     flipDelay: Number,
 });
+
 const isCardFaceDown = ref(true);
 
 onBeforeMount(() => {
