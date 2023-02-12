@@ -1,20 +1,22 @@
 # syntax=docker/dockerfile:1
 
 #to create/update image from root:
-#    docker build --platform linux/x86_64 -t gabr0236/pokedle-server -f docker/go-server .
+#    docker build -t gabr0236/pokedle-server -f docker/go-server .
 
 #to run container:
 #   docker run --env-file .env --publish 3000:3000 gabr0236/pokedle-server:latest
-FROM golang:1.19.5-alpine
+FROM --platform=linux/x86_64 golang:1.19.5-alpine
 
 WORKDIR /app
 
 COPY /server/ /app/server/
 COPY /server/data/pokemonData-v4.json /app/data/
 
-
 RUN cd /app/server && go mod download
 RUN cd /app/server && go build -o /app/out
+
+ARG CLIENT_URL=http://104.155.117.226/
+ENV CLIENT_URL=${CLIENT_URL}
 
 EXPOSE 3000
 

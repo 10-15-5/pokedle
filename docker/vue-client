@@ -11,6 +11,13 @@ COPY /client/ /app/client/
 COPY package.json ./
 COPY index.html ./
 COPY vite.config.js ./
+
+ARG SERVER_URL=http://34.79.55.16/
+ENV SERVER_URL=${SERVER_URL}
+
+ARG SERVER_API_URL=http://34.79.55.16/api
+ENV SERVER_API_URL=${SERVER_API_URL}
+
 # need to make sure relative file paths are correct, could use env to change path 
 #   but this would create discrepency between prod/dev
 COPY /server/data/pokemonData-v4.json /app/server/data/

@@ -11,7 +11,7 @@ import vuetify from 'vite-plugin-vuetify'
 // https://vitejs.dev/config/
 export default defineConfig({
     define: {
-        BUILD_API_URL: JSON.stringify(process.env.SERVER_API_URL || '/api')
+        BUILD_API_URL: JSON.stringify(process.env.SERVER_API_URL)
     },
     plugins: [
         vue(),
