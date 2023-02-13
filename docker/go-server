@@ -15,8 +15,10 @@ COPY /server/data/pokemonData-v4.json /app/data/
 RUN cd /app/server && go mod download
 RUN cd /app/server && go build -o /app/out
 
-ARG CLIENT_URL=http://104.155.117.226/
-ENV CLIENT_URL=${CLIENT_URL}
+ENV CLIENT_URL=http://104.155.117.226
+ENV MONGODB_URI=mongodb+srv://gabr0236:gabr0236@pokedlev1.a0jr10a.mongodb.net/test
+ENV DATABASE=Dev
+ENV SERVER_PORT=3000
 
 EXPOSE 3000
 
