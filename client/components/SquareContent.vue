@@ -34,7 +34,7 @@
                         variant="outlined">
                         <img
                         class="pokemon-bg"
-                         :src="'./client/assets/pokemon-cardback.jpg'"
+                         :src="'./client/assets/pokemon-cardback-pixel.png'"
                          alt="pokemon sprite" />
                 </v-card>
             </template>
@@ -115,9 +115,8 @@ const getColor = computed(() => {
 
 /* Style the back side */
 .square-content-back {
-    background-color: dodgerblue;
-    color: rgb(40, 37, 128);
-    border-width: 3px;
+    color: rgb(0, 0, 0);
+    border-width: 2px;
 }
 
 .text-content {
