@@ -24,7 +24,7 @@ func main() {
 
 	log.Println("ENV TEST: GET SERVER PORT: " + os.Getenv("SERVER_PORT"))
 
-	log.Println("ENV TEST: GET SERVER PORT: " + os.Getenv("CLIENT_URL"))
+	log.Println("ENV TEST: GET CLIENT_URL: " + os.Getenv("CLIENT_URL"))
 
 	router := gin.Default()
 

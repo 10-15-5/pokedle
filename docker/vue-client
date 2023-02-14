@@ -3,7 +3,7 @@
 #to create/update image from root:
 #    docker build -t gabr0236/pokedle-client -f docker/vue-client .
 #to run container:
-#   docker run --env-file .env --publish 8000:8000 gabr0236/pokedle-client:latest
+#   docker run --publish 8000:8000 gabr0236/pokedle-client:latest
 FROM --platform=linux/amd64 node:16.14.2
 WORKDIR /app
 

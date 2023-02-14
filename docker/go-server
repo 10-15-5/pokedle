@@ -4,7 +4,7 @@
 #    docker build -t gabr0236/pokedle-server -f docker/go-server .
 
 #to run container:
-#   docker run --env-file .env --publish 3000:3000 gabr0236/pokedle-server:latest
+#   docker run --publish 3000:3000 gabr0236/pokedle-server:latest
 FROM --platform=linux/x86_64 golang:1.19.5-alpine
 
 WORKDIR /app
