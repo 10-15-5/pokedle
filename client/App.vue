@@ -3,8 +3,8 @@
         <v-main>
             <div class="container">
                 <div>
-                    <v-img src="/client/assets/title.png"
-                           class="title-img mt-4" />
+                    <v-img src="/client/assets/pokedle-logo.png"
+                           class="title-img mt-5" />
                     <HeaderContainer />
                 </div>
                 <SearchField v-if="!isGameWon"
@@ -220,7 +220,7 @@ const newGame = async () => {
 
 .title-img {
     transition: transform 0.2s;
-    min-width: 230px;
+    width: 360px;
     -webkit-filter: drop-shadow(0px 0px 20px rgb(255, 255, 255));
 }
 
