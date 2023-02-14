@@ -16,7 +16,7 @@ RUN cd /app/server && go mod download
 RUN cd /app/server && go build -o /app/out
 
 ENV CLIENT_URL=http://104.155.117.226
-ENV MONGODB_URI=mongodb+srv://gabr0236:gabr0236@pokedlev1.a0jr10a.mongodb.net/test
+ENV MONGODB_URI=mongodb+srv://production:gabr0236@pokedlev1.a0jr10a.mongodb.net/test
 ENV DATABASE=Dev
 ENV SERVER_PORT=3000
 
