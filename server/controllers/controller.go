@@ -1,11 +1,13 @@
 package controllers
 
 import (
+	"fmt"
 	"net/http"
 
 	"github.com/gabr0236/pokedle/server/data"
 	"github.com/gabr0236/pokedle/server/services"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/mongo"
 )
 
 func GetSecretPokemon(c *gin.Context) {
@@ -46,8 +48,11 @@ func GetDailyStats(c *gin.Context) {
 
 	dailyStats, err := services.GetDailyStats(c.Param("date"))
 
-	if err != nil {
+	fmt.Println(err)
+
+	if err != nil && err != mongo.ErrNoDocuments {
 		c.AbortWithStatus(500)
+		return
 	}
 
 	c.IndentedJSON(http.StatusOK, dailyStats)
