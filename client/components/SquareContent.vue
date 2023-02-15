@@ -93,7 +93,7 @@ const getColor = computed(() => {
 }
 
 .pokemon-habitat {
-    width: 100%;
+    width: 101%;
     border-style: solid;
     border-radius: 60%;
     border-width: 2px;
