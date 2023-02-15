@@ -173,18 +173,37 @@ const setNewSecretPokemon = async () => {
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 }
 
+const setSecretPokemon = async () => {
+    const response = await getSecretPokemon();
+    secretPokemon = response.data;
+    localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
+}
+
 onMounted(async () => {
     const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
+    if(!dayOfLastUpdate) setNewDate();
 
-    if (dayOfLastUpdate && parseInt(dayOfLastUpdate) == new Date().getUTCDate()) {
+
+    if (parseInt(dayOfLastUpdate) == new Date().getUTCDate()) {
         loadSecretPokemon();
-        loadColors();
-        loadGuesses();
-        loadIsGameWon();
-        removePokemonsFromGuessPool();
+        
+        const currSecretPokemon = await (await getSecretPokemon()).data;
+
+        if (secretPokemon && secretPokemon?.name === currSecretPokemon?.name) {
+            loadColors();
+            loadGuesses();
+            loadIsGameWon();
+            removePokemonsFromGuessPool();
+        } else {
+            localStorage.clear();
+            setNewDate();
+            await setSecretPokemon();
+        }
+
     } else {
         localStorage.clear();
         setNewDate();
+        //TODO: this should be replaced with CDN
         await setNewSecretPokemon();
     }
 });
