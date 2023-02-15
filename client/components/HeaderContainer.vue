@@ -21,11 +21,11 @@
         </div>
         <v-dialog class="dialog-content"
                   v-model="dialogSettings">
-            <v-card>
-                <v-card-title class="dialog-text">SETTINGS</v-card-title>
-                <v-card-text class="dialog-text">Coming Soon...</v-card-text>
+            <v-card class="card-content" variant="outlined">
+                <v-card-title class="card-title">SETTINGS</v-card-title>
+                <v-card-text class="card-text"> Coming Soon....</v-card-text>
                 <v-card-actions>
-                    <v-btn color="primary"
+                    <v-btn class="dialog-btn"
                            block
                            @click="dialogSettings = false">Close</v-btn>
                 </v-card-actions>
@@ -33,11 +33,11 @@
         </v-dialog>
         <v-dialog class="dialog-content"
                   v-model="dialogStatistics">
-            <v-card>
-                <v-card-title class="dialog-text">STATISTICS</v-card-title>
-                <v-card-text class="dialog-text">Coming Soon...</v-card-text>
+            <v-card class="card-content" variant="outlined">
+                <v-card-title class="card-title">STATISTICS</v-card-title>
+                <v-card-text class="card-text"> Coming Soon....</v-card-text>
                 <v-card-actions>
-                    <v-btn color="primary"
+                    <v-btn class="dialog-btn"
                            block
                            @click="dialogStatistics = false">Close</v-btn>
                 </v-card-actions>
@@ -45,15 +45,19 @@
         </v-dialog>
         <v-dialog class="dialog-content"
                   v-model="dialogInfo">
-            <v-card>
-                <v-card-title class="dialog-text">About</v-card-title>
-                <v-card-text class="dialog-text">Welcome to the world of POKEMéN! <br> Every day a wild secret POKéMON
+            <v-card class="card-content" variant="outlined">
+                <v-card-title class="card-title">About</v-card-title>
+                <v-card-text class="card-text">Welcome to the world of POKEMéN! <br> Every day a wild secret POKéMON
                     will be hiding and its your job as a POKéMON TRAINER to catch (guess) it! </v-card-text>
-                <v-card-text class="dialog-text">• Reset time <br> • Inspired by<br /> • Contact for removal/credit of
-                    background image<br /> • Suggestion<br /> • Bugs<br /> • Feedback<br />
-                </v-card-text>
+                <v-card-title class="card-title">Credit</v-card-title>
+                <v-card-text class="card-text"> Pokédlé is heavily inspired by loldle.net and wordle. Original
+                    artist/creator of images, please DM for removal or credit. </v-card-text>
+                <v-card-title class="card-title">Contact</v-card-title>
+                <v-card-text class="card-text"> If you have any questions/feedback/bug reports feel free to contact me
+                    on the email below. <br> > <a
+                       href="mailto: pokedle.contact@gmail.com">pokedle.contact@gmail.com</a></v-card-text>
                 <v-card-actions>
-                    <v-btn color="primary"
+                    <v-btn class="dialog-btn"
                            block
                            @click="dialogInfo = false">Close</v-btn>
                 </v-card-actions>
@@ -86,12 +90,37 @@ const dialogSettings = ref(false);
     transition: all 120ms ease-in-out;
 }
 
-.dialog-text {
+.fire-emoji {
+    font-size: x-large;
+}
+
+.card-text,
+.card-title,
+.dialog-btn {
     font-family: pkmEmerald;
+}
+.card-title {
+    font-size: larger;
+    font-weight: bold;
 }
 
 .dialog-content {
     width: 500px;
+}
+
+.card-content {
+    padding: 8px;
+    border-style: solid;
+    border-width: 2px;
+    background-color: white;
+}
+
+.dialog-btn {
+    font-size: large;
+    padding: 4px;
+    font-weight: bold;
+    color: red;
+    margin-top: 8px;
 }
 
 .header-icon:hover {
@@ -105,7 +134,4 @@ const dialogSettings = ref(false);
     justify-content: center;
 }
 
-.fire-emoji {
-    font-size: x-large;
-}
 </style>
