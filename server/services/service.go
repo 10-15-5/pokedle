@@ -10,13 +10,14 @@ import (
 	"github.com/gabr0236/pokedle/server/models"
 	"github.com/gabr0236/pokedle/server/repository/dailyStats"
 	"github.com/gabr0236/pokedle/server/repository/secretPokemon"
+	"go.mongodb.org/mongo-driver/mongo"
 )
+
+var MongoClient *mongo.Client
 
 func GetSecretPokemon() (models.Pokemon, error) {
 
-	mongoClient := data.GetMongoDBClient()
-
-	r := secretPokemon.GetPokemonRepository(mongoClient)
+	r := secretPokemon.GetPokemonRepository(MongoClient)
 
 	return r.FindCurrentSecretPokemon(context.TODO())
 }
@@ -33,9 +34,7 @@ func NewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.
 		containsRandomPokemon = randomPokemon.Name == currentSecretPokemon.Name
 	}
 
-	mongoClient := data.GetMongoDBClient()
-
-	r := secretPokemon.GetPokemonRepository(mongoClient)
+	r := secretPokemon.GetPokemonRepository(MongoClient)
 
 	r.InsertNewPokemon(context.TODO(), randomPokemon)
 
@@ -46,13 +45,11 @@ func NewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.
 func UpdateDailySecretPokemon() error {
 	pokemonData := data.GetPokemonData()
 
-	mongoClient := data.GetMongoDBClient()
-
-	if pokemonData == nil || mongoClient == nil {
-		panic("Missing pokemonData or mongoClient")
+	if pokemonData == nil {
+		panic("PokemonData not found")
 	}
 
-	r := secretPokemon.GetPokemonRepository(mongoClient)
+	r := secretPokemon.GetPokemonRepository(MongoClient)
 
 	recentSecretPokemons, err := r.FindRecentSecretPokemons(context.TODO(), 30)
 
@@ -90,8 +87,7 @@ func UpdateDailySecretPokemon() error {
 }
 
 func UpdateCurrentDailyStatsWithGamesWon() error {
-	mongoClient := data.GetMongoDBClient()
-	r := dailyStats.GetPokemonRepository(mongoClient)
+	r := dailyStats.GetPokemonRepository(MongoClient)
 
 	currentTime := time.Now()
 
@@ -103,8 +99,7 @@ func UpdateCurrentDailyStatsWithGamesWon() error {
 }
 
 func GetDailyStats(date string) (models.DailyStats, error) {
-	mongoClient := data.GetMongoDBClient()
-	r := dailyStats.GetPokemonRepository(mongoClient)
+	r := dailyStats.GetPokemonRepository(MongoClient)
 
 	dailyStats, err := r.GetDailyStats(context.TODO(), date)
 
