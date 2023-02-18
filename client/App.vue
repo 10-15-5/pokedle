@@ -31,9 +31,10 @@
         <div class="game-button-container">
             <v-btn @click="revealPokemon">reveal secret pokemon</v-btn>
             <v-btn @click="newGame">new game</v-btn>
+            <v-btn @click="lauchConfetti">test confetti</v-btn>
         </div>
         <!-- <HomeView /> -->
-    </v-app>
+</v-app>
 </template>
 
 <script setup>
@@ -47,6 +48,7 @@ import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
 import { onMounted, reactive, ref } from 'vue';
 import { getGuessResults } from './services/guess';
 import { getSecretPokemon, newSecretPokemon, updateDailyGamesWonCount } from './services/service';
+import confetti from 'canvas-confetti'
 
 //Use ref here? https://github.com/vuejs/docs/issues/801#issuecomment-757587022
 const state = reactive({
@@ -89,8 +91,9 @@ const decideGame = (guess) => {
 
         //Wait for all cards to flip
         setTimeout(() => {
+            lauchConfetti();
             isGameWon.value = true;
-            localStorage.setItem('isGameWon', 'true')
+            localStorage.setItem('isGameWon', 'true');
             console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
             updateDailyGamesWonCount();
         }, 2750);
@@ -181,12 +184,12 @@ const setSecretPokemon = async () => {
 
 onMounted(async () => {
     const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
-    if(!dayOfLastUpdate) setNewDate();
+    if (!dayOfLastUpdate) setNewDate();
 
 
     if (parseInt(dayOfLastUpdate) == new Date().getUTCDate()) {
         loadSecretPokemon();
-        
+
         const currSecretPokemon = await (await getSecretPokemon()).data;
 
         if (secretPokemon && secretPokemon?.name === currSecretPokemon?.name) {
@@ -217,6 +220,50 @@ const revealPokemon = async () => {
 const newGame = async () => {
     localStorage.clear();
     location.reload();
+}
+
+
+const lauchConfetti = () => {
+    var duration = 3 * 1000;
+    var animationEnd = Date.now() + duration;
+    var particleCount = 200;
+    var defaults = {
+        startVelocity: 25,
+        spread: 360,
+        ticks: 300,
+        zIndex: 0,
+        scalar: 1.4,
+    };
+
+    if(colors.at(-1) === 'shiny') {
+        defaults.shapes = ['star'],
+        defaults.colors = ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8']
+        defaults.scalar = 1.1
+        particleCount = 90;
+    }
+
+    const randomInRange = (min, max) => {
+        return Math.random() * (max - min) + min;
+    }
+
+    const fire = () => {
+        var timeLeft = animationEnd - Date.now();
+
+        if (timeLeft <= 0) {
+            return clearInterval(lauchConfetti);
+        }
+
+        var currParticleCount = particleCount * (timeLeft / duration);
+        // since particles fall down, start a bit higher than random
+        confetti(Object.assign({}, defaults, { currParticleCount, origin: { x: randomInRange(0.1, 0.3), y: Math.random() - 0.4 } }));
+        confetti(Object.assign({}, defaults, { currParticleCount, origin: { x: randomInRange(0.7, 0.9), y: Math.random() - 0.4 } }));
+    }
+
+    fire();
+
+    setInterval(() => {
+        fire();
+    }, 250);
 }
 
 </script>
