@@ -5,10 +5,8 @@
         <v-card-text class="card-text">You Guessed: {{ pokemon }}</v-card-text>
         <SquareContent :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"
                        :color="props.color" />
-        <v-card-text class="card-smaller-text">Next Pokemon Will Appear In: {{
-            " " +hoursRemaining + ":" + minRemaining
-                + ":" + secRemaining
-        }}</v-card-text>
+        <v-card-text class="card-smaller-text">Next Pokemon Will Appear In: {{ " " + hoursRemaining + ":" + minRemaining +
+            ":" + secRemaining }}</v-card-text>
     </v-card>
 </template>
 
@@ -47,6 +45,14 @@ const updateTimeRemaining = () => {
     secRemaining.value = sec < 10 ? "0" + sec : "" + sec;
     minRemaining.value = min < 10 ? "0" + min : "" + min;
     hoursRemaining.value = hours < 10 ? "0" + hours : "" + hours;
+
+    if (secRemaining.value <= 0) {
+        secRemaining.value = "00";
+        minRemaining.value = "00";
+        hoursRemaining.value = "00";
+        console.log("TEST: DANGER")
+        return clearInterval(updateTimeRemaining);
+    }
 }
 setInterval(() => {
     updateTimeRemaining();
