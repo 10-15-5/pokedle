@@ -59,7 +59,6 @@ const isGameWon = ref(false);
 const isSearchFieldDisabled = ref(false);
 
 let colors = [];
-
 let secretPokemon;
 
 const getRandomColor = () => {

@@ -4,13 +4,10 @@
         <p v-for="(fieldTitle, _, index) in guessFieldTitles"
            :key="fieldTitle"
            :value="fieldTitle"
-           class="square-content">{{ fieldTitle }} <v-tooltip class="tooltip"
-                       activator="parent"
-                       location="top"
-                       open-delay="320"
-                       v-if="getGuessFieldTooltipsFromIndex(index)"> {{
-           getGuessFieldTooltipsFromIndex(index)
-                       }}</v-tooltip>
+           class="square-content">{{ fieldTitle }} 
+           <!-- <v-card v-if="getGuessFieldTooltipsFromIndex(index)"
+                    class="tooltip-card"
+                    variant="outlined"> {{ getGuessFieldTooltipsFromIndex(index) }} </v-card> -->
         </p>
     </v-card>
 </template>
@@ -50,5 +47,14 @@ p {
 
 .tooltip {
     font-family: pkmEmerald;
+    margin: 0px;
+    padding: 0px;
+}
+
+.tooltip-card {
+    background-color: white;
+    border-width: 2px;
+    color: black;
+    padding: 10px;
 }
 </style>
