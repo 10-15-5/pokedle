@@ -1,17 +1,22 @@
 <template>
     <v-card class="games-won-card"
     variant="outlined">
-        {{ dailyGamesWon + " Trainers Already Found Out!" }}
+        {{ ((isGameWon === true ? 1 : 0) + dailyGamesWon) +" Trainers Already Found Out!" }}
     </v-card>
 </template>
 
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import {getDailyStats} from '../services/service.js';
+
 const dailyGamesWon = ref(0);
 
+const props = defineProps({
+    isGameWon: Boolean
+})
+
 const updateDailyGamesWonCount = async () => {
-    var date = (new Date()).toISOString().split('T')[0];
+    var date = (new Date()).toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD
     const res = await getDailyStats(date);
     dailyGamesWon.value = res.data.gamesWon;
 }

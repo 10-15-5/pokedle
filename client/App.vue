@@ -13,7 +13,7 @@
                 <GameWinContainer v-else
                                   :pokemon="state.guesses[0]"
                                   :color="colors.at(-1)" />
-                <DailyGamesWonContainer />
+                <DailyGamesWonContainer :isGameWon="isGameWon" />
                 <div v-if="state.guesses.length"
                      class="guess-container">
                     <SquareContentHeader class="mb-n1" />
