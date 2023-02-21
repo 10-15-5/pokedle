@@ -4,10 +4,9 @@
         <p v-for="(fieldTitle, _, index) in guessFieldTitles"
            :key="fieldTitle"
            :value="fieldTitle"
-           class="square-content">{{ fieldTitle }} 
-           <!-- <v-card v-if="getGuessFieldTooltipsFromIndex(index)"
-                    class="tooltip-card"
-                    variant="outlined"> {{ getGuessFieldTooltipsFromIndex(index) }} </v-card> -->
+           class="square-content">{{ fieldTitle }} <v-card v-if="getGuessFieldTooltipsFromIndex(index)"
+                    class="tooltip"
+                    variant="outlined"> {{ getGuessFieldTooltipsFromIndex(index) }} </v-card>
         </p>
     </v-card>
 </template>
@@ -27,6 +26,8 @@ import { guessFieldTitles, getGuessFieldTooltipsFromIndex } from '../constants.j
     gap: 8px;
     padding: 8px 0 8px 8px;
     border-width: 2px;
+    position: static;
+
 }
 
 .square-content {
@@ -40,21 +41,30 @@ import { guessFieldTitles, getGuessFieldTooltipsFromIndex } from '../constants.j
 }
 
 p {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: bolder;
     font-family: pkmEmerald;
+    text-align: center;
 }
 
 .tooltip {
-    font-family: pkmEmerald;
-    margin: 0px;
-    padding: 0px;
+    opacity: 0;
+    color: rgb(0, 0, 0);
+    text-align: center;
+    padding: 6px;
+    margin-top: -102px;
+    border-width: 2px;
+    position: absolute;
+    z-index: 1;
+    background-color: rgb(196, 243, 255);
+    transition: opacity 0.3s;
 }
 
-.tooltip-card {
-    background-color: white;
-    border-width: 2px;
-    color: black;
-    padding: 10px;
+
+
+/* Show the tooltip text when you mouse over the tooltip container */
+.square-content:hover .tooltip {
+    opacity: 1;
+    transition-delay: 0.8s;
 }
 </style>

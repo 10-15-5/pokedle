@@ -39,6 +39,15 @@ onBeforeMount(() => {
 
 const updateTimeRemaining = () => {
     secondsRemaining.value--;
+
+    if (secondsRemaining.value <= 0) {
+        secRemaining.value = "00";
+        minRemaining.value = "00";
+        hoursRemaining.value = "00";
+        console.log("TEST: DANGER")
+        return clearInterval(updateTimeRemaining);
+    }
+    
     const sec = Math.floor(secondsRemaining.value % 60);
     const min = Math.floor((secondsRemaining.value / 60) % 60);
     const hours = Math.floor((secondsRemaining.value / (60 * 60)) % 60);
@@ -46,13 +55,6 @@ const updateTimeRemaining = () => {
     minRemaining.value = min < 10 ? "0" + min : "" + min;
     hoursRemaining.value = hours < 10 ? "0" + hours : "" + hours;
 
-    if (secRemaining.value <= 0) {
-        secRemaining.value = "00";
-        minRemaining.value = "00";
-        hoursRemaining.value = "00";
-        console.log("TEST: DANGER")
-        return clearInterval(updateTimeRemaining);
-    }
 }
 setInterval(() => {
     updateTimeRemaining();
