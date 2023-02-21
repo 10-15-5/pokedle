@@ -58,12 +58,14 @@ p {
     z-index: 1;
     background-color: rgb(196, 243, 255);
     transition: opacity 0.3s;
+    visibility: hidden;
 }
 
 
 
 /* Show the tooltip text when you mouse over the tooltip container */
 .square-content:hover .tooltip {
+    visibility: visible;
     opacity: 1;
     transition-delay: 0.8s;
 }
