@@ -86,16 +86,16 @@ func UpdateDailySecretPokemon() error {
 	return err
 }
 
-func UpdateCurrentDailyStatsWithGamesWon() error {
+func UpdateCurrentDailyStatsWithGamesWon() (models.DailyStats, error) {
 	r := dailyStats.GetPokemonRepository(MongoClient)
 
 	currentTime := time.Now()
 
 	currentDate := currentTime.Format("2006-01-02")
 
-	err := r.UpdateDailyGuessCount(context.TODO(), currentDate)
+	result, err := r.UpdateDailyGuessCount(context.TODO(), currentDate)
 
-	return err
+	return result, err
 }
 
 func GetDailyStats(date string) (models.DailyStats, error) {

@@ -33,15 +33,13 @@ func NewSecretPokemon(c *gin.Context) {
 // Dont allow for param/payload here for security reasons
 func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
 	//TODO: add guard so single user cant spam this, use user cookie to identify, maybe even IP identification
-	err := services.UpdateCurrentDailyStatsWithGamesWon()
+	dailyStats, err := services.UpdateCurrentDailyStatsWithGamesWon()
 
 	if err != nil {
 		c.AbortWithStatus(500)
 	}
 
-	c.JSON(200, gin.H{
-		"message": "Games Won Updated",
-	})
+	c.IndentedJSON(http.StatusOK, dailyStats.GamesWon)
 }
 
 func GetDailyStats(c *gin.Context) {
