@@ -44,7 +44,7 @@ const updateTimeRemaining = () => {
         secRemaining.value = "00";
         minRemaining.value = "00";
         hoursRemaining.value = "00";
-        console.log("TEST: DANGER")
+
         return clearInterval(updateTimeRemaining);
     }
     

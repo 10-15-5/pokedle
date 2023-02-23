@@ -6,28 +6,9 @@
 </template>
 
 <script setup>
-import { onBeforeMount, ref, watch } from 'vue';
-import {getDailyStats} from '../services/service.js';
-
-const dailyGamesWon = ref(0);
 
 const props = defineProps({
-    isGameWon: Boolean
-});
-
-
-const updateDailyGamesWonCount = async () => {
-    var date = (new Date()).toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD
-    const res = await getDailyStats(date);
-    dailyGamesWon.value = res.data.gamesWon;
-}
-
-watch(() => props.isGameWon, () => {
-    updateDailyGamesWonCount();
-});
-
-onBeforeMount(async () =>{ 
-    await updateDailyGamesWonCount()
+    dailyGamesWon: Number
 });
 
 </script>

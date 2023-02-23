@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"net/http"
 
 	"github.com/gabr0236/pokedle/server/data"
@@ -14,7 +13,7 @@ func GetSecretPokemon(c *gin.Context) {
 	secretPokemon, err := services.GetSecretPokemon()
 
 	if err != nil {
-		c.AbortWithStatus(500)
+		c.AbortWithStatus(http.StatusInternalServerError)
 	}
 
 	c.IndentedJSON(http.StatusOK, secretPokemon)
@@ -36,23 +35,20 @@ func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
 	dailyStats, err := services.UpdateCurrentDailyStatsWithGamesWon()
 
 	if err != nil {
-		c.AbortWithStatus(500)
+		c.AbortWithStatus(http.StatusInternalServerError)
 	}
 
-	c.IndentedJSON(http.StatusOK, dailyStats.GamesWon)
+	c.JSON(http.StatusOK, gin.H{"gamesWon": dailyStats.GamesWon})
 }
 
 func GetDailyStats(c *gin.Context) {
 
 	dailyStats, err := services.GetDailyStats(c.Param("date"))
 
-	fmt.Println(err)
-
 	if err != nil && err != mongo.ErrNoDocuments {
-		c.AbortWithStatus(500)
-		return
+		c.AbortWithStatus(http.StatusInternalServerError)
 	}
 
-	c.IndentedJSON(http.StatusOK, dailyStats)
+	c.JSON(http.StatusOK, dailyStats)
 
 }

@@ -13,7 +13,7 @@
                 <GameWinContainer v-else
                                   :pokemon="state.guesses[0]"
                                   :color="colors.at(-1)" />
-                <DailyGamesWonContainer :isGameWon="isGameWon" />
+                <DailyGamesWonContainer :dailyGamesWon="dailyGamesWon" />
                 <div v-if="state.guesses.length"
                      class="guess-container">
                     <SquareContentHeader class="mb-n1" />
@@ -45,10 +45,10 @@ import SearchField from './components/SearchField.vue';
 import pokemonData from '../server/data/pokemonData-v4.json';
 import HeaderContainer from './components/HeaderContainer.vue';
 import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
-import { onMounted, reactive, ref } from 'vue';
+import { onMounted, reactive, ref, onBeforeMount } from 'vue';
 import { getGuessResults } from './services/guess';
-import { getSecretPokemon, newSecretPokemon, updateDailyGamesWonCount } from './services/service';
-import confetti from 'canvas-confetti'
+import * as service from './services/service.js';
+import confetti from 'canvas-confetti';
 
 //Use ref here? https://github.com/vuejs/docs/issues/801#issuecomment-757587022
 const state = reactive({
@@ -57,14 +57,22 @@ const state = reactive({
 });
 const isGameWon = ref(false);
 const isSearchFieldDisabled = ref(false);
+const dailyGamesWon = ref(0);
 
 let colors = [];
 let secretPokemon;
 
-const getRandomColor = () => {
-    const random = Math.random() * 100;
-    return random < 5 ? 'shiny' : 'normal';
+const getRandomColor = () => Math.random() * 100 < 5 ? 'shiny' : 'normal';
+
+const setDailyGamesWonCount = async () => {
+    var date = (new Date()).toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD
+    const res = await service.getDailyStats(date);
+    dailyGamesWon.value = res.data.gamesWon;
 }
+
+onBeforeMount(async () =>{ 
+    await setDailyGamesWonCount()
+});
 
 const removePokemonFromGuessPool = (guess) => {
     let guessRemovedFromList = false;
@@ -84,6 +92,11 @@ const removePokemonFromGuessPool = (guess) => {
     }
 }
 
+const incrementGamesWonCount = async () => {
+    const result = await service.updateDailyGamesWonCount();
+    dailyGamesWon.value = result.data.gamesWon;
+}
+
 const decideGame = (guess) => {
     if (guess === secretPokemon.name) {
         isSearchFieldDisabled.value = true;
@@ -94,7 +107,7 @@ const decideGame = (guess) => {
             isGameWon.value = true;
             localStorage.setItem('isGameWon', 'true');
             console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
-            updateDailyGamesWonCount();
+            incrementGamesWonCount();
         }, 2750);
     } else {
         console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");
@@ -170,13 +183,13 @@ const setNewDate = () => localStorage
 const setNewSecretPokemon = async () => {
     //TODO: currently we set new secret pokemon every day at 00:00. 
     // Users will see a random pokemon each, since we rely on this instead of job/CDN
-    const response = await newSecretPokemon();
+    const response = await service.newSecretPokemon();
     secretPokemon = response.data;
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 }
 
 const setSecretPokemon = async () => {
-    const response = await getSecretPokemon();
+    const response = await service.getSecretPokemon();
     secretPokemon = response.data;
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 }
@@ -189,7 +202,7 @@ onMounted(async () => {
     if (parseInt(dayOfLastUpdate) == new Date().getUTCDate()) {
         loadSecretPokemon();
 
-        const currSecretPokemon = await (await getSecretPokemon()).data;
+        const currSecretPokemon = await (await service.getSecretPokemon()).data;
 
         if (secretPokemon && secretPokemon?.name === currSecretPokemon?.name) {
             loadColors();
@@ -212,7 +225,7 @@ onMounted(async () => {
 
 const revealPokemon = async () => {
     console.log(localStorage.getItem('secretPokemon'))
-    const backendResponse = await getSecretPokemon();
+    const backendResponse = await service.getSecretPokemon();
     console.log(backendResponse.data)
 }
 
