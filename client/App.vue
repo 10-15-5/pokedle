@@ -34,7 +34,7 @@
             <v-btn @click="lauchConfetti">test confetti</v-btn>
         </div>
         <!-- <HomeView /> -->
-</v-app>
+    </v-app>
 </template>
 
 <script setup>
@@ -70,7 +70,7 @@ const setDailyGamesWonCount = async () => {
     dailyGamesWon.value = res.data.gamesWon;
 }
 
-onBeforeMount(async () =>{ 
+onBeforeMount(async () => {
     await setDailyGamesWonCount()
 });
 
@@ -194,7 +194,7 @@ const setSecretPokemon = async () => {
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 }
 
-onMounted(async () => {
+const loadGameData = async () => {
     const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
     if (!dayOfLastUpdate) setNewDate();
 
@@ -221,6 +221,19 @@ onMounted(async () => {
         //TODO: this should be replaced with CDN
         await setNewSecretPokemon();
     }
+}
+
+getUserDataOrCreateCookie = async () => {
+    
+}
+
+onMounted(async () => {
+
+    await Promise.all([
+        loadGameData(),
+        getUserDataOrCreateCookie(),
+    ])
+
 });
 
 const revealPokemon = async () => {
@@ -247,9 +260,9 @@ const lauchConfetti = () => {
         scalar: 1.4,
     };
 
-    if(colors.at(-1) === 'shiny') {
+    if (colors.at(-1) === 'shiny') {
         defaults.shapes = ['star'],
-        defaults.colors = ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8']
+            defaults.colors = ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8']
         defaults.scalar = 1.1
         particleCount = 90;
     }
