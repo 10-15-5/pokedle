@@ -11,6 +11,7 @@ import (
 	"github.com/gabr0236/pokedle/server/repository/dailyStats"
 	"github.com/gabr0236/pokedle/server/repository/secretPokemon"
 	"github.com/gabr0236/pokedle/server/repository/user"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -105,6 +106,12 @@ func GetDailyStats(date string) (models.DailyStats, error) {
 	dailyStats, err := r.GetDailyStats(context.TODO(), date)
 
 	return dailyStats, err
+}
+
+func GetUser(userId primitive.ObjectID) models.User {
+	r := user.GetUserRepository(MongoClient)
+
+	return r.GetUser(userId)
 }
 
 func SaveUser(newUser models.User) error {

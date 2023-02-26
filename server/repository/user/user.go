@@ -5,6 +5,8 @@ import (
 	"os"
 
 	"github.com/gabr0236/pokedle/server/models"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -24,6 +26,19 @@ func GetUserRepository(mongoClient *mongo.Client) *userRepository {
 		client: *mongoClient,
 	}
 	return r
+}
+
+func (r *userRepository) GetUser(userId primitive.ObjectID) models.User {
+
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+
+	result := coll.FindOne(context.Background(), bson.M{"_id": userId})
+
+	var user models.User
+
+	result.Decode(&user)
+
+	return user
 }
 
 func (r *userRepository) InsertNewUser(user models.User) error {

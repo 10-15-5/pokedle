@@ -48,6 +48,7 @@ import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
 import { onMounted, reactive, ref, onBeforeMount } from 'vue';
 import { getGuessResults } from './services/guess';
 import * as service from './services/service.js';
+import * as helpers from './helpers.js';
 import confetti from 'canvas-confetti';
 
 //Use ref here? https://github.com/vuejs/docs/issues/801#issuecomment-757587022
@@ -223,14 +224,31 @@ const loadGameData = async () => {
     }
 }
 
-const createUser = () => service.createUser();
+
+const createOrGetUser = async () => {
+    const {userId} = helpers.getCookie(document);
+
+    if(!userId){
+        await service.createUser();
+        return undefined;
+    }
+
+    const response = await service.getUser(userId);
+
+    return response.data.user;
+}
+
 
 onMounted(async () => {
 
-    await Promise.all([
+    const [_, user] = await Promise.all([
         loadGameData(),
-        createUser(),
+        createOrGetUser(),
     ]);
+
+    if(user){
+        //TODO: set user data
+    }
 
 });
 

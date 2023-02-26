@@ -1,6 +1,7 @@
 package controllers
 
 import (
+	"fmt"
 	"math"
 	"net/http"
 	"os"
@@ -9,6 +10,7 @@ import (
 	"github.com/gabr0236/pokedle/server/models"
 	"github.com/gabr0236/pokedle/server/services"
 	"github.com/gin-gonic/gin"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -32,9 +34,8 @@ func NewSecretPokemon(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, secretPokemon)
 }
 
-// Dont allow for param/payload here for security reasons
 func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
-	//TODO: add guard so single user cant spam this, use user cookie to identify, maybe even IP identification
+
 	dailyStats, err := services.UpdateCurrentDailyStatsWithGamesWon()
 
 	if err != nil {
@@ -53,6 +54,24 @@ func GetDailyStats(c *gin.Context) {
 	}
 
 	c.JSON(http.StatusOK, dailyStats)
+
+}
+
+func GetUser(c *gin.Context) {
+
+	userId := c.Param("userId")
+
+	mongoUserId, err := primitive.ObjectIDFromHex(userId)
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+	}
+
+	user := services.GetUser(mongoUserId)
+
+	fmt.Println(user)
+
+	c.JSON(http.StatusOK, gin.H{"user": user})
 
 }
 

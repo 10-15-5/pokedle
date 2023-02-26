@@ -23,6 +23,8 @@ func SetupRoutes(router *gin.Engine) {
 		// curl http://localhost:3000/api/daily-stats/21321 --request "GET"
 		api.GET("/daily-stats/:date", controllers.GetDailyStats)
 
+		api.GET("/user/:userId", controllers.GetUser)
+
 		api.POST("/user", controllers.CreateUser)
 	}
 
