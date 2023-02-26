@@ -50,6 +50,7 @@ import { getGuessResults } from './services/guess';
 import * as service from './services/service.js';
 import * as helpers from './helpers.js';
 import confetti from 'canvas-confetti';
+import { useStore } from './stores/store';
 
 //Use ref here? https://github.com/vuejs/docs/issues/801#issuecomment-757587022
 const state = reactive({
@@ -59,6 +60,7 @@ const state = reactive({
 const isGameWon = ref(false);
 const isSearchFieldDisabled = ref(false);
 const dailyGamesWon = ref(0);
+const store = useStore();
 
 let colors = [];
 let secretPokemon;
@@ -234,7 +236,7 @@ const createOrGetUser = async () => {
     }
 
     const response = await service.getUser(userId);
-
+    console.log(response.data)
     return response.data.user;
 }
 
@@ -246,8 +248,11 @@ onMounted(async () => {
         createOrGetUser(),
     ]);
 
+    console.log(user)
+
     if(user){
-        //TODO: set user data
+        store.setUser(user);
+        console.log(store.user)
     }
 
 });

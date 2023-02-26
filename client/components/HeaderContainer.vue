@@ -1,7 +1,7 @@
 <template>
     <div class="header-container">
         <div class="header-icon">
-            <p class="fire-emoji">🔥</p>
+            <p class="fire-emoji">🔥<p>{{ store.user.currentStreak }}</p></p>
         </div>
         <div class="header-icon"
              @click="dialogSettings = true">
@@ -19,6 +19,7 @@
                     size="small">
             </v-icon>
         </div>
+        <!-- TODO: this should be a view -->
         <v-dialog class="dialog-content"
                   v-model="dialogSettings">
             <v-card class="card-content" variant="outlined">
@@ -31,6 +32,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <!-- TODO: this should be a view -->
         <v-dialog class="dialog-content"
                   v-model="dialogStatistics">
             <v-card class="card-content" variant="outlined">
@@ -43,6 +45,7 @@
                 </v-card-actions>
             </v-card>
         </v-dialog>
+        <!-- TODO: this should be a view -->
         <v-dialog class="dialog-content"
                   v-model="dialogInfo">
             <v-card class="card-content" variant="outlined">
@@ -67,11 +70,12 @@
 </template>
 
 <script setup>
+import { useStore } from '../stores/store';
 import { ref } from 'vue';
-
-const dialogInfo = ref(false);
-const dialogStatistics = ref(false);
-const dialogSettings = ref(false);
+const store = useStore();
+let dialogInfo = ref(false);
+let dialogStatistics = ref(false);
+let dialogSettings = ref(false);
 
 </script>
 
