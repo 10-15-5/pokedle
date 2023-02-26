@@ -1,9 +1,12 @@
 package controllers
 
 import (
+	"math"
 	"net/http"
+	"os"
 
 	"github.com/gabr0236/pokedle/server/data"
+	"github.com/gabr0236/pokedle/server/models"
 	"github.com/gabr0236/pokedle/server/services"
 	"github.com/gin-gonic/gin"
 	"go.mongodb.org/mongo-driver/mongo"
@@ -51,4 +54,17 @@ func GetDailyStats(c *gin.Context) {
 
 	c.JSON(http.StatusOK, dailyStats)
 
+}
+
+func CreateUser(c *gin.Context) {
+
+	user := models.NewUser()
+
+	if err := services.SaveUser(user); err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+	}
+
+	c.SetCookie("userId", user.ID.Hex(), math.MaxInt32, "/", os.Getenv("DOMAIN"), true, false) //TODO: eventually make httpOnly=true
+
+	c.Writer.WriteHeader(http.StatusCreated)
 }

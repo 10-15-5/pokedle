@@ -8,9 +8,12 @@ const updateDailyGamesWonCount = () => apiClient().post(`games-won`);
 
 const getDailyStats = (date) => apiClient().get(`daily-stats/${date}`);
 
+const createUser = () => apiClient().post(`user`);
+
 export {
     getSecretPokemon,
     newSecretPokemon,
     updateDailyGamesWonCount,
-    getDailyStats
+    getDailyStats,
+    createUser
 }

@@ -10,6 +10,7 @@ import (
 	"github.com/gabr0236/pokedle/server/models"
 	"github.com/gabr0236/pokedle/server/repository/dailyStats"
 	"github.com/gabr0236/pokedle/server/repository/secretPokemon"
+	"github.com/gabr0236/pokedle/server/repository/user"
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
@@ -104,4 +105,10 @@ func GetDailyStats(date string) (models.DailyStats, error) {
 	dailyStats, err := r.GetDailyStats(context.TODO(), date)
 
 	return dailyStats, err
+}
+
+func SaveUser(newUser models.User) error {
+	r := user.GetUserRepository(MongoClient)
+
+	return r.InsertNewUser(newUser)
 }

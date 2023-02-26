@@ -22,6 +22,8 @@ func SetupRoutes(router *gin.Engine) {
 
 		// curl http://localhost:3000/api/daily-stats/21321 --request "GET"
 		api.GET("/daily-stats/:date", controllers.GetDailyStats)
+
+		api.POST("/user", controllers.CreateUser)
 	}
 
 	// curl http://localhost:3000/health --include --header "Content-Type: application/json" --request "GET"

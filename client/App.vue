@@ -223,16 +223,14 @@ const loadGameData = async () => {
     }
 }
 
-getUserDataOrCreateCookie = async () => {
-    
-}
+const createUser = () => service.createUser();
 
 onMounted(async () => {
 
     await Promise.all([
         loadGameData(),
-        getUserDataOrCreateCookie(),
-    ])
+        createUser(),
+    ]);
 
 });
 
