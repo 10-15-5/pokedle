@@ -1,7 +1,8 @@
 <template>
     <div class="header-container">
         <div class="header-icon">
-            <p class="fire-emoji">🔥<p>{{ store.user.currentStreak }}</p></p>
+            <p class="fire-emoji">🔥</p>
+            <p class="streak-count mt-2">{{ store.user.currentStreak }}</p>
         </div>
         <div class="header-icon"
              @click="dialogSettings = true">
@@ -95,12 +96,18 @@ let dialogSettings = ref(false);
 }
 
 .fire-emoji {
-    font-size: x-large;
+    font-size: 30px;
+}
+
+.streak-count {
+    position: absolute;
+    font-weight: bold;
+    margin-left: 1px;
 }
 
 .card-text,
 .card-title,
-.dialog-btn {
+.dialog-btn, .streak-count {
     font-family: pkmEmerald;
 }
 .card-title {
