@@ -7,18 +7,18 @@ import (
 )
 
 type GameWon struct {
-	CreatedAt       time.Time `bson:"createdAt"`
-	NumberOfGuesses int       `bson:"numberOfGuesses"`
+	CreatedAt       time.Time `json:"createdAt" bson:"createdAt"`
+	NumberOfGuesses int       `json:"numberOfGuesses" bson:"numberOfGuesses"`
 }
 
 type User struct {
-	ID            primitive.ObjectID `bson:"_id,omitempty"`
-	CreatedAt     time.Time          `bson:"createdAt"`
-	UpdatedAt     time.Time          `bson:"updatedAt"`
-	CurrentStreak int                `bson:"currentStreak"`
-	MaxStreak     int                `bson:"maxStreak"`
-	FirstTryWins  int                `bson:"firstTryWins"`
-	GamesWon      []GameWon          `bson:"gamesWon"`
+	ID            primitive.ObjectID `json:"_id,omitempty" bson:"_id,omitempty"`
+	CreatedAt     time.Time          `json:"createdAt" bson:"createdAt"`
+	UpdatedAt     time.Time          `json:"updatedAt" bson:"updatedAt"`
+	CurrentStreak int                `json:"currentStreak" bson:"currentStreak"`
+	MaxStreak     int                `json:"maxStreak" bson:"maxStreak"`
+	FirstTryWins  int                `json:"firstTryWins" bson:"firstTryWins"`
+	GamesWon      []GameWon          `json:"gamesWon" bson:"gamesWon"`
 }
 
 func NewUser() User {
