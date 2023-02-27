@@ -26,6 +26,8 @@ func SetupRoutes(router *gin.Engine) {
 		api.GET("/user/:userId", controllers.GetUser)
 
 		api.POST("/user", controllers.CreateUser)
+
+		api.POST("/user/:userId/gamesWon", controllers.UpdateUserGameWon)
 	}
 
 	// curl http://localhost:3000/health --include --header "Content-Type: application/json" --request "GET"

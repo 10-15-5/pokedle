@@ -3,11 +3,13 @@ package user
 import (
 	"context"
 	"os"
+	"time"
 
 	"github.com/gabr0236/pokedle/server/models"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
+	"go.mongodb.org/mongo-driver/mongo/options"
 )
 
 const collectionName = "users"
@@ -48,4 +50,36 @@ func (r *userRepository) InsertNewUser(user models.User) error {
 	_, err := coll.InsertOne(context.Background(), user)
 
 	return err
+}
+
+func (r *userRepository) InsertNewGameWon(
+	userId primitive.ObjectID,
+	gameWon models.GameWon,
+	currentStreak int,
+	maxStreak int,
+	isFirstTryWin int,
+) models.User {
+
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+
+	after := options.After
+
+	opt := options.FindOneAndUpdateOptions{
+		ReturnDocument: &after,
+	}
+
+	result := coll.FindOneAndUpdate(context.Background(),
+		bson.M{"_id": userId},
+		bson.M{
+			"$push": bson.M{"gamesWon": gameWon},
+			"$set":  bson.M{"currentStreak": currentStreak, "maxStreak": maxStreak, "updatedAt": time.Now()},
+			"$inc":  bson.M{"firstTryWins": isFirstTryWin},
+		},
+		&opt)
+
+	var user models.User
+
+	result.Decode(&user)
+
+	return user
 }

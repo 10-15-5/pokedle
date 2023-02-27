@@ -91,9 +91,7 @@ func UpdateDailySecretPokemon() error {
 func UpdateCurrentDailyStatsWithGamesWon() (models.DailyStats, error) {
 	r := dailyStats.GetPokemonRepository(MongoClient)
 
-	currentTime := time.Now()
-
-	currentDate := currentTime.Format("2006-01-02")
+	currentDate := time.Now().Format("2006-01-02")
 
 	result, err := r.UpdateDailyGuessCount(context.TODO(), currentDate)
 
@@ -118,4 +116,34 @@ func SaveUser(newUser models.User) error {
 	r := user.GetUserRepository(MongoClient)
 
 	return r.InsertNewUser(newUser)
+}
+
+func CalculateStreak(gamesWon []models.GameWon, currStreak int) int {
+
+	if len(gamesWon) == 0 {
+		return 1
+	}
+
+	lastGameWon := gamesWon[len(gamesWon)-1]
+
+	yesterday := time.Now().Add(-24 * time.Hour)
+
+	if DateEqual(yesterday, lastGameWon.CreatedAt) {
+		return currStreak + 1
+	}
+
+	return 1
+}
+
+func FindAndUpdateUserWithGameWon(
+	userId primitive.ObjectID,
+	gameWon models.GameWon,
+	currentStreak int,
+	maxStreak int,
+	isFirstTryWin int,
+) models.User {
+
+	r := user.GetUserRepository(MongoClient)
+
+	return r.InsertNewGameWon(userId, gameWon, currentStreak, maxStreak, isFirstTryWin)
 }

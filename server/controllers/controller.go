@@ -5,6 +5,7 @@ import (
 	"math"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/gabr0236/pokedle/server/data"
 	"github.com/gabr0236/pokedle/server/models"
@@ -37,7 +38,7 @@ func NewSecretPokemon(c *gin.Context) {
 func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
 
 	dailyStats, err := services.UpdateCurrentDailyStatsWithGamesWon()
-
+	//TODO: increment daily first try wins
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 	}
@@ -86,4 +87,58 @@ func CreateUser(c *gin.Context) {
 	c.SetCookie("userId", user.ID.Hex(), math.MaxInt32, "/", os.Getenv("DOMAIN"), true, false) //TODO: eventually make httpOnly=true
 
 	c.Writer.WriteHeader(http.StatusCreated)
+}
+
+type UpdateUserGameWonRequest struct {
+	NumberOfGuesses int `json:"numberOfGuesses"`
+}
+
+func UpdateUserGameWon(c *gin.Context) {
+
+	userId := c.Param("userId")
+
+	mongoUserId, err := primitive.ObjectIDFromHex(userId)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "UserId string is not a valid ObjectID")
+		return
+	}
+
+	user := services.GetUser(mongoUserId)
+
+	if len(user.GamesWon) > 0 {
+
+		lastGameWon := user.GamesWon[len(user.GamesWon)-1]
+
+		//TODO: test this and then comment out untill 1 guess a day is implemented
+		if services.DateEqual(time.Now(), lastGameWon.CreatedAt) {
+			c.JSON(http.StatusBadRequest, "User has already won a game today")
+			return
+		}
+
+	}
+
+	var updateUserGameWonRequest UpdateUserGameWonRequest
+
+	c.BindJSON(&updateUserGameWonRequest)
+
+	if updateUserGameWonRequest.NumberOfGuesses <= 0 {
+		c.JSON(http.StatusBadRequest, "Number of guesses cannot be <= 0")
+		return
+	}
+
+	gameWon := models.GameWon{
+		NumberOfGuesses: updateUserGameWonRequest.NumberOfGuesses,
+		CreatedAt:       time.Now(),
+	}
+
+	streak := services.CalculateStreak(user.GamesWon, user.CurrentStreak)
+
+	maxStreak := int(math.Max(float64(streak), float64(user.MaxStreak)))
+
+	isFirstTryWin := services.If(updateUserGameWonRequest.NumberOfGuesses == 1, 1, 0)
+
+	updatedUser := services.FindAndUpdateUserWithGameWon(mongoUserId, gameWon, streak, maxStreak, isFirstTryWin)
+
+	c.JSON(http.StatusOK, gin.H{"user": updatedUser})
 }
