@@ -8,11 +8,11 @@ const updateDailyGamesWonCount = () => apiClient().post(`games-won`);
 
 const getDailyStats = (date) => apiClient().get(`daily-stats/${date}`);
 
-const getUser = (userId) => apiClient().get(`user/${userId}`);
+const getUser = (userId) => apiClient().get(`users/${userId}`);
 
-const createUser = () => apiClient().post(`user`);
+const createUser = () => apiClient().post(`users`);
 
-const updateUserWithGameWon = (userId,numberOfGuesses) => apiClient().post(`user/${userId}/gamesWon`, {numberOfGuesses});
+const updateUserWithGameWon = (userId,numberOfGuesses) => apiClient().post(`users/${userId}/gamesWon`, {numberOfGuesses});
 
 export {
     getSecretPokemon,
