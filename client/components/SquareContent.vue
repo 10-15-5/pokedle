@@ -43,7 +43,7 @@
 </template>
 
 <script setup>
-//getHabitatImage(habitat)
+
 import { guessState } from '../constants.js';
 import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { getHabitatImage } from '../services/assets.js';
