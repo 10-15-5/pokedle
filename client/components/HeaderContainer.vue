@@ -1,6 +1,7 @@
 <template>
     <div class="header-container">
         <div class="header-icon">
+            <!-- <v-img :src="'./client/assets/fire-emoji.png'"></v-img> -->
             <p class="fire-emoji">🔥</p>
             <p class="streak-count mt-2">{{ store.user.currentStreak }}</p>
         </div>
