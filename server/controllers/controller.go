@@ -90,13 +90,24 @@ func CreateUser(c *gin.Context) {
 }
 
 type UpdateUserGameWonRequest struct {
-	NumberOfGuesses int `json:"numberOfGuesses"`
+	NumberOfGuesses int `json:"numberOfGuesses" bson:"numberOfGuesses" binding:"required"`
 }
 
 func UpdateUserGameWon(c *gin.Context) {
 
-	userId := c.Param("userId")
+	var updateUserGameWonRequest UpdateUserGameWonRequest
 
+	if err := c.ShouldBindJSON(&updateUserGameWonRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	if updateUserGameWonRequest.NumberOfGuesses <= 0 {
+		c.JSON(http.StatusBadRequest, "Number of guesses cannot be <= 0")
+		return
+	}
+
+	userId := c.Param("userId")
 	mongoUserId, err := primitive.ObjectIDFromHex(userId)
 
 	if err != nil {
@@ -105,6 +116,13 @@ func UpdateUserGameWon(c *gin.Context) {
 	}
 
 	user := services.GetUser(mongoUserId)
+
+	gameWon := models.GameWon{
+		NumberOfGuesses: updateUserGameWonRequest.NumberOfGuesses,
+		CreatedAt:       time.Now(),
+	}
+
+	var streak int
 
 	if len(user.GamesWon) > 0 {
 
@@ -116,23 +134,11 @@ func UpdateUserGameWon(c *gin.Context) {
 			return
 		}
 
+		streak = services.CalculateStreak(lastGameWon, user.CurrentStreak)
+
+	} else {
+		streak = 1
 	}
-
-	var updateUserGameWonRequest UpdateUserGameWonRequest
-
-	c.BindJSON(&updateUserGameWonRequest)
-
-	if updateUserGameWonRequest.NumberOfGuesses <= 0 {
-		c.JSON(http.StatusBadRequest, "Number of guesses cannot be <= 0")
-		return
-	}
-
-	gameWon := models.GameWon{
-		NumberOfGuesses: updateUserGameWonRequest.NumberOfGuesses,
-		CreatedAt:       time.Now(),
-	}
-
-	streak := services.CalculateStreak(user.GamesWon, user.CurrentStreak)
 
 	maxStreak := int(math.Max(float64(streak), float64(user.MaxStreak)))
 

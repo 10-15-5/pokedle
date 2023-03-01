@@ -1,0 +1,25 @@
+import {apiClient} from './httpClient.js';
+
+const getSecretPokemon = () => apiClient().get(`secret-pokemons`);
+
+const newSecretPokemon = () => apiClient().post(`secret-pokemons`);
+
+const updateDailyGamesWonCount = () => apiClient().post(`games-won`);
+
+const getDailyStats = (date) => apiClient().get(`daily-stats/${date}`);
+
+const getUser = (userId) => apiClient().get(`user/${userId}`);
+
+const createUser = () => apiClient().post(`user`);
+
+const updateUserWithGameWon = (userId,numberOfGuesses) => apiClient().post(`user/${userId}/gamesWon`, {numberOfGuesses});
+
+export {
+    getSecretPokemon,
+    newSecretPokemon,
+    updateDailyGamesWonCount,
+    getDailyStats,
+    createUser,
+    getUser,
+    updateUserWithGameWon
+}

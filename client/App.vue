@@ -47,7 +47,7 @@ import HeaderContainer from './components/HeaderContainer.vue';
 import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
 import { onMounted, reactive, ref, onBeforeMount } from 'vue';
 import { getGuessResults } from './services/guess';
-import * as service from './services/service.js';
+import * as service from './services/apiService.js';
 import * as helpers from './helpers.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
@@ -96,8 +96,15 @@ const removePokemonFromGuessPool = (guess) => {
 }
 
 const incrementGamesWonCount = async () => {
-    const result = await service.updateDailyGamesWonCount();
-    dailyGamesWon.value = result.data.gamesWon;
+    const response = await service.updateDailyGamesWonCount();
+    dailyGamesWon.value = response.data.gamesWon;
+}
+
+const updateUserWithGameWon = async () => {
+    const {userId} = helpers.getCookie(document);
+    console.log(state.guesses.length)
+    const response = await service.updateUserWithGameWon(userId, state.guesses.length);
+    store.setUser(response.data.user)
 }
 
 const decideGame = (guess) => {
@@ -111,6 +118,7 @@ const decideGame = (guess) => {
             localStorage.setItem('isGameWon', 'true');
             console.log("🥳🎉🎊 Congrats! You guessed the secret pokemon: " + guess);
             incrementGamesWonCount();
+            updateUserWithGameWon();
         }, 2750);
     } else {
         console.log("❌❌❌ Wrong Guess. The secret pokemon was not " + guess + " ❌❌❌");

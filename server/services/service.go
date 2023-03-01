@@ -118,13 +118,7 @@ func SaveUser(newUser models.User) error {
 	return r.InsertNewUser(newUser)
 }
 
-func CalculateStreak(gamesWon []models.GameWon, currStreak int) int {
-
-	if len(gamesWon) == 0 {
-		return 1
-	}
-
-	lastGameWon := gamesWon[len(gamesWon)-1]
+func CalculateStreak(lastGameWon models.GameWon, currStreak int) int {
 
 	yesterday := time.Now().Add(-24 * time.Hour)
 
