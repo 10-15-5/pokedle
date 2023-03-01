@@ -88,12 +88,14 @@ func UpdateDailySecretPokemon() error {
 	return err
 }
 
-func UpdateCurrentDailyStatsWithGamesWon(isFirstTryWin int) (models.DailyStats, error) {
+func UpdateCurrentDailyStatsWithGamesWon(numberOfGuesses int) (models.DailyStats, error) {
 	r := dailyStats.GetPokemonRepository(MongoClient)
 
 	currentDate := time.Now().Format("2006-01-02")
 
-	result, err := r.UpdateDailyGuessCount(context.TODO(), currentDate, isFirstTryWin)
+	isFirstTryWin := If(numberOfGuesses == 1, 1, 0)
+
+	result, err := r.UpdateDailyGuessCount(context.TODO(), currentDate, isFirstTryWin, numberOfGuesses)
 
 	return result, err
 }

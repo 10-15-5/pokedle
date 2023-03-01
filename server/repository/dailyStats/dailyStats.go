@@ -24,15 +24,24 @@ func GetPokemonRepository(mongoClient *mongo.Client) *dailyStatsRepository {
 	return r
 }
 
-func (r *dailyStatsRepository) UpdateDailyGuessCount(ctx context.Context, date string, isFirstTryWin int) (models.DailyStats, error) {
+func (r *dailyStatsRepository) UpdateDailyGuessCount(ctx context.Context, date string, isFirstTryWin int, numberOfGuesses int) (models.DailyStats, error) {
 	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
 
-	filter := bson.M{"date": date}
-	update := bson.M{"$inc": bson.M{"gamesWon": 1, "firstTryWins": isFirstTryWin}}
 	options := options.FindOneAndUpdate().SetUpsert(true).SetReturnDocument(options.After)
 
 	var result models.DailyStats
-	err := coll.FindOneAndUpdate(context.Background(), filter, update, options).Decode(&result)
+	err := coll.FindOneAndUpdate(
+		context.Background(),
+		bson.M{"date": date},
+		bson.M{
+			"$inc": bson.M{
+				"gamesWon":        1,
+				"firstTryWins":    isFirstTryWin,
+				"numberOfGuesses": numberOfGuesses,
+			},
+		},
+		options,
+	).Decode(&result)
 
 	return result, err
 }

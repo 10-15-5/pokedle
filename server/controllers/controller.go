@@ -48,9 +48,7 @@ func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
 		return
 	}
 
-	isFirstTryWin := services.If(updateUserGameWonRequest.NumberOfGuesses == 1, 1, 0)
-
-	dailyStats, err := services.UpdateCurrentDailyStatsWithGamesWon(isFirstTryWin)
+	dailyStats, err := services.UpdateCurrentDailyStatsWithGamesWon(updateUserGameWonRequest.NumberOfGuesses)
 	//TODO: increment daily first try wins
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
