@@ -53,7 +53,7 @@ func UpdateDailySecretPokemon() error {
 
 	r := secretPokemon.GetPokemonRepository(MongoClient)
 
-	recentSecretPokemons, err := r.FindRecentSecretPokemons(context.TODO(), 30)
+	recentSecretPokemons := r.FindRecentSecretPokemons(context.TODO(), 30)
 
 	//TODO: if recentSecretPokemons.length > 30 remove oldest doc
 
@@ -78,7 +78,7 @@ func UpdateDailySecretPokemon() error {
 		containsRandomPokemon = containsPokemonName(randomPokemon.Name, recentSecretPokemons)
 	}
 
-	_, err = r.InsertNewPokemon(context.TODO(), randomPokemon)
+	_, err := r.InsertNewPokemon(context.TODO(), randomPokemon)
 	if err != nil {
 		fmt.Println("Error when inserting pokemon")
 	}
@@ -88,12 +88,12 @@ func UpdateDailySecretPokemon() error {
 	return err
 }
 
-func UpdateCurrentDailyStatsWithGamesWon() (models.DailyStats, error) {
+func UpdateCurrentDailyStatsWithGamesWon(isFirstTryWin int) (models.DailyStats, error) {
 	r := dailyStats.GetPokemonRepository(MongoClient)
 
 	currentDate := time.Now().Format("2006-01-02")
 
-	result, err := r.UpdateDailyGuessCount(context.TODO(), currentDate)
+	result, err := r.UpdateDailyGuessCount(context.TODO(), currentDate, isFirstTryWin)
 
 	return result, err
 }

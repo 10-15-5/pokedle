@@ -52,7 +52,6 @@ import * as helpers from './helpers.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
 
-//Use ref here? https://github.com/vuejs/docs/issues/801#issuecomment-757587022
 const state = reactive({
     pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
     guesses: [],
@@ -60,6 +59,7 @@ const state = reactive({
 const isGameWon = ref(false);
 const isSearchFieldDisabled = ref(false);
 const dailyGamesWon = ref(0);
+const dailyFirstTryWins = ref(0)
 const store = useStore();
 
 let colors = [];
@@ -96,8 +96,10 @@ const removePokemonFromGuessPool = (guess) => {
 }
 
 const incrementGamesWonCount = async () => {
-    const response = await service.updateDailyGamesWonCount();
-    dailyGamesWon.value = response.data.gamesWon;
+    const response = await service.updateDailyGamesWonCount(state.guesses.length);
+    dailyGamesWon.value = response.data.dailyStats.gamesWon;
+    dailyFirstTryWins.value = response.data.dailyStats.firstTryWins;
+
 }
 
 const updateUserWithGameWon = async () => {

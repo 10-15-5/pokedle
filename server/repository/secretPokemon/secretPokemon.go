@@ -45,7 +45,7 @@ func (r *pokemonRepository) InsertNewPokemon(ctx context.Context, pokemon models
 func (r *pokemonRepository) FindCurrentSecretPokemon(ctx context.Context) (models.Pokemon, error) {
 	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
 
-	options := options.FindOne().SetSort(bson.D{{"_id", -1}})
+	options := options.FindOne().SetSort(bson.M{"_id": -1})
 
 	var secretPokemon models.Pokemon
 
@@ -54,7 +54,7 @@ func (r *pokemonRepository) FindCurrentSecretPokemon(ctx context.Context) (model
 	return secretPokemon, err
 }
 
-func (r *pokemonRepository) FindRecentSecretPokemons(ctx context.Context, limit int) ([]models.Pokemon, error) {
+func (r *pokemonRepository) FindRecentSecretPokemons(ctx context.Context, limit int) []models.Pokemon {
 
 	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
 
@@ -62,15 +62,13 @@ func (r *pokemonRepository) FindRecentSecretPokemons(ctx context.Context, limit 
 
 	options := options.Find()
 
-	options.SetSort(bson.D{{"_id", -1}})
+	options.SetSort(bson.M{"_id": -1})
 
 	options.SetLimit(int64(limit))
 
-	cursor, err := coll.Find(context.Background(), bson.D{}, options)
+	cursor, _ := coll.Find(context.Background(), bson.M{}, options)
 
-	if err = cursor.All(context.TODO(), &secretPokemons); err != nil {
-		panic(err)
-	}
+	cursor.All(context.TODO(), &secretPokemons)
 
-	return secretPokemons, err
+	return secretPokemons
 }

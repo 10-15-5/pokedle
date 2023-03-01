@@ -15,6 +15,10 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+type NumberOfGuessesRequest struct {
+	NumberOfGuesses int `json:"numberOfGuesses" bson:"numberOfGuesses" binding:"required"`
+}
+
 func GetSecretPokemon(c *gin.Context) {
 	secretPokemon, err := services.GetSecretPokemon()
 
@@ -37,13 +41,22 @@ func NewSecretPokemon(c *gin.Context) {
 
 func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
 
-	dailyStats, err := services.UpdateCurrentDailyStatsWithGamesWon()
+	var updateUserGameWonRequest NumberOfGuessesRequest
+
+	if err := c.ShouldBindJSON(&updateUserGameWonRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	isFirstTryWin := services.If(updateUserGameWonRequest.NumberOfGuesses == 1, 1, 0)
+
+	dailyStats, err := services.UpdateCurrentDailyStatsWithGamesWon(isFirstTryWin)
 	//TODO: increment daily first try wins
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 	}
 
-	c.JSON(http.StatusOK, gin.H{"gamesWon": dailyStats.GamesWon})
+	c.JSON(http.StatusOK, gin.H{"dailyStats": dailyStats})
 }
 
 func GetDailyStats(c *gin.Context) {
@@ -89,13 +102,9 @@ func CreateUser(c *gin.Context) {
 	c.Writer.WriteHeader(http.StatusCreated)
 }
 
-type UpdateUserGameWonRequest struct {
-	NumberOfGuesses int `json:"numberOfGuesses" bson:"numberOfGuesses" binding:"required"`
-}
-
 func UpdateUserGameWon(c *gin.Context) {
 
-	var updateUserGameWonRequest UpdateUserGameWonRequest
+	var updateUserGameWonRequest NumberOfGuessesRequest
 
 	if err := c.ShouldBindJSON(&updateUserGameWonRequest); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
