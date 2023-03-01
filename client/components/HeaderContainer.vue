@@ -103,6 +103,10 @@ let dialogSettings = ref(false);
     position: absolute;
     font-weight: bold;
     margin-left: 1px;
+    text-shadow: -0.5px 0.5px 1px #fffcfc,
+				  0.5px 0.5px 1px #ffffff,
+				  0.5px -0.5px 0 #ffffff,
+				  -0.5px -0.5px 0 #ffffff;
 }
 
 .card-text,
