@@ -1,7 +1,7 @@
 <template>
     <div>
         <v-text-field label="Type pokemon name"
-                      class="search-field"
+                      class="search-field border-black"
                       variant="solo"
                       hide-details
                       v-model="searchTerm"
@@ -9,7 +9,7 @@
                       v-click-outside="onClickOutsideSearchField"
                       :active="isSearchFieldActive"
                       @click="isSearchFieldActive = true" />
-        <v-card class="search-suggestion-dropdown"
+        <v-card class="search-suggestion-dropdown border-black bg-white"
                 variant="outlined"
                 v-if="searchPokemonNames.length && isSearchFieldActive">
             <v-virtual-scroll :items="searchPokemonNames"
@@ -28,7 +28,7 @@
                         </template>
                     </v-list-item>
                     <v-divider v-if="index + 1 < searchPokemonNames.length"
-                               class="suggestion-divider"
+                               class="suggestion-divider border-black"
                                thickness="2px"></v-divider>
                 </template>
             </v-virtual-scroll>
