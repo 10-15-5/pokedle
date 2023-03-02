@@ -1,5 +1,14 @@
 <template>
     <v-app id="app">
+        <div class="bg-white text-black dark:bg-black dark:text-white">
+            <p>TEST 1: "bg-white text-black dark:bg-black dark:text-white"</p>
+        </div>
+        <div class="bg-red-400 text-green-400 dark:bg-black dark:text-white">
+            <p>TEST 2: "bg-red-400 text-green-400 dark:bg-black dark:text-white"</p>
+        </div>
+        <div>
+            <p>IsDark: {{ isDark }}</p>
+        </div>
         <v-main>
             <div class="container">
                 <div>
@@ -51,7 +60,7 @@ import * as service from './services/apiService.js';
 import * as helpers from './helpers.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
-import {useDark, useToggle} from '@vueuse/core';
+import { useDark, useToggle } from '@vueuse/core';
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
@@ -332,6 +341,7 @@ const lauchConfetti = () => {
 html.dark {
     color-scheme: dark;
 }
+
 .game-button-container {
     display: flex;
     justify-content: center;

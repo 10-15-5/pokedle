@@ -22,6 +22,8 @@
     "express": "^4.18.2",
     "node": "18.13.0",
     "pinia": "^2.0.32",
+    "primeicons": "^6.0.1",
+    "primevue": "^3.23.0",
     "roboto-fontface": "*",
     "vue": "^3.2.45",
     "vue-flip": "^3.0.2",

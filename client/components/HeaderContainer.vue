@@ -4,7 +4,7 @@
             <p class="fire-emoji">🔥</p>
             <p class="streak-count mt-2">{{ store.user.currentStreak }}</p>
         </div>
-        <div class="header-icon bg-white border-black dark:bg-purple-500"
+        <div class="header-icon"
              @click="dialogSettings = true">
             <v-icon icon="mdi-cog"
                     size="small" />
@@ -83,7 +83,7 @@
                     artist/creator of images, please DM for removal or credit. </v-card-text>
                 <v-card-title class="card-title">Contact</v-card-title>
                 <v-card-text class="card-text"> If you have any questions/feedback/bug reports feel free to contact me on
-                    the email below. <br> > <a
+                    the email below. <br> <a
                        href="mailto: pokedle.contact@gmail.com">pokedle.contact@gmail.com</a></v-card-text>
                 <v-card-actions>
                     <v-btn class="dialog-btn"
