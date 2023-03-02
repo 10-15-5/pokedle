@@ -64,7 +64,6 @@ setInterval(() => {
 
 <style scoped>
 .card-container {
-    background-color: white;
     display: flex;
     flex-direction: column;
     justify-content: center;

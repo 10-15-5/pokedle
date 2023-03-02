@@ -22,7 +22,6 @@ import { guessFieldTitles, getGuessFieldTooltipsFromIndex } from '../constants.j
     display: flex;
     flex-direction: row;
     justify-content: center;
-    background-color: white;
     gap: 8px;
     padding: 8px 0 8px 8px;
     border-width: 2px;
@@ -35,9 +34,8 @@ import { guessFieldTitles, getGuessFieldTooltipsFromIndex } from '../constants.j
     height: 40px;
     display: flex;
     justify-content: center;
-    border-bottom: 2px solid rgb(0, 0, 0);
+    border-bottom: 2px solid;
     align-items: center;
-    color: rgb(0, 0, 0);
 }
 
 p {
@@ -49,14 +47,12 @@ p {
 
 .tooltip {
     opacity: 0;
-    color: rgb(0, 0, 0);
     text-align: center;
     padding: 6px;
     margin-top: -102px;
     border-width: 2px;
     position: absolute;
     z-index: 1;
-    background-color: rgb(196, 243, 255);
     transition: opacity 0.3s;
     visibility: hidden;
 }

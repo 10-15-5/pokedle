@@ -97,7 +97,6 @@ p {
 }
 
 .suggestion-divider {
-    color: rgb(0, 0, 0);
     opacity: 100%;
 }
 
@@ -110,7 +109,6 @@ p {
 .search-suggestion-dropdown {
     position: absolute;
     z-index: 2;
-    background-color: white;
     margin-top: -1px;
     border-width: 2px;
 

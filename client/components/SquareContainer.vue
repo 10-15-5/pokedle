@@ -36,7 +36,6 @@ const props = defineProps({
     justify-content: center;
     gap: 8px;
     padding: 8px 0 8px 8px;
-    background-color: rgb(255, 255, 255, .9);
     border-width: 2px;
 }
 </style>

@@ -10,6 +10,6 @@ export const useStore = defineStore('store', () => {
 
     return {
         user,
-        setUser,   
+        setUser,
     }
-  });
+});

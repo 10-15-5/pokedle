@@ -89,7 +89,6 @@ const getColor = computed(() => {
     width: 100%;
     background-image: url("../assets/pokecenter-box-background.png");
     background-size: contain;
-    background-color: white;
 }
 
 .pokemon-habitat {
@@ -115,7 +114,6 @@ const getColor = computed(() => {
 
 /* Style the back side */
 .square-content-back {
-    color: rgb(0, 0, 0);
     border-width: 2px;
 }
 
@@ -142,7 +140,6 @@ const getColor = computed(() => {
 }
 
 .star-icon-background {
-    color: black;
     z-index: 1;
     position: absolute;
     font-size: 25px;

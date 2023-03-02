@@ -1,5 +1,6 @@
 <template>
     <v-app id="app">
+        <h1 class="text-3xl font-bold underline bg-red-200"> Hello world! </h1>
         <v-main>
             <div class="container">
                 <div>
@@ -26,14 +27,14 @@
                     </v-card>
                 </div>
             </div>
-            <!-- <square-container></square-container> -->
         </v-main>
         <div class="game-button-container">
             <v-btn @click="revealPokemon">reveal secret pokemon</v-btn>
             <v-btn @click="newGame">new game</v-btn>
             <v-btn @click="lauchConfetti">test confetti</v-btn>
+            <v-btn @click="store.toggleTheme">change theme</v-btn>
+            <p>{{ store.theme }}</p>
         </div>
-        <!-- <HomeView /> -->
     </v-app>
 </template>
 
@@ -103,7 +104,7 @@ const incrementGamesWonCount = async () => {
 }
 
 const updateUserWithGameWon = async () => {
-    const {userId} = helpers.getCookie(document);
+    const { userId } = helpers.getCookie(document);
     console.log(state.guesses.length)
     const response = await service.updateUserWithGameWon(userId, state.guesses.length);
     store.setUser(response.data.user)
@@ -237,10 +238,10 @@ const loadGameData = async () => {
 }
 
 
-const createOrGetUser = async () => {
-    const {userId} = helpers.getCookie(document);
+const createOrGetUser = async () => {
+    const { userId } = helpers.getCookie(document);
 
-    if(!userId){
+    if (!userId) {
         await service.createUser();
         return undefined;
     }
@@ -260,7 +261,7 @@ onMounted(async () => {
 
     console.log(user)
 
-    if(user){
+    if (user) {
         store.setUser(user);
         console.log(store.user)
     }
@@ -331,7 +332,6 @@ const lauchConfetti = () => {
 }
 
 .guess-container {
-    background-color: transparent;
     margin-bottom: 50%;
     display: flex;
     flex-direction: column;

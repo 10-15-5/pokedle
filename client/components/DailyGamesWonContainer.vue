@@ -16,8 +16,6 @@ const props = defineProps({
 <style scoped>
 .games-won-card{
     padding: 5px 8px 3px 8px;
-    background-color: rgb(255, 255, 255);
-    color: rgb(0, 0, 0);
     font-size: small;
     font-family: pkmEmerald;
     border-width: 2px;

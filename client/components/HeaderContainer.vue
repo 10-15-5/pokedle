@@ -35,7 +35,7 @@
             </v-card>
         </v-dialog>
         <!-- TODO: this should be a view -->
-        <v-dialog class="dialog-content"
+        <v-dialog class="dialog-content" :class="store.theme === 'light' ? 'light-theme' : 'dark-theme'"
                   v-model="dialogStatistics">
             <v-card class="card-content"
                     variant="outlined">
@@ -49,9 +49,9 @@
             </v-card>
         </v-dialog>
         <!-- TODO: this should be a view -->
-        <v-dialog class="dialog-content"
+        <v-dialog class="dialog-content" 
                   v-model="dialogInfo">
-            <v-card class="card-content"
+            <v-card class="card-content" :class="store.theme === 'light' ? 'light-theme' : 'dark-theme'"
                     variant="outlined">
                 <v-card-title class="card-title">About</v-card-title>
                 <v-card-text class="card-text">Welcome to the world of POKEMéN! <br> Every day a wild secret POKéMON will be
@@ -110,7 +110,6 @@ let dialogSettings = ref(false);
     width: 32px;
     height: 32px;
     margin: 4px;
-    background-color: rgb(255, 255, 255);
     border-style: solid;
     border-width: 2px;
     border-radius: 4px;
@@ -132,6 +131,7 @@ p {
     position: absolute;
     font-weight: bold;
     margin-left: 1px;
+    color: black;
     text-shadow: -0.5px 0.5px 1px #fffcfc,
         0.5px 0.5px 1px #ffffff,
         0.5px -0.5px 0 #ffffff,
@@ -158,7 +158,6 @@ p {
     padding: 8px;
     border-style: solid;
     border-width: 2px;
-    background-color: white;
 }
 
 .dialog-btn {
