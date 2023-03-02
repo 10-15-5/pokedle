@@ -1,6 +1,5 @@
 <template>
     <v-app id="app">
-        <h1 class="text-3xl font-bold underline bg-red-200"> Hello world! </h1>
         <v-main>
             <div class="container">
                 <div>
@@ -32,8 +31,8 @@
             <v-btn @click="revealPokemon">reveal secret pokemon</v-btn>
             <v-btn @click="newGame">new game</v-btn>
             <v-btn @click="lauchConfetti">test confetti</v-btn>
-            <v-btn @click="store.toggleTheme">change theme</v-btn>
-            <p>{{ store.theme }}</p>
+            <v-btn @click="toggleDark()">change theme</v-btn>
+            <p>IsDark: {{ isDark }}</p>
         </div>
     </v-app>
 </template>
@@ -52,6 +51,10 @@ import * as service from './services/apiService.js';
 import * as helpers from './helpers.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
+import {useDark, useToggle} from '@vueuse/core';
+
+const isDark = useDark();
+const toggleDark = useToggle(isDark);
 
 const state = reactive({
     pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
@@ -326,6 +329,9 @@ const lauchConfetti = () => {
 </script>
 
 <style scoped>
+html.dark {
+    color-scheme: dark;
+}
 .game-button-container {
     display: flex;
     justify-content: center;

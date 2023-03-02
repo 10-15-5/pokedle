@@ -4,7 +4,7 @@
             <p class="fire-emoji">🔥</p>
             <p class="streak-count mt-2">{{ store.user.currentStreak }}</p>
         </div>
-        <div class="header-icon"
+        <div class="header-icon dark:bg-purple-500"
              @click="dialogSettings = true">
             <v-icon icon="mdi-cog"
                     size="small" />
