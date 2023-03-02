@@ -1,5 +1,5 @@
 <template>
-    <v-card class="games-won-card"
+    <v-card class="games-won-card bg-white border-black"
     variant="outlined">
         {{ dailyGamesWon + " Trainers Already Found Out!" }}
     </v-card>

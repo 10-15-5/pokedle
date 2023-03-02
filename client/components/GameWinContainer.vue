@@ -1,5 +1,5 @@
 <template>
-    <v-card class="card-container"
+    <v-card class="card-container bg-white border-black"
             variant="outlined">
         <v-card-title class="title">VICTORY!</v-card-title>
         <v-card-text class="card-text">You Guessed: {{ pokemon }}</v-card-text>

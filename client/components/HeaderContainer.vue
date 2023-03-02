@@ -1,20 +1,20 @@
 <template>
     <div class="header-container">
-        <div class="header-icon">
+        <div class="header-icon bg-white border-black">
             <p class="fire-emoji">🔥</p>
             <p class="streak-count mt-2">{{ store.user.currentStreak }}</p>
         </div>
-        <div class="header-icon dark:bg-purple-500"
+        <div class="header-icon bg-white border-black dark:bg-purple-500"
              @click="dialogSettings = true">
             <v-icon icon="mdi-cog"
                     size="small" />
         </div>
-        <div class="header-icon"
+        <div class="header-icon bg-white border-black"
              @click="dialogStatistics = true">
             <v-icon icon="mdi-poll"
                     size="small" />
         </div>
-        <div class="header-icon"
+        <div class="header-icon bg-white border-black"
              @click="dialogInfo = true">
             <v-icon icon="mdi-information-outline"
                     size="small">
@@ -23,7 +23,7 @@
         <!-- TODO: this should be a view -->
         <v-dialog class="dialog-content"
                   v-model="dialogSettings">
-            <v-card class="card-content"
+            <v-card class="card-content bg-white border-black"
                     variant="outlined">
                 <v-card-title class="card-title">SETTINGS</v-card-title>
                 <v-card-text class="card-text"> Coming Soon....</v-card-text>
@@ -35,9 +35,9 @@
             </v-card>
         </v-dialog>
         <!-- TODO: this should be a view -->
-        <v-dialog class="dialog-content" :class="store.theme === 'light' ? 'light-theme' : 'dark-theme'"
+        <v-dialog class="dialog-content"
                   v-model="dialogStatistics">
-            <v-card class="card-content"
+            <v-card class="card-content bg-white border-black"
                     variant="outlined">
                 <v-card-title class="card-title">STATISTICS</v-card-title>
                 <v-card-text class="card-text"> Coming Soon....</v-card-text>
@@ -51,7 +51,7 @@
         <!-- TODO: this should be a view -->
         <v-dialog class="dialog-content" 
                   v-model="dialogInfo">
-            <v-card class="card-content" :class="store.theme === 'light' ? 'light-theme' : 'dark-theme'"
+            <v-card class="card-content bg-white border-black"
                     variant="outlined">
                 <v-card-title class="card-title">About</v-card-title>
                 <v-card-text class="card-text">Welcome to the world of POKEMéN! <br> Every day a wild secret POKéMON will be

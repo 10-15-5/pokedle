@@ -1,5 +1,5 @@
 <template>
-    <v-card class="content"
+    <v-card class="content bg-white border-black"
             variant="outlined">
         <div v-for="(field, k, i) in guessResult"
              :key="k"

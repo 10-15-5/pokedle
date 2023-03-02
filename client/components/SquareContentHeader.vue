@@ -1,5 +1,5 @@
 <template>
-    <v-card class="content"
+    <v-card class="content bg-white border-black"
             variant="outlined">
         <p v-for="(fieldTitle, _, index) in guessFieldTitles"
            :key="fieldTitle"

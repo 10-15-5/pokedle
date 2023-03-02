@@ -13,15 +13,15 @@
                  width="60px"
                  height="60px">
             <template v-slot:front>
-                <v-card class="square-content-front"
+                <v-card class="square-content-front border-black"
                         :style="{ 'background-color': getColor }"
                         variant="outlined">
                     <img v-if="pokemon"
-                         class="pokemon-bg"
+                         class="pokemon-bg bg-white"
                          :src="'https://img.pokemondb.net/sprites/ruby-sapphire/' + color + '/' + pokemon + '.png'"
                          alt="pokemon sprite" />
                     <img v-if="habitat"
-                         class="pokemon-habitat"
+                         class="pokemon-habitat border-black"
                          :src="getHabitatImage(habitat)"
                          :title="`${habitat}`"
                          :alt="`${habitat}`" />
@@ -30,7 +30,7 @@
                 </v-card>
             </template>
             <template v-slot:back>
-                <v-card class="square-content-back"
+                <v-card class="square-content-back border-black"
                         variant="outlined">
                         <img
                         class="pokemon-bg"
