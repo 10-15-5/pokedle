@@ -1,25 +1,25 @@
 <template>
-    <div class="header-container">
-        <div class="header-icon bg-white border-black">
+    <div class="flex justify-center items-center">
+        <HeaderIcon>
             <p class="fire-emoji">🔥</p>
-            <p class="streak-count mt-2">{{ store.user.currentStreak }}</p>
-        </div>
-        <div class="header-icon"
+            <p class="streak-count mt-2 text-light-text dark:text-gray-600">{{ store.user.currentStreak }}</p>
+        </HeaderIcon>
+        <HeaderIcon
              @click="dialogSettings = true">
-            <v-icon icon="mdi-cog"
+            <v-icon class="text-light-text dark:text-dark-text" icon="mdi-cog"
                     size="small" />
-        </div>
-        <div class="header-icon bg-white border-black"
+        </HeaderIcon>
+        <HeaderIcon
              @click="dialogStatistics = true">
-            <v-icon icon="mdi-poll"
+            <v-icon class="text-light-text dark:text-dark-text" icon="mdi-poll"
                     size="small" />
-        </div>
-        <div class="header-icon bg-white border-black"
+        </HeaderIcon>
+        <HeaderIcon
              @click="dialogInfo = true">
-            <v-icon icon="mdi-information-outline"
+            <v-icon class="text-light-text dark:text-dark-text" icon="mdi-information-outline"
                     size="small">
             </v-icon>
-        </div>
+        </HeaderIcon>
         <!-- TODO: this should be a view -->
         <v-dialog class="dialog-content"
                   v-model="dialogSettings">
@@ -98,6 +98,7 @@
 <script setup>
 import { useStore } from '../stores/store';
 import { ref } from 'vue';
+import HeaderIcon from './HeaderIcon.vue'
 const store = useStore();
 let dialogInfo = ref(false);
 let dialogStatistics = ref(false);
@@ -106,18 +107,6 @@ let dialogSettings = ref(false);
 </script>
 
 <style scoped>
-.header-icon {
-    width: 32px;
-    height: 32px;
-    margin: 4px;
-    border-style: solid;
-    border-width: 2px;
-    border-radius: 4px;
-    justify-content: center;
-    align-items: center;
-    display: flex;
-    transition: all 120ms ease-in-out;
-}
 
 p {
     padding: 4px;
@@ -131,7 +120,6 @@ p {
     position: absolute;
     font-weight: bold;
     margin-left: 1px;
-    color: black;
     text-shadow: -0.5px 0.5px 1px #fffcfc,
         0.5px 0.5px 1px #ffffff,
         0.5px -0.5px 0 #ffffff,
