@@ -7,4 +7,8 @@
         @apply bg-light-bg border-light-border text-black dark:!text-dark-text rounded flex justify-center 
         items-center border-2 dark:!bg-dark-bg dark:!border-dark-border
     }
+    .result-card {
+        @apply border-2 flex justify-center items-center absolute
+        w-full h-full rounded border-light-border dark:!border-dark-border
+    }
 }
