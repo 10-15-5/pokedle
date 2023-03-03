@@ -20,6 +20,9 @@ module.exports = {
                         border: colors.gray[500],
                         text: colors.gray[300],
                     }
+            },
+            fontFamily: {
+                pkmEmerald: ['pkmEmerald']
             }
         },
     },

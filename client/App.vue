@@ -1,11 +1,11 @@
 <template>
     <v-app id="app">
-        <v-main :class="{'background-white': !isDark, 'background-black': isDark}">
+        <v-main :class="{ 'background-white': !isDark, 'background-black': isDark }">
             <div class="flex flex-col items-center justify-center gap-y-4">
                 <div>
                     <v-img src="/client/assets/pokedle-logo.png"
                            class="w-[280px] title-img mt-5 mb-3 
-                           hover:scale-110 transition-all duration-100 ease-linear" />
+                               hover:scale-110 transition-all duration-100 ease-linear" />
                     <HeaderContainer />
                 </div>
                 <SearchField v-if="!isGameWon"
@@ -29,10 +29,14 @@
             </div>
         </v-main>
         <div class="flex justify-center items-center">
-            <v-btn class="text-xs" @click="revealPokemon">Reveal</v-btn>
-            <v-btn class="text-xs" @click="newGame">New Game</v-btn>
-            <v-btn class="text-xs" @click="lauchConfetti">Confetti</v-btn>
-            <v-btn class="text-xs" @click="toggleDark()">Theme</v-btn>
+            <v-btn class="text-xs"
+                   @click="revealPokemon">Reveal</v-btn>
+            <v-btn class="text-xs"
+                   @click="newGame">New Game</v-btn>
+            <v-btn class="text-xs"
+                   @click="lauchConfetti">Confetti</v-btn>
+            <v-btn class="text-xs"
+                   @click="toggleDark()">Theme</v-btn>
             <p>IsDark: {{ isDark }}</p>
         </div>
     </v-app>
@@ -346,5 +350,4 @@ html.dark {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
-
 </style>
