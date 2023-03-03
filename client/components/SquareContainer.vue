@@ -1,6 +1,5 @@
 <template>
-    <v-card class="content bg-white border-black"
-            variant="outlined">
+    <div class="card flex p-2 gap-2">
         <div v-for="(field, k, i) in guessResult"
              :key="k"
              :value="field">
@@ -16,7 +15,7 @@
                            :guessText="field.text"
                            :flipDelay="i-1" />
         </div>
-    </v-card>
+    </div>
 </template>
 
 <script setup>
@@ -30,12 +29,4 @@ const props = defineProps({
 </script>
 
 <style scoped>
-.content {
-    display: flex;
-    flex-direction: row;
-    justify-content: center;
-    gap: 8px;
-    padding: 8px 0 8px 8px;
-    border-width: 2px;
-}
 </style>

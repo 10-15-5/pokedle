@@ -5,7 +5,7 @@
            :value="fieldTitle"
            class="w-[60px] h-[40px] flex justify-center items-center border-b-2
                             border-light-border dark:border-dark-border
-                             font-pkmEmerald font-bold text-center group">{{ fieldTitle }}
+                             font-pkmEmerald font-bold text-center group text-sm">{{ fieldTitle }}
         <div v-if="getGuessFieldTooltipsFromIndex(index)"
              class="card transition-all duration-150 scale-0 origin-top absolute
                         group-hover:scale-100 z-1 mb-[100px] p-2 delay-500
