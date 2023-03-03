@@ -1,15 +1,6 @@
 <template>
     <v-app id="app">
-        <div class="bg-white text-black dark:bg-black dark:text-white">
-            <p>TEST 1: "bg-white text-black dark:bg-black dark:text-white"</p>
-        </div>
-        <div class="bg-red-400 text-green-400 dark:bg-black dark:text-white">
-            <p>TEST 2: "bg-red-400 text-green-400 dark:bg-black dark:text-white"</p>
-        </div>
-        <div>
-            <p>IsDark: {{ isDark }}</p>
-        </div>
-        <v-main>
+        <v-main :class="{'background-white': !isDark, 'background-black': isDark}">
             <div class="container">
                 <div>
                     <v-img src="/client/assets/pokedle-logo.png"
@@ -369,15 +360,24 @@ html.dark {
 .container {
     display: flex;
     align-items: center;
+    justify-content: center;
     flex-direction: column;
-    width: auto;
+    width: 100%;
     row-gap: 16px;
 }
 
-main {
+.background-white {
     background-image: url("./client/assets/background-white.jpg");
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
+.background-black {
+    background-image: url("./client/assets/background-black.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 </style>
