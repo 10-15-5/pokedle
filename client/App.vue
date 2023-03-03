@@ -1,10 +1,11 @@
 <template>
     <v-app id="app">
         <v-main :class="{'background-white': !isDark, 'background-black': isDark}">
-            <div class="container">
+            <div class="flex flex-col items-center justify-center gap-y-4">
                 <div>
                     <v-img src="/client/assets/pokedle-logo.png"
-                           class="title-img mt-5 mb-3" />
+                           class="w-[280px] title-img mt-5 mb-3 
+                           hover:scale-110 transition-all duration-100 ease-linear" />
                     <HeaderContainer />
                 </div>
                 <SearchField v-if="!isGameWon"
@@ -15,7 +16,7 @@
                                   :color="colors.at(-1)" />
                 <DailyGamesWonContainer :dailyGamesWon="dailyGamesWon" />
                 <div v-if="state.guesses.length"
-                     class="guess-container">
+                     class="flex flex-col gap-y-2 mb-20">
                     <SquareContentHeader class="mb-n1" />
                     <v-card v-for="(guess, i) in state.guesses"
                             :key="guess"
@@ -27,11 +28,11 @@
                 </div>
             </div>
         </v-main>
-        <div class="game-button-container">
-            <v-btn @click="revealPokemon">reveal secret pokemon</v-btn>
-            <v-btn @click="newGame">new game</v-btn>
-            <v-btn @click="lauchConfetti">test confetti</v-btn>
-            <v-btn @click="toggleDark()">change theme</v-btn>
+        <div class="flex justify-center items-center">
+            <v-btn class="text-xs" @click="revealPokemon">Reveal</v-btn>
+            <v-btn class="text-xs" @click="newGame">New Game</v-btn>
+            <v-btn class="text-xs" @click="lauchConfetti">Confetti</v-btn>
+            <v-btn class="text-xs" @click="toggleDark()">Theme</v-btn>
             <p>IsDark: {{ isDark }}</p>
         </div>
     </v-app>
@@ -196,7 +197,6 @@ const removePokemonsFromGuessPool = () => {
 const setNewDate = () => localStorage
     .setItem('dayOfLastUpdate', new Date().getUTCDate().toString());
 
-
 const setNewSecretPokemon = async () => {
     //TODO: currently we set new secret pokemon every day at 00:00. 
     // Users will see a random pokemon each, since we rely on this instead of job/CDN
@@ -331,39 +331,6 @@ const lauchConfetti = () => {
 <style scoped>
 html.dark {
     color-scheme: dark;
-}
-
-.game-button-container {
-    display: flex;
-    justify-content: center;
-}
-
-.guess-container {
-    margin-bottom: 50%;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 8px;
-}
-
-.title-img {
-    transition: transform 0.2s;
-    width: 290px;
-    -webkit-filter: drop-shadow(0px 0px 20px rgb(255, 255, 255));
-}
-
-.title-img:hover {
-    transform: scale(1.1);
-}
-
-.container {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    row-gap: 16px;
 }
 
 .background-white {
