@@ -344,7 +344,7 @@ html.dark {
 }
 
 .background-black {
-    background-image: url('./client/assets/background-black.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('./client/assets/background-black.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
