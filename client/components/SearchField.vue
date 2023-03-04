@@ -1,38 +1,46 @@
 <template>
     <div class="relative">
-        <input class="card p-4 font-pkmEmerald w-[200px] focus:outline-none"
-               label="Type pokemon name"
-               type="text"
-               placeholder="Type Pokemon Name..."
-               v-model="searchTerm"
-               @keypress.enter="submitGuess(searchTerm)"
-               v-click-outside="onClickOutsideSearchField"
-               :active="isSearchFieldActive"
-               @click="isSearchFieldActive = true" />
+        <input
+            class="card w-[200px] p-4 font-pkmEmerald focus:outline-none"
+            label="Type pokemon name"
+            type="text"
+            placeholder="Type Pokemon Name..."
+            v-model="searchTerm"
+            @keypress.enter="submitGuess(searchTerm)"
+            v-click-outside="onClickOutsideSearchField"
+            :active="isSearchFieldActive"
+            @click="isSearchFieldActive = true"
+        />
         <div class="absolute z-10">
-            <VirtualScroller v-if="searchPokemonNames.length && isSearchFieldActive"
-                             class="h-[260px] w-[200px] absolute z-10 card mt-[-2px]"
-                             :items="searchPokemonNames"
-                             :itemSize="52">
+            <VirtualScroller
+                v-if="searchPokemonNames.length && isSearchFieldActive"
+                class="card absolute z-10 mt-[-2px] h-[260px] w-[200px]"
+                :items="searchPokemonNames"
+                :itemSize="52"
+            >
                 <template v-slot:item="{ item, options }">
-                    <div style="height: 52px;"
-                         @click="submitGuess(item)"
-                         class="flex justify-left items-center
-                                 bg-light-bg text-black 
-                                         dark:!text-dark-text
-                                         dark:!bg-dark-bg cursor-pointer
-                                         hover:!text-orange-500
-                                         hover:!bg-neutral-200
-                                         hover:dark:!text-orange-300
-                                         hover:dark:!bg-neutral-700">
-                        <img class="sprite-img ml-3"
-                             :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' +
-                                 removeSpecialCharactersExceptDashFromString(item) + '.png'"
-                             alt="" />
-                        <p class="ml-4 capitalize font-pkmEmerald text-4">{{ item }}</p>
+                    <div
+                        style="height: 52px"
+                        @click="submitGuess(item)"
+                        class="justify-left flex cursor-pointer items-center bg-light-bg text-black hover:!bg-neutral-200 hover:!text-green-500 dark:!bg-dark-bg dark:!text-dark-text hover:dark:!bg-neutral-700 hover:dark:!text-green-300"
+                    >
+                        <img
+                            class="sprite-img ml-3"
+                            :src="
+                                'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' +
+                                removeSpecialCharactersExceptDashFromString(item) +
+                                '.png'
+                            "
+                            alt=""
+                        />
+                        <p class="text-4 ml-4 font-pkmEmerald capitalize">
+                            {{ item }}
+                        </p>
                     </div>
-                    <hr class="border-t-2 border-light-border dark:border-dark-border"
-                        v-if="options.index + 1 < searchPokemonNames.length">
+                    <hr
+                        class="border-t-2 border-light-border dark:border-dark-border"
+                        v-if="options.index + 1 < searchPokemonNames.length"
+                    />
                 </template>
             </VirtualScroller>
         </div>
@@ -51,9 +59,9 @@ const isSearchFieldActive = ref(false);
 
 const onClickOutsideSearchField = () => {
     isSearchFieldActive.value = false;
-}
+};
 
-const emit = defineEmits(['submitGuess'])
+const emit = defineEmits(['submitGuess']);
 let searchTerm = ref('');
 
 const searchPokemonNames = computed(() => {
@@ -61,16 +69,16 @@ const searchPokemonNames = computed(() => {
         return [];
     }
 
-    const test = props.pokemonNames.filter(name =>
-        name.startsWith(searchTerm.value.toLowerCase()));
+    const test = props.pokemonNames.filter((name) =>
+        name.startsWith(searchTerm.value.toLowerCase())
+    );
     return test;
 });
 
 const submitGuess = (pokemonName) => {
-    searchTerm.value = "";
+    searchTerm.value = '';
     emit('submitGuess', pokemonName);
-}
-
+};
 </script>
 
 <style scoped>

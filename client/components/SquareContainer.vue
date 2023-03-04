@@ -1,19 +1,23 @@
 <template>
-    <div class="card flex p-2 gap-2">
-        <div v-for="(field, k, i) in guessResult"
-             :key="k"
-             :value="field">
-            <SquareContent v-if="field.name"
-                           :pokemon="removeSpecialCharactersExceptDashFromString(field.name)"
-                           :color="color" />
-            <SquareContent v-else-if="field.habitat"
-                           :guessResult="field.guessState"
-                           :habitat="field.habitat"
-                           :flipDelay="i-1" />
-            <SquareContent v-else
-                           :guessResult="field.guessState"
-                           :guessText="field.text"
-                           :flipDelay="i-1" />
+    <div class="card flex gap-2 p-2">
+        <div v-for="(field, k, i) in guessResult" :key="k" :value="field">
+            <SquareContent
+                v-if="field.name"
+                :pokemon="removeSpecialCharactersExceptDashFromString(field.name)"
+                :color="color"
+            />
+            <SquareContent
+                v-else-if="field.habitat"
+                :guessResult="field.guessState"
+                :habitat="field.habitat"
+                :flipDelay="i - 1"
+            />
+            <SquareContent
+                v-else
+                :guessResult="field.guessState"
+                :guessText="field.text"
+                :flipDelay="i - 1"
+            />
         </div>
     </div>
 </template>
@@ -28,5 +32,4 @@ const props = defineProps({
 });
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
