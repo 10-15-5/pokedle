@@ -1,5 +1,5 @@
 <template>
-    <v-card class="card gap-x-2 py-1 pl-2 static">
+    <div class="card gap-x-2 py-1 pl-2 static">
         <p v-for="(fieldTitle, _, index) in guessFieldTitles"
            :key="fieldTitle"
            :value="fieldTitle"
@@ -11,7 +11,7 @@
                         group-hover:scale-100 z-1 mb-[100px] p-2 delay-500
                 "> {{ getGuessFieldTooltipsFromIndex(index) }} </div>
         </p>
-    </v-card>
+    </div>
 </template>
 
 <script setup>

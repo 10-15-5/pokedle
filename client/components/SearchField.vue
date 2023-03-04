@@ -1,38 +1,36 @@
 <template>
-    <div>
-        <v-text-field label="Type pokemon name"
-                      class="search-field border-black"
-                      variant="solo"
-                      hide-details
-                      v-model="searchTerm"
-                      @keypress.enter="submitGuess(searchTerm)"
-                      v-click-outside="onClickOutsideSearchField"
-                      :active="isSearchFieldActive"
-                      @click="isSearchFieldActive = true" />
-        <v-card class="search-suggestion-dropdown border-black bg-white"
-                variant="outlined"
-                v-if="searchPokemonNames.length && isSearchFieldActive">
-            <v-virtual-scroll :items="searchPokemonNames"
-                              max-height="260"
-                              item-height="52">
-                <template v-slot:default="{ item, index }">
-                    <v-list-item @click="submitGuess(item)"
-                                 class="search-suggestions">
-                        <template v-slot:prepend>
-                            <img class="sprite-img ml-2"
-                                 :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' + removeSpecialCharactersExceptDashFromString(item) + '.png'"
-                                 alt="" />
-                        </template>
-                        <template v-slot:default>
-                            <p class="ml-1">{{ item }}</p>
-                        </template>
-                    </v-list-item>
-                    <v-divider v-if="index + 1 < searchPokemonNames.length"
-                               class="suggestion-divider border-black"
-                               thickness="2px"></v-divider>
+    <div class="relative">
+        <input class="card p-4 font-pkmEmerald w-[200px] focus:outline-none"
+               label="Type pokemon name"
+               type="text"
+               placeholder="Type Pokemon Name..."
+               v-model="searchTerm"
+               @keypress.enter="submitGuess(searchTerm)"
+               v-click-outside="onClickOutsideSearchField"
+               :active="isSearchFieldActive"
+               @click="isSearchFieldActive = true" />
+        <div class="absolute z-10">
+            <VirtualScroller v-if="searchPokemonNames.length && isSearchFieldActive"
+                             class="h-[260px] w-[200px] absolute z-10 card"
+                             :items="searchPokemonNames"
+                             :itemSize="52">
+                <template v-slot:item="{ item, options }">
+                    <div style="height: 52px;"
+                         @click="submitGuess(item)"
+                         class="bg-light-bg text-black 
+                                                 dark:!text-dark-text flex justify-left items-center
+                                                  dark:!bg-dark-bg cursor-pointer">
+                        <img class="sprite-img ml-3"
+                             :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' +
+                                 removeSpecialCharactersExceptDashFromString(item) + '.png'"
+                             alt="" />
+                        <p class="ml-4 capitalize font-pkmEmerald text-4">{{ item }}</p>
+                    </div>
+                    <hr class="border-t-2 border-light-border dark:border-dark-border"
+                        v-if="options.index + 1 < searchPokemonNames.length">
                 </template>
-            </v-virtual-scroll>
-        </v-card>
+            </VirtualScroller>
+        </div>
     </div>
 </template>
 
@@ -76,13 +74,6 @@ const submitGuess = (pokemonName) => {
     height: 35px;
 }
 
-.search-field {
-    font-weight: 600;
-    border-style: solid;
-    border-radius: 5px;
-    border-width: 2px;
-}
-
 .search-suggestions {
     display: flex;
     gap: 14%;
@@ -94,28 +85,5 @@ p {
     font-family: pkmEmerald;
     font-size: 16px;
     text-transform: capitalize;
-}
-
-.suggestion-divider {
-    opacity: 100%;
-}
-
-.search-suggestions,
-.search-field {
-    font-family: pkmEmerald;
-    text-transform: capitalize;
-}
-
-.search-suggestion-dropdown {
-    position: absolute;
-    z-index: 2;
-    margin-top: -1px;
-    border-width: 2px;
-
-}
-
-.search-field,
-.search-suggestion-dropdown {
-    width: 200px;
 }
 </style>

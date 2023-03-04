@@ -1,13 +1,11 @@
 <template>
-    <v-card class="card-container bg-white border-black"
-            variant="outlined">
-        <v-card-title class="title">VICTORY!</v-card-title>
-        <v-card-text class="card-text">You Guessed: {{ pokemon }}</v-card-text>
+    <div class="card flex flex-col p-4 justify-center items-center">
+        <p class="text-[32px] font-pkmEmerald  text-green-600 dark:!text-green-300">VICTORY!</p>
+        <p class="text-[18px] font-pkmEmerald mb-3"> You Guessed: {{ pokemon }}</p>
         <SquareContent :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"
                        :color="props.color" />
-        <v-card-text class="card-smaller-text">Next Pokemon Will Appear In: {{ " " + hoursRemaining + ":" + minRemaining +
-            ":" + secRemaining }}</v-card-text>
-    </v-card>
+        <p class="text-[14px] font-pkmEmerald mt-2">Next Pokemon Will Appear In: {{ " " + hoursRemaining + ":" + minRemaining + ":" + secRemaining }}</p>
+    </div>
 </template>
 
 <script setup>
@@ -47,7 +45,7 @@ const updateTimeRemaining = () => {
 
         return clearInterval(updateTimeRemaining);
     }
-    
+
     const sec = Math.floor(secondsRemaining.value % 60);
     const min = Math.floor((secondsRemaining.value / 60) % 60);
     const hours = Math.floor((secondsRemaining.value / (60 * 60)) % 60);
@@ -63,15 +61,6 @@ setInterval(() => {
 </script>
 
 <style scoped>
-.card-container {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 8px;
-    border-width: 2px;
-}
-
 .card-text,
 .title,
 .card-smaller-text {
@@ -87,8 +76,4 @@ setInterval(() => {
     font-size: 14px;
 }
 
-.title {
-    font-size: 32px;
-    color: rgb(34, 153, 0);
-}
 </style>

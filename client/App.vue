@@ -5,7 +5,7 @@
                 <div>
                     <v-img src="/client/assets/pokedle-logo.png"
                            class="w-[280px] title-img mt-5 mb-3 
-                               hover:scale-110 transition-all duration-100 ease-linear" />
+                                   hover:scale-110 transition-all duration-100 ease-linear" />
                     <HeaderContainer />
                 </div>
                 <SearchField v-if="!isGameWon"
