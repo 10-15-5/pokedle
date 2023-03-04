@@ -11,7 +11,6 @@
             <v-icon class="absolute z-10 text-[17px] text-yellow-500" icon="mdi-star" />
         </div>
         <VueFlip
-            class="square-content"
             v-model="isCardFaceDown"
             transition="1s"
             width="60px"
@@ -19,13 +18,13 @@
         >
             <template v-slot:front>
                 <div
-                    class="result-card"
+                    class="result-card rounded"
                     :style="{ 'background-color': getColor }"
                     variant="outlined"
                 >
                     <img
                         v-if="pokemon"
-                        class="pokemon-bg bg-white"
+                        class="pokemon-bg bg-neutral-200 dark:!bg-neutral-700"
                         :src="
                             'https://img.pokemondb.net/sprites/ruby-sapphire/' +
                             color +
@@ -51,12 +50,8 @@
                 </div>
             </template>
             <template v-slot:back>
-                <div class="result-card" variant="outlined">
-                    <img
-                        class="pokemon-bg"
-                        :src="'./client/assets/pokemon-cardback-pixel.png'"
-                        alt="pokemon sprite"
-                    />
+                <div class="result-card bg-neutral-200 dark:!bg-neutral-800" variant="outlined">
+                    <img :src="'./client/assets/pokemon-cardback-pixel.png'" alt="pokemon sprite" />
                 </div>
             </template>
         </VueFlip>
@@ -114,7 +109,7 @@ const getColor = computed(() => {
 }
 
 .pokemon-habitat {
-    width: 101%;
+    width: 105%;
     border-style: solid;
     border-radius: 60%;
     border-width: 2px;
