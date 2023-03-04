@@ -11,4 +11,14 @@
         @apply border-2 border-solid flex justify-center items-center absolute
         w-full h-full rounded border-light-border dark:!border-dark-border
     }
+    .divider {
+        @apply border-t-2 border-light-border dark:border-dark-border w-full mt-3 mb-6
+    }
+    .dialog-close {
+        @apply text-lg p-2 font-bold text-red-600 bg-red-200 hover:bg-red-300 mt-8 dark:text-red-700 dark:bg-red-400 hover:dark:bg-red-300 font-pkmEmerald w-full rounded
+    }
+
+    .dialog-card {
+        @apply card p-8 flex flex-col justify-start overflow-scroll
+    }
 }
