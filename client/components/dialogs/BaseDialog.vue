@@ -16,8 +16,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
-
 const props = defineProps({
     isVisible: Boolean,
     onClose: Function,

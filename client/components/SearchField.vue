@@ -14,13 +14,14 @@
         <div class="absolute z-10">
             <VirtualScroller
                 v-if="searchPokemonNames.length && isSearchFieldActive"
-                class="card absolute z-10 mt-[-2px] h-[260px] w-[200px]"
+                class="card absolute z-10 mt-[-2px] w-[200px]"
+                :class="getSearchSuggestionsHeight"
                 :items="searchPokemonNames"
-                :itemSize="52"
+                :itemSize="itemSize"
             >
                 <template v-slot:item="{ item, options }">
                     <div
-                        style="height: 52px"
+                        :style="{ height: `${itemSize}px` }"
                         @click="submitGuess(item)"
                         class="justify-left flex cursor-pointer items-center bg-light-bg text-black hover:!bg-neutral-200 hover:!text-green-500 dark:!bg-dark-bg dark:!text-dark-text hover:dark:!bg-neutral-700 hover:dark:!text-green-300"
                     >
@@ -51,6 +52,17 @@
 import { computed, ref } from 'vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers.js';
 
+const itemSize = 52;
+//Multiplications of 56 since; itemSize: 52 + borderWidth: 2*2 = 56
+const searchFieldHeights = [
+    'h-[0px]',
+    'h-[56px]',
+    'h-[112px]',
+    'h-[168px]',
+    'h-[224px]',
+    'h-[270px]',
+]
+
 const props = defineProps({
     pokemonNames: Object,
 });
@@ -74,6 +86,10 @@ const searchPokemonNames = computed(() => {
     );
     return test;
 });
+
+const getSearchSuggestionsHeight = computed(() => 
+     searchPokemonNames.value.length >= 5 ? searchFieldHeights[5] : searchFieldHeights[searchPokemonNames.value.length]
+);
 
 const submitGuess = (pokemonName) => {
     searchTerm.value = '';

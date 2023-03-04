@@ -6,7 +6,6 @@
 </template>
 
 <script setup>
-import { defineProps } from 'vue';
 import BaseDialog from './BaseDialog.vue';
 
 const props = defineProps({
