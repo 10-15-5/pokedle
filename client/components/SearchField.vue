@@ -11,15 +11,20 @@
                @click="isSearchFieldActive = true" />
         <div class="absolute z-10">
             <VirtualScroller v-if="searchPokemonNames.length && isSearchFieldActive"
-                             class="h-[260px] w-[200px] absolute z-10 card"
+                             class="h-[260px] w-[200px] absolute z-10 card mt-[-2px]"
                              :items="searchPokemonNames"
                              :itemSize="52">
                 <template v-slot:item="{ item, options }">
                     <div style="height: 52px;"
                          @click="submitGuess(item)"
-                         class="bg-light-bg text-black 
-                                                 dark:!text-dark-text flex justify-left items-center
-                                                  dark:!bg-dark-bg cursor-pointer">
+                         class="flex justify-left items-center
+                                 bg-light-bg text-black 
+                                         dark:!text-dark-text
+                                         dark:!bg-dark-bg cursor-pointer
+                                         hover:!text-orange-500
+                                         hover:!bg-neutral-200
+                                         hover:dark:!text-orange-300
+                                         hover:dark:!bg-neutral-700">
                         <img class="sprite-img ml-3"
                              :src="'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' +
                                  removeSpecialCharactersExceptDashFromString(item) + '.png'"
