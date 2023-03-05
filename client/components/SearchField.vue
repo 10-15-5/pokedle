@@ -6,10 +6,12 @@
             type="text"
             placeholder="Type Pokemon Name..."
             v-model="searchTerm"
-            @keypress.enter="submitGuess(searchTerm)"
+            @keypress.enter="submitGuess(searchPokemonNames[idx]), resetScroll"
             v-click-outside="onClickOutsideSearchField"
             :active="isSearchFieldActive"
             @click="isSearchFieldActive = true"
+            @keydown.arrow-down="scrollDown"
+            @keydown.arrow-up="scrollUp"
         />
         <div class="absolute z-10">
             <VirtualScroller
@@ -18,12 +20,14 @@
                 :class="getSearchSuggestionsHeight"
                 :items="searchPokemonNames"
                 :itemSize="itemSize"
+                ref="virtualScroller"
             >
                 <template v-slot:item="{ item, options }">
                     <div
                         :style="{ height: `${itemSize}px` }"
                         @click="submitGuess(item)"
-                        class="justify-left flex cursor-pointer items-center bg-light-bg text-black hover:!bg-neutral-200 hover:!text-green-500 dark:!bg-dark-bg dark:!text-dark-text hover:dark:!bg-neutral-700 hover:dark:!text-green-300"
+                        class="justify-left hover flex cursor-pointer items-center border-b-2 border-light-border bg-light-bg text-black hover:!bg-neutral-200 hover:!text-green-500 dark:border-dark-border dark:!bg-dark-bg dark:!text-dark-text hover:dark:!bg-neutral-700 hover:dark:!text-green-300"
+                        :class="getHover(options.index)"
                     >
                         <img
                             class="sprite-img ml-3"
@@ -38,10 +42,6 @@
                             {{ item }}
                         </p>
                     </div>
-                    <hr
-                        class="border-t-2 border-light-border dark:border-dark-border"
-                        v-if="options.index + 1 < searchPokemonNames.length"
-                    />
                 </template>
             </VirtualScroller>
         </div>
@@ -49,32 +49,57 @@
 </template>
 
 <script setup>
-import { computed, ref } from 'vue';
+import { computed, ref, watch } from 'vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers.js';
 
 const itemSize = 52;
 //Multiplications of 56 since; itemSize: 52 + borderWidth: 2*2 = 56
 const searchFieldHeights = [
     '!h-[0px]',
-    '!h-[56px]',
-    '!h-[112px]',
-    '!h-[168px]',
-    '!h-[224px]',
-    '!h-[270px]',
+    '!h-[54px]',
+    '!h-[108px]',
+    '!h-[162px]',
+    '!h-[216px]',
+    '!h-[258px]',
 ];
+
+const idx = ref(0);
 
 const props = defineProps({
     pokemonNames: Object,
 });
 
+const getHover = (index) => {
+    if (idx.value === index)
+        return '!bg-neutral-200 !text-green-500 dark:!bg-neutral-700 dark:!text-green-300';
+};
+
 const isSearchFieldActive = ref(false);
 const searchTerm = ref('');
+const virtualScroller = ref(null);
+
+const scrollDown = () => {
+    idx.value += searchPokemonNames.value.length - 1 > idx.value ? 1 : 0;
+    console.log(idx.value);
+    virtualScroller.value?.scrollTo({ top: idx.value * itemSize });
+};
+
+const scrollUp = () => {
+    idx.value -= idx.value > 0 ? 1 : 0;
+    console.log(idx.value);
+    virtualScroller.value?.scrollTo({ top: idx.value * itemSize });
+};
 
 const onClickOutsideSearchField = () => {
     isSearchFieldActive.value = false;
 };
 
 const emit = defineEmits(['submitGuess']);
+
+watch(searchTerm, () => {
+    idx.value = 0;
+    virtualScroller.value?.scrollToIndex(0);
+});
 
 const searchPokemonNames = computed(() => {
     if (searchTerm.value === '') {
@@ -87,8 +112,10 @@ const searchPokemonNames = computed(() => {
     return test;
 });
 
-const getSearchSuggestionsHeight = computed(() => 
-     searchPokemonNames.value.length >= 5 ? searchFieldHeights[5] : searchFieldHeights[searchPokemonNames.value.length]
+const getSearchSuggestionsHeight = computed(() =>
+    searchPokemonNames.value.length >= 5
+        ? searchFieldHeights[5]
+        : searchFieldHeights[searchPokemonNames.value.length]
 );
 
 const submitGuess = (pokemonName) => {
