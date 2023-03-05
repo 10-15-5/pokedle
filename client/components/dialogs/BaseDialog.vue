@@ -1,16 +1,20 @@
 <template>
     <Dialog
-        class="w-[800px]"
+        class="!transition-none"
         :visible="isVisible"
-        :dismissable-mask="true"
         :closeOnEscape="true"
-        :modal="true"
         :position="'center'"
+        :showHeader="false"
         @update:visible="onClose"
     >
-        <div class="dialog-card">
-            <slot></slot>
-            <button class="dialog-close" block @click="onClose">Close</button>
+        <div
+            class="flex !h-screen !w-screen items-center justify-center bg-black/40"
+            @click="onClose"
+        >
+            <div class="dialog-card" v-on:click.stop>
+                <slot></slot>
+                <button class="dialog-close" block @click="onClose">Close</button>
+            </div>
         </div>
     </Dialog>
 </template>
@@ -21,3 +25,5 @@ const props = defineProps({
     onClose: Function,
 });
 </script>
+
+<style></style>

@@ -1,5 +1,5 @@
 <template>
-    <BaseDialog class="backdrop:bg-emerald-500" :isVisible="isVisible" :onClose="onClose">
+    <BaseDialog :isVisible="isVisible" :onClose="onClose">
         <h1 class="font-pkmEmerald text-[32px] uppercase">About</h1>
         <p class="font-pkmEmerald text-[20px]">
             Welcome to the world of POKEMéN! <br />
