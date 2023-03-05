@@ -1,7 +1,7 @@
 <template>
-    <v-card class="card p-[3px] px-2 pt-[4px] font-pkmEmerald text-sm">
+    <div class="card p-[3px] px-2 pt-[4px] font-pkmEmerald text-sm">
         {{ dailyGamesWon + ' Trainers Already Found Out!' }}
-    </v-card>
+    </div>
 </template>
 
 <script setup>

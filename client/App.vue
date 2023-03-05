@@ -23,13 +23,13 @@
                 <DailyGamesWonContainer :dailyGamesWon="dailyGamesWon" />
                 <div v-if="state.guesses.length" class="mb-20 flex flex-col gap-y-2">
                     <SquareContentHeader class="mb-n1" />
-                    <v-card v-for="(guess, i) in state.guesses" :key="guess" :value="guess">
+                    <div v-for="(guess, i) in state.guesses" :key="guess" :value="guess">
                         <SquareContainer
                             :pokemonName="guess"
                             :guessResult="getGuessResults(guess, secretPokemon)"
                             :color="colors.at(state.guesses.length - 1 - i)"
                         />
-                    </v-card>
+                    </div>
                 </div>
             </div>
         </v-main>
