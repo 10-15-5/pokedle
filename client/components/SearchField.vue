@@ -53,14 +53,14 @@ import { computed, ref, watch } from 'vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers.js';
 
 const itemSize = 52;
-//Multiplications of 56 since; itemSize: 52 + borderWidth: 2*2 = 56
+
 const searchFieldHeights = [
     '!h-[0px]',
     '!h-[54px]',
-    '!h-[108px]',
-    '!h-[162px]',
-    '!h-[216px]',
-    '!h-[258px]',
+    '!h-[104px]',
+    '!h-[156px]',
+    '!h-[208px]',
+    '!h-[260px]',
 ];
 
 const idx = ref(0);
