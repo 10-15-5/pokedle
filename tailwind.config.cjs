@@ -18,7 +18,7 @@ module.exports = {
                     dark: {
                         bg: '#4a4a4a',
                         border: colors.gray[500],
-                        text: colors.gray[300],
+                        text: colors.gray[100],
                     }
             },
             fontFamily: {
