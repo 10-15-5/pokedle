@@ -55,26 +55,26 @@ import { removeSpecialCharactersExceptDashFromString } from '../helpers.js';
 const itemSize = 52;
 //Multiplications of 56 since; itemSize: 52 + borderWidth: 2*2 = 56
 const searchFieldHeights = [
-    'h-[0px]',
-    'h-[56px]',
-    'h-[112px]',
-    'h-[168px]',
-    'h-[224px]',
-    'h-[270px]',
-]
+    '!h-[0px]',
+    '!h-[56px]',
+    '!h-[112px]',
+    '!h-[168px]',
+    '!h-[224px]',
+    '!h-[270px]',
+];
 
 const props = defineProps({
     pokemonNames: Object,
 });
 
 const isSearchFieldActive = ref(false);
+const searchTerm = ref('');
 
 const onClickOutsideSearchField = () => {
     isSearchFieldActive.value = false;
 };
 
 const emit = defineEmits(['submitGuess']);
-let searchTerm = ref('');
 
 const searchPokemonNames = computed(() => {
     if (searchTerm.value === '') {
