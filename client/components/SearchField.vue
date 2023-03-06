@@ -6,7 +6,7 @@
             type="text"
             placeholder="Type Pokemon Name..."
             v-model="searchTerm"
-            @keypress.enter="submitGuess(searchPokemonNames[idx]), resetScroll"
+            @keypress.enter="submitGuess(searchPokemonNames[idx === -1 ? 0 : idx]), resetScroll"
             :onFocus="
                 () => {
                     isSearchFieldActive = true;
