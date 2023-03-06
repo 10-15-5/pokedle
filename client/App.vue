@@ -93,16 +93,19 @@ onBeforeMount(async () => {
 });
 
 const getOrCreateUser = async () => {
-    const { userId } = helpers.getCookie(document);
+    const userId = localStorage.getItem('userId');
 
+    console.log(userId);
     if (userId) {
-        console.log(userId);
-        await service.updateUserStreak(userId)
+        await service.updateUserStreak(userId);
         const response = await service.getUser(userId);
         return response.data.user;
     }
+
     const response = await service.createUser();
-    return response.data.user;
+    const { user } = response.data;
+    localStorage.setItem('userId', user._id);
+    return user;
 };
 
 const removePokemonFromGuessPool = (guess) => {
@@ -129,9 +132,11 @@ const incrementGamesWonCount = async () => {
 };
 
 const updateUserWithGameWon = async () => {
-    const { userId } = helpers.getCookie(document);
-    const response = await service.updateUserWithGameWon(userId, state.guesses.length);
-    store.setUser(response.data.user);
+    const userId = localStorage.getItem('userId');
+    if (userId) {
+        const response = await service.updateUserWithGameWon(userId, state.guesses.length);
+        store.setUser(response.data.user);
+    }
 };
 
 const decideGame = (guess) => {
