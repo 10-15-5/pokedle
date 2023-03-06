@@ -33,7 +33,7 @@
                         :class="getHover(options.index)"
                     >
                         <img
-                            class="sprite-img ml-3"
+                            class="sprite-img ml-5"
                             :src="
                                 'https://img.pokemondb.net/sprites/ruby-sapphire/normal/' +
                                 removeSpecialCharactersExceptDashFromString(item) +
@@ -41,7 +41,7 @@
                             "
                             alt=""
                         />
-                        <p class="text-4 ml-4 font-pkmEmerald capitalize">
+                        <p class="text-4 ml-5 font-pkmEmerald capitalize">
                             {{ item }}
                         </p>
                     </div>
