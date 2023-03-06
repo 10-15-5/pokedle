@@ -83,3 +83,17 @@ func (r *userRepository) InsertNewGameWon(
 
 	return user
 }
+
+func (r *userRepository) UpdateUserStreak(
+	userId primitive.ObjectID,
+	currentStreak int,
+) {
+
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+
+	coll.UpdateByID(
+		context.Background(),
+		userId,
+		bson.M{"$set": bson.M{"currentStreak": currentStreak}},
+	)
+}

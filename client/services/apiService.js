@@ -12,6 +12,8 @@ const getUser = (userId) => apiClient().get(`users/${userId}`);
 
 const createUser = () => apiClient().post(`users`);
 
+const updateUserStreak = (userId) => apiClient().patch(`users/${userId}`);
+
 const updateUserWithGameWon = (userId,numberOfGuesses) => apiClient().post(`users/${userId}/gamesWon`, {numberOfGuesses});
 
 export {
@@ -21,5 +23,6 @@ export {
     getDailyStats,
     createUser,
     getUser,
-    updateUserWithGameWon
+    updateUserWithGameWon,
+    updateUserStreak
 }

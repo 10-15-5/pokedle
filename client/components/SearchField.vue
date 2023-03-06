@@ -59,7 +59,7 @@ const itemSize = 52;
 
 const searchFieldHeights = [
     '!h-[0px]',
-    '!h-[54px]',
+    '!h-[52px]',
     '!h-[104px]',
     '!h-[156px]',
     '!h-[208px]',

@@ -125,10 +125,10 @@ func CalculateStreak(lastGameWon models.GameWon, currStreak int) int {
 	yesterday := time.Now().Add(-24 * time.Hour)
 
 	if DateEqual(yesterday, lastGameWon.CreatedAt) {
-		return currStreak + 1
+		return currStreak
 	}
 
-	return 1
+	return 0
 }
 
 func FindAndUpdateUserWithGameWon(
@@ -142,4 +142,14 @@ func FindAndUpdateUserWithGameWon(
 	r := user.GetUserRepository(MongoClient)
 
 	return r.InsertNewGameWon(userId, gameWon, currentStreak, maxStreak, isFirstTryWin)
+}
+
+func UpdateUserStreak(
+	userId primitive.ObjectID,
+	currentStreak int,
+) {
+
+	r := user.GetUserRepository(MongoClient)
+
+	r.UpdateUserStreak(userId, currentStreak)
 }

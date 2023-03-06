@@ -25,6 +25,8 @@ func SetupRoutes(router *gin.Engine) {
 
 		api.GET("/users/:userId", controllers.GetUser)
 
+		api.PATCH("/users/:userId", controllers.UpdateUserStreak)
+
 		api.POST("/users", controllers.CreateUser)
 
 		api.POST("/users/:userId/gamesWon", controllers.UpdateUserGameWon)

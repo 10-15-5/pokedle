@@ -51,7 +51,7 @@ import SearchField from './components/SearchField.vue';
 import pokemonData from '../server/data/pokemonData-v4.json';
 import HeaderContainer from './components/HeaderContainer.vue';
 import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
-import { onMounted, reactive, ref, onBeforeMount } from 'vue';
+import { reactive, ref, onBeforeMount } from 'vue';
 import { getGuessResults } from './services/guess';
 import * as service from './services/apiService.js';
 import * as helpers from './helpers.js';
@@ -83,8 +83,27 @@ const setDailyGamesWonCount = async () => {
 };
 
 onBeforeMount(async () => {
-    await setDailyGamesWonCount();
+    const [user] = await Promise.all([getOrCreateUser(), loadGameData(), setDailyGamesWonCount()]);
+
+    console.log(user);
+
+    if (user) {
+        store.setUser(user);
+    }
 });
+
+const getOrCreateUser = async () => {
+    const { userId } = helpers.getCookie(document);
+
+    if (userId) {
+        console.log(userId);
+        await service.updateUserStreak(userId)
+        const response = await service.getUser(userId);
+        return response.data.user;
+    }
+    const response = await service.createUser();
+    return response.data.user;
+};
 
 const removePokemonFromGuessPool = (guess) => {
     let guessRemovedFromList = false;
@@ -232,29 +251,6 @@ const loadGameData = async () => {
     }
 };
 
-const getOrCreateUser = async () => {
-    const { userId } = helpers.getCookie(document);
-
-    if (!userId) {
-        await service.createUser();
-        return undefined;
-    }
-
-    const response = await service.getUser(userId);
-    return response.data.user;
-};
-
-onMounted(async () => {
-    const [_, user] = await Promise.all([loadGameData(), getOrCreateUser()]);
-
-    console.log(user);
-
-    if (user) {
-        store.setUser(user);
-        console.log(store.user);
-    }
-});
-
 const revealPokemon = async () => {
     console.log(localStorage.getItem('secretPokemon'));
     const backendResponse = await service.getSecretPokemon();
@@ -339,7 +335,8 @@ html.dark {
 }
 
 .background-black {
-    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)), url('./client/assets/background-black.jpg');
+    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+        url('./client/assets/background-black.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;

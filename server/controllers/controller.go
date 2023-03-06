@@ -1,7 +1,6 @@
 package controllers
 
 import (
-	"fmt"
 	"math"
 	"net/http"
 	"os"
@@ -69,24 +68,6 @@ func GetDailyStats(c *gin.Context) {
 
 }
 
-func GetUser(c *gin.Context) {
-
-	userId := c.Param("userId")
-
-	mongoUserId, err := primitive.ObjectIDFromHex(userId)
-
-	if err != nil {
-		c.AbortWithStatus(http.StatusBadRequest)
-	}
-
-	user := services.GetUser(mongoUserId)
-
-	fmt.Println(user)
-
-	c.JSON(http.StatusOK, gin.H{"user": user})
-
-}
-
 func CreateUser(c *gin.Context) {
 
 	user := models.NewUser()
@@ -99,7 +80,52 @@ func CreateUser(c *gin.Context) {
 
 	c.SetCookie("userId", user.ID.Hex(), math.MaxInt32, "/", os.Getenv("DOMAIN"), true, false)
 
-	c.Writer.WriteHeader(http.StatusCreated)
+	c.JSON(http.StatusCreated, gin.H{"user": user})
+}
+
+func GetUser(c *gin.Context) {
+
+	userId := c.Param("userId")
+
+	mongoUserId, err := primitive.ObjectIDFromHex(userId)
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+	}
+
+	user := services.GetUser(mongoUserId)
+
+	c.JSON(http.StatusOK, gin.H{"user": user})
+
+}
+
+func UpdateUserStreak(c *gin.Context) {
+
+	userId := c.Param("userId")
+
+	mongoUserId, err := primitive.ObjectIDFromHex(userId)
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusBadRequest)
+	}
+
+	user := services.GetUser(mongoUserId)
+
+	var streak int
+
+	if len(user.GamesWon) > 0 {
+
+		lastGameWon := user.GamesWon[len(user.GamesWon)-1]
+
+		streak = services.CalculateStreak(lastGameWon, user.CurrentStreak)
+	}
+
+	if streak != user.CurrentStreak {
+		services.UpdateUserStreak(mongoUserId, streak)
+		c.AbortWithStatusJSON(200, gin.H{"msg": "Streak Updated"})
+	}
+
+	c.AbortWithStatus(200)
 }
 
 func UpdateUserGameWon(c *gin.Context) {
@@ -143,10 +169,7 @@ func UpdateUserGameWon(c *gin.Context) {
 			return
 		}
 
-		streak = services.CalculateStreak(lastGameWon, user.CurrentStreak)
-
-	} else {
-		streak = 1
+		streak = (1 + services.CalculateStreak(lastGameWon, user.CurrentStreak))
 	}
 
 	maxStreak := int(math.Max(float64(streak), float64(user.MaxStreak)))
