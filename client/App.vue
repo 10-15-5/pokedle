@@ -6,6 +6,7 @@
                 'background-black': isDark,
             }"
         >
+            <ThemeButton :isActive="isDark" :toggleActive="toggleDark" />
             <div class="flex flex-col items-center justify-center gap-y-4">
                 <div>
                     <v-img
@@ -58,6 +59,7 @@ import * as helpers from './helpers.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
 import { useDark, useToggle } from '@vueuse/core';
+import ThemeButton from './components/ThemeButton.vue';
 
 const isDark = useDark();
 const toggleDark = useToggle(isDark);
