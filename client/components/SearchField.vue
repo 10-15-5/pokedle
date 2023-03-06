@@ -6,12 +6,8 @@
             type="text"
             placeholder="Type Pokemon Name..."
             v-model="searchTerm"
-            @keypress.enter="submitGuess(searchPokemonNames[idx === -1 ? 0 : idx]), resetScroll"
-            :onFocus="
-                () => {
-                    isSearchFieldActive = true;
-                }
-            "
+            @keypress.enter="submitGuess(searchPokemonNames[idx === -1 ? 0 : idx])"
+            :onFocus="() => {isSearchFieldActive = true}"
             v-click-outside="onClickOutsideSearchField"
             @keydown.arrow-down="scrollDown"
             @keydown.arrow-up="scrollUp"
@@ -102,15 +98,20 @@ const scrollUp = () => {
 
 const onClickOutsideSearchField = () => {
     isSearchFieldActive.value = false;
+    resetSuggestionsView();
 };
 
 const emit = defineEmits(['submitGuess']);
 
 watch(searchTerm, () => {
+    resetSuggestionsView();
+});
+
+const resetSuggestionsView = () => {
     idx.value = -1;
     suggestionViewportStart = 0;
     virtualScroller.value?.scrollToIndex(0);
-});
+};
 
 const searchPokemonNames = computed(() => {
     if (searchTerm.value === '') {
