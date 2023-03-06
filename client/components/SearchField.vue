@@ -7,7 +7,11 @@
             placeholder="Type Pokemon Name..."
             v-model="searchTerm"
             @keypress.enter="submitGuess(searchPokemonNames[idx]), resetScroll"
-            :onFocus="() => {isSearchFieldActive = true}"
+            :onFocus="
+                () => {
+                    isSearchFieldActive = true;
+                }
+            "
             v-click-outside="onClickOutsideSearchField"
             @keydown.arrow-down="scrollDown"
             @keydown.arrow-up="scrollUp"
@@ -64,6 +68,9 @@ const searchFieldHeights = [
 
 const idx = ref(0);
 
+let suggestionViewportStart = 0;
+const suggestionViewportSize = 4;
+
 const props = defineProps({
     pokemonNames: Object,
 });
@@ -79,12 +86,20 @@ const virtualScroller = ref(null);
 
 const scrollDown = () => {
     idx.value += searchPokemonNames.value.length - 1 > idx.value ? 1 : 0;
-    virtualScroller.value?.scrollTo({ top: idx.value * itemSize });
+    console.log(idx.value);
+    if (idx.value > suggestionViewportStart + suggestionViewportSize) {
+        suggestionViewportStart++;
+        virtualScroller.value?.scrollTo({ top: suggestionViewportStart * itemSize });
+    }
 };
 
 const scrollUp = () => {
     idx.value -= idx.value > 0 ? 1 : 0;
-    virtualScroller.value?.scrollTo({ top: idx.value * itemSize });
+    console.log(idx.value);
+    if (idx.value < suggestionViewportStart) {
+        suggestionViewportStart--;
+        virtualScroller.value?.scrollTo({ top: suggestionViewportStart * itemSize });
+    }
 };
 
 const onClickOutsideSearchField = () => {
@@ -95,6 +110,7 @@ const emit = defineEmits(['submitGuess']);
 
 watch(searchTerm, () => {
     idx.value = 0;
+    suggestionViewportStart = 0;
     virtualScroller.value?.scrollToIndex(0);
 });
 
