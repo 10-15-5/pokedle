@@ -79,13 +79,11 @@ const virtualScroller = ref(null);
 
 const scrollDown = () => {
     idx.value += searchPokemonNames.value.length - 1 > idx.value ? 1 : 0;
-    console.log(idx.value);
     virtualScroller.value?.scrollTo({ top: idx.value * itemSize });
 };
 
 const scrollUp = () => {
     idx.value -= idx.value > 0 ? 1 : 0;
-    console.log(idx.value);
     virtualScroller.value?.scrollTo({ top: idx.value * itemSize });
 };
 

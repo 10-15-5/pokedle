@@ -112,7 +112,6 @@ const incrementGamesWonCount = async () => {
 
 const updateUserWithGameWon = async () => {
     const { userId } = helpers.getCookie(document);
-    console.log(state.guesses.length);
     const response = await service.updateUserWithGameWon(userId, state.guesses.length);
     store.setUser(response.data.user);
 };
@@ -236,7 +235,7 @@ const loadGameData = async () => {
     }
 };
 
-const createOrGetUser = async () => {
+const getOrCreateUser = async () => {
     const { userId } = helpers.getCookie(document);
 
     if (!userId) {
@@ -245,12 +244,11 @@ const createOrGetUser = async () => {
     }
 
     const response = await service.getUser(userId);
-    console.log(response.data);
     return response.data.user;
 };
 
 onMounted(async () => {
-    const [_, user] = await Promise.all([loadGameData(), createOrGetUser()]);
+    const [_, user] = await Promise.all([loadGameData(), getOrCreateUser()]);
 
     console.log(user);
 
