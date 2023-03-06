@@ -15,7 +15,7 @@
                     <HeaderContainer />
                 </div>
                 <SearchField
-                    v-if="!isGameWon"
+                    v-if="!store.isGameWon"
                     :pokemonNames="state.pokemonNames"
                     @submit-guess="submitGuess"
                 />
@@ -66,7 +66,6 @@ const state = reactive({
     pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
     guesses: [],
 });
-const isGameWon = ref(false);
 const isSearchFieldDisabled = ref(false);
 const dailyGamesWon = ref(0);
 const dailyFirstTryWins = ref(0);
@@ -123,8 +122,7 @@ const decideGame = (guess) => {
         //Wait for all cards to flip
         setTimeout(() => {
             lauchConfetti();
-            isGameWon.value = true;
-            localStorage.setItem('isGameWon', 'true');
+            store.setIsGameWon(true);
             console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
             incrementGamesWonCount();
             updateUserWithGameWon();
@@ -175,10 +173,9 @@ const loadColors = () => {
 const loadIsGameWon = () => {
     const loadedIsGameWon = localStorage.getItem('isGameWon');
     if (loadedIsGameWon === 'true') {
-        isGameWon.value = true;
+        store.setIsGameWon(true);
     } else {
-        localStorage.setItem('isGameWon', 'false');
-        isGameWon.value = false;
+        store.setIsGameWon(false);
     }
 };
 

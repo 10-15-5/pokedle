@@ -64,7 +64,9 @@ import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { getHabitatImage } from '../services/assets.js';
 import { VueFlip } from 'vue-flip';
 import { useDark } from '@vueuse/core';
+import { useStore } from '../stores/store';
 const isDark = useDark();
+const store = useStore();
 
 const props = defineProps({
     guessResult: String,
@@ -78,7 +80,7 @@ const props = defineProps({
 const isCardFaceDown = ref(true);
 
 onBeforeMount(() => {
-    if (props.flipDelay === undefined) isCardFaceDown.value = false;
+    if (props.flipDelay === undefined || store.isGameWon) isCardFaceDown.value = false;
 });
 
 onMounted(() => {
