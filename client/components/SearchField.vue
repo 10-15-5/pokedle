@@ -29,7 +29,7 @@
                     <div
                         :style="{ height: `${itemSize}px` }"
                         @click="submitGuess(item)"
-                        class="justify-left hover flex cursor-pointer items-center border-b-2 border-light-border bg-light-bg text-black hover:!bg-neutral-200 hover:!text-green-500 dark:border-dark-border dark:!bg-dark-bg dark:!text-dark-text hover:dark:!bg-neutral-700 hover:dark:!text-green-300"
+                        class="justify-left hover flex cursor-pointer items-center border-light-border bg-light-bg text-black hover:!bg-neutral-200 hover:!text-green-500 dark:border-dark-border dark:!bg-dark-bg dark:!text-dark-text hover:dark:!bg-neutral-700 hover:dark:!text-green-300"
                         :class="getHover(options.index)"
                     >
                         <img
@@ -86,7 +86,6 @@ const virtualScroller = ref(null);
 
 const scrollDown = () => {
     idx.value += searchPokemonNames.value.length - 1 > idx.value ? 1 : 0;
-    console.log(idx.value);
     if (idx.value > suggestionViewportStart + suggestionViewportSize) {
         suggestionViewportStart++;
         virtualScroller.value?.scrollTo({ top: suggestionViewportStart * itemSize });
@@ -95,7 +94,6 @@ const scrollDown = () => {
 
 const scrollUp = () => {
     idx.value -= idx.value > 0 ? 1 : 0;
-    console.log(idx.value);
     if (idx.value < suggestionViewportStart) {
         suggestionViewportStart--;
         virtualScroller.value?.scrollTo({ top: suggestionViewportStart * itemSize });
@@ -109,7 +107,7 @@ const onClickOutsideSearchField = () => {
 const emit = defineEmits(['submitGuess']);
 
 watch(searchTerm, () => {
-    idx.value = 0;
+    idx.value = -1;
     suggestionViewportStart = 0;
     virtualScroller.value?.scrollToIndex(0);
 });
