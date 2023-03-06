@@ -17,7 +17,7 @@ RUN cd /app/server && go build -o /app/out
 
 ENV CLIENT_URL=http://34.22.152.8
 ENV MONGODB_URI=mongodb+srv://production:gabr0236@pokedlev1.a0jr10a.mongodb.net/test
-ENV DATABASE=Dev
+ENV DATABASE=Production
 ENV SERVER_PORT=3000
 # TODO: should eventually be pokedle.xyz
 ENV DOMAIN=http://34.22.152.8
