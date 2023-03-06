@@ -11,11 +11,14 @@ COPY /client/ /app/client/
 COPY package.json ./
 COPY index.html ./
 COPY vite.config.js ./
+COPY tailwind.config.cjs ./
+COPY postcss.config.cjs ./
 
 ENV SERVER_URL=http://34.140.25.206:80
 ENV SERVER_API_URL=http://34.140.25.206:80/api
 ENV CLIENT_PORT=8000
-ENV DOMAIN=https://pokedle.xyz
+# TODO: should eventually be pokedle.xyz
+ENV DOMAIN=http://34.22.152.8
 
 # need to make sure relative file paths are correct, could use env to change path 
 #   but this would create discrepency between prod/dev

@@ -95,7 +95,9 @@ func CreateUser(c *gin.Context) {
 		c.AbortWithStatus(http.StatusInternalServerError)
 	}
 
-	c.SetCookie("userId", user.ID.Hex(), math.MaxInt32, "/", os.Getenv("DOMAIN"), true, false) //TODO: eventually make httpOnly=true
+	c.SetSameSite(http.SameSiteNoneMode)
+
+	c.SetCookie("userId", user.ID.Hex(), math.MaxInt32, "/", os.Getenv("DOMAIN"), true, false)
 
 	c.Writer.WriteHeader(http.StatusCreated)
 }
