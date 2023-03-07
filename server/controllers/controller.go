@@ -28,6 +28,16 @@ func GetSecretPokemon(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, secretPokemon)
 }
 
+func GetPreviousSecretPokemon(c *gin.Context) {
+	secretPokemon, err := services.GetPreviousSecretPokemon()
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+	}
+
+	c.IndentedJSON(http.StatusOK, secretPokemon)
+}
+
 func NewSecretPokemon(c *gin.Context) {
 	currentSecretPokemon, _ := services.GetSecretPokemon()
 

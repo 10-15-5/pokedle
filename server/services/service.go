@@ -24,6 +24,15 @@ func GetSecretPokemon() (models.Pokemon, error) {
 	return r.FindCurrentSecretPokemon(context.TODO())
 }
 
+func GetPreviousSecretPokemon() (models.Pokemon, error) {
+
+	r := secretPokemon.GetPokemonRepository(MongoClient)
+
+	secretPokemons, err := r.FindLastTwoSecretPokemon(context.TODO())
+
+	return secretPokemons[1], err
+}
+
 func NewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.Pokemon) models.Pokemon {
 	containsRandomPokemon := true
 

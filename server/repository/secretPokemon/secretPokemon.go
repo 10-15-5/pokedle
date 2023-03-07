@@ -54,6 +54,22 @@ func (r *pokemonRepository) FindCurrentSecretPokemon(ctx context.Context) (model
 	return secretPokemon, err
 }
 
+func (r *pokemonRepository) FindLastTwoSecretPokemon(ctx context.Context) ([]models.Pokemon, error) {
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+
+	options := options.Find().SetSort(bson.M{"_id": -1}).SetLimit(2)
+
+	var secretPokemons []models.Pokemon
+
+	cursor, err := coll.Find(ctx, bson.D{}, options)
+
+	if err := cursor.All(context.Background(), &secretPokemons); err != nil {
+		panic(err)
+	}
+
+	return secretPokemons, err
+}
+
 func (r *pokemonRepository) FindRecentSecretPokemons(ctx context.Context, limit int) []models.Pokemon {
 
 	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
