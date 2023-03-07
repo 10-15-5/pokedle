@@ -5,10 +5,10 @@
             class="z-1 absolute mt-[-8px] ml-[46px] flex h-[22px] w-[22px] items-center justify-center"
         >
             <v-icon
-                class="absolute z-10 text-[25px] text-black dark:!text-dark-border"
+                class="absolute z-10 text-3xl text-black dark:!text-dark-border"
                 icon="mdi-star"
             />
-            <v-icon class="absolute z-10 text-[17px] text-yellow-500" icon="mdi-star" />
+            <v-icon class="absolute z-10 text-xl text-yellow-500" icon="mdi-star" />
         </div>
         <VueFlip
             v-model="isCardFaceDown"
