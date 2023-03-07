@@ -34,13 +34,13 @@
                         "
                         alt="pokemon sprite"
                     />
+                    <div v-if="habitat" class=" border-light-border dark:!border-dark-border border-2 rounded-[50%] h-[39px] overflow-hidden">
                     <img
-                        v-if="habitat"
-                        class="pokemon-habitat border-light-border dark:!border-dark-border"
                         :src="getHabitatImage(habitat)"
                         :title="`${habitat}`"
                         :alt="`${habitat}`"
                     />
+                    </div>
                     <p
                         v-else-if="guessResult"
                         class="pt-1 pl-[2px] font-pkmEmerald text-[16px] capitalize dark:font-bold dark:text-dark-text"
@@ -110,10 +110,4 @@ const getColor = computed(() => {
     background-size: contain;
 }
 
-.pokemon-habitat {
-    width: 105%;
-    border-style: solid;
-    border-radius: 60%;
-    border-width: 2px;
-}
 </style>
