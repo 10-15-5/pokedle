@@ -237,7 +237,7 @@ const loadGameData = async () => {
 
     if (
         parseInt(dayOfLastUpdate) == new Date().getUTCDate() 
-        || (secretPokemon && secretPokemon?.name === currSecretPokemon?.name)
+        && (secretPokemon && secretPokemon?.name === currSecretPokemon?.name)
     ) {
         loadColors();
         loadGuesses();
@@ -267,7 +267,7 @@ const newGame = () => {
 
 const getNewGame = async () => {
     newGame();
-    setSecretPokemon();
+    await setSecretPokemon();
     location.reload();
 }
 
