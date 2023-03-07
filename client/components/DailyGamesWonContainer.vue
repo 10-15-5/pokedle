@@ -1,6 +1,6 @@
 <template>
     <div class="card p-[3px] px-2 pt-[4px] font-pkmEmerald text-sm">
-        {{ dailyGamesWon + ' Trainers Already Found Out!' }}
+      <p> <b class=" text-orange-600 dark:text-orange-300"> {{ dailyGamesWon }}</b>   Trainers Already Found Out!</p>
     </div>
 </template>
 

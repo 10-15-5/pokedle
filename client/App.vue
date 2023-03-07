@@ -32,6 +32,7 @@
                         />
                     </div>
                 </div>
+                <PreviousPokemonCard v-else />
             </div>
         </v-main>
         <div class="flex items-center justify-center">
@@ -47,6 +48,7 @@
 import SquareContainer from './components/SquareContainer.vue';
 import SquareContentHeader from './components/SquareContentHeader.vue';
 import GameWinContainer from './components/GameWinContainer.vue';
+import PreviousPokemonCard from './components/PreviousPokemonCard.vue';
 import SearchField from './components/SearchField.vue';
 import pokemonData from '../server/data/pokemonData-v4.json';
 import HeaderContainer from './components/HeaderContainer.vue';
@@ -57,7 +59,7 @@ import * as service from './services/apiService.js';
 import * as helpers from './helpers.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
-import { useDark, useToggle } from '@vueuse/core';
+import { useDark } from '@vueuse/core';
 import ThemeButton from './components/ThemeButton.vue';
 
 const isDark = useDark();

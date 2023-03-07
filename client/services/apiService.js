@@ -2,6 +2,8 @@ import {apiClient} from './httpClient.js';
 
 const getSecretPokemon = () => apiClient().get(`secret-pokemons`);
 
+const getPreviousSecretPokemon = () => apiClient().get(`previous-secret-pokemons`);
+
 const newSecretPokemon = () => apiClient().post(`secret-pokemons`);
 
 const updateDailyGamesWonCount = (numberOfGuesses) => apiClient().post(`games-won`, {numberOfGuesses});
@@ -24,5 +26,6 @@ export {
     createUser,
     getUser,
     updateUserWithGameWon,
-    updateUserStreak
+    updateUserStreak,
+    getPreviousSecretPokemon
 }
