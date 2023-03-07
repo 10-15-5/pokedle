@@ -36,10 +36,9 @@
         </v-main>
         <div class="flex items-center justify-center">
             <v-btn class="text-xs" @click="revealPokemon">Reveal</v-btn>
-            <v-btn class="text-xs" @click="setNewGame">New Game</v-btn>
+            <v-btn class="text-xs" @click="getNewGame">Get New Game</v-btn>
+            <v-btn class="text-xs" @click="setNewGame">Set New Game</v-btn>
             <v-btn class="text-xs" @click="lauchConfetti">Confetti</v-btn>
-            <v-btn class="text-xs" @click="toggleDark()">Theme</v-btn>
-            <p>IsDark: {{ isDark }}</p>
         </div>
     </v-app>
 </template>
@@ -265,6 +264,12 @@ const newGame = () => {
     setNewDate();
     store.setIsGameWon(false);
 };
+
+const getNewGame = async () => {
+    newGame();
+    setSecretPokemon();
+    location.reload();
+}
 
 // Force update pokemon in DB
 const setNewGame = async () => {
