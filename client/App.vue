@@ -6,7 +6,7 @@
                 'background-black': isDark,
             }"
         >
-            <ThemeButton :isActive="isDark" :toggleActive="toggleDark" />
+            <ThemeButton class="absolute" />
             <div class="flex flex-col items-center justify-center gap-y-4">
                 <div>
                     <v-img
