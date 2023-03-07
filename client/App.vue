@@ -61,7 +61,6 @@ import { useDark, useToggle } from '@vueuse/core';
 import ThemeButton from './components/ThemeButton.vue';
 
 const isDark = useDark();
-const toggleDark = useToggle(isDark);
 
 const state = reactive({
     pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
@@ -75,7 +74,7 @@ const store = useStore();
 let colors = [];
 let secretPokemon;
 
-const getRandomColor = () => (Math.random() * 100 < 5 ? 'shiny' : 'normal');
+const getRandomColor = () => (Math.random() * 100 < 5 ? 'shiny' : 'shiny');
 
 const setDailyGamesWonCount = async () => {
     var date = new Date().toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD
@@ -236,8 +235,9 @@ const loadGameData = async () => {
     const currSecretPokemon = await (await service.getSecretPokemon()).data;
 
     if (
-        parseInt(dayOfLastUpdate) == new Date().getUTCDate() 
-        && (secretPokemon && secretPokemon?.name === currSecretPokemon?.name)
+        parseInt(dayOfLastUpdate) == new Date().getUTCDate() &&
+        secretPokemon &&
+        secretPokemon?.name === currSecretPokemon?.name
     ) {
         loadColors();
         loadGuesses();
@@ -269,7 +269,7 @@ const getNewGame = async () => {
     newGame();
     await setSecretPokemon();
     location.reload();
-}
+};
 
 // Force update pokemon in DB
 const setNewGame = async () => {
@@ -290,11 +290,17 @@ const lauchConfetti = () => {
         scalar: 1.4,
     };
 
-    if (colors.at(-1) === 'shiny') {
-        (defaults.shapes = ['star']),
-            (defaults.colors = ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8']);
+    if (colors.at(-1) === 'shiny' || state.guesses.length === 1) {
+        defaults.shapes = ['star'];
         defaults.scalar = 1.1;
         particleCount = 90;
+        if (colors.at(-1) === 'shiny' && state.guesses.length === 1) {
+            defaults.colors = ['9EFD38', '32CD32', 'A8E4A0', '98FB98', '7CFC00'];
+        } else if (colors.at(-1) === 'shiny') {
+            defaults.colors = ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'];
+        } else if (state.guesses.length === 1) {
+            defaults.colors = ['63C5DA', '48AAD', '52B2BF', '3944BC'];
+        }
     }
 
     const randomInRange = (min, max) => {
