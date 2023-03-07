@@ -76,7 +76,7 @@ const store = useStore();
 let colors = [];
 let secretPokemon;
 
-const getRandomColor = () => (Math.random() * 100 < 5 ? 'shiny' : 'shiny');
+const getRandomColor = () => (Math.random() * 100 < 5 ? 'shiny' : 'normal');
 
 const setDailyGamesWonCount = async () => {
     var date = new Date().toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD

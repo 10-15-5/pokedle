@@ -31,23 +31,51 @@
                 in <b>evolution stage 3</b> <br />
                 This leaves only one POKEMéN; <b>METAGROSS.</b>
             </p>
-            <v-img class="card mx-auto w-[600px]" :src="'./client/assets/game-example.png'"></v-img>
+            <img class="card mx-auto w-[600px]" :src="'./client/assets/game-example.png'" />
         </div>
+
+        <hr class="divider" />
+        <h1 class="font-pkmEmerald text-[32px] uppercase">Habitats</h1>
+        <p class="font-pkmEmerald text-[20px]">
+            The Habitats used are all taken from
+            <a
+                class="link"
+                href="https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_habitat"
+            >
+                Bulbapedia
+            </a>
+            and include:
+        </p>
+        <div class="flex gap-1 p-2">
+            <img :src="'./client/assets/habitats/cave.png'" alt="" />
+            <img :src="'./client/assets/habitats/forest.png'" alt="" />
+            <img :src="'./client/assets/habitats/grassland.png'" alt="" />
+            <img :src="'./client/assets/habitats/mountain.png'" alt="" />
+            <img :src="'./client/assets/habitats/rare.png'" alt="" />
+            <img :src="'./client/assets/habitats/rough-terrain.png'" alt="" />
+            <img :src="'./client/assets/habitats/sea.png'" alt="" />
+            <img :src="'./client/assets/habitats/urban.png'" alt="" />
+            <img :src="'./client/assets/habitats/waters-edge.png'" alt="" />
+        </div>
+
         <hr class="divider" />
         <h1 class="font-pkmEmerald text-[32px] uppercase">Credit</h1>
-        <p class="font-pkmEmerald text-[20px]">
-            Pokédlé is heavily inspired by loldle.net and wordle. Original artist/creator of images,
-            please DM for removal or credit.
-        </p>
+        <div class="w-full">
+            <p class="font-pkmEmerald text-[20px]">
+                Pokédle is created by Gabriel Haugbøl. I hope you enjoy playing along 😊🎮!
+                <br />
+                Pokédle is heavily inspired by loldle.net and wordle.
+                <br />
+                Original artist/creator of image(s), please DM for removal or credit.
+            </p>
+        </div>
         <hr class="divider" />
-        <h1 class="font-pkmEmerald text-[32px] uppercase">Contact</h1>
+        <h1 class="text-center font-pkmEmerald text-[32px] uppercase">Contact</h1>
         <p class="font-pkmEmerald text-[20px]">
             If you have any questions/feedback/bug reports feel free to contact me on the email
-            below. <br />
-            <a
-                class="text-[24px] font-bold text-blue-500 hover:text-blue-400 dark:text-blue-300 dark:hover:text-blue-400"
-                href="mailto: pokedle.contact@gmail.com"
-            >
+            below: <br />
+            &#8594;
+            <a class="link ml-2 text-[24px] font-bold" href="mailto: pokedle.contact@gmail.com">
                 pokedle.contact@gmail.com
             </a>
         </p>
