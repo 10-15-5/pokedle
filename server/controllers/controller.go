@@ -169,8 +169,10 @@ func UpdateUserGameWon(c *gin.Context) {
 			return
 		}
 
-		streak = (1 + services.CalculateStreak(lastGameWon, user.CurrentStreak))
+		streak = services.CalculateStreak(lastGameWon, user.CurrentStreak)
 	}
+
+	streak++
 
 	maxStreak := int(math.Max(float64(streak), float64(user.MaxStreak)))
 
