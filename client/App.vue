@@ -36,7 +36,7 @@
         </v-main>
         <div class="flex items-center justify-center">
             <v-btn class="text-xs" @click="revealPokemon">Reveal</v-btn>
-            <v-btn class="text-xs" @click="newGame">New Game</v-btn>
+            <v-btn class="text-xs" @click="setNewGame">New Game</v-btn>
             <v-btn class="text-xs" @click="lauchConfetti">Confetti</v-btn>
             <v-btn class="text-xs" @click="toggleDark()">Theme</v-btn>
             <p>IsDark: {{ isDark }}</p>
@@ -218,8 +218,6 @@ const setNewDate = () =>
     localStorage.setItem('dayOfLastUpdate', new Date().getUTCDate().toString());
 
 const setNewSecretPokemon = async () => {
-    //TODO: currently we set new secret pokemon every day at 00:00.
-    // Users will see a random pokemon each, since we rely on this instead of job/CDN
     const response = await service.newSecretPokemon();
     secretPokemon = response.data;
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
@@ -235,27 +233,22 @@ const loadGameData = async () => {
     const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
     if (!dayOfLastUpdate) setNewDate();
 
-    if (parseInt(dayOfLastUpdate) == new Date().getUTCDate()) {
-        loadSecretPokemon();
+    loadSecretPokemon();
+    const currSecretPokemon = await (await service.getSecretPokemon()).data;
 
-        const currSecretPokemon = await (await service.getSecretPokemon()).data;
-
-        if (secretPokemon && secretPokemon?.name === currSecretPokemon?.name) {
-            loadColors();
-            loadGuesses();
-            loadIsGameWon();
-            removePokemonsFromGuessPool();
-        } else {
-            localStorage.clear();
-            setNewDate();
-            await setSecretPokemon();
-        }
+    if (
+        parseInt(dayOfLastUpdate) == new Date().getUTCDate() 
+        || (secretPokemon && secretPokemon?.name === currSecretPokemon?.name)
+    ) {
+        loadColors();
+        loadGuesses();
+        loadIsGameWon();
+        removePokemonsFromGuessPool();
     } else {
-        localStorage.clear();
-        setNewDate();
-        //TODO: this should be replaced with CDN
-        await setNewSecretPokemon();
+        newGame();
+        await setSecretPokemon();
     }
+    setNewDate();
 };
 
 const revealPokemon = async () => {
@@ -264,8 +257,19 @@ const revealPokemon = async () => {
     console.log(backendResponse.data);
 };
 
-const newGame = async () => {
-    localStorage.clear();
+const newGame = () => {
+    localStorage.removeItem('secretPokemon');
+    localStorage.removeItem('guesses');
+    localStorage.removeItem('colors');
+    localStorage.removeItem('isGameWon');
+    setNewDate();
+    store.setIsGameWon(false);
+};
+
+// Force update pokemon in DB
+const setNewGame = async () => {
+    newGame();
+    await setNewSecretPokemon();
     location.reload();
 };
 
