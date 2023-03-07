@@ -1,6 +1,6 @@
 <template>
 <div class="card font-pkmEmerald p-1 mt-[-8px] text-xs capitalize">
-    <p>Yesterdays Pokemon Was <b class=" text-green-600 dark:!text-green-300">{{ pokemonName }}</b> </p>
+    <p>Yesterdays Pokemon Was <b class=" text-light-green dark:!text-dark-green">{{ pokemonName }}</b> </p>
 </div>
 </template>
 

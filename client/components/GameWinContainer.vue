@@ -1,6 +1,6 @@
 <template>
     <div class="card flex flex-col items-center justify-center p-4">
-        <p class="font-pkmEmerald text-[32px] text-green-600 dark:!text-green-300">VICTORY!</p>
+        <p class="font-pkmEmerald text-[32px] !text-light-green dark:!text-dark-green">VICTORY!</p>
         <p class="mb-3 font-pkmEmerald text-[18px]">You Guessed: {{ pokemon }}</p>
         <SquareContent
             :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"
@@ -63,18 +63,4 @@ setInterval(() => {
 </script>
 
 <style scoped>
-.card-text,
-.title,
-.card-smaller-text {
-    font-family: pkmEmerald;
-    text-transform: capitalize;
-}
-
-.card-text {
-    font-size: 18px;
-}
-
-.card-smaller-text {
-    font-size: 14px;
-}
 </style>

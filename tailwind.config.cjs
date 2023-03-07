@@ -13,12 +13,16 @@ module.exports = {
                     light: {
                         bg: colors.white,
                         border: colors.black,
-                        text: colors.black
+                        text: colors.black,
+                        orange: colors.orange[600],
+                        green: colors.green[600],
                     },
                     dark: {
                         bg: '#4a4a4a',
                         border: colors.gray[500],
                         text: colors.gray[100],
+                        orange: colors.orange[300],
+                        green: colors.green[300],
                     }
             },
             fontFamily: {
