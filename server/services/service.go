@@ -122,9 +122,10 @@ func SaveUser(newUser models.User) error {
 
 func CalculateStreak(lastGameWon models.GameWon, currStreak int) int {
 
-	yesterday := time.Now().Add(-24 * time.Hour)
+	today := time.Now()
+	yesterday := today.Add(-24 * time.Hour)
 
-	if DateEqual(yesterday, lastGameWon.CreatedAt) {
+	if DateEqual(yesterday, lastGameWon.CreatedAt) || DateEqual(today, lastGameWon.CreatedAt) {
 		return currStreak
 	}
 
