@@ -1,14 +1,16 @@
 <template>
-    <div class="card flex flex-col items-center justify-center p-4">
-        <p class="font-pkmEmerald text-[32px] !text-light-green dark:!text-dark-green">VICTORY!</p>
-        <p class="mb-3 font-pkmEmerald text-[18px]">You Guessed: {{ pokemon }}</p>
+    <div class="card flex flex-col items-center justify-center p-6">
+        <p class="font-pkmEmerald text-[32px] !text-light-green dark:!text-dark-green fontbo">VICTORY!</p>
+        <p class="mb-3 font-pkmEmerald text-[18px] capitalize">You Guessed: <b class="!text-light-green dark:!text-dark-green"> {{ pokemon }} </b></p>
         <SquareContent
             :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"
             :color="props.color"
         />
         <p class="mt-2 font-pkmEmerald text-[14px]">
-            Next Pokemon Will Appear In:
-            {{ ' ' + hoursRemaining + ':' + minRemaining + ':' + secRemaining }}
+            Next Pokemon Will Appear In :&nbsp;
+            <b class="text-light-orange dark:!text-dark-orange">
+                {{ ' ' + hoursRemaining + ' : ' + minRemaining + ' : ' + secRemaining }}</b
+            >
         </p>
     </div>
 </template>
@@ -62,5 +64,4 @@ setInterval(() => {
 }, 1000);
 </script>
 
-<style scoped>
-</style>
+<style scoped></style>
