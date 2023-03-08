@@ -11,7 +11,7 @@
                 <div>
                     <v-img
                         src="/client/assets/pokedle-logo.png"
-                        class="title-img mt-5 mb-3 w-[280px] transition-all duration-100 ease-linear hover:scale-110"
+                        class="title-img mt-5 mb-3 w-[280px] sm:w-[220px] transition-all duration-100 ease-linear hover:scale-110"
                     />
                     <HeaderContainer />
                 </div>
@@ -22,8 +22,8 @@
                 />
                 <GameWinContainer v-else :pokemon="state.guesses[0]" :color="colors.at(-1)" />
                 <DailyGamesWonContainer :dailyGamesWon="dailyGamesWon" />
-                <div v-if="state.guesses.length" class="mb-20 flex flex-col gap-y-2">
-                    <SquareContentHeader class="mb-n1" />
+                <div v-if="state.guesses.length" class="mb-20 flex flex-col sm:gap-y-1 gap-y-2">
+                    <SquareContentHeader class="mb-n1 sm:!mb-0" />
                     <div v-for="(guess, i) in state.guesses" :key="guess" :value="guess">
                         <SquareContainer
                             :pokemonName="guess"

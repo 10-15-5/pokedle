@@ -13,8 +13,7 @@
         <VueFlip
             v-model="isCardFaceDown"
             transition="1s"
-            width="60px"
-            height="60px"
+            class="h-[60px] w-[60px] sm:h-[45px] sm:w-[45px]"
         >
             <template v-slot:front>
                 <div
@@ -34,16 +33,19 @@
                         "
                         alt="pokemon sprite"
                     />
-                    <div v-if="habitat" class=" border-light-border dark:!border-dark-border border-2 rounded-[50%] h-[39px] overflow-hidden">
-                    <img
-                        :src="getHabitatImage(habitat)"
-                        :title="`${habitat}`"
-                        :alt="`${habitat}`"
-                    />
+                    <div
+                        v-if="habitat"
+                        class="h-[39px] overflow-hidden rounded-[50%] border-2 border-light-border dark:!border-dark-border sm:h-[30px]"
+                    >
+                        <img
+                            :src="getHabitatImage(habitat)"
+                            :title="`${habitat}`"
+                            :alt="`${habitat}`"
+                        />
                     </div>
                     <p
                         v-else-if="guessResult"
-                        class="pt-1 pl-[2px] font-pkmEmerald text-[16px] capitalize dark:font-bold dark:text-dark-text"
+                        class="pt-1 pl-[2px] font-pkmEmerald text-[16px] capitalize dark:font-bold dark:text-dark-text sm:text-[12px] sm:font-bold"
                     >
                         {{ guessText }}
                     </p>
@@ -109,5 +111,4 @@ const getColor = computed(() => {
     background-image: url('../assets/pokecenter-box-background.png');
     background-size: contain;
 }
-
 </style>

@@ -10,6 +10,7 @@
             v-click-outside="onClickOutsideSearchField"
             @keydown.arrow-down="scrollDown"
             @keydown.arrow-up="scrollUp"
+            autocomplete="off"
         />
         <div class="absolute z-10">
             <VirtualScroller

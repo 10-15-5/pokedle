@@ -19,7 +19,7 @@
     }
 
     .dialog-card {
-        @apply card p-8 flex flex-col justify-start items-center overflow-scroll w-[800px] max-h-[900px]
+        @apply card p-8 flex flex-col justify-start items-center h-4/5 w-[50%] overflow-y-scroll overflow-x-hidden sm:h-[90%] sm:w-[90%]
     }
 
     .link {

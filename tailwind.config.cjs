@@ -28,6 +28,9 @@ module.exports = {
             fontFamily: {
                 pkmEmerald: ['pkmEmerald']
             },
+            screens: {
+                'sm': { 'max': '576px'},
+            },
         },
     },
     plugins: [],

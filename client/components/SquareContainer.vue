@@ -1,5 +1,5 @@
 <template>
-    <div class="card flex gap-2 p-2">
+    <div class="card flex gap-2 sm:gap-[2px] p-2">
         <div v-for="(field, k, i) in guessResult" :key="k" :value="field">
             <SquareContent
                 v-if="field.name"

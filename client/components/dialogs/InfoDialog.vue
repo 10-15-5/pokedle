@@ -1,84 +1,85 @@
 <template>
     <BaseDialog :isVisible="isVisible" :onClose="onClose">
-        <h1 class="font-pkmEmerald text-[32px] uppercase">About</h1>
-        <p class="font-pkmEmerald text-[20px]">
-            Welcome to the world of POKEMéN! <br />
-            Every day a wild secret POKéMON will be hiding and its your job as a POKéMON TRAINER to
-            catch (guess) it!
-        </p>
-        <hr class="divider" />
-        <h1 class="font-pkmEmerald text-[32px] uppercase">How To Play</h1>
-        <div class="font-pkmEmerald text-[20px]">
-            <p>
-                <b>1. Guess:</b> Guess any random POKEMéN <b>from gen 1-3</b>, since we currently
-                have no clues. We will guess <b>SQUIRTLE</b> here.
-            </p>
-            <p>
-                <b>2. Guess:</b> We now know that we are looking for a <b>BLUE</b> POKEMéN.
-                Furthermore the POKEMéN has to be in its <b>final evolution stage</b>. Lastly, the
-                POKEMéN is <b>not</b> from gen 1. <br />
-                Let's guess <b> HERACROSS </b> since it matches these characteristics.
-            </p>
-            <p>
-                <b>3. Guess:</b> Now we know the hidden POKEMéN <b>must</b> be from gen 3. Since the
-                hidden POKEMéN cannot be a <b>WATER TYPE</b>, this leaves only a couple of possible
-                options. <br />
-                Let's guess
-                <b>SALAMANCE.</b>
-            </p>
-            <p>
-                <b>4. Guess:</b> We now know that the POKEMéN lives in <b>ROUGH TERRAIN</b> and is
-                in <b>evolution stage 3</b> <br />
-                This leaves only one POKEMéN; <b>METAGROSS.</b>
-            </p>
-            <img class="card mx-auto w-[600px]" :src="'./client/assets/game-example.png'" />
-        </div>
-
-        <hr class="divider" />
-        <h1 class="font-pkmEmerald text-[32px] uppercase">Habitats</h1>
-        <p class="font-pkmEmerald text-[20px]">
-            The Habitats used are all taken from
-            <a
-                class="link"
-                href="https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_habitat"
-            >
-                Bulbapedia
-            </a>
-            and include:
-        </p>
-        <div class="flex gap-1 p-2">
-            <img :src="'./client/assets/habitats/cave.png'" alt="" />
-            <img :src="'./client/assets/habitats/forest.png'" alt="" />
-            <img :src="'./client/assets/habitats/grassland.png'" alt="" />
-            <img :src="'./client/assets/habitats/mountain.png'" alt="" />
-            <img :src="'./client/assets/habitats/rare.png'" alt="" />
-            <img :src="'./client/assets/habitats/rough-terrain.png'" alt="" />
-            <img :src="'./client/assets/habitats/sea.png'" alt="" />
-            <img :src="'./client/assets/habitats/urban.png'" alt="" />
-            <img :src="'./client/assets/habitats/waters-edge.png'" alt="" />
-        </div>
-
-        <hr class="divider" />
-        <h1 class="font-pkmEmerald text-[32px] uppercase">Credit</h1>
-        <div class="w-full">
+        
+            <h1 class="font-pkmEmerald text-[32px] uppercase">About</h1>
             <p class="font-pkmEmerald text-[20px]">
-                Pokédle is created by Gabriel Haugbøl. I hope you enjoy playing along 😊🎮!
-                <br />
-                Pokédle is heavily inspired by loldle.net and wordle.
-                <br />
-                Original artist/creator of image(s), please DM for removal or credit.
+                Welcome to the world of POKEMéN! <br />
+                Every day a wild secret POKéMON will be hiding and its your job as a POKéMON TRAINER
+                to catch (guess) it!
             </p>
-        </div>
-        <hr class="divider" />
-        <h1 class="text-center font-pkmEmerald text-[32px] uppercase">Contact</h1>
-        <p class="font-pkmEmerald text-[20px]">
-            If you have any questions/feedback/bug reports feel free to contact me on the email
-            below: <br />
-            &#8594;
-            <a class="link ml-2 text-[24px] font-bold" href="mailto: pokedle.contact@gmail.com">
-                pokedle.contact@gmail.com
-            </a>
-        </p>
+            <hr class="divider" />
+            <h1 class="font-pkmEmerald text-[32px] uppercase">How To Play</h1>
+            <div class="font-pkmEmerald text-[20px]">
+                <p>
+                    <b>1. Guess:</b> Guess any random POKEMéN <b>from gen 1-3</b>, since we
+                    currently have no clues. We will guess <b>SQUIRTLE</b> here.
+                </p>
+                <p>
+                    <b>2. Guess:</b> We now know that we are looking for a <b>BLUE</b> POKEMéN.
+                    Furthermore the POKEMéN has to be in its <b>final evolution stage</b>. Lastly,
+                    the POKEMéN is <b>not</b> from gen 1. <br />
+                    Let's guess <b> HERACROSS </b> since it matches these characteristics.
+                </p>
+                <p>
+                    <b>3. Guess:</b> Now we know the hidden POKEMéN <b>must</b> be from gen 3. Since
+                    the hidden POKEMéN cannot be a <b>WATER TYPE</b>, this leaves only a couple of
+                    possible options. <br />
+                    Let's guess
+                    <b>SALAMANCE.</b>
+                </p>
+                <p>
+                    <b>4. Guess:</b> We now know that the POKEMéN lives in <b>ROUGH TERRAIN</b> and
+                    is in <b>evolution stage 3</b> <br />
+                    This leaves only one POKEMéN; <b>METAGROSS.</b>
+                </p>
+                <img class="card mx-auto w-[600px]" :src="'./client/assets/game-example.png'" />
+            </div>
+
+            <hr class="divider" />
+            <h1 class="font-pkmEmerald text-[32px] uppercase">Habitats</h1>
+            <p class="font-pkmEmerald text-[20px]">
+                The Habitats used are all taken from
+                <a
+                    class="link"
+                    href="https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_habitat"
+                >
+                    Bulbapedia
+                </a>
+                and include:
+            </p>
+            <div class="grid grid-flow-col sm:grid-flow-col sm:grid-rows-3 gap-1 p-2">
+                <img :src="'./client/assets/habitats/cave.png'" alt="" />
+                <img :src="'./client/assets/habitats/forest.png'" alt="" />
+                <img :src="'./client/assets/habitats/grassland.png'" alt="" />
+                <img :src="'./client/assets/habitats/mountain.png'" alt="" />
+                <img :src="'./client/assets/habitats/rare.png'" alt="" />
+                <img :src="'./client/assets/habitats/rough-terrain.png'" alt="" />
+                <img :src="'./client/assets/habitats/sea.png'" alt="" />
+                <img :src="'./client/assets/habitats/urban.png'" alt="" />
+                <img :src="'./client/assets/habitats/waters-edge.png'" alt="" />
+            </div>
+
+            <hr class="divider" />
+            <h1 class="font-pkmEmerald text-[32px] uppercase">Credit</h1>
+            <div class="w-full">
+                <p class="font-pkmEmerald text-[20px]">
+                    Pokédle is created by Gabriel Haugbøl. I hope you enjoy playing along 😊🎮!
+                    <br />
+                    Pokédle is heavily inspired by loldle.net and wordle.
+                    <br />
+                    Original artist/creator of image(s), please DM for removal or credit.
+                </p>
+            </div>
+            <hr class="divider" />
+            <h1 class="text-center font-pkmEmerald text-[32px] uppercase">Contact</h1>
+            <p class="font-pkmEmerald text-[20px]">
+                If you have any questions/feedback/bug reports feel free to contact me on the email
+                below: <br />
+                &#8594;
+                <a class="link ml-2 text-[24px] font-bold" href="mailto: pokedle.contact@gmail.com">
+                    pokedle.contact@gmail.com
+                </a>
+            </p>
     </BaseDialog>
 </template>
 
