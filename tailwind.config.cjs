@@ -15,14 +15,14 @@ module.exports = {
                         border: colors.black,
                         text: colors.black,
                         orange: colors.orange[600],
-                        green: colors.green[600],
+                        emerald: colors.green[600],
                     },
                     dark: {
                         bg: '#4a4a4a',
                         border: colors.gray[500],
                         text: colors.gray[100],
                         orange: colors.orange[300],
-                        green: colors.green[300],
+                        emerald: colors.green[300],
                     }
             },
             fontFamily: {

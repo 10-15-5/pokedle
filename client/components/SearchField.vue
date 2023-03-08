@@ -25,7 +25,7 @@
                     <div
                         :style="{ height: `${itemSize}px` }"
                         @click="submitGuess(item)"
-                        class="justify-left hover flex cursor-pointer items-center border-light-border bg-light-bg text-black hover:!bg-neutral-100 hover:!text-light-green dark:border-dark-border dark:!bg-dark-bg dark:!text-dark-text hover:dark:!bg-neutral-600 hover:dark:!text-dark-green"
+                        class="justify-left hover flex cursor-pointer items-center border-light-border bg-light-bg text-black hover:!bg-neutral-100 hover:!text-light-emerald dark:border-dark-border dark:!bg-dark-bg dark:!text-dark-text hover:dark:!bg-neutral-600 hover:dark:!text-dark-emerald"
                         :class="getHover(options.index)"
                     >
                         <img
@@ -73,7 +73,7 @@ const props = defineProps({
 
 const getHover = (index) => {
     if (idx.value === index)
-        return '!bg-neutral-100 !text-light-green dark:!bg-neutral-600 dark:!text-dark-green';
+        return '!bg-neutral-100 !text-light-emerald dark:!bg-neutral-600 dark:!text-dark-emerald';
 };
 
 const isSearchFieldActive = ref(false);

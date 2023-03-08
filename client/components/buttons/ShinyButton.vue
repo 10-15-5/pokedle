@@ -4,8 +4,8 @@
         @click="store.toggleShiny()"
     >
         <span v-if="store.isShiny" class="pi pi-eye-slash
-        group-hover:!text-red-600 group-hover:dark:!text-red-300 "></span>
-        <span v-else class="pi pi-palette group-hover:!text-light-green group-hover:dark:!text-dark-green"></span>
+        group-hover:text-red-600 dark:group-hover:text-red-300 "></span>
+        <span v-else class="pi pi-palette group-hover:text-light-emerald dark:group-hover:text-dark-emerald"></span>
     </button>
 </template>
 

@@ -1,7 +1,7 @@
 <template>
     <div class="card flex flex-col items-center justify-center p-6">
-        <p class="font-pkmEmerald text-[32px] !text-light-green dark:!text-dark-green fontbo">VICTORY!</p>
-        <p class="mb-3 font-pkmEmerald text-[18px] capitalize">You Guessed: <b class="!text-light-green dark:!text-dark-green"> {{ pokemon }} </b></p>
+        <p class="font-pkmEmerald text-[32px] !text-light-emerald dark:!text-dark-emerald fontbo">VICTORY!</p>
+        <p class="mb-3 font-pkmEmerald text-[18px] capitalize">You Guessed: <b class="!text-light-emerald dark:!text-dark-emerald"> {{ pokemon }} </b></p>
         <SquareContent
             :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"
             :color="props.color"
