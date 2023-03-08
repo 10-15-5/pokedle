@@ -6,7 +6,7 @@
                 'background-black': isDark,
             }"
         >
-            <ThemeButton class="absolute" />
+            <ThemeButton class="absolute right-0" />
             <div class="flex flex-col items-center justify-center gap-y-4">
                 <div>
                     <v-img
@@ -53,6 +53,7 @@ import SearchField from './components/SearchField.vue';
 import pokemonData from '../server/data/pokemonData-v4.json';
 import HeaderContainer from './components/HeaderContainer.vue';
 import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
+import ThemeButton from './components/buttons/ThemeButton.vue';
 import { reactive, ref, onBeforeMount } from 'vue';
 import { getGuessResults } from './services/guess';
 import * as service from './services/apiService.js';
@@ -60,7 +61,6 @@ import * as helpers from './helpers.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
 import { useDark } from '@vueuse/core';
-import ThemeButton from './components/ThemeButton.vue';
 
 const isDark = useDark();
 
@@ -76,7 +76,7 @@ const store = useStore();
 let colors = [];
 let secretPokemon;
 
-const getRandomColor = () => (Math.random() * 100 < 5 ? 'shiny' : 'normal');
+const getRandomColor = () => store.isShiny ? 'shiny' : (Math.random() * 100 < 5 ? 'shiny' : 'normal');
 
 const setDailyGamesWonCount = async () => {
     var date = new Date().toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD
@@ -229,6 +229,15 @@ const setSecretPokemon = async () => {
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 };
 
+const loadIsShiny = () => {
+    const isShinyString = localStorage.getItem("isShiny")
+    if(isShinyString && isShinyString === 'true') {
+        store.setShiny(true);
+        return
+    }
+    store.setShiny(false);
+}
+
 const loadGameData = async () => {
     const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
     if (!dayOfLastUpdate) setNewDate();
@@ -250,6 +259,7 @@ const loadGameData = async () => {
         await setSecretPokemon();
     }
     setNewDate();
+    loadIsShiny();
 };
 
 const revealPokemon = async () => {

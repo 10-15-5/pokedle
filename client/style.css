@@ -4,26 +4,30 @@
 
 @layer components {
     .card {
-        @apply bg-light-bg border-light-border text-black dark:!text-dark-text rounded flex justify-center 
-        items-center border-solid border-2 dark:!bg-dark-bg dark:!border-dark-border
+        @apply flex items-center justify-center rounded border-2 border-solid border-light-border 
+        bg-light-bg text-black dark:!border-dark-border dark:!bg-dark-bg dark:!text-dark-text;
     }
     .result-card {
-        @apply border-2 border-solid flex justify-center items-center absolute
-        w-full h-full rounded border-light-border dark:!border-dark-border
+        @apply absolute flex h-full w-full items-center justify-center
+        rounded border-2 border-solid border-light-border dark:!border-dark-border;
     }
     .divider {
-        @apply border-t-2 border-light-border dark:border-dark-border w-full mt-3 mb-6
+        @apply mt-3 mb-6 w-full border-t-2 border-light-border dark:border-dark-border;
     }
     .dialog-close {
-        @apply text-lg p-2 font-bold text-red-600 bg-red-200 hover:bg-red-300 mt-8 dark:text-red-700 dark:bg-red-400 hover:dark:bg-red-300 font-pkmEmerald w-full rounded
+        @apply mt-8 w-full rounded bg-red-200 p-2 font-pkmEmerald text-lg font-bold text-red-600 hover:bg-red-300 dark:bg-red-400 dark:text-red-700 hover:dark:bg-red-300;
     }
 
     .dialog-card {
-        @apply card p-8 flex flex-col justify-start items-center h-4/5 w-[50%] overflow-y-scroll overflow-x-hidden sm:h-[90%] sm:w-[90%]
+        @apply card flex h-4/5 w-[50%] flex-col items-center justify-start overflow-x-hidden overflow-y-scroll p-8 sm:h-[90%] sm:w-[90%];
     }
 
     .link {
-        @apply text-blue-500 hover:text-blue-400 dark:text-blue-300 dark:hover:text-blue-400
+        @apply text-blue-500 hover:text-blue-400 dark:text-blue-300 dark:hover:text-blue-400;
+    }
+
+    .toggle-button {
+        @apply z-10 m-4 flex h-11 w-11 items-center justify-center rounded-full bg-black/30 text-[28px] text-white  hover:bg-black/10 dark:bg-white/40 hover:dark:bg-white/20;
     }
 }
 
