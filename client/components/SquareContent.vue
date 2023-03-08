@@ -2,13 +2,15 @@
     <div>
         <div
             v-if="pokemon && color === 'shiny'"
-            class="z-1 absolute mt-[-8px] ml-[46px] flex h-[22px] w-[22px] items-center justify-center"
+            class="z-1 absolute mt-[-8px] ml-[46px] flex h-[22px] w-[22px]
+            sm:ml-[30px] sm:mt-[-10px]
+            items-center justify-center"
         >
             <v-icon
-                class="absolute z-10 text-3xl text-black dark:!text-dark-border"
+                class="absolute z-10 text-3xl sm:text-2xl text-black dark:!text-dark-border"
                 icon="mdi-star"
             />
-            <v-icon class="absolute z-10 text-xl text-yellow-500" icon="mdi-star" />
+            <v-icon class="absolute z-10 text-xl sm:text-base text-yellow-500" icon="mdi-star" />
         </div>
         <VueFlip
             v-model="isCardFaceDown"
