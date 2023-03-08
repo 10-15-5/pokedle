@@ -1,12 +1,11 @@
 <template>
     <div class="relative">
-        <input
+        <input id="password"
             class="card w-[200px] p-4 font-pkmEmerald focus:outline-none"
-            label="Type pokemon name"
             type="text"
-            placeholder="Type Pokemon Name..."
+            placeholder="Type Pokemon..."
             v-model="searchTerm"
-            @keypress.enter="submitGuess(searchPokemonNames[idx === -1 ? 0 : idx])"
+            @keypress.enter="submitGuess(filteredPokemons[idx === -1 ? 0 : idx])"
             :onFocus="() => {isSearchFieldActive = true}"
             v-click-outside="onClickOutsideSearchField"
             @keydown.arrow-down="scrollDown"
@@ -14,10 +13,10 @@
         />
         <div class="absolute z-10">
             <VirtualScroller
-                v-if="searchPokemonNames.length && isSearchFieldActive"
+                v-if="filteredPokemons.length && isSearchFieldActive"
                 class="card absolute z-10 mt-[-2px] w-[200px]"
                 :class="getSearchSuggestionsHeight"
-                :items="searchPokemonNames"
+                :items="filteredPokemons"
                 :itemSize="itemSize"
                 ref="virtualScroller"
             >
@@ -81,7 +80,7 @@ const searchTerm = ref('');
 const virtualScroller = ref(null);
 
 const scrollDown = () => {
-    idx.value += searchPokemonNames.value.length - 1 > idx.value ? 1 : 0;
+    idx.value += filteredPokemons.value.length - 1 > idx.value ? 1 : 0;
     if (idx.value > suggestionViewportStart + suggestionViewportSize) {
         suggestionViewportStart++;
         virtualScroller.value?.scrollTo({ top: suggestionViewportStart * itemSize });
@@ -113,21 +112,21 @@ const resetSuggestionsView = () => {
     virtualScroller.value?.scrollToIndex(0);
 };
 
-const searchPokemonNames = computed(() => {
+const filteredPokemons = computed(() => {
     if (searchTerm.value === '') {
         return [];
     }
 
-    const test = props.pokemonNames.filter((name) =>
-        name.startsWith(searchTerm.value.toLowerCase())
+    const test = props.pokemonNames.filter((n) =>
+        n.startsWith(searchTerm.value.toLowerCase())
     );
     return test;
 });
 
 const getSearchSuggestionsHeight = computed(() =>
-    searchPokemonNames.value.length >= 5
+    filteredPokemons.value.length >= 5
         ? searchFieldHeights[5]
-        : searchFieldHeights[searchPokemonNames.value.length]
+        : searchFieldHeights[filteredPokemons.value.length]
 );
 
 const submitGuess = (pokemonName) => {
