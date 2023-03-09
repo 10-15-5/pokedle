@@ -1,4 +1,4 @@
-import allPokemonData from '../../server/data/pokemonData-v4.json';
+import allPokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import { guessState, guessType } from '../constants.js';
 
 const getGuessResults = (pokemonName, secretPokemon) => {

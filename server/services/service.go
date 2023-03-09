@@ -45,6 +45,8 @@ func NewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.
 		containsRandomPokemon = randomPokemon.Name == currentSecretPokemon.Name
 	}
 
+	fmt.Println(randomPokemon)
+
 	r := secretPokemon.GetPokemonRepository(MongoClient)
 
 	r.InsertNewPokemon(context.TODO(), randomPokemon)

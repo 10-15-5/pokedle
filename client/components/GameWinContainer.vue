@@ -5,6 +5,7 @@
         <SquareContent
             :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"
             :color="props.color"
+            :type="guessType.Pokemon"
         />
         <p class="mt-2 font-pkmEmerald text-[14px]">
             Next Pokemon Will Appear In :&nbsp;
@@ -16,9 +17,10 @@
 </template>
 
 <script setup>
-import { onBeforeMount, onMounted, ref } from 'vue';
+import { onBeforeMount, ref } from 'vue';
 import SquareContent from './result/ResultSquare.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers';
+import { guessType } from '../constants';
 
 const props = defineProps({
     pokemon: String,

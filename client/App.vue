@@ -21,6 +21,7 @@
                     @submit-guess="submitGuess"
                 />
                 <GameWinContainer v-else :pokemon="state.guesses[0]" :color="colors.at(-1)" />
+                <HintContainer :text="secretPokemon.flavorText" />
                 <DailyGamesWonContainer :dailyGamesWon="dailyGamesWon" />
                 <div
                     v-if="state.guesses.length"
@@ -52,10 +53,11 @@
 import SquareContainer from './components/result/ResultContainer.vue';
 import SquareContentHeader from './components/result/ResultHeader.vue';
 import GameWinContainer from './components/GameWinContainer.vue';
+import HintContainer from './components/hints/HintContainer.vue';
 import PreviousPokemonCard from './components/PreviousPokemonCard.vue';
 import SearchField from './components/SearchField.vue';
-import pokemonData from '../server/data/pokemonData-v4.json';
-import HeaderContainer from './components/headerIcon/HeaderIconContainer.vue';
+import pokemonData from '../server/data/pokemonData-v5-flavorText.json';
+import HeaderContainer from './components/headerIcons/HeaderIconContainer.vue';
 import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
 import ThemeButton from './components/buttons/ThemeButton.vue';
 import { reactive, ref, onBeforeMount } from 'vue';
@@ -77,7 +79,7 @@ const dailyFirstTryWins = ref(0);
 const store = useStore();
 
 let colors = [];
-let secretPokemon;
+const secretPokemon = reactive({});
 
 const getRandomColor = () =>
     store.isShiny ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal';
@@ -187,7 +189,7 @@ const submitGuess = (guess) => {
 
 const loadSecretPokemon = () => {
     const loadedSecretPokemon = localStorage.getItem('secretPokemon');
-    secretPokemon = JSON.parse(loadedSecretPokemon);
+    Object.assign(secretPokemon, JSON.parse(loadedSecretPokemon));
 };
 
 const loadGuesses = () => {
@@ -223,13 +225,13 @@ const setNewDate = () =>
 
 const setNewSecretPokemon = async () => {
     const response = await service.newSecretPokemon();
-    secretPokemon = response.data;
+    Object.assign(secretPokemon,response.data)
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 };
 
 const setSecretPokemon = async () => {
     const response = await service.getSecretPokemon();
-    secretPokemon = response.data;
+    Object.assign(secretPokemon,response.data)
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 };
 

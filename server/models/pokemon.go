@@ -9,4 +9,5 @@ type Pokemon struct {
 	IsFullyEvolved string `json:"isFullyEvolved"`
 	Habitat        string `json:"habitat"`
 	Color          string `json:"color"`
+	FlavorText     string `json:"flavorText"`
 }

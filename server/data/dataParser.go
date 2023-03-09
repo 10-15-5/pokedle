@@ -11,7 +11,7 @@ import (
 
 func GetPokemonData() []models.Pokemon {
 
-	content, err := os.ReadFile("./data/pokemonData-v4.json")
+	content, err := os.ReadFile("./data/pokemonData-v5-flavorText.json")
 
 	if err != nil {
 		log.Fatal("Error when opening file: ", err)
@@ -27,5 +27,6 @@ func GetPokemonData() []models.Pokemon {
 		log.Fatal("Error during Unmarshal(): ", err)
 	}
 
+	fmt.Println(pokemons[len(pokemons)-1])
 	return pokemons
 }
