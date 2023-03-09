@@ -17,24 +17,21 @@
                 </div>
                 <SearchField
                     v-if="!store.isGameWon"
-                    :pokemonNames="state.pokemonNames"
+                    :pokemonNames="componentStore.pokemonNames"
                     @submit-guess="submitGuess"
                 />
-                <GameWinContainer v-else :pokemon="state.guesses[0]" :color="colors.at(-1)" />
+                <GameWinContainer v-else :pokemon="componentStore.guesses[0]" :color="colors.at(-1)" />
                 <HintContainer :text="secretPokemon.flavorText" />
                 <DailyGamesWonContainer :dailyGamesWon="dailyGamesWon" />
-                <div
-                    v-if="state.guesses.length"
-                    class="mb-20 flex flex-col gap-y-2 sm:gap-y-1"
-                >
+                <div v-if="componentStore.guesses.length" class="mb-20 flex flex-col gap-y-2 sm:gap-y-1">
                     <SquareContentHeader class="mb-n1 sm:!mb-0" />
                     <SquareContainer
-                        v-for="(guess, i) in state.guesses"
+                        v-for="(guess, i) in componentStore.guesses"
                         :key="guess"
                         :value="guess"
                         :pokemonName="guess"
                         :guessResult="getGuessResults(guess, secretPokemon)"
-                        :color="colors.at(state.guesses.length - 1 - i)"
+                        :color="colors.at(componentStore.guesses.length - 1 - i)"
                     />
                 </div>
                 <PreviousPokemonCard v-else />
@@ -69,10 +66,13 @@ import { useDark } from '@vueuse/core';
 
 const isDark = useDark();
 
-const state = reactive({
-    pokemonNames: pokemonData.map((pokemonInfo) => pokemonInfo.name).sort(),
-    guesses: [],
-});
+const getSortedPokemonNames = () => pokemonData.map((pokemonInfo) => pokemonInfo.name).sort();
+
+const componentStore = reactive({
+    pokemonNames: reactive(getSortedPokemonNames()),
+    guesses: reactive([])
+})
+
 const isSearchFieldDisabled = ref(false);
 const dailyGamesWon = ref(0);
 const dailyFirstTryWins = ref(0);
@@ -89,6 +89,7 @@ const setDailyGamesWonCount = async () => {
     const res = await service.getDailyStats(date);
     dailyGamesWon.value = res.data.gamesWon;
 };
+
 
 onBeforeMount(async () => {
     const [user] = await Promise.all([getOrCreateUser(), loadGameData(), setDailyGamesWonCount()]);
@@ -119,9 +120,10 @@ const getOrCreateUser = async () => {
 const removePokemonFromGuessPool = (guess) => {
     let guessRemovedFromList = false;
     let pokemonName = '';
-    const updatedPokemonNames = state.pokemonNames.filter((e) => {
+
+    const updatedPokemonNames = componentStore.pokemonNames.filter((e) => {
         if (!guessRemovedFromList && e.startsWith(guess.toLowerCase())) {
-            state.guesses.unshift(e);
+            componentStore.guesses.unshift(e);
             pokemonName = e;
             guessRemovedFromList = true;
         } else return true;
@@ -134,7 +136,7 @@ const removePokemonFromGuessPool = (guess) => {
 };
 
 const incrementGamesWonCount = async () => {
-    const response = await service.updateDailyGamesWonCount(state.guesses.length);
+    const response = await service.updateDailyGamesWonCount(componentStore.guesses.length);
     dailyGamesWon.value = response.data.dailyStats.gamesWon;
     dailyFirstTryWins.value = response.data.dailyStats.firstTryWins;
 };
@@ -142,7 +144,7 @@ const incrementGamesWonCount = async () => {
 const updateUserWithGameWon = async () => {
     const userId = localStorage.getItem('userId');
     if (userId) {
-        const response = await service.updateUserWithGameWon(userId, state.guesses.length);
+        const response = await service.updateUserWithGameWon(userId, componentStore.guesses.length);
         store.setUser(response.data.user);
     }
 };
@@ -165,7 +167,7 @@ const decideGame = (guess) => {
 };
 
 const addGuessesToLocalStorage = () => {
-    localStorage.setItem('guesses', JSON.stringify(state.guesses));
+    localStorage.setItem('guesses', JSON.stringify(componentStore.guesses));
 };
 
 const addColorsToLocalStorage = () => {
@@ -177,10 +179,10 @@ const submitGuess = (guess) => {
 
     const { updatedPokemonNames, pokemonName } = removePokemonFromGuessPool(guess);
 
-    if (updatedPokemonNames.length >= state.pokemonNames.length) return;
+    if (updatedPokemonNames.length >= componentStore.pokemonNames.length) return;
 
     colors.push(getRandomColor());
-    state.pokemonNames = updatedPokemonNames;
+    componentStore.pokemonNames = updatedPokemonNames;
     addGuessesToLocalStorage();
     addColorsToLocalStorage();
 
@@ -193,8 +195,8 @@ const loadSecretPokemon = () => {
 };
 
 const loadGuesses = () => {
-    const guesses = localStorage.getItem('guesses');
-    if (guesses) state.guesses = JSON.parse(guesses);
+    const guesses = localStorage.getItem('componentStore.guesses');
+    if (guesses) componentStore.guesses = JSON.parse(componentStore.guesses);
 };
 
 const loadColors = () => {
@@ -212,8 +214,8 @@ const loadIsGameWon = () => {
 };
 
 const removePokemonsFromGuessPool = () => {
-    state.pokemonNames = state.pokemonNames.filter((pokemon) => {
-        for (const guessedPokemon of state.guesses) {
+    componentStore.pokemonNames = componentStore.pokemonNames.filter((pokemon) => {
+        for (const guessedPokemon of componentStore.guesses) {
             if (guessedPokemon === pokemon) return false;
         }
         return true;
@@ -279,6 +281,9 @@ const newGame = () => {
     localStorage.removeItem('guesses');
     localStorage.removeItem('colors');
     localStorage.removeItem('isGameWon');
+    colors = [];
+    componentStore.guesses.splice(0)
+    componentStore.pokemonNames = getSortedPokemonNames();
     setNewDate();
     store.setIsGameWon(false);
 };
@@ -286,14 +291,12 @@ const newGame = () => {
 const getNewGame = async () => {
     newGame();
     await setSecretPokemon();
-    location.reload();
 };
 
 // Force update pokemon in DB
 const setNewGame = async () => {
     newGame();
     await setNewSecretPokemon();
-    location.reload();
 };
 
 const lauchConfetti = () => {
@@ -308,15 +311,15 @@ const lauchConfetti = () => {
         scalar: 1.4,
     };
 
-    if (colors.at(-1) === 'shiny' || state.guesses.length === 1) {
+    if (colors.at(-1) === 'shiny' || componentStore.guesses.length === 1) {
         defaults.shapes = ['star'];
         defaults.scalar = 1.1;
         particleCount = 90;
-        if (colors.at(-1) === 'shiny' && state.guesses.length === 1) {
+        if (colors.at(-1) === 'shiny' && componentStore.guesses.length === 1) {
             defaults.colors = ['9EFD38', '32CD32', 'A8E4A0', '98FB98', '7CFC00'];
         } else if (colors.at(-1) === 'shiny') {
             defaults.colors = ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'];
-        } else if (state.guesses.length === 1) {
+        } else if (componentStore.guesses.length === 1) {
             defaults.colors = ['63C5DA', '48AAD', '52B2BF', '3944BC'];
         }
     }
