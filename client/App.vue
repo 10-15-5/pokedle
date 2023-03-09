@@ -73,7 +73,6 @@ const componentStore = reactive({
     guesses: reactive([])
 })
 
-const isSearchFieldDisabled = ref(false);
 const dailyGamesWon = ref(0);
 const dailyFirstTryWins = ref(0);
 const store = useStore();
@@ -151,7 +150,6 @@ const updateUserWithGameWon = async () => {
 
 const decideGame = (guess) => {
     if (guess === secretPokemon.name) {
-        isSearchFieldDisabled.value = true;
 
         //Wait for all cards to flip
         setTimeout(() => {
@@ -175,7 +173,7 @@ const addColorsToLocalStorage = () => {
 };
 
 const submitGuess = (guess) => {
-    if (!guess || isSearchFieldDisabled.value) return;
+    if (!guess) return;
 
     const { updatedPokemonNames, pokemonName } = removePokemonFromGuessPool(guess);
 
@@ -195,8 +193,8 @@ const loadSecretPokemon = () => {
 };
 
 const loadGuesses = () => {
-    const guesses = localStorage.getItem('componentStore.guesses');
-    if (guesses) componentStore.guesses = JSON.parse(componentStore.guesses);
+    const guesses = localStorage.getItem('guesses');
+    if (guesses) componentStore.guesses = JSON.parse(guesses);
 };
 
 const loadColors = () => {

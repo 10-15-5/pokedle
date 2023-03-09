@@ -1,5 +1,5 @@
 <template>
-    <div class="card max-w-[400px] flex-col p-4 gap-3">
+    <div class="card text-justify sm:text-sm font-pkmEmerald max-w-[400px] sm:max-w-[330px] flex-col p-4 sm:p-2">
         {{ text }}
     </div>
 </template>
