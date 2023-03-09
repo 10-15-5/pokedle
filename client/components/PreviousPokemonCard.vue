@@ -6,7 +6,7 @@
 
 <script setup>
 import { onMounted, ref } from 'vue';
-import {getPreviousSecretPokemon} from '../services/apiService.js';
+import {getPreviousSecretPokemon} from '../services/api/apiService.js';
 const pokemonName = ref('')
 onMounted(async () => {
     const yesterdaysPokemon = (await getPreviousSecretPokemon()).data;

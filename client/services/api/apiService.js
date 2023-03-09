@@ -1,4 +1,4 @@
-import {apiClient} from './httpClient.js';
+import {apiClient} from '../api/httpClient.js';
 
 const getSecretPokemon = () => apiClient().get(`secret-pokemons`);
 
