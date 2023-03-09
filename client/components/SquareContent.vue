@@ -15,7 +15,7 @@
         <VueFlip
             v-model="isCardFaceDown"
             transition="1s"
-            class="!h-[60px] !w-[60px] sm:!h-[45px] sm:!w-[45px]" :height="'1px'" :width="'1px'" 
+            class="!h-[60px] !w-[60px] sm:!h-[43px] sm:!w-[43px]" :height="'1px'" :width="'1px'" 
         >
             <template v-slot:front>
                 <div

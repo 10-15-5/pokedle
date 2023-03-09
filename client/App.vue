@@ -11,7 +11,7 @@
                 <div>
                     <v-img
                         src="/client/assets/pokedle-logo.png"
-                        class="title-img mt-5 mb-3 w-[280px] sm:w-[220px] transition-all duration-100 ease-linear hover:scale-110"
+                        class="title-img mt-5 mb-3 w-[280px] transition-all duration-100 ease-linear hover:scale-110 sm:w-[220px]"
                     />
                     <HeaderContainer />
                 </div>
@@ -22,15 +22,16 @@
                 />
                 <GameWinContainer v-else :pokemon="state.guesses[0]" :color="colors.at(-1)" />
                 <DailyGamesWonContainer :dailyGamesWon="dailyGamesWon" />
-                <div v-if="state.guesses.length" class="mb-20 flex flex-col sm:gap-y-1 gap-y-2">
+                <div v-if="state.guesses.length" class="mb-20 flex flex-col gap-y-2 sm:gap-y-1 !items-center">
                     <SquareContentHeader class="mb-n1 sm:!mb-0" />
-                    <div v-for="(guess, i) in state.guesses" :key="guess" :value="guess">
-                        <SquareContainer
-                            :pokemonName="guess"
-                            :guessResult="getGuessResults(guess, secretPokemon)"
-                            :color="colors.at(state.guesses.length - 1 - i)"
-                        />
-                    </div>
+                    <SquareContainer
+                        v-for="(guess, i) in state.guesses"
+                        :key="guess"
+                        :value="guess"
+                        :pokemonName="guess"
+                        :guessResult="getGuessResults(guess, secretPokemon)"
+                        :color="colors.at(state.guesses.length - 1 - i)"
+                    />
                 </div>
                 <PreviousPokemonCard v-else />
             </div>
@@ -46,7 +47,7 @@
 
 <script setup>
 import SquareContainer from './components/SquareContainer.vue';
-import SquareContentHeader from './components/SquareContentHeader.vue';
+import SquareContentHeader from './components/ResultHeader.vue';
 import GameWinContainer from './components/GameWinContainer.vue';
 import PreviousPokemonCard from './components/PreviousPokemonCard.vue';
 import SearchField from './components/SearchField.vue';
@@ -76,7 +77,8 @@ const store = useStore();
 let colors = [];
 let secretPokemon;
 
-const getRandomColor = () => store.isShiny ? 'shiny' : (Math.random() * 100 < 5 ? 'shiny' : 'normal');
+const getRandomColor = () =>
+    store.isShiny ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal';
 
 const setDailyGamesWonCount = async () => {
     var date = new Date().toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD
@@ -230,13 +232,13 @@ const setSecretPokemon = async () => {
 };
 
 const loadIsShiny = () => {
-    const isShinyString = localStorage.getItem("isShiny")
-    if(isShinyString && isShinyString === 'true') {
+    const isShinyString = localStorage.getItem('isShiny');
+    if (isShinyString && isShinyString === 'true') {
         store.setShiny(true);
-        return
+        return;
     }
     store.setShiny(false);
-}
+};
 
 const loadGameData = async () => {
     const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
