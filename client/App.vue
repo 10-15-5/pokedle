@@ -22,7 +22,10 @@
                 />
                 <GameWinContainer v-else :pokemon="state.guesses[0]" :color="colors.at(-1)" />
                 <DailyGamesWonContainer :dailyGamesWon="dailyGamesWon" />
-                <div v-if="state.guesses.length" class="mb-20 flex flex-col gap-y-2 sm:gap-y-1 !items-center">
+                <div
+                    v-if="state.guesses.length"
+                    class="mb-20 flex flex-col gap-y-2 sm:gap-y-1"
+                >
                     <SquareContentHeader class="mb-n1 sm:!mb-0" />
                     <SquareContainer
                         v-for="(guess, i) in state.guesses"
