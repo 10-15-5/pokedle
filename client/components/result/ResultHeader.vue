@@ -18,7 +18,7 @@
 </template>
 
 <script setup>
-import { guessFieldTitles, getGuessFieldTooltipsFromIndex } from '../constants.js';
+import { guessFieldTitles, getGuessFieldTooltipsFromIndex } from '../../constants.js';
 </script>
 
 <style scoped></style>

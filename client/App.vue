@@ -49,13 +49,13 @@
 </template>
 
 <script setup>
-import SquareContainer from './components/SquareContainer.vue';
-import SquareContentHeader from './components/ResultHeader.vue';
+import SquareContainer from './components/result/ResultContainer.vue';
+import SquareContentHeader from './components/result/ResultHeader.vue';
 import GameWinContainer from './components/GameWinContainer.vue';
 import PreviousPokemonCard from './components/PreviousPokemonCard.vue';
 import SearchField from './components/SearchField.vue';
 import pokemonData from '../server/data/pokemonData-v4.json';
-import HeaderContainer from './components/HeaderContainer.vue';
+import HeaderContainer from './components/headerIcon/HeaderIconContainer.vue';
 import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
 import ThemeButton from './components/buttons/ThemeButton.vue';
 import { reactive, ref, onBeforeMount } from 'vue';

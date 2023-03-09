@@ -63,12 +63,12 @@
 </template>
 
 <script setup>
-import { guessState } from '../constants.js';
+import { guessState } from '../../constants.js';
 import { computed, onBeforeMount, onMounted, ref } from 'vue';
-import { getHabitatImage } from '../services/assets.js';
+import { getHabitatImage } from '../../services/assets.js';
 import { VueFlip } from 'vue-flip';
 import { useDark } from '@vueuse/core';
-import { useStore } from '../stores/store';
+import { useStore } from '../../stores/store';
 const isDark = useDark();
 const store = useStore();
 
@@ -110,7 +110,7 @@ const getColor = computed(() => {
 <style scoped>
 .pokemon-bg {
     width: 100%;
-    background-image: url('../assets/pokecenter-box-background.png');
+    background-image: url('/client/assets/pokecenter-box-background.png');
     background-size: contain;
 }
 </style>

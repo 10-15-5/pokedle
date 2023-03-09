@@ -43,12 +43,12 @@
 </template>
 
 <script setup>
-import { useStore } from '../stores/store';
+import { useStore } from '../../stores/store';
 import { ref } from 'vue';
-import HeaderIcon from './HeaderIcon.vue';
-import InfoDialog from './dialogs/InfoDialog.vue';
-import SettingsDialog from './dialogs/SettingsDialog.vue';
-import StatisticsDialog from './dialogs/StatisticsDialog.vue';
+import HeaderIcon from '../headerIcon/HeaderIcon.vue';
+import InfoDialog from '../dialogs/InfoDialog.vue';
+import SettingsDialog from '../dialogs/SettingsDialog.vue';
+import StatisticsDialog from '../dialogs/StatisticsDialog.vue';
 
 const store = useStore();
 let isDialogStatistics = ref(false);

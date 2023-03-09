@@ -17,7 +17,7 @@
 
 <script setup>
 import { onBeforeMount, onMounted, ref } from 'vue';
-import SquareContent from './SquareContent.vue';
+import SquareContent from './result/ResultSquare.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers';
 
 const props = defineProps({
