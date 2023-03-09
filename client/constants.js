@@ -5,6 +5,12 @@ const guessState = {
     None: "None"
 }
 
+const guessType = {
+    Pokemon: 'Pokemon',
+    Text: 'Text',
+    Habitat: 'Habitat'
+}
+
 const guessFieldTitles = {
   Pokemon: "Pokemon",
   Type1: "Type 1",
@@ -49,5 +55,6 @@ export {
     guessFieldTitles,
     Habitats,
     GuessFieldTooltips,
-    getGuessFieldTooltipsFromIndex
+    guessType,
+    getGuessFieldTooltipsFromIndex,
 }

@@ -1,5 +1,5 @@
 import allPokemonData from '../../server/data/pokemonData-v4.json';
-import { guessState } from '../constants.js';
+import { guessState, guessType } from '../constants.js';
 
 const getGuessResults = (pokemonName, secretPokemon) => {
 
@@ -10,35 +10,43 @@ const getGuessResults = (pokemonName, secretPokemon) => {
     const result = {
         name: {
             name: pokemonName,
-            guessState: guessState.None
+            guessState: guessState.None,
+            type: guessType.Pokemon
         },
         type1: {
             text: pokemonData.type1,
             guessState: pokemonData.type1 === secretPokemon.type1 ? guessState.CorrectGuess : guessState.WrongGuess,
+            type: guessType.Text
         },
         type2: {
             text: !pokemonData.type2 ? "None" : pokemonData.type2,
             guessState: pokemonData.type2 === secretPokemon.type2 ? guessState.CorrectGuess : guessState.WrongGuess
+            , type: guessType.Text
         },
         evolutionLevel: {
             text: '' + pokemonData.evolutionState,
             guessState: pokemonData.evolutionState === secretPokemon.evolutionState ? guessState.CorrectGuess : guessState.WrongGuess
+            , type: guessType.Text
         },
         isFullyEvolved: {
             text: '' + pokemonData.isFullyEvolved,
             guessState: pokemonData.isFullyEvolved === secretPokemon.isFullyEvolved ? guessState.CorrectGuess : guessState.WrongGuess
+            , type: guessType.Text
         },
         color: {
             text: pokemonData.color,
             guessState: pokemonData.color === secretPokemon.color ? guessState.CorrectGuess : guessState.WrongGuess
+            , type: guessType.Text
         },
         habitat: {
             habitat: pokemonData.habitat,
             guessState: pokemonData.habitat === secretPokemon.habitat ? guessState.CorrectGuess : guessState.WrongGuess
+            , type: guessType.Habitat
         },
         generation: {
             text: "Gen " + pokemonData.generation,
-            guessState: pokemonData.generation === secretPokemon.generation ? guessState.CorrectGuess : guessState.WrongGuess
+            guessState: pokemonData.generation === secretPokemon.generation ? guessState.CorrectGuess : guessState.WrongGuess,
+            type: guessType.Text
         },
     }
 
