@@ -10,7 +10,7 @@ FROM --platform=linux/x86_64 golang:1.19.5-alpine
 WORKDIR /app
 
 COPY /server/ /app/server/
-COPY /server/data/pokemonData-v4.json /app/data/
+COPY /server/data/pokemonData-v5-flavorText.json /app/data/
 
 RUN cd /app/server && go mod download
 RUN cd /app/server && go build -o /app/out
