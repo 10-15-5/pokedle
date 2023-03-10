@@ -27,7 +27,7 @@ const runScript = async () => {
 
     //Replace occurences of '___é___' with '___'
     const withoutÈ = withUnderscoreAndÈ.map(withUnderscoreAndÈ => (
-        withUnderscoreAndÈ.replace('___é___', '___')
+        withUnderscoreAndÈ.replace('___é___', 'POKéMON')
     ))
 
     //Many places in text are '\n', replace wiht space here
