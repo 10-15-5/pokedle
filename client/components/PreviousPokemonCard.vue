@@ -5,11 +5,10 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { onMounted, ref, defineProps } from 'vue';
 import {getPreviousSecretPokemon} from '../services/api/apiService.js';
-const pokemonName = ref('')
-onMounted(async () => {
-    const yesterdaysPokemon = (await getPreviousSecretPokemon()).data;
-    pokemonName.value = yesterdaysPokemon.name;
-})
+
+const props = defineProps({
+    pokemonName: String,
+});
 </script>

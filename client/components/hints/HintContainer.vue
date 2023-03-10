@@ -1,6 +1,6 @@
 <template>
     <div
-        class="card flex min-w-[190px] max-w-[400px] flex-col font-pkmEmerald sm:max-w-[330px] sm:text-sm"
+        class="card flex min-w-[80px] max-w-[400px] flex-col font-pkmEmerald sm:max-w-[330px] sm:text-sm"
     >
         <div class="flex w-full flex-row items-center justify-between p-2 px-3 pb-1">
             <div class="text-base flex flex-row">
@@ -12,7 +12,7 @@
                 <button v-else class="pi pi-plus" @click="isShowHint = true"></button>
             </div>
         </div>
-        <div v-if="isShowHint" class="w-full bg-gray-10 dark:bg-zinc-700 p-4 pt-3 text-justify">
+        <div v-if="isShowHint" class="w-full bg-gray-100 dark:bg-zinc-700 p-4 pt-3 text-justify">
             {{ text }}
         </div>
     </div>
@@ -26,7 +26,8 @@ const props = defineProps({
     numberOfGuesses: {
         type: Number,
         default: 0,
-    }
+    },
+    forceEnableHint: Boolean
 });
 
 const isShowHint = ref(false)

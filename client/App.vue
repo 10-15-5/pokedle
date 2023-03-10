@@ -20,10 +20,21 @@
                     :pokemonNames="componentStore.pokemonNames"
                     @submit-guess="submitGuess"
                 />
-                <GameWinContainer v-else :pokemon="componentStore.guesses[0]" :color="colors.at(-1)" />
-                <HintContainer v-if="!store.isGameWon && componentStore.guesses.length" :text="secretPokemon.flavorText" :numberOfGuesses="componentStore.guesses.length" />
+                <GameWinContainer
+                    v-else
+                    :pokemon="componentStore.guesses[0]"
+                    :color="colors.at(-1)"
+                />
+                <HintContainer
+                    v-if="!store.isGameWon && componentStore.guesses.length"
+                    :text="secretPokemon.flavorText"
+                    :numberOfGuesses="componentStore.guesses.length"
+                />
                 <DailyGamesWonContainer :dailyGamesWon="dailyGamesWon" />
-                <div v-if="componentStore.guesses.length" class="mb-20 flex flex-col gap-y-2 sm:gap-y-1">
+                <div
+                    v-if="componentStore.guesses.length"
+                    class="mb-20 flex flex-col gap-y-2 sm:gap-y-1"
+                >
                     <SquareContentHeader class="mb-n1 sm:!mb-0" />
                     <SquareContainer
                         v-for="(guess, i) in componentStore.guesses"
@@ -34,7 +45,7 @@
                         :color="colors.at(componentStore.guesses.length - 1 - i)"
                     />
                 </div>
-                <PreviousPokemonCard v-else />
+                <PreviousPokemonCard :pokemonName="yesterdaysPokemon.name" v-else />
             </div>
         </v-main>
         <div class="flex items-center justify-center">
@@ -59,7 +70,7 @@ import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
 import ThemeButton from './components/buttons/ThemeButton.vue';
 import { reactive, ref, onBeforeMount } from 'vue';
 import { getGuessResults } from './services/guess';
-import * as service from './services/api/apiService.js';
+import * as apiService from './services/api/apiService.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
 import { useDark } from '@vueuse/core';
@@ -70,12 +81,13 @@ const getSortedPokemonNames = () => pokemonData.map((pokemonInfo) => pokemonInfo
 
 const componentStore = reactive({
     pokemonNames: reactive(getSortedPokemonNames()),
-    guesses: reactive([])
-})
+    guesses: reactive([]),
+});
 
 const dailyGamesWon = ref(0);
 const dailyFirstTryWins = ref(0);
 const store = useStore();
+const yesterdaysPokemon = ref('');
 
 let colors = [];
 const secretPokemon = reactive({});
@@ -85,10 +97,9 @@ const getRandomColor = () =>
 
 const setDailyGamesWonCount = async () => {
     var date = new Date().toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD
-    const res = await service.getDailyStats(date);
+    const res = await apiService.getDailyStats(date);
     dailyGamesWon.value = res.data.gamesWon;
 };
-
 
 onBeforeMount(async () => {
     const [user] = await Promise.all([getOrCreateUser(), loadGameData(), setDailyGamesWonCount()]);
@@ -105,12 +116,12 @@ const getOrCreateUser = async () => {
 
     console.log(userId);
     if (userId) {
-        await service.updateUserStreak(userId);
-        const response = await service.getUser(userId);
+        await apiService.updateUserStreak(userId);
+        const response = await apiService.getUser(userId);
         return response.data.user;
     }
 
-    const response = await service.createUser();
+    const response = await apiService.createUser();
     const { user } = response.data;
     localStorage.setItem('userId', user._id);
     return user;
@@ -135,7 +146,7 @@ const removePokemonFromGuessPool = (guess) => {
 };
 
 const incrementGamesWonCount = async () => {
-    const response = await service.updateDailyGamesWonCount(componentStore.guesses.length);
+    const response = await apiService.updateDailyGamesWonCount(componentStore.guesses.length);
     dailyGamesWon.value = response.data.dailyStats.gamesWon;
     dailyFirstTryWins.value = response.data.dailyStats.firstTryWins;
 };
@@ -143,14 +154,16 @@ const incrementGamesWonCount = async () => {
 const updateUserWithGameWon = async () => {
     const userId = localStorage.getItem('userId');
     if (userId) {
-        const response = await service.updateUserWithGameWon(userId, componentStore.guesses.length);
+        const response = await apiService.updateUserWithGameWon(
+            userId,
+            componentStore.guesses.length
+        );
         store.setUser(response.data.user);
     }
 };
 
 const decideGame = (guess) => {
     if (guess === secretPokemon.name) {
-
         //Wait for all cards to flip
         setTimeout(() => {
             lauchConfetti();
@@ -162,6 +175,11 @@ const decideGame = (guess) => {
     } else {
         console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
     }
+};
+
+const updateYesterdaysPokemon = async () => {
+    console.log('TEST');
+    yesterdaysPokemon.value = (await apiService.getPreviousSecretPokemon()).data;
 };
 
 const addGuessesToLocalStorage = () => {
@@ -224,14 +242,14 @@ const setNewDate = () =>
     localStorage.setItem('dayOfLastUpdate', new Date().getUTCDate().toString());
 
 const setNewSecretPokemon = async () => {
-    const response = await service.newSecretPokemon();
-    Object.assign(secretPokemon,response.data)
+    const response = await apiService.newSecretPokemon();
+    Object.assign(secretPokemon, response.data);
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 };
 
 const setSecretPokemon = async () => {
-    const response = await service.getSecretPokemon();
-    Object.assign(secretPokemon,response.data)
+    const response = await apiService.getSecretPokemon();
+    Object.assign(secretPokemon, response.data);
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 };
 
@@ -249,7 +267,7 @@ const loadGameData = async () => {
     if (!dayOfLastUpdate) setNewDate();
 
     loadSecretPokemon();
-    const currSecretPokemon = await (await service.getSecretPokemon()).data;
+    const currSecretPokemon = await (await apiService.getSecretPokemon()).data;
 
     if (
         parseInt(dayOfLastUpdate) == new Date().getUTCDate() &&
@@ -266,35 +284,38 @@ const loadGameData = async () => {
     }
     setNewDate();
     loadIsShiny();
+    updateYesterdaysPokemon();
 };
 
 const revealPokemon = async () => {
     console.log(localStorage.getItem('secretPokemon'));
-    const backendResponse = await service.getSecretPokemon();
+    const backendResponse = await apiService.getSecretPokemon();
     console.log(backendResponse.data);
 };
 
-const newGame = () => {
+const newGame = async () => {
     localStorage.removeItem('secretPokemon');
     localStorage.removeItem('guesses');
     localStorage.removeItem('colors');
     localStorage.removeItem('isGameWon');
     colors = [];
-    componentStore.guesses.splice(0)
+    componentStore.guesses.splice(0);
     componentStore.pokemonNames = getSortedPokemonNames();
     setNewDate();
     store.setIsGameWon(false);
 };
 
 const getNewGame = async () => {
-    newGame();
+    await newGame();
     await setSecretPokemon();
+    await updateYesterdaysPokemon();
 };
 
 // Force update pokemon in DB
 const setNewGame = async () => {
-    newGame();
+    await newGame();
     await setNewSecretPokemon();
+    await updateYesterdaysPokemon();
 };
 
 const lauchConfetti = () => {
