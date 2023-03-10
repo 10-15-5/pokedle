@@ -21,7 +21,7 @@
                     @submit-guess="submitGuess"
                 />
                 <GameWinContainer v-else :pokemon="componentStore.guesses[0]" :color="colors.at(-1)" />
-                <HintContainer :text="secretPokemon.flavorText" />
+                <HintContainer v-if="!store.isGameWon && componentStore.guesses.length" :text="secretPokemon.flavorText" :numberOfGuesses="componentStore.guesses.length" />
                 <DailyGamesWonContainer :dailyGamesWon="dailyGamesWon" />
                 <div v-if="componentStore.guesses.length" class="mb-20 flex flex-col gap-y-2 sm:gap-y-1">
                     <SquareContentHeader class="mb-n1 sm:!mb-0" />
