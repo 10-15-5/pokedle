@@ -35,8 +35,8 @@
                     v-if="componentStore.guesses.length"
                     class="mb-20 flex flex-col gap-y-2 sm:gap-y-1"
                 >
-                    <SquareContentHeader class="mb-n1 sm:!mb-0" />
-                    <SquareContainer
+                    <ResultHeader class="mb-n1 sm:!mb-0" />
+                    <ResultContainer
                         v-for="(guess, i) in componentStore.guesses"
                         :key="guess"
                         :value="guess"
@@ -58,8 +58,8 @@
 </template>
 
 <script setup>
-import SquareContainer from './components/result/ResultContainer.vue';
-import SquareContentHeader from './components/result/ResultHeader.vue';
+import ResultContainer from './components/result/ResultContainer.vue';
+import ResultHeader from './components/result/ResultHeader.vue';
 import GameWinContainer from './components/GameWinContainer.vue';
 import HintContainer from './components/hints/HintContainer.vue';
 import PreviousPokemonCard from './components/PreviousPokemonCard.vue';
@@ -89,6 +89,7 @@ const dailyFirstTryWins = ref(0);
 const store = useStore();
 const yesterdaysPokemon = ref('');
 
+let isGuessing = true; //Used to disable 
 let colors = [];
 const secretPokemon = reactive({});
 
@@ -164,6 +165,7 @@ const updateUserWithGameWon = async () => {
 
 const decideGame = (guess) => {
     if (guess === secretPokemon.name) {
+        isGuessing = false; //
         //Wait for all cards to flip
         setTimeout(() => {
             lauchConfetti();
@@ -178,7 +180,6 @@ const decideGame = (guess) => {
 };
 
 const updateYesterdaysPokemon = async () => {
-    console.log('TEST');
     yesterdaysPokemon.value = (await apiService.getPreviousSecretPokemon()).data;
 };
 
@@ -191,7 +192,7 @@ const addColorsToLocalStorage = () => {
 };
 
 const submitGuess = (guess) => {
-    if (!guess) return;
+    if (!guess || !isGuessing) return;
 
     const { updatedPokemonNames, pokemonName } = removePokemonFromGuessPool(guess);
 

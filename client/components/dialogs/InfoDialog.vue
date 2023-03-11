@@ -48,15 +48,15 @@
                 and include:
             </p>
             <div class="grid grid-flow-col sm:grid-flow-col sm:grid-rows-3 gap-1 p-2">
-                <img :src="'./client/assets/habitats/cave.png'" alt="" />
-                <img :src="'./client/assets/habitats/forest.png'" alt="" />
-                <img :src="'./client/assets/habitats/grassland.png'" alt="" />
-                <img :src="'./client/assets/habitats/mountain.png'" alt="" />
-                <img :src="'./client/assets/habitats/rare.png'" alt="" />
-                <img :src="'./client/assets/habitats/rough-terrain.png'" alt="" />
-                <img :src="'./client/assets/habitats/sea.png'" alt="" />
-                <img :src="'./client/assets/habitats/urban.png'" alt="" />
-                <img :src="'./client/assets/habitats/waters-edge.png'" alt="" />
+                <img :src="'./client/assets/habitats/cave.png'" title="cave" />
+                <img :src="'./client/assets/habitats/forest.png'" title="forest" />
+                <img :src="'./client/assets/habitats/grassland.png'" title="grassland" />
+                <img :src="'./client/assets/habitats/mountain.png'" title="mountain" />
+                <img :src="'./client/assets/habitats/rare.png'" title="rare" />
+                <img :src="'./client/assets/habitats/rough-terrain.png'" title="rough-terrain" />
+                <img :src="'./client/assets/habitats/sea.png'" title="sea" />
+                <img :src="'./client/assets/habitats/urban.png'" title="urban" />
+                <img :src="'./client/assets/habitats/waters-edge.png'" title="waters-edge" />
             </div>
 
             <hr class="divider" />

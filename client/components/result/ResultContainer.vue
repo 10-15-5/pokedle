@@ -1,7 +1,7 @@
 <template>
     <div class="card space-x-2 p-2 sm:space-x-[2px] sm:!p-1">
         <div v-for="(field, k, i) in guessResult" :key="k" :value="field">
-            <SquareContent
+            <ResultSquare
                 :pokemon="removeSpecialCharactersExceptDashFromString(field.name)"
                 :color="color"
                 :guessResult="field.guessState"
@@ -15,7 +15,7 @@
 </template>
 
 <script setup>
-import SquareContent from '../result/ResultSquare.vue';
+import ResultSquare from '../result/ResultSquare.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../../helpers.js';
 const props = defineProps({
     pokemonName: String,
