@@ -30,7 +30,7 @@
                     :text="secretPokemon.flavorText"
                     :numberOfGuesses="componentStore.guesses.length"
                 />
-                <DailyGamesWonContainer :dailyGamesWon="dailyGamesWon" />
+                <DailyGamesWonContainer v-if="!componentStore.guesses.length || store.isGameWon" :dailyGamesWon="dailyGamesWon" />
                 <div
                     v-if="componentStore.guesses.length"
                     class="mb-20 flex flex-col gap-y-2 sm:gap-y-1"
