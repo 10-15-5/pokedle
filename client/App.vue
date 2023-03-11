@@ -300,6 +300,7 @@ const newGame = async () => {
     localStorage.removeItem('colors');
     localStorage.removeItem('isGameWon');
     colors = [];
+    isGuessing = true;
     componentStore.guesses.splice(0);
     componentStore.pokemonNames = getSortedPokemonNames();
     setNewDate();
