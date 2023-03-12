@@ -1,14 +1,19 @@
 <template>
-    <div>
+    <div class="relative">
         <div
             v-if="type === guessType.Pokemon && color === 'shiny'"
-            class="z-1 absolute mt-[-8px] ml-[46px] flex h-[22px] w-[22px] items-center justify-center sm:ml-[30px] sm:mt-[-10px]"
+            class="z-1 absolute mt-[-10px] ml-[46px] flex h-[22px] w-[22px] items-center justify-center sm:ml-[30px] sm:mt-[-10px]"
         >
-            <v-icon
-                class="absolute z-10 text-3xl text-black dark:!text-dark-border sm:text-2xl"
-                icon="mdi-star"
+            <SvgIcon
+                type="mdi"
+                :path="mdiStar"
+                class="absolute z-10 h-[30px] w-[30px] text-black dark:!text-dark-border sm:h-[22px] sm:w-[22px]"
             />
-            <v-icon class="absolute z-10 text-xl text-yellow-500 sm:text-base" icon="mdi-star" />
+            <SvgIcon
+                type="mdi"
+                :path="mdiStar"
+                class="absolute z-10 h-[20px] w-[20px] text-yellow-500 sm:h-[14px] sm:w-[14px]"
+            />
         </div>
         <VueFlip
             v-model="isCardFaceDown"
@@ -25,7 +30,7 @@
                 >
                     <img
                         v-if="type == guessType.Pokemon"
-                        class="pokemon-bg bg-neutral-200 dark:!bg-neutral-700"
+                        class="pokemon-bg bg-neutral-200 bg-no-repeat dark:!bg-neutral-700"
                         :src="
                             'https://img.pokemondb.net/sprites/ruby-sapphire/' +
                             color +
@@ -69,6 +74,8 @@ import { getHabitatImage } from '../../services/assets.js';
 import { VueFlip } from 'vue-flip';
 import { useDark } from '@vueuse/core';
 import { useStore } from '../../stores/store';
+import SvgIcon from '@jamescoyle/vue-icon';
+import { mdiStar } from '@mdi/js';
 
 const isDark = useDark();
 const store = useStore();
@@ -86,11 +93,11 @@ const props = defineProps({
 const isCardFaceDown = ref(true);
 
 onBeforeMount(() => {
-    if (props.flipDelay === undefined || store.isGameWon || props.type === guessType.Pokemon) isCardFaceDown.value = false;
+    if (props.flipDelay === undefined || store.isGameWon || props.type === guessType.Pokemon)
+        isCardFaceDown.value = false;
 });
 
 onMounted(() => {
-
     setTimeout(() => {
         isCardFaceDown.value = false;
     }, props.flipDelay * 350);

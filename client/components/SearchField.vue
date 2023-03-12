@@ -1,13 +1,17 @@
 <template>
     <div class="relative">
-        <input ref="inputField"
+        <input
+            ref="inputField"
             class="card w-[200px] p-4 font-pkmEmerald focus:outline-none"
             type="text"
             placeholder="Type Pokemon..."
             v-model="searchTerm"
             @keypress.enter="submitGuess(filteredPokemons[idx === -1 ? 0 : idx])"
-            :onFocus="() => {isSearchFieldActive = true}"
-            v-click-outside="onClickOutsideSearchField"
+            :onFocus="
+                () => {
+                    isSearchFieldActive = true;
+                }
+            "
             @keydown.arrow-down="scrollDown"
             @keydown.arrow-up="scrollUp"
             autocomplete="off"
@@ -65,11 +69,12 @@ const searchFieldHeights = [
 
 const isSearchFieldActive = ref(false);
 const searchTerm = ref('');
-const inputField = ref(null)
+const inputField = ref(null);
 
 useClickOutside(inputField, () => {
     isSearchFieldActive.value = false;
-})
+    resetSuggestionsView();
+});
 
 const idx = ref(0);
 
@@ -103,11 +108,6 @@ const scrollUp = () => {
     }
 };
 
-const onClickOutsideSearchField = () => {
-    isSearchFieldActive.value = false;
-    resetSuggestionsView();
-};
-
 const emit = defineEmits(['submitGuess']);
 
 watch(searchTerm, () => {
@@ -125,9 +125,7 @@ const filteredPokemons = computed(() => {
         return [];
     }
 
-    const test = props.pokemonNames.filter((n) =>
-        n.startsWith(searchTerm.value.toLowerCase())
-    );
+    const test = props.pokemonNames.filter((n) => n.startsWith(searchTerm.value.toLowerCase()));
     return test;
 });
 

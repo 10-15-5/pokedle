@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-center">
+    <div class="flex items-center justify-center relative">
         <HeaderIcon>
             <p class="text-[30px] sm:!text-[26px]">🔥</p>
             <p class="streak-count mt-2 font-pkmEmerald text-light-text dark:text-gray-600">
