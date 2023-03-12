@@ -231,7 +231,7 @@
         "isFullyEvolved": "yes",
         "habitat": "forest",
         "color": "brown",
-        "flavorText": "This POKéMON has gorgeous, glossy feathers. Many ___ are so captivated by the beautiful feathers on its head that they choose ___ as their ___é___."
+        "flavorText": "This POKéMON has gorgeous, glossy feathers. Many TRAINERS are so captivated by the beautiful feathers on its head that they choose ___ as their POKéMON."
     },
     {
         "number": 19,
@@ -816,7 +816,7 @@
         "isFullyEvolved": "no",
         "habitat": "urban",
         "color": "brown",
-        "flavorText": "A POKéMON that sleeps 18 hours a day. Observation revealed that it uses ___ to change its location once every hour."
+        "flavorText": "A POKéMON that sleeps 18 hours a day. Observation revealed that it uses TELEPORT to change its location once every hour."
     },
     {
         "number": 64,
@@ -1037,7 +1037,7 @@
         "isFullyEvolved": "yes",
         "habitat": "waters-edge",
         "color": "pink",
-        "flavorText": "Its tail has a ___ firmly attached with a bite. As a result, the tail can’t be used for fishing anymore. This forces it to reluctantly swim and catch prey."
+        "flavorText": "Its tail has a SHELLDER firmly attached with a bite. As a result, the tail can’t be used for fishing anymore. This forces it to reluctantly swim and catch prey."
     },
     {
         "number": 81,
@@ -1297,7 +1297,7 @@
         "isFullyEvolved": "no",
         "habitat": "urban",
         "color": "red",
-        "flavorText": "It bears an uncanny and unexplained resemblance to a ___é ___. Because it explodes at the slightest shock, even veteran ___ treat it with caution."
+        "flavorText": "It bears an uncanny and unexplained resemblance to a POKé BALL. Because it explodes at the slightest shock, even veteran TRAINERS treat it with caution."
     },
     {
         "number": 101,
@@ -1583,7 +1583,7 @@
         "isFullyEvolved": "yes",
         "habitat": "urban",
         "color": "pink",
-        "flavorText": "A ___. ___ is a master of pantomime. It can convince others that something unseeable actually exists. Once believed, the imaginary object does become real."
+        "flavorText": "A ___ is a master of pantomime. It can convince others that something unseeable actually exists. Once believed, the imaginary object does become real."
     },
     {
         "number": 123,
@@ -1726,7 +1726,7 @@
         "isFullyEvolved": "no",
         "habitat": "urban",
         "color": "brown",
-        "flavorText": "An ___ has an unstable genetic makeup that suddenly mutates due to its environment. Radiation from various ___ causes this POKéMON to evolve."
+        "flavorText": "An ___ has an unstable genetic makeup that suddenly mutates due to its environment. Radiation from various STONES causes this POKéMON to evolve."
     },
     {
         "number": 134,
@@ -1843,7 +1843,7 @@
         "isFullyEvolved": "yes",
         "habitat": "mountain",
         "color": "purple",
-        "flavorText": "___ is a POKéMON from the age of dinosaurs. It was regenerated from ___ extracted from amber. It is imagined to have been the king of the skies."
+        "flavorText": "___ is a POKéMON from the age of dinosaurs. It was regenerated from DNA extracted from amber. It is imagined to have been the king of the skies."
     },
     {
         "number": 143,
@@ -1869,7 +1869,7 @@
         "isFullyEvolved": "yes",
         "habitat": "rare",
         "color": "blue",
-        "flavorText": "___ is a legendary bird POKéMON that can control ice. The flapping of its wings chills the air. As a result, it is said that when this ___é___ flies, snow will fall."
+        "flavorText": "___ is a legendary bird POKéMON that can control ice. The flapping of its wings chills the air. As a result, it is said that when this POKéMON flies, snow will fall."
     },
     {
         "number": 145,
@@ -2545,7 +2545,7 @@
         "isFullyEvolved": "yes",
         "habitat": "urban",
         "color": "purple",
-        "flavorText": "An ___ is extremely loyal to any ___ it considers to be worthy. It is said to have developed precognitive powers to protect its ___ from harm."
+        "flavorText": "An ___ is extremely loyal to any TRAINER it considers to be worthy. It is said to have developed precognitive powers to protect its TRAINER from harm."
     },
     {
         "number": 197,
@@ -2584,7 +2584,7 @@
         "isFullyEvolved": "yes",
         "habitat": "waters-edge",
         "color": "pink",
-        "flavorText": "It undertakes research every day to solve the mysteries of the world. However, it apparently forgets everything if the ___ on its head comes off."
+        "flavorText": "It undertakes research every day to solve the mysteries of the world. However, it apparently forgets everything if the SHELLDER on its head comes off."
     },
     {
         "number": 200,
@@ -2805,7 +2805,7 @@
         "isFullyEvolved": "no",
         "habitat": "mountain",
         "color": "brown",
-        "flavorText": "It licks its palms that are sweetened by being soaked in honey. A ___ makes its own honey by blending fruits and pollen collected by ___."
+        "flavorText": "It licks its palms that are sweetened by being soaked in honey. A ___ makes its own honey by blending fruits and pollen collected by BEEDRILL."
     },
     {
         "number": 217,
@@ -2935,7 +2935,7 @@
         "isFullyEvolved": "yes",
         "habitat": "sea",
         "color": "purple",
-        "flavorText": "On sunny days, schools of ___ can be seen elegantly leaping over the waves. It is not bothered by the ___ that hitches rides."
+        "flavorText": "On sunny days, schools of ___ can be seen elegantly leaping over the waves. It is not bothered by the REMORAID that hitches rides."
     },
     {
         "number": 227,
@@ -3065,7 +3065,7 @@
         "isFullyEvolved": "no",
         "habitat": "urban",
         "color": "purple",
-        "flavorText": "___ become stressed out if they do not get to train every day. When raising this POKéMON, the ___ must establish a regular training schedule."
+        "flavorText": "___ become stressed out if they do not get to train every day. When raising this POKéMON, the TRAINER must establish a regular training schedule."
     },
     {
         "number": 237,
@@ -3507,7 +3507,7 @@
         "isFullyEvolved": "no",
         "habitat": "waters-edge",
         "color": "green",
-        "flavorText": "This POKéMON lives in ponds with clean water. It is known to ferry small ___é___ across ponds by carrying them on the broad leaf on its head."
+        "flavorText": "This POKéMON lives in ponds with clean water. It is known to ferry small POKéMON across ponds by carrying them on the broad leaf on its head."
     },
     {
         "number": 271,
@@ -3585,7 +3585,7 @@
         "isFullyEvolved": "no",
         "habitat": "grassland",
         "color": "blue",
-        "flavorText": "Although it is small, it is very courageous. It will take on a larger ___ on an equal footing. However, its will weakens if it becomes hungry."
+        "flavorText": "Although it is small, it is very courageous. It will take on a larger SKARMORY on an equal footing. However, its will weakens if it becomes hungry."
     },
     {
         "number": 277,
@@ -3663,7 +3663,7 @@
         "isFullyEvolved": "yes",
         "habitat": "urban",
         "color": "white",
-        "flavorText": "It apparently does not feel the pull of gravity because it supports itself with psychic power. It will give its life to protect its ___."
+        "flavorText": "It apparently does not feel the pull of gravity because it supports itself with psychic power. It will give its life to protect its TRAINER."
     },
     {
         "number": 283,
@@ -4079,7 +4079,7 @@
         "isFullyEvolved": "yes",
         "habitat": "forest",
         "color": "purple",
-        "flavorText": "A nocturnal POKéMON that becomes active upon nightfall. It leads a ___ swarm to draw patterns in the night sky. Over 200 different patterns have been confirmed."
+        "flavorText": "A nocturnal POKéMON that becomes active upon nightfall. It leads a VOLBEAT swarm to draw patterns in the night sky. Over 200 different patterns have been confirmed."
     },
     {
         "number": 315,
@@ -4352,7 +4352,7 @@
         "isFullyEvolved": "yes",
         "habitat": "grassland",
         "color": "white",
-        "flavorText": "When it battles, it stands on its hind legs and attacks with its sharply clawed forelegs. Its fur bristles if it encounters any ___."
+        "flavorText": "When it battles, it stands on its hind legs and attacks with its sharply clawed forelegs. Its fur bristles if it encounters any SEVIPER."
     },
     {
         "number": 336,
@@ -4365,7 +4365,7 @@
         "isFullyEvolved": "yes",
         "habitat": "grassland",
         "color": "black",
-        "flavorText": "___ and ___ are eternal rivals. It counters a ___’s dazzling agility with its swordlike tail, which also oozes a horrible poison."
+        "flavorText": "___ and ZANGOOSE are eternal rivals. It counters a ZANGOOSE’s dazzling agility with its swordlike tail, which also oozes a horrible poison."
     },
     {
         "number": 337,
@@ -4534,7 +4534,7 @@
         "isFullyEvolved": "no",
         "habitat": "waters-edge",
         "color": "brown",
-        "flavorText": "___ live in ponds that are heavily infested with weeds. Because of its hopelessly shabby appearance, it seems as if few ___ raise it."
+        "flavorText": "___ live in ponds that are heavily infested with weeds. Because of its hopelessly shabby appearance, it seems as if few TRAINERS raise it."
     },
     {
         "number": 350,
@@ -4807,7 +4807,7 @@
         "isFullyEvolved": "yes",
         "habitat": "sea",
         "color": "pink",
-        "flavorText": "___ make the branches of ___ their nests. There is a custom from long ago of giving a ___ as a gift to express one’s feelings of love."
+        "flavorText": "___ make the branches of CORSOLA their nests. There is a custom from long ago of giving a ___ as a gift to express one’s feelings of love."
     },
     {
         "number": 371,
@@ -4963,7 +4963,7 @@
         "isFullyEvolved": "yes",
         "habitat": "sea",
         "color": "blue",
-        "flavorText": "___ has appeared in mythology as the creator of the sea. After long years of feuding with ___, it took to sleep at the bottom of the sea."
+        "flavorText": "___ has appeared in mythology as the creator of the sea. After long years of feuding with GROUDON, it took to sleep at the bottom of the sea."
     },
     {
         "number": 383,
@@ -4989,7 +4989,7 @@
         "isFullyEvolved": "yes",
         "habitat": "rare",
         "color": "green",
-        "flavorText": "A POKéMON that flies endlessly in the ozone layer. It is said it would descend to the ground if ___ and ___ were to fight."
+        "flavorText": "A POKéMON that flies endlessly in the ozone layer. It is said it would descend to the ground if KYOGRE and GROUDON were to fight."
     },
     {
         "number": 385,

@@ -1,6 +1,6 @@
 import { createRequire } from "module"; // Bring in the ability to create the 'require' method
 const require = createRequire(import.meta.url); // construct the require method
-const pokemonData = require('../server/data/pokemonData-v4.json');
+const pokemonData = require('../../server/data/pokemonData-v4.json');
 import fs from 'fs';
 import axios from "axios";
 
@@ -20,18 +20,20 @@ const runScript = async () => {
         }
     });
 
-    //Remove uppercase pokemon name, will leave '___é___' in some places
-    const withUnderscoreAndÈ = flavorTextArr.map(flavorTextEntry => (
-        flavorTextEntry.flavorText.replace(/[A-Z]{2,}/g, '___')
-    ))
+    const flavorTextArrWONames = [];
 
-    //Replace occurences of '___é___' with '___'
-    const withoutÈ = withUnderscoreAndÈ.map(withUnderscoreAndÈ => (
-        withUnderscoreAndÈ.replace('___é___', 'POKéMON')
-    ))
+    for (let i = 0; i < flavorTextArr.length; i++) {
+       const name = pokemonData[i].name;
+       const uppercaseName = name.toUpperCase();
+
+      const currFlavorText = flavorTextArr[i].flavorText;
+
+      const currWOName = currFlavorText.replace(uppercaseName, '___');
+      flavorTextArrWONames.push(currWOName);
+    }
 
     //Many places in text are '\n', replace wiht space here
-    const withoutBackslashN = withoutÈ.map(withoutÈ => (withoutÈ.replace(/\n/g, ' ')))
+    const withoutBackslashN = flavorTextArrWONames.map(text => (text.replace(/\n/g, ' ')))
 
     const updatedPokemonData = pokemonData.map((pokemon, idx) => ({
         ...pokemon,
@@ -40,7 +42,7 @@ const runScript = async () => {
 
     const jsonData = JSON.stringify(updatedPokemonData);
 
-    fs.writeFile("./scripts/result.json", jsonData, (err) => {
+    fs.writeFile("./scripts/pokemonDataModifications/result.json", jsonData, (err) => {
         if (err) {
             console.log("Error");
             console.log(err);
