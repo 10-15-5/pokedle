@@ -1,6 +1,6 @@
 <template>
-    <v-app id="app">
-        <v-main
+    <div id="app">
+        <div class="w-full min-h-screen"
             :class="{
                 'background-white': !isDark,
                 'background-black': isDark,
@@ -9,7 +9,7 @@
             <ThemeButton class="absolute right-0" />
             <div class="flex flex-col items-center justify-center gap-y-4">
                 <div>
-                    <v-img
+                    <img
                         src="/client/assets/pokedle-logo.png"
                         class="title-img mt-5 mb-3 w-[280px] transition-all duration-100 ease-linear hover:scale-110 sm:w-[220px]"
                     />
@@ -47,14 +47,14 @@
                 </div>
                 <PreviousPokemonCard :pokemonName="yesterdaysPokemon.name" v-else />
             </div>
-        </v-main>
-        <div class="flex items-center justify-center">
-            <v-btn class="text-xs" @click="revealPokemon">Reveal</v-btn>
-            <v-btn class="text-xs" @click="getNewGame">Get New Game</v-btn>
-            <v-btn class="text-xs" @click="setNewGame">Set New Game</v-btn>
-            <v-btn class="text-xs" @click="lauchConfetti">Confetti</v-btn>
         </div>
-    </v-app>
+        <div class="flex items-center justify-center">
+            <button class="text-xs card p-2" @click="revealPokemon">Reveal</button>
+            <button class="text-xs card p-2" @click="getNewGame">Get New Game</button>
+            <button class="text-xs card p-2" @click="setNewGame">Set New Game</button>
+            <button class="text-xs card p-2" @click="lauchConfetti">Confetti</button>
+        </div>
+    </div>
 </template>
 
 <script setup>
@@ -94,7 +94,7 @@ let colors = [];
 const secretPokemon = reactive({});
 
 const getRandomColor = () =>
-    store.isShiny ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal';
+    store.isShiny ? 'shiny' : (Math.random() * 100 < 5 ? 'shiny' : 'normal');
 
 const setDailyGamesWonCount = async () => {
     var date = new Date().toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD

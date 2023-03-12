@@ -1,6 +1,6 @@
 <template>
     <div class="relative">
-        <input id="password"
+        <input ref="inputField"
             class="card w-[200px] p-4 font-pkmEmerald focus:outline-none"
             type="text"
             placeholder="Type Pokemon..."
@@ -50,6 +50,7 @@
 <script setup>
 import { computed, ref, watch } from 'vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers.js';
+import { useClickOutside } from '../composables/useClickOutside.js';
 
 const itemSize = 52;
 
@@ -61,6 +62,14 @@ const searchFieldHeights = [
     '!h-[208px]',
     '!h-[260px]',
 ];
+
+const isSearchFieldActive = ref(false);
+const searchTerm = ref('');
+const inputField = ref(null)
+
+useClickOutside(inputField, () => {
+    isSearchFieldActive.value = false;
+})
 
 const idx = ref(0);
 
@@ -76,8 +85,6 @@ const getHover = (index) => {
         return '!bg-neutral-100 !text-light-emerald dark:!bg-neutral-600 dark:!text-dark-emerald';
 };
 
-const isSearchFieldActive = ref(false);
-const searchTerm = ref('');
 const virtualScroller = ref(null);
 
 const scrollDown = () => {

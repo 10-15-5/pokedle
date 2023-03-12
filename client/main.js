@@ -1,7 +1,6 @@
 import { createApp } from 'vue'
 import App from './App.vue'
 import router from './router'
-import vuetify from './plugins/vuetify'
 import { createPinia } from 'pinia'
 import { loadFonts } from './plugins/webfontloader'
 import PrimeVue from 'primevue/config';
@@ -19,5 +18,4 @@ createApp(App)
     .component('VirtualScroller', VirtualScroller)
     .component('Dialog', Dialog)
     .use(router)
-    .use(vuetify)
     .mount('#app');
