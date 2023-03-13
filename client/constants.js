@@ -50,11 +50,14 @@ const Habitats = {
     RoughTerrain: "rough-terrain",
 }
 
+const TotalResultCardFlipDelay = 2750;
+
 export {
     guessState,
     guessFieldTitles,
     Habitats,
     GuessFieldTooltips,
     guessType,
+    TotalResultCardFlipDelay,
     getGuessFieldTooltipsFromIndex,
 }

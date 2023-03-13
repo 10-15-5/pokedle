@@ -5,7 +5,7 @@
 @layer components {
     .card {
         @apply flex items-center justify-center rounded border-2 border-solid border-light-border 
-        bg-light-bg text-black dark:!border-dark-border dark:!bg-dark-bg dark:!text-dark-text;
+        bg-light-bg text-black dark:border-dark-border dark:bg-dark-bg dark:text-dark-text;
     }
     .result-card {
         @apply absolute flex h-full w-full items-center justify-center

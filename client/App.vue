@@ -45,6 +45,7 @@
                         :key="guess"
                         :value="guess"
                         :pokemonName="guess"
+                        :isGameWon="instantIsGameWon"
                         :guessResult="getGuessResults(guess, secretPokemon)"
                         :color="colors.at(componentStore.guesses.length - 1 - i)"
                     />
@@ -86,6 +87,7 @@ import * as apiService from './services/api/apiService.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
 import { useDark } from '@vueuse/core';
+import { TotalResultCardFlipDelay } from './constants';
 
 const isDark = useDark();
 
@@ -100,8 +102,8 @@ const dailyGamesWon = ref(0);
 const dailyFirstTryWins = ref(0);
 const store = useStore();
 const yesterdaysPokemon = ref('');
-
-let isGuessing = true; //Used to disable
+//Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
+const instantIsGameWon = ref(false); 
 let colors = [];
 const secretPokemon = reactive({});
 
@@ -177,7 +179,7 @@ const updateUserWithGameWon = async () => {
 
 const decideGame = (guess) => {
     if (guess === secretPokemon.name) {
-        isGuessing = false; //
+        instantIsGameWon.value = true;
         //Wait for all cards to flip
         setTimeout(() => {
             lauchConfetti();
@@ -185,7 +187,7 @@ const decideGame = (guess) => {
             console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
             incrementGamesWonCount();
             updateUserWithGameWon();
-        }, 2750);
+        }, TotalResultCardFlipDelay);
     } else {
         console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
     }
@@ -204,7 +206,7 @@ const addColorsToLocalStorage = () => {
 };
 
 const submitGuess = (guess) => {
-    if (!guess || !isGuessing) return;
+    if (!guess || instantIsGameWon.value) return;
 
     const { updatedPokemonNames, pokemonName } = removePokemonFromGuessPool(guess);
 
@@ -312,7 +314,7 @@ const newGame = async () => {
     localStorage.removeItem('colors');
     localStorage.removeItem('isGameWon');
     colors = [];
-    isGuessing = true;
+    instantIsGameWon.value = false;
     componentStore.guesses.splice(0);
     componentStore.pokemonNames = getSortedPokemonNames();
     setNewDate();
