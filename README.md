@@ -1,6 +1,6 @@
 # Pokedle
 
-Test your traine knowledge!
+Test your trainer knowledge!
 
 ## Recommended IDE Setup
 
