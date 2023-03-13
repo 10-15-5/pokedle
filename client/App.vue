@@ -1,6 +1,7 @@
 <template>
     <div id="app">
-        <div class="w-full min-h-screen"
+        <div
+            class="min-h-screen w-full"
             :class="{
                 'background-white': !isDark,
                 'background-black': isDark,
@@ -30,7 +31,10 @@
                     :text="secretPokemon.flavorText"
                     :numberOfGuesses="componentStore.guesses.length"
                 />
-                <DailyGamesWonContainer v-if="!componentStore.guesses.length || store.isGameWon" :dailyGamesWon="dailyGamesWon" />
+                <DailyGamesWonContainer
+                    v-if="!componentStore.guesses.length || store.isGameWon"
+                    :dailyGamesWon="dailyGamesWon"
+                />
                 <div
                     v-if="componentStore.guesses.length"
                     class="mb-20 flex flex-col gap-y-2 sm:gap-y-1"
@@ -49,10 +53,18 @@
             </div>
         </div>
         <div class="flex items-center justify-center">
-            <button class="text-xs card p-2" @click="revealPokemon">Reveal</button>
-            <button class="text-xs card p-2" @click="getNewGame">Get New Game</button>
-            <button class="text-xs card p-2" @click="setNewGame">Set New Game</button>
-            <button class="text-xs card p-2" @click="lauchConfetti">Confetti</button>
+            <button class="card p-2 text-xs hover:!bg-green-400" @click="revealPokemon">
+                Reveal
+            </button>
+            <button class="card p-2 text-xs hover:!bg-purple-400" @click="getNewGame">
+                Get New Game
+            </button>
+            <button class="card p-2 text-xs hover:!bg-blue-400" @click="setNewGame">
+                Set New Game
+            </button>
+            <button class="card p-2 text-xs hover:!bg-pink-400" @click="lauchConfetti">
+                Confetti
+            </button>
         </div>
     </div>
 </template>
@@ -89,12 +101,12 @@ const dailyFirstTryWins = ref(0);
 const store = useStore();
 const yesterdaysPokemon = ref('');
 
-let isGuessing = true; //Used to disable 
+let isGuessing = true; //Used to disable
 let colors = [];
 const secretPokemon = reactive({});
 
 const getRandomColor = () =>
-    store.isShiny ? 'shiny' : (Math.random() * 100 < 5 ? 'shiny' : 'normal');
+    store.isShiny ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal';
 
 const setDailyGamesWonCount = async () => {
     var date = new Date().toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD
