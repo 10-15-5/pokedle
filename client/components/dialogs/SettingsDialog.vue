@@ -1,7 +1,7 @@
 <template>
     <BaseDialog :isVisible="isVisible" :onClose="onClose">
         <h1 class="font-pkmEmerald text-[32px] uppercase">SETTINGS</h1>
-        <div class="grid grid-cols-3 items-center justify-center gap-4">
+        <div class="grid grid-cols-3 items-center justify-center gap-y-4 gap-x-16 sm:gap-x-4">
             <p class="col-span-2 font-pkmEmerald text-[24px]">DarkMode:</p>
             <BaseToggle :isEnabled="isDark" :toggle="toggleDark">
                 <template #leftIcon>
