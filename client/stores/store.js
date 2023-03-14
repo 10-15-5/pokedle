@@ -46,6 +46,7 @@ export const useStore = defineStore('store', () => {
         setIsGameWon,
         toggleShiny,
         setShiny,
+        setDifficultyInsane,
         toggleDifficultyInsane,
     }
 });

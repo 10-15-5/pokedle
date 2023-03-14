@@ -275,8 +275,16 @@ const loadIsShiny = () => {
         store.setShiny(true);
         return;
     }
-    store.setShiny(false);
 };
+
+const loadIsDifficultyInsane = () => {
+    const isDifficultyInsaneString = localStorage.getItem('isDifficultyInsane');
+    console.log(isDifficultyInsaneString);
+    if (isDifficultyInsaneString && isDifficultyInsaneString === 'true') {
+        store.setDifficultyInsane(true);
+        return;
+    }
+}
 
 const loadGameData = async () => {
     const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
@@ -300,6 +308,7 @@ const loadGameData = async () => {
     }
     setNewDate();
     loadIsShiny();
+    loadIsDifficultyInsane();
     updateYesterdaysPokemon();
 };
 
