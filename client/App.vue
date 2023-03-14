@@ -3,15 +3,17 @@
         <div
             class="min-h-screen w-full"
             :class="{
-                'background-white': !isDark,
-                'background-black': isDark,
+                'background-white': !(isDark && store.isDifficultyInsane),
+                'background-black': isDark && !store.isDifficultyInsane,
+                'background-white-difficulty-insane': !isDark && store.isDifficultyInsane,
+                'background-black-difficulty-insane': isDark && store.isDifficultyInsane,
             }"
         >
             <ThemeButton class="absolute right-0" />
             <div class="flex flex-col items-center justify-center gap-y-4">
                 <div>
                     <img
-                        src="/client/assets/pokedle-logo.png"
+                        src="/client/assets/logo/pokedle-logo.png"
                         class="title-img mt-5 mb-3 w-[280px] transition-all duration-100 ease-linear hover:scale-110 sm:w-[220px]"
                     />
                     <HeaderContainer />
@@ -406,7 +408,7 @@ html.dark {
 }
 
 .background-white {
-    background-image: url('./client/assets/background-white.jpg');
+    background-image: url('./client/assets/backgrounds/background-white.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -414,9 +416,25 @@ html.dark {
 
 .background-black {
     background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
-        url('./client/assets/background-black.jpg');
+        url('./client/assets/backgrounds/background-black.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
+
+.background-white-difficulty-insane {
+    background-image: url('./client/assets/backgrounds/background-white-trainer-red.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.background-black-difficulty-insane {
+    background-image: url('./client/assets/backgrounds/background-black-cubone.jpeg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+
 </style>
