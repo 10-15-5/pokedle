@@ -26,8 +26,11 @@
                         class="h-[30px] w-[30px]"
                     /> </template
             ></BaseToggle>
-            <p class="col-span-2 font-pkmEmerald text-[24px]">Difficulty Insane:</p>
-            <BaseToggle :isEnabled="store.isDifficultyInsane" :toggle="store.toggleDifficultyInsane">
+            <p class="col-span-2 font-pkmEmerald text-[24px]">Champion Difficulty:</p>
+            <BaseToggle
+                :isEnabled="store.isDifficultyInsane"
+                :toggle="store.toggleDifficultyInsane"
+            >
                 <template #leftIcon>
                     <SvgIcon type="mdi" :path="mdiCoffin" class="h-[30px] w-[30px]" />
                 </template>
@@ -46,7 +49,14 @@
 import BaseDialog from './BaseDialog.vue';
 import BaseToggle from '../buttons/BaseToggle.vue';
 import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiStarOffOutline, mdiStarOutline, mdiWeatherNight,mdiWeatherSunny, mdiCoffin, mdiEmoticonExcitedOutline } from '@mdi/js';
+import {
+    mdiStarOffOutline,
+    mdiStarOutline,
+    mdiWeatherNight,
+    mdiWeatherSunny,
+    mdiCoffin,
+    mdiEmoticonExcitedOutline,
+} from '@mdi/js';
 import { useStore } from '../../stores/store.js';
 import { useDark, useToggle } from '@vueuse/core';
 const store = useStore();
