@@ -408,7 +408,7 @@ html.dark {
 }
 
 .background-white {
-    background-image: url('./client/assets/backgrounds/background-white.jpg');
+    background-image: url('./client/assets/backgrounds/background-white.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
