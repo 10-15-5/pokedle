@@ -1,6 +1,9 @@
 <template>
-    <div class="card space-x-2 p-2 sm:space-x-[2px] sm:!p-1" :class="(isAllFieldsCorrect && !isGameWon) ? '!bg-red-300 dark:!bg-red-900' : ''">
-        <div v-for="(field, k, i) in guessResult" :key="k" :value="field">
+    <div
+        class="card space-x-2 p-2 sm:space-x-[2px] sm:!p-1"
+        :class="isAllFieldsCorrectButIncorrectPokemon ? '!bg-red-300 dark:!bg-red-900' : ''"
+    >
+        <div v-for="(field, k, i) in guessResult.fields" :key="k" :value="field">
             <ResultSquare
                 :pokemon="removeSpecialCharactersExceptDashFromString(field.name)"
                 :color="color"
@@ -19,34 +22,34 @@ import ResultSquare from '../result/ResultSquare.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../../helpers.js';
 import { guessState, TotalResultCardFlipDelay } from '../../constants.js';
 import { useStore } from '../../stores/store.js';
-import {onMounted, ref} from 'vue';
+import { onMounted, ref } from 'vue';
 const store = useStore();
 
 const props = defineProps({
     pokemonName: String,
     guessResult: Object,
     color: String,
-    isGameWon: Boolean,
 });
 
-const isAllFieldsCorrect = ref(false)
+const isAllFieldsCorrectButIncorrectPokemon = ref(false);
 
+//Set background to 'red' if all fields are correct, but pokemon is incorrect
 onMounted(() => {
-    console.log("computed");
-    if(!props.guessResult) return false;
-    console.log(props.guessResult);
-    const arr = Object.values(props.guessResult);
-    const arr2 = arr.shift();
-    console.log(props.guessResult);
-    console.log(arr);
-    const t = arr.every((e) => e.guessState === guessState.CorrectGuess)
-    console.log(t);
+    if (!props.guessResult) return false;
+    if (props.guessResult.isCorrectGuess) return false;
+
+    const arr = Object.values(props.guessResult.fields);
+
+    const isAllFieldsCorrectGuess = arr.every(
+        (e, idx) => idx < 1 || e.guessState === guessState.CorrectGuess
+    );
+
+    const delay = store.isGameWon ? 0 : TotalResultCardFlipDelay;
 
     setTimeout(() => {
-        isAllFieldsCorrect.value = t;
-    }, TotalResultCardFlipDelay)
+        isAllFieldsCorrectButIncorrectPokemon.value = isAllFieldsCorrectGuess;
+    }, delay);
 });
-
 </script>
 
 <style scoped></style>

@@ -47,7 +47,6 @@
                         :key="guess"
                         :value="guess"
                         :pokemonName="guess"
-                        :isGameWon="instantIsGameWon"
                         :guessResult="getGuessResults(guess, secretPokemon)"
                         :color="colors.at(componentStore.guesses.length - 1 - i)"
                     />
