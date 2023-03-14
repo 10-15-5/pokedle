@@ -32,7 +32,7 @@
                     is in <b>evolution stage 3</b> <br />
                     This leaves only one POKEMéN; <b>METAGROSS.</b>
                 </p>
-                <img class="card mx-auto w-[600px]" :src="'./client/assets/game-example.png'" />
+                <img class="card mx-auto w-[600px]" :src="'./client/assets/game-examples/game-example.png'" />
             </div>
 
             <hr class="divider" />

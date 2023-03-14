@@ -60,7 +60,7 @@
             </template>
             <template v-slot:back>
                 <div class="result-card bg-neutral-200 dark:!bg-neutral-800" variant="outlined">
-                    <img :src="'./client/assets/pokemon-cardback-pixel.png'" alt="pokemon sprite" />
+                    <img :src="'./client/assets/result-cards/pokemon-cardback-pixel.png'" alt="pokemon sprite" />
                 </div>
             </template>
         </VueFlip>
@@ -120,7 +120,7 @@ const getColor = computed(() => {
 <style scoped>
 .pokemon-bg {
     width: 100%;
-    background-image: url('/client/assets/pokecenter-box-background.png');
+    background-image: url('/client/assets/result-cards/pokecenter-box-background.png');
     background-size: contain;
 }
 </style>
