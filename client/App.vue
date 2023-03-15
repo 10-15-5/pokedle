@@ -283,7 +283,6 @@ const loadIsShiny = () => {
 
 const loadIsDifficultyInsane = () => {
     const isDifficultyInsaneString = localStorage.getItem('isDifficultyInsane');
-    console.log(isDifficultyInsaneString);
     if (isDifficultyInsaneString && isDifficultyInsaneString === 'true') {
         store.setDifficultyInsane(true);
         return;
