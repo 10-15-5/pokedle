@@ -1,47 +1,63 @@
 <template>
-    <div id="app">
-        <div
-            class="min-h-screen w-full"
-            :class="{
-                'background-white': !(isDark && store.isDifficultyInsane),
-                'background-black': isDark && !store.isDifficultyInsane,
-                'background-white-difficulty-insane': !isDark && store.isDifficultyInsane,
-                'background-black-difficulty-insane': isDark && store.isDifficultyInsane,
-            }"
-        >
-            <ThemeButton class="absolute right-0" />
-            <div class="flex flex-col items-center justify-center">
-                <RouterLink to="/">
-                    <img
-                        src="/client/assets/logo/pokedle-logo.png"
-                        class="title-img mt-5 mb-3 w-[280px] transition-all duration-100 ease-linear hover:scale-110 sm:w-[220px]"
-                    />
-                </RouterLink>
-                <HeaderContainer />
-            </div>
-            <RouterView />
+    <div class="flex flex-col items-center justify-center gap-y-4 pt-4">
+        <SearchField
+            v-if="!store.isGameWon"
+            :pokemonNames="componentStore.pokemonNames"
+            @submit-guess="submitGuess"
+        />
+        <GameWinContainer v-else :pokemon="componentStore.guesses[0]" :color="colors.at(-1)" />
+        <HintContainer
+            v-if="!store.isGameWon && componentStore.guesses.length"
+            :text="secretPokemon.flavorText"
+            :numberOfGuesses="componentStore.guesses.length"
+        />
+        <DailyGamesWonContainer
+            v-if="!componentStore.guesses.length || store.isGameWon"
+            :dailyGamesWon="dailyGamesWon"
+        />
+        <div v-if="componentStore.guesses.length" class="mb-20 flex flex-col gap-y-2 sm:gap-y-1">
+            <ResultHeader class="mb-n1 sm:!mb-0" />
+            <ResultContainer
+                v-for="(guess, i) in componentStore.guesses"
+                :key="guess"
+                :value="guess"
+                :pokemonName="guess"
+                :guessResult="getGuessResults(guess, secretPokemon)"
+                :color="colors.at(componentStore.guesses.length - 1 - i)"
+            />
         </div>
+        <PreviousPokemonCard :pokemonName="yesterdaysPokemon.name" v-else />
+    </div>
+    <div class="flex items-center justify-center mt-[700px]">
+        <button class="card p-2 text-xs hover:!bg-green-400" @click="revealPokemon">Reveal</button>
+        <button class="card p-2 text-xs hover:!bg-purple-400" @click="getNewGame">
+            Get New Game
+        </button>
+        <button class="card p-2 text-xs hover:!bg-blue-400" @click="setNewGame">
+            Set New Game
+        </button>
+        <button class="card p-2 text-xs hover:!bg-pink-400" @click="lauchConfetti">Confetti</button>
     </div>
 </template>
 
 <script setup>
-import ResultContainer from './components/result/ResultContainer.vue';
-import ResultHeader from './components/result/ResultHeader.vue';
-import GameWinContainer from './components/GameWinContainer.vue';
-import HintContainer from './components/hints/HintContainer.vue';
-import PreviousPokemonCard from './components/PreviousPokemonCard.vue';
-import SearchField from './components/SearchField.vue';
-import pokemonData from '../server/data/pokemonData-v5-flavorText.json';
-import HeaderContainer from './components/headerIcons/HeaderIconContainer.vue';
-import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
-import ThemeButton from './components/buttons/ThemeButton.vue';
+import ResultContainer from '../components/result/ResultContainer.vue';
+import ResultHeader from '../components/result/ResultHeader.vue';
+import GameWinContainer from '../components/GameWinContainer.vue';
+import HintContainer from '../components/hints/HintContainer.vue';
+import PreviousPokemonCard from '../components/PreviousPokemonCard.vue';
+import SearchField from '../components/SearchField.vue';
+import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
+import HeaderContainer from '../components/headerIcons/HeaderIconContainer.vue';
+import DailyGamesWonContainer from '../components/DailyGamesWonContainer.vue';
+import ThemeButton from '../components/buttons/ThemeButton.vue';
 import { reactive, ref, onBeforeMount } from 'vue';
-import { getGuessResults } from './services/guess';
-import * as apiService from './services/api/apiService.js';
+import { getGuessResults } from '../services/guess';
+import * as apiService from '../services/api/apiService.js';
 import confetti from 'canvas-confetti';
-import { useStore } from './stores/store';
+import { useStore } from '../stores/store';
 import { useDark } from '@vueuse/core';
-import { TotalResultCardFlipDelay } from './constants';
+import { TotalResultCardFlipDelay } from '../constants';
 
 const isDark = useDark();
 
@@ -369,7 +385,7 @@ html.dark {
 }
 
 .background-white {
-    background-image: url('./client/assets/backgrounds/background-white.png');
+    background-image: url('../client/assets/backgrounds/background-white.png');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
@@ -377,21 +393,21 @@ html.dark {
 
 .background-black {
     background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
-        url('./client/assets/backgrounds/background-black.jpg');
+        url('../client/assets/backgrounds/background-black.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
 .background-white-difficulty-insane {
-    background-image: url('./client/assets/backgrounds/background-white-trainer-red.jpeg');
+    background-image: url('../client/assets/backgrounds/background-white-trainer-red.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
 .background-black-difficulty-insane {
-    background-image: url('./client/assets/backgrounds/background-black-cubone.jpeg');
+    background-image: url('../client/assets/backgrounds/background-black-cubone.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
