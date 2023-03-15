@@ -44,7 +44,7 @@ onMounted(() => {
         (e, idx) => idx < 1 || e.guessState === guessState.CorrectGuess
     );
 
-    const delay = store.isGameWon ? 0 : TotalResultCardFlipDelay;
+    const delay = store.isClassicGameWon ? 0 : TotalResultCardFlipDelay;
 
     setTimeout(() => {
         isAllFieldsCorrectButIncorrectPokemon.value = isAllFieldsCorrectGuess;

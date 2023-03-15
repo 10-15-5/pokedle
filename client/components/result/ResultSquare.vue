@@ -93,7 +93,7 @@ const props = defineProps({
 const isCardFaceDown = ref(true);
 
 onBeforeMount(() => {
-    if (props.flipDelay === undefined || store.isGameWon || props.type === guessType.Pokemon)
+    if (props.flipDelay === undefined || store.isClassicGameWon || props.type === guessType.Pokemon)
         isCardFaceDown.value = false;
 });
 

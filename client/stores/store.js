@@ -3,7 +3,7 @@ import { reactive, ref } from 'vue'
 
 export const useStore = defineStore('store', () => {
     const user = reactive({});
-    const isGameWon = ref(false);
+    const isClassicGameWon = ref(false);
     const isShiny = ref(false);
     const isDifficultyInsane = ref(false);
 
@@ -30,20 +30,20 @@ export const useStore = defineStore('store', () => {
         Object.assign(user, newUser);
     }
 
-    const setIsGameWon = (isWon) => {
-        isGameWon.value = isWon;
-        localStorage.setItem('isGameWon', `${isWon}`);
+    const setIsClassicGameWon = (isWon) => {
+        isClassicGameWon.value = isWon;
+        localStorage.setItem('isClassicGameWon', `${isWon}`);
     }
 
     
 
     return {
         user,
-        isGameWon,
+        isClassicGameWon,
         isShiny,
         isDifficultyInsane,
         setUser,
-        setIsGameWon,
+        setIsClassicGameWon,
         toggleShiny,
         setShiny,
         setDifficultyInsane,

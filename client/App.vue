@@ -25,59 +25,26 @@
 </template>
 
 <script setup>
-import ResultContainer from './components/result/ResultContainer.vue';
-import ResultHeader from './components/result/ResultHeader.vue';
-import GameWinContainer from './components/GameWinContainer.vue';
-import HintContainer from './components/hints/HintContainer.vue';
-import PreviousPokemonCard from './components/PreviousPokemonCard.vue';
-import SearchField from './components/SearchField.vue';
-import pokemonData from '../server/data/pokemonData-v5-flavorText.json';
 import HeaderContainer from './components/headerIcons/HeaderIconContainer.vue';
-import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
 import ThemeButton from './components/buttons/ThemeButton.vue';
 import { reactive, ref, onBeforeMount } from 'vue';
-import { getGuessResults } from './services/guess';
 import * as apiService from './services/api/apiService.js';
-import confetti from 'canvas-confetti';
-import { useStore } from './stores/store';
+import { useStore } from './stores/store.js';
 import { useDark } from '@vueuse/core';
-import { TotalResultCardFlipDelay } from './constants';
 
 const isDark = useDark();
-
-const getSortedPokemonNames = () => pokemonData.map((pokemonInfo) => pokemonInfo.name).sort();
-
-const componentStore = reactive({
-    pokemonNames: reactive(getSortedPokemonNames()),
-    guesses: reactive([]),
-});
-
-const dailyGamesWon = ref(0);
-const dailyFirstTryWins = ref(0);
 const store = useStore();
-const yesterdaysPokemon = ref('');
-//Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
-const instantIsGameWon = ref(false);
-let colors = [];
-const secretPokemon = reactive({});
-
-const getRandomColor = () =>
-    store.isShiny ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal';
-
-const setDailyGamesWonCount = async () => {
-    var date = new Date().toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD
-    const res = await apiService.getDailyStats(date);
-    dailyGamesWon.value = res.data.gamesWon;
-};
 
 onBeforeMount(async () => {
-    const [user] = await Promise.all([getOrCreateUser(), loadGameData(), setDailyGamesWonCount()]);
-
+    const user = await getOrCreateUser();
     console.log(user);
 
     if (user) {
         store.setUser(user);
     }
+
+    loadIsShiny();
+    loadIsDifficultyInsane();
 });
 
 const getOrCreateUser = async () => {
@@ -96,132 +63,6 @@ const getOrCreateUser = async () => {
     return user;
 };
 
-const removePokemonFromGuessPool = (guess) => {
-    let guessRemovedFromList = false;
-    let pokemonName = '';
-
-    const updatedPokemonNames = componentStore.pokemonNames.filter((e) => {
-        if (!guessRemovedFromList && e.startsWith(guess.toLowerCase())) {
-            componentStore.guesses.unshift(e);
-            pokemonName = e;
-            guessRemovedFromList = true;
-        } else return true;
-    });
-
-    return {
-        pokemonName,
-        updatedPokemonNames,
-    };
-};
-
-const incrementGamesWonCount = async () => {
-    const response = await apiService.updateDailyGamesWonCount(componentStore.guesses.length);
-    dailyGamesWon.value = response.data.dailyStats.gamesWon;
-    dailyFirstTryWins.value = response.data.dailyStats.firstTryWins;
-};
-
-const updateUserWithGameWon = async () => {
-    const userId = localStorage.getItem('userId');
-    if (userId) {
-        const response = await apiService.updateUserWithGameWon(
-            userId,
-            componentStore.guesses.length
-        );
-        store.setUser(response.data.user);
-    }
-};
-
-const decideGame = (guess) => {
-    if (guess === secretPokemon.name) {
-        instantIsGameWon.value = true;
-        //Wait for all cards to flip
-        setTimeout(() => {
-            lauchConfetti();
-            store.setIsGameWon(true);
-            console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
-            incrementGamesWonCount();
-            updateUserWithGameWon();
-        }, TotalResultCardFlipDelay);
-    } else {
-        console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
-    }
-};
-
-const updateYesterdaysPokemon = async () => {
-    yesterdaysPokemon.value = (await apiService.getPreviousSecretPokemon()).data;
-};
-
-const addGuessesToLocalStorage = () => {
-    localStorage.setItem('guesses', JSON.stringify(componentStore.guesses));
-};
-
-const addColorsToLocalStorage = () => {
-    localStorage.setItem('colors', JSON.stringify(colors));
-};
-
-const submitGuess = (guess) => {
-    if (!guess || instantIsGameWon.value) return;
-
-    const { updatedPokemonNames, pokemonName } = removePokemonFromGuessPool(guess);
-
-    if (updatedPokemonNames.length >= componentStore.pokemonNames.length) return;
-
-    colors.push(getRandomColor());
-    componentStore.pokemonNames = updatedPokemonNames;
-    addGuessesToLocalStorage();
-    addColorsToLocalStorage();
-
-    decideGame(pokemonName);
-};
-
-const loadSecretPokemon = () => {
-    const loadedSecretPokemon = localStorage.getItem('secretPokemon');
-    Object.assign(secretPokemon, JSON.parse(loadedSecretPokemon));
-};
-
-const loadGuesses = () => {
-    const guesses = localStorage.getItem('guesses');
-    if (guesses) componentStore.guesses = JSON.parse(guesses);
-};
-
-const loadColors = () => {
-    const loadedColors = localStorage.getItem('colors');
-    if (loadedColors) colors = JSON.parse(loadedColors);
-};
-
-const loadIsGameWon = () => {
-    const loadedIsGameWon = localStorage.getItem('isGameWon');
-    if (loadedIsGameWon === 'true') {
-        store.setIsGameWon(true);
-    } else {
-        store.setIsGameWon(false);
-    }
-};
-
-const removePokemonsFromGuessPool = () => {
-    componentStore.pokemonNames = componentStore.pokemonNames.filter((pokemon) => {
-        for (const guessedPokemon of componentStore.guesses) {
-            if (guessedPokemon === pokemon) return false;
-        }
-        return true;
-    });
-};
-
-const setNewDate = () =>
-    localStorage.setItem('dayOfLastUpdate', new Date().getUTCDate().toString());
-
-const setNewSecretPokemon = async () => {
-    const response = await apiService.newSecretPokemon();
-    Object.assign(secretPokemon, response.data);
-    localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
-};
-
-const setSecretPokemon = async () => {
-    const response = await apiService.getSecretPokemon();
-    Object.assign(secretPokemon, response.data);
-    localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
-};
-
 const loadIsShiny = () => {
     const isShinyString = localStorage.getItem('isShiny');
     if (isShinyString && isShinyString === 'true') {
@@ -237,129 +78,6 @@ const loadIsDifficultyInsane = () => {
         store.setDifficultyInsane(true);
         return;
     }
-};
-
-const loadGameData = async () => {
-    const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
-    if (!dayOfLastUpdate) setNewDate();
-
-    loadSecretPokemon();
-    const currSecretPokemon = await (await apiService.getSecretPokemon()).data;
-
-    if (
-        parseInt(dayOfLastUpdate) == new Date().getUTCDate() &&
-        secretPokemon &&
-        secretPokemon?.name === currSecretPokemon?.name
-    ) {
-        loadColors();
-        loadGuesses();
-        loadIsGameWon();
-        removePokemonsFromGuessPool();
-    } else {
-        newGame();
-        await setSecretPokemon();
-    }
-    setNewDate();
-    loadIsShiny();
-    loadIsDifficultyInsane();
-    updateYesterdaysPokemon();
-};
-
-const revealPokemon = async () => {
-    console.log(localStorage.getItem('secretPokemon'));
-    const backendResponse = await apiService.getSecretPokemon();
-    console.log(backendResponse.data);
-};
-
-const newGame = async () => {
-    localStorage.removeItem('secretPokemon');
-    localStorage.removeItem('guesses');
-    localStorage.removeItem('colors');
-    localStorage.removeItem('isGameWon');
-    colors = [];
-    instantIsGameWon.value = false;
-    componentStore.guesses.splice(0);
-    componentStore.pokemonNames = getSortedPokemonNames();
-    setNewDate();
-    store.setIsGameWon(false);
-};
-
-const getNewGame = async () => {
-    await newGame();
-    await setSecretPokemon();
-    await updateYesterdaysPokemon();
-};
-
-// Force update pokemon in DB
-const setNewGame = async () => {
-    await newGame();
-    await setNewSecretPokemon();
-    await updateYesterdaysPokemon();
-};
-
-const lauchConfetti = () => {
-    var duration = 3 * 1000;
-    var animationEnd = Date.now() + duration;
-    var particleCount = 200;
-    var defaults = {
-        startVelocity: 25,
-        spread: 360,
-        ticks: 300,
-        zIndex: 0,
-        scalar: 1.4,
-    };
-
-    if (colors.at(-1) === 'shiny' || componentStore.guesses.length === 1) {
-        defaults.shapes = ['star'];
-        defaults.scalar = 1.1;
-        particleCount = 90;
-        if (colors.at(-1) === 'shiny' && componentStore.guesses.length === 1) {
-            defaults.colors = ['9EFD38', '32CD32', 'A8E4A0', '98FB98', '7CFC00'];
-        } else if (colors.at(-1) === 'shiny') {
-            defaults.colors = ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'];
-        } else if (componentStore.guesses.length === 1) {
-            defaults.colors = ['63C5DA', '48AAD', '52B2BF', '3944BC'];
-        }
-    }
-
-    const randomInRange = (min, max) => {
-        return Math.random() * (max - min) + min;
-    };
-
-    const fire = () => {
-        var timeLeft = animationEnd - Date.now();
-
-        if (timeLeft <= 0) {
-            return clearInterval(lauchConfetti);
-        }
-
-        var currParticleCount = particleCount * (timeLeft / duration);
-        // since particles fall down, start a bit higher than random
-        confetti(
-            Object.assign({}, defaults, {
-                currParticleCount,
-                origin: {
-                    x: randomInRange(0.1, 0.3),
-                    y: Math.random() - 0.4,
-                },
-            })
-        );
-        confetti(
-            Object.assign({}, defaults, {
-                currParticleCount,
-                origin: {
-                    x: randomInRange(0.7, 0.9),
-                    y: Math.random() - 0.4,
-                },
-            })
-        );
-    };
-
-    fire();
-
-    setInterval(() => {
-        fire();
-    }, 250);
 };
 </script>
 

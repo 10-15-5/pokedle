@@ -1,18 +1,18 @@
 <template>
     <div class="flex flex-col items-center justify-center gap-y-4 pt-4">
         <SearchField
-            v-if="!store.isGameWon"
+            v-if="!store.isClassicGameWon"
             :pokemonNames="componentStore.pokemonNames"
             @submit-guess="submitGuess"
         />
         <GameWinContainer v-else :pokemon="componentStore.guesses[0]" :color="colors.at(-1)" />
         <HintContainer
-            v-if="!store.isGameWon && componentStore.guesses.length"
+            v-if="!store.isClassicGameWon && componentStore.guesses.length"
             :text="secretPokemon.flavorText"
             :numberOfGuesses="componentStore.guesses.length"
         />
         <DailyGamesWonContainer
-            v-if="!componentStore.guesses.length || store.isGameWon"
+            v-if="!componentStore.guesses.length || store.isClassicGameWon"
             :dailyGamesWon="dailyGamesWon"
         />
         <div v-if="componentStore.guesses.length" class="mb-20 flex flex-col gap-y-2 sm:gap-y-1">
@@ -55,7 +55,7 @@ import { reactive, ref, onBeforeMount } from 'vue';
 import { getGuessResults } from '../services/guess';
 import * as apiService from '../services/api/apiService.js';
 import confetti from 'canvas-confetti';
-import { useStore } from '../stores/store';
+import { useStore } from '../stores/store.js';
 import { useDark } from '@vueuse/core';
 import { TotalResultCardFlipDelay } from '../constants';
 
@@ -72,8 +72,8 @@ const dailyGamesWon = ref(0);
 const dailyFirstTryWins = ref(0);
 const store = useStore();
 const yesterdaysPokemon = ref('');
-//Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
-const instantIsGameWon = ref(false);
+//Updated as soon an correct pokemon is guessed, contrary to store.isClassicGameWon Which is only updated after TotalResultCardFlipDelay
+const instantIsClassicGameWon = ref(false);
 let colors = [];
 const secretPokemon = reactive({});
 
@@ -149,11 +149,11 @@ const updateUserWithGameWon = async () => {
 
 const decideGame = (guess) => {
     if (guess === secretPokemon.name) {
-        instantIsGameWon.value = true;
+        instantIsClassicGameWon.value = true;
         //Wait for all cards to flip
         setTimeout(() => {
             lauchConfetti();
-            store.setIsGameWon(true);
+            store.setIsClassicGameWon(true);
             console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
             incrementGamesWonCount();
             updateUserWithGameWon();
@@ -176,7 +176,7 @@ const addColorsToLocalStorage = () => {
 };
 
 const submitGuess = (guess) => {
-    if (!guess || instantIsGameWon.value) return;
+    if (!guess || instantIsClassicGameWon.value) return;
 
     const { updatedPokemonNames, pokemonName } = removePokemonFromGuessPool(guess);
 
@@ -205,12 +205,12 @@ const loadColors = () => {
     if (loadedColors) colors = JSON.parse(loadedColors);
 };
 
-const loadIsGameWon = () => {
-    const loadedIsGameWon = localStorage.getItem('isGameWon');
-    if (loadedIsGameWon === 'true') {
-        store.setIsGameWon(true);
+const loadIsClassicGameWon = () => {
+    const loadedIsClassicGameWon = localStorage.getItem('isClassicGameWon');
+    if (loadedIsClassicGameWon === 'true') {
+        store.setIsClassicGameWon(true);
     } else {
-        store.setIsGameWon(false);
+        store.setIsClassicGameWon(false);
     }
 };
 
@@ -238,23 +238,6 @@ const setSecretPokemon = async () => {
     localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
 };
 
-const loadIsShiny = () => {
-    const isShinyString = localStorage.getItem('isShiny');
-    if (isShinyString && isShinyString === 'true') {
-        store.setShiny(true);
-        return;
-    }
-};
-
-const loadIsDifficultyInsane = () => {
-    const isDifficultyInsaneString = localStorage.getItem('isDifficultyInsane');
-    console.log(isDifficultyInsaneString);
-    if (isDifficultyInsaneString && isDifficultyInsaneString === 'true') {
-        store.setDifficultyInsane(true);
-        return;
-    }
-};
-
 const loadGameData = async () => {
     const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
     if (!dayOfLastUpdate) setNewDate();
@@ -269,15 +252,13 @@ const loadGameData = async () => {
     ) {
         loadColors();
         loadGuesses();
-        loadIsGameWon();
+        loadIsClassicGameWon();
         removePokemonsFromGuessPool();
     } else {
         newGame();
         await setSecretPokemon();
     }
     setNewDate();
-    loadIsShiny();
-    loadIsDifficultyInsane();
     updateYesterdaysPokemon();
 };
 
@@ -291,13 +272,13 @@ const newGame = async () => {
     localStorage.removeItem('secretPokemon');
     localStorage.removeItem('guesses');
     localStorage.removeItem('colors');
-    localStorage.removeItem('isGameWon');
+    localStorage.removeItem('isClassicGameWon');
     colors = [];
-    instantIsGameWon.value = false;
+    instantIsClassicGameWon.value = false;
     componentStore.guesses.splice(0);
     componentStore.pokemonNames = getSortedPokemonNames();
     setNewDate();
-    store.setIsGameWon(false);
+    store.setIsClassicGameWon(false);
 };
 
 const getNewGame = async () => {
