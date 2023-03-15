@@ -3,33 +3,33 @@
         <div class="max-w-[700px] font-pkmEmerald text-[20px]">
             <h1 class="text-center mb-2  text-[32px] uppercase">About</h1>
             <p>
-                Welcome to the world of POKEMéN! <br />
+                Welcome to the world of POKéMON! <br />
                 Every day a wild secret POKéMON will be hiding and its your job as a POKéMON TRAINER
                 to catch (guess) it!
             </p>
             <hr class="divider" />
             <h1 class="text-center mb-2  font-pkmEmerald text-[32px] uppercase">How To Play</h1>
             <p class="my-2">
-                <b>1. Guess:</b> Guess any random POKEMéN <b>from gen 1-3</b>, since we currently
+                <b>1. Guess:</b> Guess any random POKéMON <b>from gen 1-3</b>, since we currently
                 have no clues. We will guess <b>SQUIRTLE</b> here.
             </p>
             <p class="my-2">
-                <b>2. Guess:</b> We now know that we are looking for a <b>BLUE</b> POKEMéN.
-                Furthermore the POKEMéN has to be in its <b>final evolution stage</b>. Lastly, the
-                POKEMéN is <b>not</b> from gen 1. <br />
+                <b>2. Guess:</b> We now know that we are looking for a <b>BLUE</b> POKéMON.
+                Furthermore the POKéMON has to be in its <b>final evolution stage</b>. Lastly, the
+                POKéMON is <b>not</b> from gen 1. <br />
                 Let's guess <b> HERACROSS </b> since it matches these characteristics.
             </p>
             <p class="my-2">
-                <b>3. Guess:</b> Now we know the hidden POKEMéN <b>must</b> be from gen 3. Since the
-                hidden POKEMéN cannot be a <b>WATER TYPE</b>, this leaves only a couple of possible
+                <b>3. Guess:</b> Now we know the hidden POKéMON <b>must</b> be from gen 3. Since the
+                hidden POKéMON cannot be a <b>WATER TYPE</b>, this leaves only a couple of possible
                 options. <br />
                 Let's guess
                 <b>SALAMANCE.</b>
             </p>
             <p class="my-2">
-                <b>4. Guess:</b> We now know that the POKEMéN lives in <b>ROUGH TERRAIN</b> and is
+                <b>4. Guess:</b> We now know that the POKéMON lives in <b>ROUGH TERRAIN</b> and is
                 in <b>evolution stage 3</b> <br />
-                This leaves only one POKEMéN; <b>METAGROSS.</b>
+                This leaves only one POKéMON; <b>METAGROSS.</b>
             </p>
             <img
                 class="card mx-auto w-[600px]"
