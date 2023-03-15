@@ -54,7 +54,7 @@
                 <PreviousPokemonCard :pokemonName="yesterdaysPokemon.name" v-else />
             </div>
         </div>
-        <div class="flex items-center justify-center">
+        <div v-if="isDevelopment" class="flex items-center justify-center">
             <button class="card p-2 text-xs hover:!bg-green-400" @click="revealPokemon">
                 Reveal
             </button>
@@ -82,13 +82,17 @@ import pokemonData from '../server/data/pokemonData-v5-flavorText.json';
 import HeaderContainer from './components/headerIcons/HeaderIconContainer.vue';
 import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
 import ThemeButton from './components/buttons/ThemeButton.vue';
-import { reactive, ref, onBeforeMount } from 'vue';
+import { reactive, ref, onBeforeMount, computed } from 'vue';
 import { getGuessResults } from './services/guess';
 import * as apiService from './services/api/apiService.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
 import { useDark } from '@vueuse/core';
 import { TotalResultCardFlipDelay } from './constants';
+
+const isDevelopment = computed(() => 
+ ENVIRONMENT === 'development'
+);
 
 const isDark = useDark();
 
