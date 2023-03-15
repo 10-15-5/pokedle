@@ -14,10 +14,10 @@ COPY vite.config.js ./
 COPY tailwind.config.cjs ./
 COPY postcss.config.cjs ./
 
-ENV SERVER_URL=https://backend.pokedle.xyz
-ENV SERVER_API_URL=https://backend.pokedle.xyz/api
+ENV SERVER_URL=https://backend.pokedle.gg
+ENV SERVER_API_URL=https://backend.pokedle.gg/api
 ENV CLIENT_PORT=8000
-ENV DOMAIN=https://pokedle.xyz
+ENV DOMAIN=https://pokedle.gg
 
 # need to make sure relative file paths are correct, could use env to change path 
 #   but this would create discrepency between prod/dev
