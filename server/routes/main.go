@@ -36,7 +36,7 @@ func SetupRoutes(router *gin.Engine) {
 	// curl http://localhost:3000/health --include --header "Content-Type: application/json" --request "GET"
 	router.GET("/health", func(c *gin.Context) {
 		c.JSON(http.StatusOK, gin.H{
-			"message": "Server v0.3 is running...",
+			"message": "Server v0.4 DEV is running...",
 		})
 	})
 }

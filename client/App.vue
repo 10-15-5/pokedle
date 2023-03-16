@@ -124,6 +124,8 @@ const setDailyGamesWonCount = async () => {
 onBeforeMount(async () => {
     const [user] = await Promise.all([getOrCreateUser(), loadGameData(), setDailyGamesWonCount()]);
 
+    console.log('Loaded at: ' + new Date());
+
     console.log(user);
 
     if (user) {
