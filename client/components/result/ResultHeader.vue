@@ -9,7 +9,7 @@
             {{ fieldTitle }}
             <div
                 v-if="getGuessFieldTooltipsFromIndex(index)"
-                class="card z-1 absolute mb-[100px] origin-top scale-0 p-2 transition-all delay-500 duration-150 group-hover:scale-100 sm:mb-[66px] sm:p-1"
+                class="card z-1 absolute mb-[100px] origin-top scale-0 p-2 pb-1 transition-all delay-500 duration-150 group-hover:scale-100 sm:mb-[66px]"
             >
                 {{ getGuessFieldTooltipsFromIndex(index) }}
             </div>
