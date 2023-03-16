@@ -47,8 +47,7 @@
                         :key="guess"
                         :value="guess"
                         :pokemonName="guess"
-                        :guessResult="getGuessResults(guess, secretPokemon)"
-                        :color="colors.at(componentStore.guesses.length - 1 - i)"
+                        :guessResult="getGuessResults(guess, secretPokemon, colors[componentStore.guesses.length-1-i])"
                     />
                 </div>
                 <PreviousPokemonCard :pokemonName="yesterdaysPokemon.name" v-else />
@@ -99,8 +98,8 @@ const isDark = useDark();
 const getSortedPokemonNames = () => pokemonData.map((pokemonInfo) => pokemonInfo.name).sort();
 
 const componentStore = reactive({
-    pokemonNames: reactive(getSortedPokemonNames()),
-    guesses: reactive([]),
+    pokemonNames: getSortedPokemonNames(),
+    guesses: [],
 });
 
 const dailyGamesWon = ref(0);
@@ -125,7 +124,7 @@ onBeforeMount(async () => {
     const [user] = await Promise.all([getOrCreateUser(), loadGameData(), setDailyGamesWonCount()]);
 
     console.log('Loaded at: ' + new Date());
-
+    console.log('ENVIRONMENT: ' + ENVIRONMENT);
     console.log(user);
 
     if (user) {
