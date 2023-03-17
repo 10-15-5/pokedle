@@ -34,5 +34,5 @@ const props = defineProps({
 
 const isShowHint = ref(false);
 
-const guessesRemainingForHint = computed(() => 5 - props.numberOfGuesses);
+const guessesRemainingForHint = computed(() => 4 - props.numberOfGuesses);
 </script>
