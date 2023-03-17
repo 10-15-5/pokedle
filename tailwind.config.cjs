@@ -23,7 +23,8 @@ module.exports = {
                         text: colors.gray[100],
                         orange: colors.orange[300],
                         emerald: colors.green[300],
-                    }
+                    },
+                    twitterblue: '#1DA1F2'
             },
             fontFamily: {
                 pkmEmerald: ['pkmEmerald']

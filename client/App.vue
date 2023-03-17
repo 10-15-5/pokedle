@@ -24,8 +24,9 @@
                     @submit-guess="submitGuess"
                 />
                 <GameWinContainer
-                    v-else
+                    v-if="store.isGameWon"
                     :pokemon="componentStore.guesses[0]"
+                    :twitterText="classicTwitterText"
                     :color="colors.at(-1)"
                 />
                 <HintContainer
@@ -87,7 +88,7 @@ import * as apiService from './services/api/apiService.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
 import { useDark } from '@vueuse/core';
-import { TotalResultCardFlipDelay } from './constants';
+import { guessState, TotalResultCardFlipDelay } from './constants';
 
 const isDevelopment = computed(() => 
  ENVIRONMENT === 'development'
@@ -130,6 +131,51 @@ onBeforeMount(async () => {
     if (user) {
         store.setUser(user);
     }
+});
+
+const emojiResults = computed(() => {
+    if(!store.isGameWon) return '';
+
+    const lastFiveGuesses = componentStore.guesses.slice(0,4);
+
+    const results = lastFiveGuesses.map((name) => getGuessResults(name,secretPokemon, 'normal')); 
+
+    const emojiResults = results.map((res) => {
+
+        var emojis = '';
+        for (const field in res.fields) {
+            if(field==='name') continue; //Skip name field
+
+            var emoji = ''
+            if(res.fields[`${field}`].guessState == guessState.CorrectGuess) emoji = '🟩'
+            else if(res.fields[`${field}`].guessState == guessState.PartlyCorrectGuess) emoji = '🟧'
+            else {
+                emoji = '🟥'
+            }
+            emojis = emojis.concat(emoji);
+        }
+        return emojis
+    });
+
+    return emojiResults;
+});
+
+const classicTwitterText = computed(() => {
+    const sub1 = componentStore.guesses.length === 1 ? 'FIRST TRY 🌟🥳🌠🏆' : `in ${componentStore.guesses.length} tries!🕵️🔎`
+
+    const header = `I guessed the #1 hidden #Pokedle Pokémon ${sub1}\n`
+
+    var emojiBody = '';
+
+    emojiResults.value.forEach(res => {
+        emojiBody = emojiBody.concat(res + '\n');
+    });
+
+    const moreGuesses = componentStore.guesses.length > 4 ? `＋ ${componentStore.guesses.length-4} more ${componentStore.guesses.length===5 ? 'guess.' : 'guesses...'}\n\n` : '\n';
+
+    const footer = `Play at pokedle.gg 🎮!`
+
+    return header + emojiBody +moreGuesses+ footer;
 });
 
 const getOrCreateUser = async () => {

@@ -1,5 +1,5 @@
 <template>
-    <div class="card flex flex-col items-center justify-center p-6 sm:p-3">
+    <div class="card flex flex-col items-center justify-center p-5 py-2 sm:p-3">
         <p class="font-pkmEmerald text-[32px] !text-light-emerald dark:!text-dark-emerald fontbo">VICTORY!</p>
         <p class="mb-3 font-pkmEmerald text-[18px] capitalize">You Guessed: <b class="!text-light-emerald dark:!text-dark-emerald"> {{ pokemon }} </b></p>
         <SquareContent
@@ -13,6 +13,7 @@
                 {{ ' ' + hoursRemaining + ' : ' + minRemaining + ' : ' + secRemaining }}</b
             >
         </p>
+        <TweetButton class="mt-3" :twitterText="twitterText" />
     </div>
 </template>
 
@@ -21,10 +22,12 @@ import { onBeforeMount, ref } from 'vue';
 import SquareContent from './result/ResultSquare.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers';
 import { guessType } from '../constants';
+import TweetButton from './buttons/TweetButton.vue';
 
 const props = defineProps({
     pokemon: String,
     color: String,
+    twitterText: String
 });
 
 const secRemaining = ref('');
