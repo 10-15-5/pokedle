@@ -4,7 +4,7 @@
             <h1 class="text-center mb-2  text-[32px] uppercase">About</h1>
             <p>
                 Welcome to the world of POKéMON! <br />
-                Every day a wild secret POKéMON will be hiding and its your job as a POKéMON TRAINER
+                Every day a wild POKéMON from gen 1-3 will be hiding and its your job as a POKéMON TRAINER
                 to catch (guess) it!
             </p>
             <hr class="divider" />
