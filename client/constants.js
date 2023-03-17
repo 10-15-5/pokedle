@@ -52,7 +52,7 @@ const Habitats = {
 
 const TotalResultCardFlipDelay = 2750;
 
-const DateOfFirstPokeldeGameClassic = new Date('Marts 16, 2023 10:00:00');
+const DateOfFirstPokeldeGameClassic = new Date('Marts 16, 2023 00:00:00');
 
 export {
     guessState,
