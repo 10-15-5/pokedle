@@ -1,0 +1,67 @@
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  annotations:
+    cert-manager.io/cluster-issuer: letsencrypt-prod
+    kubectl.kubernetes.io/last-applied-configuration: |
+      {"apiVersion":"networking.k8s.io/v1","kind":"Ingress","metadata":{"annotations":{"cert-manager.io/cluster-issuer":"letsencrypt-prod"},"name":"backend","namespace":"default"},"spec":{"ingressClassName":"nginx","rules":[{"host":"backend.pokedle.xyz","http":{"paths":[{"backend":{"service":{"name":"pokedle-server-ggprb","port":{"number":80}}},"path":"/","pathType":"Prefix"}]}}],"tls":[{"hosts":["backend.pokedle.xyz"],"secretName":"backend-tls"}]}}
+  creationTimestamp: "2023-03-15T10:36:44Z"
+  generation: 2
+  managedFields:
+  - apiVersion: networking.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:metadata:
+        f:annotations:
+          .: {}
+          f:cert-manager.io/cluster-issuer: {}
+          f:kubectl.kubernetes.io/last-applied-configuration: {}
+      f:spec:
+        f:ingressClassName: {}
+    manager: kubectl-create
+    operation: Update
+    time: "2023-03-15T10:36:44Z"
+  - apiVersion: networking.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:status:
+        f:loadBalancer:
+          f:ingress: {}
+    manager: nginx-ingress-controller
+    operation: Update
+    subresource: status
+    time: "2023-03-15T10:37:10Z"
+  - apiVersion: networking.k8s.io/v1
+    fieldsType: FieldsV1
+    fieldsV1:
+      f:spec:
+        f:rules: {}
+        f:tls: {}
+    manager: GoogleCloudConsole
+    operation: Update
+    time: "2023-03-15T20:51:49Z"
+  name: backend-dev
+  namespace: default
+  resourceVersion: "34282029"
+  uid: 7b5e4622-315e-4e1b-93e7-7743b008f957
+spec:
+  ingressClassName: nginx
+  rules:
+  - host: dev.backend.pokedle.gg
+    http:
+      paths:
+      - backend:
+          service:
+            name: pokedle-server-dev-service
+            port:
+              number: 80
+        path: /
+        pathType: Prefix
+  tls:
+  - hosts:
+    - dev.backend.pokedle.gg
+    secretName: backend-dev-tls
+status:
+  loadBalancer:
+    ingress:
+    - ip: 34.79.151.4
