@@ -88,7 +88,8 @@ import * as apiService from './services/api/apiService.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
 import { useDark } from '@vueuse/core';
-import { guessState, TotalResultCardFlipDelay } from './constants';
+import { guessState, TotalResultCardFlipDelay } from './constants.js';
+import { getCurrentClassicPokemonNumber } from './helpers.js';
 
 const isDevelopment = computed(() => 
  ENVIRONMENT === 'development'
@@ -163,7 +164,7 @@ const emojiResults = computed(() => {
 const classicTwitterText = computed(() => {
     const sub1 = componentStore.guesses.length === 1 ? 'FIRST TRY 🌟🥳🌠🏆' : `in ${componentStore.guesses.length} tries!🕵️🔎`
 
-    const header = `I guessed the #1 hidden #Pokedle Pokémon ${sub1}\n`
+    const header = `I guessed the #${getCurrentClassicPokemonNumber()} hidden #Pokedle Pokémon ${sub1}\n`
 
     var emojiBody = '';
 

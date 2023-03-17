@@ -52,6 +52,8 @@ const Habitats = {
 
 const TotalResultCardFlipDelay = 2750;
 
+const DateOfFirstPokeldeGameClassic = new Date('Marts 16, 2023 10:00:00');
+
 export {
     guessState,
     guessFieldTitles,
@@ -60,4 +62,5 @@ export {
     guessType,
     TotalResultCardFlipDelay,
     getGuessFieldTooltipsFromIndex,
+    DateOfFirstPokeldeGameClassic
 }
