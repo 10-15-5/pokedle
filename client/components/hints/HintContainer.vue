@@ -23,7 +23,7 @@
             <div class="flex flex-row gap-2">
                 <div
                     @click="selectHintFlavortext"
-                    class="hint-tab-header"
+                    class="hint-tab-header ml-1"
                     :class="isShowHintOne ? 'hint-tab-header-active' : ''"
                 >
                     Flavortext
