@@ -31,9 +31,18 @@
                 />
                 <HintContainer
                     v-if="!store.isGameWon && componentStore.guesses.length"
-                    :text="secretPokemon.flavorText"
                     :numberOfGuesses="componentStore.guesses.length"
-                />
+                >
+                <template #hint1>
+                    {{ secretPokemon.flavorText }}
+                </template>
+                <template #hint2>
+                    HINT 2!
+                </template>
+                <template #hint3>
+                    HINT 3!
+                </template>
+            </HintContainer>
                 <DailyGamesWonContainer
                     v-if="!componentStore.guesses.length || store.isGameWon"
                     :dailyGamesWon="dailyGamesWon"
