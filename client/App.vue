@@ -48,7 +48,13 @@
                         :key="guess"
                         :value="guess"
                         :pokemonName="guess"
-                        :guessResult="getGuessResults(guess, secretPokemon, colors[componentStore.guesses.length-1-i])"
+                        :guessResult="
+                            getGuessResults(
+                                guess,
+                                secretPokemon,
+                                colors[componentStore.guesses.length - 1 - i]
+                            )
+                        "
                     />
                 </div>
                 <PreviousPokemonCard :pokemonName="yesterdaysPokemon.name" v-else />
@@ -90,10 +96,9 @@ import { useStore } from './stores/store';
 import { useDark } from '@vueuse/core';
 import { guessState, TotalResultCardFlipDelay } from './constants.js';
 import { getCurrentClassicPokemonNumber } from './helpers.js';
+import moment from 'moment-timezone';
 
-const isDevelopment = computed(() => 
- ENVIRONMENT === 'development'
-);
+const isDevelopment = computed(() => ENVIRONMENT === 'development');
 
 const isDark = useDark();
 
@@ -109,7 +114,7 @@ const dailyFirstTryWins = ref(0);
 const store = useStore();
 const yesterdaysPokemon = ref('');
 //Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
-const instantIsGameWon = ref(false); 
+const instantIsGameWon = ref(false);
 let colors = [];
 const secretPokemon = reactive({});
 
@@ -117,7 +122,7 @@ const getRandomColor = () =>
     store.isShiny ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal';
 
 const setDailyGamesWonCount = async () => {
-    var date = new Date().toISOString().split('T')[0]; //Get current date in the format YYYY-MM-DD
+    const date = moment().format('YYYY-MM-DD');
     const res = await apiService.getDailyStats(date);
     dailyGamesWon.value = res.data.gamesWon;
 };
@@ -125,58 +130,66 @@ const setDailyGamesWonCount = async () => {
 onBeforeMount(async () => {
     const [user] = await Promise.all([getOrCreateUser(), loadGameData(), setDailyGamesWonCount()]);
 
-    console.log('Loaded at: ' + new Date());
+    console.log('Loaded at: ' + moment().toString());
     console.log('ENVIRONMENT: ' + ENVIRONMENT);
     console.log(user);
-
+  
     if (user) {
         store.setUser(user);
     }
 });
 
 const emojiResults = computed(() => {
-    if(!store.isGameWon) return '';
+    if (!store.isGameWon) return '';
 
-    const lastFiveGuesses = componentStore.guesses.slice(0,4);
+    const lastFiveGuesses = componentStore.guesses.slice(0, 4);
 
-    const results = lastFiveGuesses.map((name) => getGuessResults(name,secretPokemon, 'normal')); 
+    const results = lastFiveGuesses.map((name) => getGuessResults(name, secretPokemon, 'normal'));
 
     const emojiResults = results.map((res) => {
-
         var emojis = '';
         for (const field in res.fields) {
-            if(field==='name') continue; //Skip name field
+            if (field === 'name') continue; //Skip name field
 
-            var emoji = ''
-            if(res.fields[`${field}`].guessState == guessState.CorrectGuess) emoji = '🟩'
-            else if(res.fields[`${field}`].guessState == guessState.PartlyCorrectGuess) emoji = '🟧'
+            var emoji = '';
+            if (res.fields[`${field}`].guessState == guessState.CorrectGuess) emoji = '🟩';
+            else if (res.fields[`${field}`].guessState == guessState.PartlyCorrectGuess)
+                emoji = '🟧';
             else {
-                emoji = '🟥'
+                emoji = '🟥';
             }
             emojis = emojis.concat(emoji);
         }
-        return emojis
+        return emojis;
     });
 
     return emojiResults;
 });
 
 const classicTwitterText = computed(() => {
-    const sub1 = componentStore.guesses.length === 1 ? 'FIRST TRY 🌟🥳🌠🏆' : `in ${componentStore.guesses.length} tries!🕵️🔎`
+    const sub1 =
+        componentStore.guesses.length === 1
+            ? 'FIRST TRY 🌟🥳🌠🏆'
+            : `in ${componentStore.guesses.length} tries!🕵️🔎`;
 
-    const header = `I guessed the #${getCurrentClassicPokemonNumber()} hidden #Pokedle Pokémon ${sub1}\n`
+    const header = `I guessed the #${getCurrentClassicPokemonNumber()} hidden #Pokedle Pokémon ${sub1}\n`;
 
     var emojiBody = '';
 
-    emojiResults.value.forEach(res => {
+    emojiResults.value.forEach((res) => {
         emojiBody = emojiBody.concat(res + '\n');
     });
 
-    const moreGuesses = componentStore.guesses.length > 4 ? `＋ ${componentStore.guesses.length-4} more ${componentStore.guesses.length===5 ? 'guess.' : 'guesses...'}\n\n` : '\n';
+    const moreGuesses =
+        componentStore.guesses.length > 4
+            ? `＋ ${componentStore.guesses.length - 4} more ${
+                  componentStore.guesses.length === 5 ? 'guess.' : 'guesses...'
+              }\n\n`
+            : '\n';
 
-    const footer = `Play at pokedle.gg 🎮!`
+    const footer = `Play at pokedle.gg 🎮!`;
 
-    return header + emojiBody +moreGuesses+ footer;
+    return header + emojiBody + moreGuesses + footer;
 });
 
 const getOrCreateUser = async () => {
@@ -307,7 +320,7 @@ const removePokemonsFromGuessPool = () => {
 };
 
 const setNewDate = () =>
-    localStorage.setItem('dayOfLastUpdate', new Date().getUTCDate().toString());
+    localStorage.setItem('dayOfLastUpdate', moment().date());
 
 const setNewSecretPokemon = async () => {
     const response = await apiService.newSecretPokemon();
@@ -335,7 +348,7 @@ const loadIsDifficultyInsane = () => {
         store.setDifficultyInsane(true);
         return;
     }
-}
+};
 
 const loadGameData = async () => {
     const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
@@ -345,7 +358,7 @@ const loadGameData = async () => {
     const currSecretPokemon = await (await apiService.getSecretPokemon()).data;
 
     if (
-        parseInt(dayOfLastUpdate) == new Date().getUTCDate() &&
+        parseInt(dayOfLastUpdate) == moment().date() &&
         secretPokemon &&
         secretPokemon?.name === currSecretPokemon?.name
     ) {
@@ -397,7 +410,7 @@ const setNewGame = async () => {
 
 const lauchConfetti = () => {
     var duration = 3 * 1000;
-    var animationEnd = Date.now() + duration;
+    var animationEnd = moment() + duration;
     var particleCount = 200;
     var defaults = {
         startVelocity: 25,
@@ -425,7 +438,7 @@ const lauchConfetti = () => {
     };
 
     const fire = () => {
-        var timeLeft = animationEnd - Date.now();
+        var timeLeft = animationEnd - moment();
 
         if (timeLeft <= 0) {
             return clearInterval(lauchConfetti);
@@ -494,6 +507,4 @@ html.dark {
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
-
-
 </style>

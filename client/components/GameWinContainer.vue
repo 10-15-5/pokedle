@@ -23,6 +23,7 @@ import SquareContent from './result/ResultSquare.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers';
 import { guessType } from '../constants';
 import TweetButton from './buttons/TweetButton.vue';
+import moment from 'moment-timezone'
 
 const props = defineProps({
     pokemon: String,
@@ -36,9 +37,9 @@ const hoursRemaining = ref('');
 const secondsRemaining = ref(0);
 
 const setSecRemaining = () => {
-    const countDownToDate = new Date(new Date().setHours(0, 0, 0));
-    countDownToDate.setDate(countDownToDate.getDate() + 1);
-    secondsRemaining.value = Math.floor((countDownToDate.getTime() - Date.now()) / 1000);
+    const endOfToday = moment().endOf('day');
+    const msLeft = endOfToday - moment();
+    secondsRemaining.value = Math.floor(msLeft / 1000);
 };
 
 onBeforeMount(() => {

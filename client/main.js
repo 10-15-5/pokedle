@@ -8,6 +8,9 @@ import VirtualScroller from 'primevue/virtualscroller';
 import Dialog from 'primevue/dialog';
 import './style.css';
 import 'primeicons/primeicons.css';
+import moment from 'moment-timezone';
+
+moment.tz.setDefault(import.meta.env.VITE_TZ);
 
 loadFonts();
 

@@ -22,6 +22,7 @@
     "canvas-confetti": "^1.6.0",
     "dotenv": "^16.0.3",
     "express": "^4.18.2",
+    "moment-timezone": "^0.5.41",
     "node": "18.13.0",
     "pinia": "^2.0.32",
     "primeicons": "^6.0.1",

@@ -19,6 +19,8 @@ ENV SERVER_API_URL=https://dev.backend.pokedle.gg/api
 ENV CLIENT_PORT=8000
 ENV DOMAIN=https://dev.pokedle.gg
 ENV ENVIRONMENT=development
+ENV VITE_TZ=UTC
+
 
 # need to make sure relative file paths are correct, could use env to change path 
 #   but this would create discrepency between prod/dev

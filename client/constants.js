@@ -1,3 +1,5 @@
+import moment from "moment-timezone"
+
 const guessState = {
     CorrectGuess: "CorrectGuess",
     PartlyCorrectGuess: "PartlyCorrectGuess",
@@ -52,7 +54,7 @@ const Habitats = {
 
 const TotalResultCardFlipDelay = 2750;
 
-const DateOfFirstPokeldeGameClassic = new Date('Marts 16, 2023 00:00:00');
+const DateOfFirstPokeldeGameClassic = moment('Marts 16, 2023 00:00:00 UTC');
 
 export {
     guessState,
