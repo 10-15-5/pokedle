@@ -32,15 +32,18 @@
                 <HintContainer
                     v-if="!store.isGameWon && componentStore.guesses.length"
                     :numberOfGuesses="componentStore.guesses.length"
+                    :stylingHintOne="''"
+                    :stylingHintTwo="'flex justify-center'"
+                    :stylingHintThree="'flex justify-center'"
                 >
                 <template #hint1>
                     {{ secretPokemon.flavorText }}
                 </template>
                 <template #hint2>
-                    HINT 2!
+                    <ResultSquare />
                 </template>
                 <template #hint3>
-                    HINT 3!
+                    <ResultSquare />
                 </template>
             </HintContainer>
                 <DailyGamesWonContainer
@@ -96,6 +99,7 @@ import SearchField from './components/SearchField.vue';
 import pokemonData from '../server/data/pokemonData-v5-flavorText.json';
 import HeaderContainer from './components/headerIcons/HeaderIconContainer.vue';
 import DailyGamesWonContainer from './components/DailyGamesWonContainer.vue';
+import ResultSquare from './components/result/ResultSquare.vue';
 import ThemeButton from './components/buttons/ThemeButton.vue';
 import { reactive, ref, onBeforeMount, computed } from 'vue';
 import { getGuessResults } from './services/guess';

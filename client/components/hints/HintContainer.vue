@@ -64,14 +64,17 @@
                 ></button>
             </div>
         </div>
-        <div v-if="isShowHints" class="w-full bg-gray-100 p-4 pt-3 text-justify dark:bg-zinc-700">
-            <div v-if="isShowHintOne">
+        <div
+            v-if="isShowHints"
+            class="bg-gray-100 p-4 pt-3 text-justify dark:bg-zinc-700"
+        >
+            <div v-if="isShowHintOne" :class="stylingHintOne">
                 <slot name="hint1"></slot>
             </div>
-            <div v-else-if="isShowHintTwo">
+            <div v-else-if="isShowHintTwo" :class="stylingHintTwo">
                 <slot name="hint2"></slot>
             </div>
-            <div v-else-if="isShowHintThree">
+            <div v-else-if="isShowHintThree" :class="stylingHintThree">
                 <slot name="hint3"></slot>
             </div>
         </div>
@@ -85,6 +88,9 @@ const props = defineProps({
         type: Number,
         default: 0,
     },
+    stylingHintOne: String,
+    stylingHintTwo: String,
+    stylingHintThree: String,
 });
 
 const hints = ['hint1', 'hint2', 'hint3'];
