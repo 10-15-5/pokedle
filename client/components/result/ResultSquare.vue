@@ -29,7 +29,7 @@
                     variant="outlined"
                 >
                     <img
-                        v-if="type == guessType.Pokemon"
+                        v-if="type === guessType.Pokemon"
                         class="pokemon-bg bg-neutral-200 bg-no-repeat dark:!bg-neutral-700"
                         :src="
                             'https://img.pokemondb.net/sprites/ruby-sapphire/' +
@@ -38,8 +38,26 @@
                             pokemon +
                             '.png'
                         "
+                        :title="pokemon"
                         alt="pokemon sprite"
                     />
+                    <div
+                        v-if="type === guessType.Blackout"
+                        class="bg-white bg-no-repeat dark:!bg-neutral-300"
+                    >
+                        <img
+                            class="brightness-0"
+                            :src="
+                                'https://img.pokemondb.net/sprites/ruby-sapphire/' +
+                                color +
+                                '/' +
+                                pokemon +
+                                '.png'
+                            "
+                            :title="pokemon"
+                            alt="pokemon sprite"
+                        />
+                    </div>
                     <div
                         v-if="type === guessType.Habitat"
                         class="h-[39px] overflow-hidden rounded-[50%] border-2 border-light-border dark:!border-dark-border sm:h-[30px]"
@@ -60,7 +78,10 @@
             </template>
             <template v-slot:back>
                 <div class="result-card bg-neutral-200 dark:!bg-neutral-800" variant="outlined">
-                    <img :src="'./client/assets/result-cards/pokemon-cardback-pixel.png'" alt="pokemon sprite" />
+                    <img
+                        :src="'./client/assets/result-cards/pokemon-cardback-pixel.png'"
+                        alt="pokemon sprite"
+                    />
                 </div>
             </template>
         </VueFlip>
@@ -122,5 +143,6 @@ const getColor = computed(() => {
     width: 100%;
     background-image: url('/client/assets/result-cards/pokecenter-box-background.png');
     background-size: contain;
+    border-radius: 2px;
 }
 </style>

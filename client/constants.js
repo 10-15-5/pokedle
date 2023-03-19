@@ -10,7 +10,8 @@ const guessState = {
 const guessType = {
     Pokemon: 'Pokemon',
     Text: 'Text',
-    Habitat: 'Habitat'
+    Habitat: 'Habitat',
+    Blackout: 'Blackout'
 }
 
 const guessFieldTitles = {

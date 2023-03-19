@@ -52,7 +52,14 @@
                         </div>
                     </template>
                     <template #hint3>
-                        <ResultSquare />
+                        <div class="flex flex-col items-center gap-2">
+                            <span class="card py-1 w-full justify-center">Shape</span>
+                            <ResultSquare
+                                :pokemon="secretPokemon.name"
+                                :type="guessType.Blackout"
+                                :color="'normal'"
+                            />
+                        </div>
                     </template>
                 </HintContainer>
                 <DailyGamesWonContainer
@@ -121,7 +128,7 @@ import {
     guessState,
     guessType,
     TotalResultCardFlipDelay,
-    ClassicGuessesNeededForHintOne,
+    ClassicGuessesNeededForHintTwo,
 } from './constants.js';
 import { getCurrentClassicPokemonNumber } from './helpers.js';
 import moment from 'moment-timezone';
@@ -170,9 +177,15 @@ onBeforeMount(async () => {
 
 const setHintTwo = () => {
     //TODO: make hint numbers constants
-    if (hintTwo.header && componentStore.guesses.length !== ClassicGuessesNeededForHintOne) return;
+    if (
+        componentStore.guesses.length < ClassicGuessesNeededForHintTwo ||
+        (hintTwo.header && componentStore.guesses.length > ClassicGuessesNeededForHintTwo)
+    )
+        return;
 
-    const results = componentStore.guesses
+    const firstFiveGuesses = componentStore.guesses.slice(Math.max(componentStore.guesses.length - ClassicGuessesNeededForHintTwo, 0))
+
+    const results = firstFiveGuesses
         .map((name) => getGuessResults(name, secretPokemon, 'normal'))
         .map((res) => ({
             type1: res.fields.type1.guessState,
@@ -180,7 +193,6 @@ const setHintTwo = () => {
             color: res.fields.color.guessState,
             habitat: res.fields.habitat.guessState,
         }));
-    console.log(results);
 
     const result = {
         type1: true,
@@ -213,7 +225,7 @@ const setHintTwo = () => {
         hint.header = guessFieldTitles.Color;
         hint.guessText = secretPokemon.color;
         hint.type = guessType.Text;
-    } else if (result.habitat) {
+    } else {
         hint.header = guessFieldTitles.Habitat;
         hint.habitat = secretPokemon.habitat;
         hint.type = guessType.Habitat;
