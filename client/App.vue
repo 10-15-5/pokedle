@@ -37,9 +37,6 @@
                     :stylingHintThree="'flex justify-center'"
                 >
                     <template #hint1>
-                        {{ secretPokemon.flavorText }}
-                    </template>
-                    <template #hint2>
                         <div class="flex flex-col items-center gap-2">
                             <span class="card px-2 py-1">{{ hintTwo.header }}</span>
                             <ResultSquare
@@ -50,6 +47,9 @@
                                 :habitat="hintTwo.habitat"
                             />
                         </div>
+                    </template>
+                    <template #hint2>
+                        {{ secretPokemon.flavorText }}
                     </template>
                     <template #hint3>
                         <div class="flex flex-col items-center gap-2">
@@ -128,7 +128,7 @@ import {
     guessState,
     guessType,
     TotalResultCardFlipDelay,
-    ClassicGuessesNeededForHintTwo,
+    ClassicGuessesNeededForHintOne,
 } from './constants.js';
 import { getCurrentClassicPokemonNumber } from './helpers.js';
 import moment from 'moment-timezone';
@@ -178,12 +178,12 @@ onBeforeMount(async () => {
 const setHintTwo = () => {
     //TODO: make hint numbers constants
     if (
-        componentStore.guesses.length < ClassicGuessesNeededForHintTwo ||
-        (hintTwo.header && componentStore.guesses.length > ClassicGuessesNeededForHintTwo)
+        componentStore.guesses.length < ClassicGuessesNeededForHintOne ||
+        (hintTwo.header && componentStore.guesses.length > ClassicGuessesNeededForHintOne)
     )
         return;
 
-    const firstFiveGuesses = componentStore.guesses.slice(Math.max(componentStore.guesses.length - ClassicGuessesNeededForHintTwo, 0))
+    const firstFiveGuesses = componentStore.guesses.slice(Math.max(componentStore.guesses.length - ClassicGuessesNeededForHintOne, 0))
 
     const results = firstFiveGuesses
         .map((name) => getGuessResults(name, secretPokemon, 'normal'))
