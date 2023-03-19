@@ -37,8 +37,8 @@
                     :stylingHintThree="'flex justify-center'"
                 >
                     <template #hint1>
-                        <div class="flex flex-col items-center gap-2">
-                            <span class="card w-full justify-center py-1">{{
+                        <div class="flex flex-col items-center gap-2 sm:gap-1">
+                            <span class="card w-full justify-center py-1 sm:py-0">{{
                                 hintTwo.header
                             }}</span>
                             <ResultSquare
@@ -54,8 +54,8 @@
                         {{ secretPokemon.flavorText }}
                     </template>
                     <template #hint3>
-                        <div class="flex flex-col items-center gap-2">
-                            <span class="card w-full justify-center py-1">Shape</span>
+                        <div class="flex flex-col items-center gap-2 sm:gap-1">
+                            <span class="card w-full justify-center py-1 sm:py-0">Shape</span>
                             <ResultSquare
                                 :pokemon="secretPokemon.name"
                                 :type="guessType.Blackout"

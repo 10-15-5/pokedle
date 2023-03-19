@@ -66,7 +66,7 @@
         </div>
         <div
             v-if="isShowHints"
-            class="bg-gray-100 p-4 pt-3 text-justify dark:bg-zinc-700"
+            class="bg-gray-100 px-4 py-2 pt-3 text-justify dark:bg-zinc-700"
         >
             <div v-if="isShowHintOne" :class="stylingHintOne">
                 <slot name="hint1"></slot>
