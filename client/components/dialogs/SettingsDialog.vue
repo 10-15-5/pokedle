@@ -1,46 +1,52 @@
 <template>
     <BaseDialog :isVisible="isVisible" :onClose="onClose">
-        <h1 class="font-pkmEmerald text-[32px] uppercase">SETTINGS</h1>
-        <div class="grid grid-cols-3 items-center justify-center gap-y-4 gap-x-16 sm:gap-x-4">
-            <p class="col-span-2 font-pkmEmerald text-[24px]">DarkMode:</p>
-            <BaseToggle :isEnabled="isDark" :toggle="toggleDark">
-                <template #leftIcon>
-                    <SvgIcon type="mdi" :path="mdiWeatherNight" class="h-[30px] w-[30px]" />
-                </template>
-                <template #rightIcon>
-                    <SvgIcon
-                        type="mdi"
-                        :path="mdiWeatherSunny"
-                        class="h-[30px] w-[30px]"
-                    /> </template
-            ></BaseToggle>
-            <p class="col-span-2 font-pkmEmerald text-[24px]">Shiny Only:</p>
-            <BaseToggle :isEnabled="store.isShiny" :toggle="store.toggleShiny">
-                <template #leftIcon>
-                    <SvgIcon type="mdi" :path="mdiStarOutline" class="h-[30px] w-[30px]" />
-                </template>
-                <template #rightIcon>
-                    <SvgIcon
-                        type="mdi"
-                        :path="mdiStarOffOutline"
-                        class="h-[30px] w-[30px]"
-                    /> </template
-            ></BaseToggle>
-            <p class="col-span-2 font-pkmEmerald text-[24px]">Champion Difficulty:</p>
-            <BaseToggle
-                :isEnabled="store.isDifficultyInsane"
-                :toggle="store.toggleDifficultyInsane"
-            >
-                <template #leftIcon>
-                    <SvgIcon type="mdi" :path="mdiCoffin" class="h-[30px] w-[30px]" />
-                </template>
-                <template #rightIcon>
-                    <SvgIcon
-                        type="mdi"
-                        :path="mdiEmoticonExcitedOutline"
-                        class="h-[30px] w-[30px]"
-                    /> </template
-            ></BaseToggle>
+        <h1 class="text-center font-pkmEmerald text-[32px] uppercase">SETTINGS</h1>
+        <div class="flex flex-col items-center gap-y-4 sm:gap-x-4">
+            <div class="flex flex-row w-full justify-between px-20 sm:px-6">
+                <p class="font-pkmEmerald text-[24px]">DarkMode:</p>
+                <BaseToggle :isEnabled="isDark" :toggle="toggleDark">
+                    <template #leftIcon>
+                        <SvgIcon type="mdi" :path="mdiWeatherNight" class="h-[30px] w-[30px]" />
+                    </template>
+                    <template #rightIcon>
+                        <SvgIcon
+                            type="mdi"
+                            :path="mdiWeatherSunny"
+                            class="h-[30px] w-[30px]"
+                        /> </template
+                ></BaseToggle>
+            </div>
+            <div class="flex flex-row w-full justify-between px-20 sm:px-6">
+                <p class="font-pkmEmerald text-[24px]">Shiny Only:</p>
+                <BaseToggle :isEnabled="store.isShiny" :toggle="store.toggleShiny">
+                    <template #leftIcon>
+                        <SvgIcon type="mdi" :path="mdiStarOutline" class="h-[30px] w-[30px]" />
+                    </template>
+                    <template #rightIcon>
+                        <SvgIcon
+                            type="mdi"
+                            :path="mdiStarOffOutline"
+                            class="h-[30px] w-[30px]"
+                        /> </template
+                ></BaseToggle>
+            </div>
+            <div class="flex flex-row w-full justify-between px-20 sm:px-6">
+                <p class="font-pkmEmerald text-[24px]">Champion Difficulty:</p>
+                <BaseToggle
+                    :isEnabled="store.isDifficultyInsane"
+                    :toggle="store.toggleDifficultyInsane"
+                >
+                    <template #leftIcon>
+                        <SvgIcon type="mdi" :path="mdiCoffin" class="h-[30px] w-[30px]" />
+                    </template>
+                    <template #rightIcon>
+                        <SvgIcon
+                            type="mdi"
+                            :path="mdiEmoticonExcitedOutline"
+                            class="h-[30px] w-[30px]"
+                        /> </template
+                ></BaseToggle>
+            </div>
         </div>
     </BaseDialog>
 </template>
