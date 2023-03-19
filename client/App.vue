@@ -444,7 +444,8 @@ const loadIsDifficultyInsane = () => {
     const isDifficultyInsaneString = localStorage.getItem('isDifficultyInsane');
     if (isDifficultyInsaneString && isDifficultyInsaneString === 'true') {
         store.setDifficultyInsane(true);
-        return;
+    } else {
+        store.setDifficultyInsane(false);
     }
 };
 
