@@ -56,6 +56,11 @@ const TotalResultCardFlipDelay = 2750;
 
 const DateOfFirstPokeldeGameClassic = moment('Marts 16, 2023 00:00:00 UTC');
 
+const ClassicGuessesNeededForHintOne = 4;
+const ClassicGuessesNeededForHintTwo = 6;
+const ClassicGuessesNeededForHintThree = 8;
+
+
 export {
     guessState,
     guessFieldTitles,
@@ -64,5 +69,8 @@ export {
     guessType,
     TotalResultCardFlipDelay,
     getGuessFieldTooltipsFromIndex,
-    DateOfFirstPokeldeGameClassic
+    DateOfFirstPokeldeGameClassic,
+    ClassicGuessesNeededForHintOne,
+    ClassicGuessesNeededForHintTwo,
+    ClassicGuessesNeededForHintThree
 }
