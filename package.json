@@ -17,7 +17,6 @@
   "dependencies": {
     "@jamescoyle/vue-icon": "^0.1.2",
     "@mdi/js": "^7.1.96",
-    "@vueuse/core": "^9.13.0",
     "axios": "^1.2.4",
     "canvas-confetti": "^1.6.0",
     "dotenv": "^16.0.3",

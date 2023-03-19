@@ -92,12 +92,10 @@ import { guessState, guessType } from '../../constants.js';
 import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { getHabitatImage } from '../../services/assets.js';
 import { VueFlip } from 'vue-flip';
-import { useDark } from '@vueuse/core';
 import { useStore } from '../../stores/store';
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiStar } from '@mdi/js';
 
-const isDark = useDark();
 const store = useStore();
 
 const props = defineProps({
@@ -126,11 +124,11 @@ onMounted(() => {
 const getColor = computed(() => {
     switch (props.guessResult) {
         case guessState.CorrectGuess:
-            return isDark.value ? '#10b981' : 'rgb(70, 217, 48)';
+            return store.isDark ? '#10b981' : 'rgb(70, 217, 48)';
         case guessState.PartlyCorrectGuess:
-            return isDark.value ? '#fb923c' : 'rgb(237, 159, 43)';
+            return store.isDark ? '#fb923c' : 'rgb(237, 159, 43)';
         case guessState.WrongGuess:
-            return isDark.value ? '#f87171' : 'rgb(237, 59, 43)';
+            return store.isDark ? '#f87171' : 'rgb(237, 59, 43)';
         default:
             return 'transparent';
     }

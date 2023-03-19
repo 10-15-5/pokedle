@@ -3,10 +3,10 @@
         <div
             class="min-h-screen w-full"
             :class="{
-                'background-white': !(isDark && store.isDifficultyInsane),
-                'background-black': isDark && !store.isDifficultyInsane,
-                'background-white-difficulty-insane': !isDark && store.isDifficultyInsane,
-                'background-black-difficulty-insane': isDark && store.isDifficultyInsane,
+                'background-white': !(store.isDark && store.isDifficultyInsane),
+                'background-black': store.isDark && !store.isDifficultyInsane,
+                'background-white-difficulty-insane': !store.isDark && store.isDifficultyInsane,
+                'background-black-difficulty-insane': store.isDark && store.isDifficultyInsane,
             }"
         >
             <ThemeButton class="absolute right-0" />
@@ -38,7 +38,9 @@
                 >
                     <template #hint1>
                         <div class="flex flex-col items-center gap-2">
-                            <span class="card py-1 w-full justify-center">{{ hintTwo.header }}</span>
+                            <span class="card w-full justify-center py-1">{{
+                                hintTwo.header
+                            }}</span>
                             <ResultSquare
                                 :color="hintTwo.color"
                                 :guessResult="hintTwo.guessResult"
@@ -53,7 +55,7 @@
                     </template>
                     <template #hint3>
                         <div class="flex flex-col items-center gap-2">
-                            <span class="card py-1 w-full justify-center">Shape</span>
+                            <span class="card w-full justify-center py-1">Shape</span>
                             <ResultSquare
                                 :pokemon="secretPokemon.name"
                                 :type="guessType.Blackout"
@@ -122,7 +124,6 @@ import { getGuessResults } from './services/guess';
 import * as apiService from './services/api/apiService.js';
 import confetti from 'canvas-confetti';
 import { useStore } from './stores/store';
-import { useDark } from '@vueuse/core';
 import {
     guessFieldTitles,
     guessState,
@@ -132,10 +133,9 @@ import {
 } from './constants.js';
 import { getCurrentClassicPokemonNumber } from './helpers.js';
 import moment from 'moment-timezone';
+const store = useStore();
 
 const isDevelopment = computed(() => ENVIRONMENT === 'development');
-
-const isDark = useDark();
 
 const getSortedPokemonNames = () => pokemonData.map((pokemonInfo) => pokemonInfo.name).sort();
 
@@ -146,7 +146,6 @@ const componentStore = reactive({
 
 const dailyGamesWon = ref(0);
 const dailyFirstTryWins = ref(0);
-const store = useStore();
 const yesterdaysPokemon = ref('');
 //Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
 const instantIsGameWon = ref(false);
@@ -164,6 +163,8 @@ const setDailyGamesWonCount = async () => {
 };
 
 onBeforeMount(async () => {
+    store.loadTheme();
+    loadIsDifficultyInsane();
     const [user] = await Promise.all([getOrCreateUser(), loadGameData(), setDailyGamesWonCount()]);
 
     console.log('Loaded at: ' + moment().toString());
@@ -183,7 +184,9 @@ const setHintTwo = () => {
     )
         return;
 
-    const firstFiveGuesses = componentStore.guesses.slice(Math.max(componentStore.guesses.length - ClassicGuessesNeededForHintOne, 0))
+    const firstFiveGuesses = componentStore.guesses.slice(
+        Math.max(componentStore.guesses.length - ClassicGuessesNeededForHintOne, 0)
+    );
 
     const results = firstFiveGuesses
         .map((name) => getGuessResults(name, secretPokemon, 'normal'))
@@ -467,7 +470,6 @@ const loadGameData = async () => {
     }
     setNewDate();
     loadIsShiny();
-    loadIsDifficultyInsane();
     setHintTwo();
     updateYesterdaysPokemon();
 };
@@ -571,10 +573,6 @@ const lauchConfetti = () => {
 </script>
 
 <style scoped>
-html.dark {
-    color-scheme: dark;
-}
-
 .background-white {
     background-image: url('./client/assets/backgrounds/background-white.png');
     background-size: cover;

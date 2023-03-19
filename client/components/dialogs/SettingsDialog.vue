@@ -4,7 +4,7 @@
         <div class="flex flex-col items-center gap-y-4 sm:gap-x-0">
             <div class="flex w-full flex-row justify-between px-20 sm:px-0">
                 <p class="font-pkmEmerald text-[24px]">DarkMode:</p>
-                <BaseToggle :isEnabled="isDark" :toggle="toggleDark">
+                <BaseToggle :isEnabled="store.isDark" :toggle="store.toggleTheme()">
                     <template #leftIcon>
                         <SvgIcon type="mdi" :path="mdiWeatherNight" class="h-[30px] w-[30px]" />
                     </template>
@@ -64,10 +64,8 @@ import {
     mdiEmoticonExcitedOutline,
 } from '@mdi/js';
 import { useStore } from '../../stores/store.js';
-import { useDark, useToggle } from '@vueuse/core';
+
 const store = useStore();
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
 
 const props = defineProps({
     isVisible: Boolean,
