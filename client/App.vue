@@ -441,11 +441,10 @@ const loadIsShiny = () => {
 };
 
 const loadIsDifficultyInsane = () => {
-    const isDifficultyInsaneString = localStorage.getItem('isDifficultyInsane');
-    if (isDifficultyInsaneString && isDifficultyInsaneString === 'true') {
-        store.setDifficultyInsane(true);
-    } else {
+    if (localStorage.isDifficultyInsane === 'false') {
         store.setDifficultyInsane(false);
+    } else {
+        store.setDifficultyInsane(true);
     }
 };
 

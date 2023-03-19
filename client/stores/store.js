@@ -44,7 +44,7 @@ export const useStore = defineStore('store', () => {
     
     const setDifficultyInsane = (isDifficultyInsaneParam) => {
         isDifficultyInsane.value = isDifficultyInsaneParam;
-        localStorage.setItem('isDifficultyInsane', `${isDifficultyInsane.value}`)
+        localStorage.isDifficultyInsane = `${isDifficultyInsane.value}`
     }
 
 
