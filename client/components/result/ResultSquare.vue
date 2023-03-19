@@ -54,7 +54,6 @@
                                 pokemon +
                                 '.png'
                             "
-                            :title="pokemon"
                             alt="pokemon sprite"
                         />
                     </div>
