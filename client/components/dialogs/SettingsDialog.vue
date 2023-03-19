@@ -1,8 +1,8 @@
 <template>
     <BaseDialog :isVisible="isVisible" :onClose="onClose">
         <h1 class="text-center font-pkmEmerald text-[32px] uppercase">SETTINGS</h1>
-        <div class="flex flex-col items-center gap-y-4 sm:gap-x-4">
-            <div class="flex flex-row w-full justify-between px-20 sm:px-6">
+        <div class="flex flex-col items-center gap-y-4 sm:gap-x-0">
+            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
                 <p class="font-pkmEmerald text-[24px]">DarkMode:</p>
                 <BaseToggle :isEnabled="isDark" :toggle="toggleDark">
                     <template #leftIcon>
@@ -16,7 +16,7 @@
                         /> </template
                 ></BaseToggle>
             </div>
-            <div class="flex flex-row w-full justify-between px-20 sm:px-6">
+            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
                 <p class="font-pkmEmerald text-[24px]">Shiny Only:</p>
                 <BaseToggle :isEnabled="store.isShiny" :toggle="store.toggleShiny">
                     <template #leftIcon>
@@ -30,7 +30,7 @@
                         /> </template
                 ></BaseToggle>
             </div>
-            <div class="flex flex-row w-full justify-between px-20 sm:px-6">
+            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
                 <p class="font-pkmEmerald text-[24px]">Champion Difficulty:</p>
                 <BaseToggle
                     :isEnabled="store.isDifficultyInsane"

@@ -32,13 +32,13 @@
                 <HintContainer
                     v-if="!store.isGameWon && componentStore.guesses.length"
                     :numberOfGuesses="componentStore.guesses.length"
-                    :stylingHintOne="''"
-                    :stylingHintTwo="'flex justify-center'"
+                    :stylingHintOne="'flex justify-center'"
+                    :stylingHintTwo="''"
                     :stylingHintThree="'flex justify-center'"
                 >
                     <template #hint1>
                         <div class="flex flex-col items-center gap-2">
-                            <span class="card px-2 py-1">{{ hintTwo.header }}</span>
+                            <span class="card py-1 w-full justify-center">{{ hintTwo.header }}</span>
                             <ResultSquare
                                 :color="hintTwo.color"
                                 :guessResult="hintTwo.guessResult"
