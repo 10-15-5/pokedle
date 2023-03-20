@@ -103,6 +103,9 @@
             <button class="card p-2 text-xs hover:!bg-pink-400" @click="lauchConfetti">
                 Confetti
             </button>
+            <button class="card p-2 text-xs hover:!bg-pink-400" @click="playWinnerSound">
+                WIN SOUND
+            </button>
         </div>
     </div>
 </template>
@@ -175,6 +178,17 @@ onBeforeMount(async () => {
         store.setUser(user);
     }
 });
+
+const playWinnerSound = () => {
+    const audioEmeraldWinMusic = new Audio('/client/assets/audio/emerald-winner.mp3');
+    const audioFireworks = new Audio('/client/assets/audio/fireworks.mp3');
+
+    audioEmeraldWinMusic.volume = 0.2
+    audioFireworks.volume = 0.15;
+
+    audioEmeraldWinMusic.play();
+    audioFireworks.play();
+};
 
 const setHintTwo = () => {
     //TODO: make hint numbers constants
@@ -345,6 +359,9 @@ const decideGame = (guess) => {
     if (guess === secretPokemon.name) {
         instantIsGameWon.value = true;
         //Wait for all cards to flip
+        setTimeout(() => {
+            playWinnerSound();
+        }, TotalResultCardFlipDelay - 200);
         setTimeout(() => {
             lauchConfetti();
             store.setIsGameWon(true);
