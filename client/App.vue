@@ -361,7 +361,7 @@ const decideGame = (guess) => {
         //Wait for all cards to flip
         setTimeout(() => {
             playWinnerSound();
-        }, TotalResultCardFlipDelay - 200);
+        }, TotalResultCardFlipDelay - 500);
         setTimeout(() => {
             lauchConfetti();
             store.setIsGameWon(true);
