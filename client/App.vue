@@ -544,7 +544,7 @@ const lauchConfetti = () => {
         } else if (colors.at(-1) === 'shiny') {
             defaults.colors = ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'];
         } else if (componentStore.guesses.length === 1) {
-            defaults.colors = ['63C5DA', '48AAD', '52B2BF', '3944BC'];
+            defaults.colors = ['00E5EE', '00FFFF', 'E0FFFF', '98F5FF'];
         }
     }
 
