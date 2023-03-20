@@ -102,11 +102,16 @@
             <hr class="divider" />
             <h1 class="text-center mb-2  text-[32px] uppercase">Contact</h1>
             <p>
-                If you have any questions/feedback/bug reports feel free to contact me on the email
+                If you have any questions/feedback/bug reports feel free to contact me on one of the following
                 below: <br />
                 &#8594;
                 <a class="link ml-2 text-[24px] font-bold" href="mailto: pokedle.contact@gmail.com">
                     pokedle.contact@gmail.com
+                </a>
+                <br>
+                &#8594;
+                <a class="link ml-2 text-[24px] font-bold" href="https://twitter.com/pokedle">
+                    Twitter
                 </a>
             </p>
         </div>
