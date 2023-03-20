@@ -3,10 +3,10 @@
         <div
             class="min-h-screen w-full"
             :class="{
-                'background-white': !(store.isDark && store.isDifficultyInsane),
-                'background-black': store.isDark && !store.isDifficultyInsane,
-                'background-white-difficulty-insane': !store.isDark && store.isDifficultyInsane,
-                'background-black-difficulty-insane': store.isDark && store.isDifficultyInsane,
+                'background-white': !store.isDark && !store.isHintMode,
+                'background-black': store.isDark && !store.isHintMode,
+                'background-white-pokemon-collage': !store.isDark && store.isHintMode,
+                'background-black-pokemon-collage': store.isDark && store.isHintMode,
             }"
         >
             <ThemeButton class="absolute right-0" />
@@ -167,7 +167,7 @@ const setDailyGamesWonCount = async () => {
 
 onBeforeMount(async () => {
     store.loadTheme();
-    loadIsDifficultyInsane();
+    loadIsHintMode();
     const [user] = await Promise.all([getOrCreateUser(), loadGameData(), setDailyGamesWonCount()]);
 
     console.log('Loaded at: ' + moment().toString());
@@ -457,11 +457,11 @@ const loadIsShiny = () => {
     }
 };
 
-const loadIsDifficultyInsane = () => {
-    if (localStorage.isDifficultyInsane === 'false') {
-        store.setDifficultyInsane(false);
+const loadIsHintMode = () => {
+    if (localStorage.isHintMode === 'true') {
+        store.setHintMode(true);
     } else {
-        store.setDifficultyInsane(true);
+        store.setHintMode(false);
     }
 };
 
@@ -590,30 +590,30 @@ const lauchConfetti = () => {
 </script>
 
 <style scoped>
+.background-white-pokemon-collage {
+    background-image: url('./client/assets/backgrounds/background-white-pokemon-collage.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.background-black-pokemon-collage {
+    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+        url('./client/assets/backgrounds/background-black-pokemon-collage.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
 .background-white {
-    background-image: url('./client/assets/backgrounds/background-white.png');
+    background-image: url('./client/assets/backgrounds/background-white.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
 .background-black {
-    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
-        url('./client/assets/backgrounds/background-black.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-.background-white-difficulty-insane {
-    background-image: url('./client/assets/backgrounds/background-white-trainer-red.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-.background-black-difficulty-insane {
-    background-image: url('./client/assets/backgrounds/background-black-cubone.jpeg');
+    background-image: url('./client/assets/backgrounds/background-black.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;

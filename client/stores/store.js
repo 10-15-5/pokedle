@@ -6,7 +6,7 @@ export const useStore = defineStore('store', () => {
     const isGameWon = ref(false);
     const isShiny = ref(false);
     const theme = ref('')
-    const isDifficultyInsane = ref(true);
+    const isHintMode = ref(false);
 
     const setShiny = (isShinyParam) => {
         isShiny.value = isShinyParam;
@@ -42,14 +42,14 @@ export const useStore = defineStore('store', () => {
         setTheme(theme.value === 'dark' ? '' : 'dark');
     }
     
-    const setDifficultyInsane = (isDifficultyInsaneParam) => {
-        isDifficultyInsane.value = isDifficultyInsaneParam;
-        localStorage.isDifficultyInsane = `${isDifficultyInsane.value}`
+    const setHintMode = (isHintModeParam) => {
+        isHintMode.value = isHintModeParam;
+        localStorage.isHintMode = `${isHintMode.value}`
     }
 
 
-    const toggleDifficultyInsane = () => {
-        setDifficultyInsane(!isDifficultyInsane.value);
+    const toggleHintMode = () => {
+        setHintMode(!isHintMode.value);
     }
 
     const setUser = (newUser) => {
@@ -65,15 +65,15 @@ export const useStore = defineStore('store', () => {
         user,
         isGameWon,
         isShiny,
-        isDifficultyInsane,
+        isHintMode,
         theme,
         isDark,
         setUser,
         setIsGameWon,
         toggleShiny,
         setShiny,
-        setDifficultyInsane,
-        toggleDifficultyInsane,
+        setHintMode,
+        toggleHintMode,
         setTheme,
         toggleTheme,
         loadTheme

@@ -31,18 +31,18 @@
                 ></BaseToggle>
             </div>
             <div class="flex w-full flex-row justify-between px-20 sm:px-0">
-                <p class="font-pkmEmerald text-[24px]">Champion Difficulty:</p>
+                <p class="font-pkmEmerald text-[24px]">Hint Mode:</p>
                 <BaseToggle
-                    :isEnabled="store.isDifficultyInsane"
-                    :toggle="store.toggleDifficultyInsane"
+                    :isEnabled="store.isHintMode"
+                    :toggle="store.toggleHintMode"
                 >
                     <template #leftIcon>
-                        <SvgIcon type="mdi" :path="mdiCoffin" class="h-[30px] w-[30px]" />
+                        <SvgIcon type="mdi" :path="mdiFlowerOutline" class="h-[30px] w-[30px]" />
                     </template>
                     <template #rightIcon>
                         <SvgIcon
                             type="mdi"
-                            :path="mdiEmoticonExcitedOutline"
+                            :path="mdiSwordCross"
                             class="h-[30px] w-[30px]"
                         /> </template
                 ></BaseToggle>
@@ -60,8 +60,8 @@ import {
     mdiStarOutline,
     mdiWeatherNight,
     mdiWeatherSunny,
-    mdiCoffin,
-    mdiEmoticonExcitedOutline,
+    mdiFlowerOutline,
+    mdiSwordCross
 } from '@mdi/js';
 import { useStore } from '../../stores/store.js';
 
