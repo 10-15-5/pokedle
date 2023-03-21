@@ -1,12 +1,12 @@
 <template>
-    <a :href="baseTweetURL+encodeURIComponent(twitterText)">
-    <div
-        class="card cursor-pointer transition-all duration-100 ease-linear hover:scale-110 gap-1 p-1 px-2 sm:py-0 !bg-twitterblue text-white"
+    <a :href="baseTweetURL + encodeURIComponent(twitterText)">
+        <div
+            class="card cursor-pointer gap-1 !bg-twitterblue p-1 px-2 text-white transition-all duration-100 ease-linear hover:scale-110 sm:py-0"
         >
-        <SvgIcon type="mdi" :path="mdiTwitter" class="w-[24px] sm:w-[20px]" />
-        <p class="font-pkmEmerald pt-1 text-sm sm:text-xs sm:font-bold">SHARE RESULTS!</p>
-    </div>
-</a>
+            <SvgIcon type="mdi" :path="mdiTwitter" class="w-[24px] sm:w-[20px]" />
+            <p class="pt-1 font-pkmEmerald text-sm sm:text-xs sm:font-bold">SHARE RESULTS!</p>
+        </div>
+    </a>
 </template>
 
 <script setup>
@@ -15,6 +15,6 @@ import { mdiTwitter } from '@mdi/js';
 var baseTweetURL = 'https://twitter.com/intent/tweet?text=';
 
 const props = defineProps({
-    twitterText: String
-})
+    twitterText: String,
+});
 </script>

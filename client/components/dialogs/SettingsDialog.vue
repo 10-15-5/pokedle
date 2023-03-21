@@ -32,10 +32,7 @@
             </div>
             <div class="flex w-full flex-row justify-between px-20 sm:px-0">
                 <p class="font-pkmEmerald text-[24px]">Hint Mode:</p>
-                <BaseToggle
-                    :isEnabled="store.isHintMode"
-                    :toggle="store.toggleHintMode"
-                >
+                <BaseToggle :isEnabled="store.isHintMode" :toggle="store.toggleHintMode">
                     <template #leftIcon>
                         <SvgIcon type="mdi" :path="mdiFlowerOutline" class="h-[30px] w-[30px]" />
                     </template>
@@ -61,7 +58,7 @@ import {
     mdiWeatherNight,
     mdiWeatherSunny,
     mdiFlowerOutline,
-    mdiSwordCross
+    mdiSwordCross,
 } from '@mdi/js';
 import { useStore } from '../../stores/store.js';
 

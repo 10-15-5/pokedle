@@ -1,7 +1,7 @@
 <template>
     <BaseDialog :isVisible="isVisible" :onClose="onClose">
-        <h1 class="font-pkmEmerald text-[32px] uppercase text-center">STATISTICS</h1>
-                <p class="font-pkmEmerald text-[20px] text-center">Coming Soon....</p>
+        <h1 class="text-center font-pkmEmerald text-[32px] uppercase">STATISTICS</h1>
+        <p class="text-center font-pkmEmerald text-[20px]">Coming Soon....</p>
     </BaseDialog>
 </template>
 

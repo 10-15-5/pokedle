@@ -8,7 +8,7 @@
         @update:visible="onClose"
     >
         <div
-            class="flex !h-screen !w-screen justify-center items-center bg-black/40"
+            class="flex !h-screen !w-screen items-center justify-center bg-black/40"
             @click="onClose"
         >
             <div class="dialog-card" v-on:click.stop>

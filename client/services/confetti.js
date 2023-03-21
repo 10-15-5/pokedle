@@ -66,6 +66,4 @@ const launchConfetti = (isShiny, isFirstTry) => {
     }, 250);
 };
 
-export {
-    launchConfetti
-}
+export { launchConfetti };

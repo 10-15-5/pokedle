@@ -1,5 +1,5 @@
 <template>
-    <div class="flex items-center justify-center relative">
+    <div class="relative flex items-center justify-center">
         <HeaderIcon>
             <p class="text-[30px] sm:!text-[26px]">🔥</p>
             <p class="streak-count mt-2 font-pkmEmerald text-light-text dark:text-gray-600">
@@ -7,13 +7,19 @@
             </p>
         </HeaderIcon>
         <HeaderIcon @click="isDialogSettings = true">
-            <span class="pi pi-cog text-[20px] sm:!text-[18px] text-light-text dark:text-dark-text"></span>
+            <span
+                class="pi pi-cog text-[20px] text-light-text dark:text-dark-text sm:!text-[18px]"
+            ></span>
         </HeaderIcon>
         <HeaderIcon @click="isDialogStatistics = true">
-            <span class="pi pi-chart-bar text-[20px] sm:!text-[18px] text-light-text dark:text-dark-text"></span>
+            <span
+                class="pi pi-chart-bar text-[20px] text-light-text dark:text-dark-text sm:!text-[18px]"
+            ></span>
         </HeaderIcon>
         <HeaderIcon @click="isDialogInfo = true">
-            <span class="pi pi-info-circle text-[20px] sm:!text-[18px] text-light-text dark:text-dark-text"></span>
+            <span
+                class="pi pi-info-circle text-[20px] text-light-text dark:text-dark-text sm:!text-[18px]"
+            ></span>
         </HeaderIcon>
         <SettingsDialog
             :isVisible="isDialogSettings"

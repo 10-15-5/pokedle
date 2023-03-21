@@ -64,10 +64,7 @@
                 ></button>
             </div>
         </div>
-        <div
-            v-if="isShowHints"
-            class="bg-gray-100 px-4 py-2 pt-3 text-justify dark:bg-zinc-700"
-        >
+        <div v-if="isShowHints" class="bg-gray-100 px-4 py-2 pt-3 text-justify dark:bg-zinc-700">
             <div v-if="isShowHintOne" :class="stylingHintOne">
                 <slot name="hint1"></slot>
             </div>
@@ -83,7 +80,11 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import { ClassicGuessesNeededForHintOne, ClassicGuessesNeededForHintTwo, ClassicGuessesNeededForHintThree } from '../../constants';
+import {
+    ClassicGuessesNeededForHintOne,
+    ClassicGuessesNeededForHintTwo,
+    ClassicGuessesNeededForHintThree,
+} from '../../constants';
 
 const props = defineProps({
     numberOfGuesses: {
@@ -99,10 +100,18 @@ const hints = ['hint1', 'hint2', 'hint3'];
 const selectedHint = ref('hint1');
 const isShowHints = ref(false);
 
-const guessesRemainingForHintOne = computed(() => ClassicGuessesNeededForHintOne - props.numberOfGuesses);
-const isHintOneUnlocked = computed(() => ClassicGuessesNeededForHintOne - props.numberOfGuesses <= 0);
-const isHintTwoUnlocked = computed(() => ClassicGuessesNeededForHintTwo - props.numberOfGuesses <= 0);
-const isHintThreeUnlocked = computed(() => ClassicGuessesNeededForHintThree - props.numberOfGuesses <= 0);
+const guessesRemainingForHintOne = computed(
+    () => ClassicGuessesNeededForHintOne - props.numberOfGuesses
+);
+const isHintOneUnlocked = computed(
+    () => ClassicGuessesNeededForHintOne - props.numberOfGuesses <= 0
+);
+const isHintTwoUnlocked = computed(
+    () => ClassicGuessesNeededForHintTwo - props.numberOfGuesses <= 0
+);
+const isHintThreeUnlocked = computed(
+    () => ClassicGuessesNeededForHintThree - props.numberOfGuesses <= 0
+);
 
 const isShowHintOne = computed(() => selectedHint.value === hints[0]);
 const isShowHintTwo = computed(() => selectedHint.value === hints[1]);

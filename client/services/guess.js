@@ -84,7 +84,7 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
         isCorrectGuess: pokemonName === secretPokemon.name,
         color,
         fields: result,
-    }
+    };
 };
 
 export { getGuessResults };

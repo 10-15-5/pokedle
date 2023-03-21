@@ -1,14 +1,14 @@
 <template>
     <BaseDialog :isVisible="isVisible" :onClose="onClose">
         <div class="max-w-[700px] font-pkmEmerald text-[20px]">
-            <h1 class="text-center mb-2  text-[32px] uppercase">About</h1>
+            <h1 class="mb-2 text-center text-[32px] uppercase">About</h1>
             <p>
                 Welcome to the world of POKéMON! <br />
-                Every day a wild POKéMON from gen 1-3 will be hiding and its your job as a POKéMON TRAINER
-                to catch (guess) it!
+                Every day a wild POKéMON from gen 1-3 will be hiding and its your job as a POKéMON
+                TRAINER to catch (guess) it!
             </p>
             <hr class="divider" />
-            <h1 class="text-center mb-2  font-pkmEmerald text-[32px] uppercase">How To Play</h1>
+            <h1 class="mb-2 text-center font-pkmEmerald text-[32px] uppercase">How To Play</h1>
             <p class="my-2">
                 <b>1. Guess:</b> Guess any random POKéMON <b>from gen 1-3</b>, since we currently
                 have no clues. We will guess <b>SQUIRTLE</b> here.
@@ -37,7 +37,7 @@
             />
 
             <hr class="divider" />
-            <h1 class="text-center mb-2  font-pkmEmerald text-[32px] uppercase">Habitats</h1>
+            <h1 class="mb-2 text-center font-pkmEmerald text-[32px] uppercase">Habitats</h1>
             <p>
                 The Habitats used are all taken from
                 <a
@@ -61,21 +61,21 @@
             </div>
 
             <hr class="divider" />
-            <h1 class="text-center mb-2  font-pkmEmerald text-[32px] uppercase">Contribute</h1>
-            <p class=" leading-8">
+            <h1 class="mb-2 text-center font-pkmEmerald text-[32px] uppercase">Contribute</h1>
+            <p class="leading-8">
                 Willing to contribute? Thats great! 🥳 You can find info on how to reach me at the
                 bottom of this card. <br />
                 At the time of this writing, some of the things I could use help with are:
             </p>
-            <ul class="list-disc ml-5 ">
+            <ul class="ml-5 list-disc">
                 <li>Animations 🎥</li>
                 <li>Translation 🇯🇵 🇪🇸 🇮🇳 🇨🇳 🇩🇪 🇫🇷</li>
                 <li>Design / Styling 🧑‍🎨 🎨</li>
-                <li>Feature Development 👷‍♂️ </li>
-                <li>CI / CD - GCP GKE/Kubernetes ♻️ </li>
+                <li>Feature Development 👷‍♂️</li>
+                <li>CI / CD - GCP GKE/Kubernetes ♻️</li>
             </ul>
             <hr class="divider" />
-            <h1 class="text-center mb-2  font-pkmEmerald text-[32px] uppercase">Credit</h1>
+            <h1 class="mb-2 text-center font-pkmEmerald text-[32px] uppercase">Credit</h1>
             <div class="w-full leading-8">
                 <p class="mb-2">
                     Pokédle is created by Gabriel Haugbøl. I hope you enjoy playing along 😊🎮!
@@ -100,15 +100,15 @@
                 <p>Original artist/creator of image(s), please DM for removal or credit.</p>
             </div>
             <hr class="divider" />
-            <h1 class="text-center mb-2  text-[32px] uppercase">Contact</h1>
+            <h1 class="mb-2 text-center text-[32px] uppercase">Contact</h1>
             <p>
-                If you have any questions/feedback/bug reports feel free to contact me on one of the following
-                below: <br />
+                If you have any questions/feedback/bug reports feel free to contact me on one of the
+                following below: <br />
                 &#8594;
                 <a class="link ml-2 text-[24px] font-bold" href="mailto: pokedle.contact@gmail.com">
                     pokedle.contact@gmail.com
                 </a>
-                <br>
+                <br />
                 &#8594;
                 <a class="link ml-2 text-[24px] font-bold" href="https://twitter.com/pokedle">
                     Twitter

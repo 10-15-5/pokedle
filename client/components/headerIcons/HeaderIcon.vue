@@ -1,6 +1,6 @@
 <template>
     <div
-        class="card justify-center items-center mx-1 h-[32px] w-[32px] sm:h-[28px] sm:w-[28px] cursor-pointer transition-all duration-100 ease-linear hover:scale-110"
+        class="card mx-1 h-[32px] w-[32px] cursor-pointer items-center justify-center transition-all duration-100 ease-linear hover:scale-110 sm:h-[28px] sm:w-[28px]"
     >
         <slot></slot>
     </div>

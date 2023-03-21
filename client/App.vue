@@ -38,6 +38,7 @@ onBeforeMount(async () => {
     store.loadTheme();
     loadIsHintMode();
     loadIsShiny();
+
     const user = await getOrCreateUser();
 
     console.log('Loaded at: ' + moment().toString());
@@ -50,7 +51,7 @@ onBeforeMount(async () => {
 });
 
 const getOrCreateUser = async () => {
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.userId;
 
     console.log(userId);
     if (userId) {
@@ -61,13 +62,12 @@ const getOrCreateUser = async () => {
 
     const response = await apiService.createUser();
     const { user } = response.data;
-    localStorage.setItem('userId', user._id);
+    localStorage.userId = user._id;
     return user;
 };
 
 const loadIsShiny = () => {
-    const isShinyString = localStorage.getItem('isShiny');
-    if (isShinyString && isShinyString === 'true') {
+    if (localStorage.isShiny && localStorage.isShiny === 'true') {
         store.setShiny(true);
         return;
     }
@@ -80,7 +80,6 @@ const loadIsHintMode = () => {
         store.setHintMode(false);
     }
 };
-
 </script>
 
 <style scoped>

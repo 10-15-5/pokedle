@@ -76,7 +76,9 @@
         <button class="card p-2 text-xs hover:!bg-blue-400" @click="setNewGame">
             Set New Game
         </button>
-        <button class="card p-2 text-xs hover:!bg-pink-400" @click="launchConfetti(false,false)">Confetti</button>
+        <button class="card p-2 text-xs hover:!bg-pink-400" @click="launchConfetti(false, false)">
+            Confetti
+        </button>
         <button class="card p-2 text-xs hover:!bg-pink-400" @click="playWinnerSound">
             WIN SOUND
         </button>
@@ -96,7 +98,7 @@ import DailyGamesWonContainer from '../components/DailyGamesWonContainer.vue';
 import ThemeButton from '../components/buttons/ThemeButton.vue';
 import { getGuessResults } from '../services/guess';
 import * as apiService from '../services/api/apiService.js';
-import {launchConfetti} from '../services/confetti.js'
+import { launchConfetti } from '../services/confetti.js';
 import { useStore } from '../stores/store.js';
 import ResultSquare from '../components/result/ResultSquare.vue';
 import { reactive, ref, onBeforeMount, computed } from 'vue';
@@ -109,7 +111,6 @@ import {
 } from '../constants.js';
 import { getCurrentClassicPokemonNumber } from '../helpers.js';
 import moment from 'moment-timezone';
-
 
 const store = useStore();
 
@@ -141,19 +142,14 @@ const setDailyGamesWonCount = async () => {
 };
 
 onBeforeMount(async () => {
-    store.loadTheme();
-
     await Promise.all([loadGameData(), setDailyGamesWonCount()]);
-
-    console.log('Loaded at: ' + moment().toString());
-    console.log('ENVIRONMENT: ' + ENVIRONMENT);
 });
 
 const playWinnerSound = () => {
     const audioEmeraldWinMusic = new Audio('/client/assets/audio/emerald-winner.mp3');
     const audioFireworks = new Audio('/client/assets/audio/fireworks.mp3');
 
-    audioEmeraldWinMusic.volume = 0.2
+    audioEmeraldWinMusic.volume = 0.2;
     audioFireworks.volume = 0.15;
 
     audioEmeraldWinMusic.play();
@@ -201,7 +197,6 @@ const emojiResults = computed(() => {
         }
         return emojis;
     });
-
 
     return emojiResults;
 });
@@ -300,7 +295,7 @@ const incrementGamesWonCount = async () => {
 };
 
 const updateUserWithGameWon = async () => {
-    const userId = localStorage.getItem('userId');
+    const userId = localStorage.userId;
     if (userId) {
         const response = await apiService.updateUserWithGameWon(
             userId,
@@ -334,11 +329,11 @@ const updateYesterdaysPokemon = async () => {
 };
 
 const addGuessesToLocalStorage = () => {
-    localStorage.setItem('guesses', JSON.stringify(componentStore.guesses));
+    localStorage.guesses = JSON.stringify(componentStore.guesses);
 };
 
 const addColorsToLocalStorage = () => {
-    localStorage.setItem('colors', JSON.stringify(colors));
+    localStorage.colors = JSON.stringify(colors);
 };
 
 const submitGuess = (guess) => {
@@ -357,13 +352,11 @@ const submitGuess = (guess) => {
     decideGame(pokemonName);
 };
 
-const loadSecretPokemon = () => {
-    const loadedSecretPokemon = localStorage.getItem('secretPokemon');
-    Object.assign(secretPokemon, JSON.parse(loadedSecretPokemon));
-};
+const loadSecretPokemon = () =>
+    Object.assign(secretPokemon, JSON.parse(localStorage.secretPokemon));
 
 const loadGuesses = () => {
-    const guesses = localStorage.getItem('guesses');
+    const guesses = localStorage.guesses;
     if (guesses) componentStore.guesses = JSON.parse(guesses);
 };
 
@@ -373,7 +366,7 @@ const loadColors = () => {
 };
 
 const loadIsClassicGameWon = () => {
-    const loadedIsClassicGameWon = localStorage.getItem('isClassicGameWon');
+    const loadedIsClassicGameWon = localStorage.isClassicGameWon;
     if (loadedIsClassicGameWon === 'true') {
         store.setIsClassicGameWon(true);
     } else {
@@ -390,22 +383,22 @@ const removePokemonsFromGuessPool = () => {
     });
 };
 
-const setNewDate = () => localStorage.setItem('dayOfLastUpdate', moment().date());
+const setNewDate = () => (localStorage.dayOfLastUpdate = moment().date());
 
 const setNewSecretPokemon = async () => {
     const response = await apiService.newSecretPokemon();
     Object.assign(secretPokemon, response.data);
-    localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
+    localStorage.secretPokemon = JSON.stringify(secretPokemon);
 };
 
 const setSecretPokemon = async () => {
     const response = await apiService.getSecretPokemon();
     Object.assign(secretPokemon, response.data);
-    localStorage.setItem('secretPokemon', JSON.stringify(secretPokemon));
+    localStorage.secretPokemon = JSON.stringify(secretPokemon);
 };
 
 const loadGameData = async () => {
-    const dayOfLastUpdate = localStorage.getItem('dayOfLastUpdate');
+    const dayOfLastUpdate = localStorage.dayOfLastUpdate;
     if (!dayOfLastUpdate) setNewDate();
 
     loadSecretPokemon();
@@ -430,7 +423,7 @@ const loadGameData = async () => {
 };
 
 const revealPokemon = async () => {
-    console.log(localStorage.getItem('secretPokemon'));
+    console.log(localStorage.secretPokemon);
     const backendResponse = await apiService.getSecretPokemon();
     console.log(backendResponse.data);
 };
@@ -460,7 +453,6 @@ const setNewGame = async () => {
     await setNewSecretPokemon();
     await updateYesterdaysPokemon();
 };
-
 </script>
 
 <style scoped>
