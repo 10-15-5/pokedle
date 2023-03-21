@@ -29,7 +29,7 @@
                     variant="outlined"
                 >
                     <img
-                        v-if="type == guessType.Pokemon"
+                        v-if="type === guessType.Pokemon"
                         class="pokemon-bg bg-neutral-200 bg-no-repeat dark:!bg-neutral-700"
                         :src="
                             'https://img.pokemondb.net/sprites/ruby-sapphire/' +
@@ -38,8 +38,25 @@
                             pokemon +
                             '.png'
                         "
+                        :title="pokemon"
                         alt="pokemon sprite"
                     />
+                    <div
+                        v-if="type === guessType.Blackout"
+                        class="bg-white bg-no-repeat dark:!bg-neutral-300"
+                    >
+                        <img
+                            class="brightness-0"
+                            :src="
+                                'https://img.pokemondb.net/sprites/ruby-sapphire/' +
+                                color +
+                                '/' +
+                                pokemon +
+                                '.png'
+                            "
+                            alt="pokemon sprite"
+                        />
+                    </div>
                     <div
                         v-if="type === guessType.Habitat"
                         class="h-[39px] overflow-hidden rounded-[50%] border-2 border-light-border dark:!border-dark-border sm:h-[30px]"
@@ -60,7 +77,10 @@
             </template>
             <template v-slot:back>
                 <div class="result-card bg-neutral-200 dark:!bg-neutral-800" variant="outlined">
-                    <img :src="'./client/assets/result-cards/pokemon-cardback-pixel.png'" alt="pokemon sprite" />
+                    <img
+                        :src="'./client/assets/result-cards/pokemon-cardback-pixel.png'"
+                        alt="pokemon sprite"
+                    />
                 </div>
             </template>
         </VueFlip>
@@ -72,12 +92,10 @@ import { guessState, guessType } from '../../constants.js';
 import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { getHabitatImage } from '../../services/assets.js';
 import { VueFlip } from 'vue-flip';
-import { useDark } from '@vueuse/core';
 import { useStore } from '../../stores/store';
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiStar } from '@mdi/js';
 
-const isDark = useDark();
 const store = useStore();
 
 const props = defineProps({
@@ -106,11 +124,11 @@ onMounted(() => {
 const getColor = computed(() => {
     switch (props.guessResult) {
         case guessState.CorrectGuess:
-            return isDark.value ? '#10b981' : 'rgb(70, 217, 48)';
+            return store.isDark ? '#10b981' : 'rgb(70, 217, 48)';
         case guessState.PartlyCorrectGuess:
-            return isDark.value ? '#fb923c' : 'rgb(237, 159, 43)';
+            return store.isDark ? '#fb923c' : 'rgb(237, 159, 43)';
         case guessState.WrongGuess:
-            return isDark.value ? '#f87171' : 'rgb(237, 59, 43)';
+            return store.isDark ? '#f87171' : 'rgb(237, 59, 43)';
         default:
             return 'transparent';
     }
@@ -122,5 +140,6 @@ const getColor = computed(() => {
     width: 100%;
     background-image: url('/client/assets/result-cards/pokecenter-box-background.png');
     background-size: contain;
+    border-radius: 2px;
 }
 </style>

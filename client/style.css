@@ -4,7 +4,7 @@
 
 @layer components {
     .card {
-        @apply flex items-center justify-center rounded border-2 border-solid border-light-border 
+        @apply flex rounded border-2 border-solid border-light-border 
         bg-light-bg text-black dark:border-dark-border dark:bg-dark-bg dark:text-dark-text;
     }
     .result-card {
@@ -28,6 +28,12 @@
 
     .toggle-button {
         @apply z-10 m-4 flex h-11 w-11 items-center justify-center rounded-full bg-black/30 text-[28px] text-white  hover:bg-black/10 dark:bg-white/40 hover:dark:bg-white/20;
+    }
+    .hint-tab-header {
+        @apply rounded-t pt-2 px-[5px] text-gray-600 dark:text-gray-400 cursor-pointer
+    }
+    .hint-tab-header-active {
+        @apply bg-gray-100 dark:bg-zinc-700 text-black dark:text-white
     }
 }
 

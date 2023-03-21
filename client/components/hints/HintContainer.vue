@@ -1,38 +1,126 @@
 <template>
     <div
-        class="card flex min-w-[80px] max-w-[400px] flex-col font-pkmEmerald sm:max-w-[330px] sm:text-sm"
+        class="card min-w-[80px] max-w-[400px] flex-col font-pkmEmerald sm:max-w-[330px] sm:text-sm"
+        :class="isShowHints ? 'w-[400px]' : ''"
     >
-        <p v-if="guessesRemainingForHint > 0" class="gap-2 p-2 px-3 sm:p-1 sm:px-2">
-            Guess <b class="text-light-orange dark:text-dark-orange"> {{ guessesRemainingForHint }} </b> more times for a HINT
+        <p v-if="!isHintOneUnlocked" class="gap-2 p-2 px-3 sm:p-1 sm:px-2 sm:pt-2">
+            Guess
+            <b class="text-light-orange dark:text-dark-orange">
+                {{ guessesRemainingForHintOne }}
+            </b>
+            more times for a HINT
         </p>
-        <div v-else class="flex w-full flex-row items-center justify-between gap-2 p-2 px-3 pb-1 sm:pb-1 sm:pt-2">
+        <div
+            v-else-if="!isShowHints"
+            class="flex w-full flex-row items-center justify-between gap-2 p-2 px-3 pb-1 sm:pb-1 sm:pt-2"
+        >
             <div class="flex flex-row text-base">
-                <p>HINT</p>
+                <p>HINT{{ isHintTwoUnlocked ? 'S' : '' }}</p>
             </div>
             <div>
-                <button v-if="isShowHint" class="pi pi-minus" @click="isShowHint = false"></button>
-                <button v-else class="pi pi-plus" @click="isShowHint = true"></button>
+                <button class="pi pi-plus" @click="isShowHints = true"></button>
             </div>
         </div>
-        <div v-if="isShowHint" class="w-full bg-gray-100 p-4 pt-3 text-justify dark:bg-zinc-700">
-            {{ text }}
+        <div v-if="isShowHints" class="mr-3 flex flex-row justify-between">
+            <div class="flex flex-row gap-2">
+                <div
+                    @click="selectHintFlavortext"
+                    class="hint-tab-header ml-1 flex gap-1"
+                    :class="isShowHintOne ? 'hint-tab-header-active' : ''"
+                >
+                    Hint 1
+                    <div>
+                        <span :class="isHintOneUnlocked ? 'pi pi-lock-open' : 'pi pi-lock'"></span>
+                    </div>
+                </div>
+                <div
+                    @click="selectHintCardOne"
+                    class="hint-tab-header flex gap-1"
+                    :class="isShowHintTwo ? 'hint-tab-header-active' : ''"
+                >
+                    Hint 2
+                    <div>
+                        <span :class="isHintTwoUnlocked ? 'pi pi-lock-open' : 'pi pi-lock'"></span>
+                    </div>
+                </div>
+                <div
+                    @click="selectHintCardTwo"
+                    class="hint-tab-header flex gap-1"
+                    :class="isShowHintThree ? 'hint-tab-header-active' : ''"
+                >
+                    Hint 3
+                    <div>
+                        <span
+                            :class="isHintThreeUnlocked ? 'pi pi-lock-open' : 'pi pi-lock'"
+                        ></span>
+                    </div>
+                </div>
+            </div>
+            <div class="flex items-center justify-center">
+                <button
+                    v-if="isShowHints"
+                    class="pi pi-minus"
+                    @click="isShowHints = false"
+                ></button>
+            </div>
+        </div>
+        <div
+            v-if="isShowHints"
+            class="bg-gray-100 px-4 py-2 pt-3 text-justify dark:bg-zinc-700"
+        >
+            <div v-if="isShowHintOne" :class="stylingHintOne">
+                <slot name="hint1"></slot>
+            </div>
+            <div v-else-if="isShowHintTwo" :class="stylingHintTwo">
+                <slot name="hint2"></slot>
+            </div>
+            <div v-else-if="isShowHintThree" :class="stylingHintThree">
+                <slot name="hint3"></slot>
+            </div>
         </div>
     </div>
 </template>
 
 <script setup>
 import { computed, ref } from 'vue';
+import { ClassicGuessesNeededForHintOne, ClassicGuessesNeededForHintTwo, ClassicGuessesNeededForHintThree } from '../../constants';
 
 const props = defineProps({
-    text: String,
     numberOfGuesses: {
         type: Number,
         default: 0,
     },
-    forceEnableHint: Boolean,
+    stylingHintOne: String,
+    stylingHintTwo: String,
+    stylingHintThree: String,
 });
 
-const isShowHint = ref(false);
+const hints = ['hint1', 'hint2', 'hint3'];
+const selectedHint = ref('hint1');
+const isShowHints = ref(false);
 
-const guessesRemainingForHint = computed(() => 5 - props.numberOfGuesses);
+const guessesRemainingForHintOne = computed(() => ClassicGuessesNeededForHintOne - props.numberOfGuesses);
+const isHintOneUnlocked = computed(() => ClassicGuessesNeededForHintOne - props.numberOfGuesses <= 0);
+const isHintTwoUnlocked = computed(() => ClassicGuessesNeededForHintTwo - props.numberOfGuesses <= 0);
+const isHintThreeUnlocked = computed(() => ClassicGuessesNeededForHintThree - props.numberOfGuesses <= 0);
+
+const isShowHintOne = computed(() => selectedHint.value === hints[0]);
+const isShowHintTwo = computed(() => selectedHint.value === hints[1]);
+const isShowHintThree = computed(() => selectedHint.value === hints[2]);
+
+const selectHintFlavortext = () => {
+    if (isHintOneUnlocked.value) {
+        selectedHint.value = hints[0];
+    }
+};
+const selectHintCardOne = () => {
+    if (isHintTwoUnlocked.value) {
+        selectedHint.value = hints[1];
+    }
+};
+const selectHintCardTwo = () => {
+    if (isHintThreeUnlocked.value) {
+        selectedHint.value = hints[2];
+    }
+};
 </script>

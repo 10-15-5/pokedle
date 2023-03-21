@@ -1,46 +1,52 @@
 <template>
     <BaseDialog :isVisible="isVisible" :onClose="onClose">
-        <h1 class="font-pkmEmerald text-[32px] uppercase">SETTINGS</h1>
-        <div class="grid grid-cols-3 items-center justify-center gap-y-4 gap-x-16 sm:gap-x-4">
-            <p class="col-span-2 font-pkmEmerald text-[24px]">DarkMode:</p>
-            <BaseToggle :isEnabled="isDark" :toggle="toggleDark">
-                <template #leftIcon>
-                    <SvgIcon type="mdi" :path="mdiWeatherNight" class="h-[30px] w-[30px]" />
-                </template>
-                <template #rightIcon>
-                    <SvgIcon
-                        type="mdi"
-                        :path="mdiWeatherSunny"
-                        class="h-[30px] w-[30px]"
-                    /> </template
-            ></BaseToggle>
-            <p class="col-span-2 font-pkmEmerald text-[24px]">Shiny Only:</p>
-            <BaseToggle :isEnabled="store.isShiny" :toggle="store.toggleShiny">
-                <template #leftIcon>
-                    <SvgIcon type="mdi" :path="mdiStarOutline" class="h-[30px] w-[30px]" />
-                </template>
-                <template #rightIcon>
-                    <SvgIcon
-                        type="mdi"
-                        :path="mdiStarOffOutline"
-                        class="h-[30px] w-[30px]"
-                    /> </template
-            ></BaseToggle>
-            <p class="col-span-2 font-pkmEmerald text-[24px]">Champion Difficulty:</p>
-            <BaseToggle
-                :isEnabled="store.isDifficultyInsane"
-                :toggle="store.toggleDifficultyInsane"
-            >
-                <template #leftIcon>
-                    <SvgIcon type="mdi" :path="mdiCoffin" class="h-[30px] w-[30px]" />
-                </template>
-                <template #rightIcon>
-                    <SvgIcon
-                        type="mdi"
-                        :path="mdiEmoticonExcitedOutline"
-                        class="h-[30px] w-[30px]"
-                    /> </template
-            ></BaseToggle>
+        <h1 class="text-center font-pkmEmerald text-[32px] uppercase">SETTINGS</h1>
+        <div class="flex flex-col items-center gap-y-4 sm:gap-x-0">
+            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
+                <p class="font-pkmEmerald text-[24px]">DarkMode:</p>
+                <BaseToggle :isEnabled="store.isDark" :toggle="store.toggleTheme">
+                    <template #leftIcon>
+                        <SvgIcon type="mdi" :path="mdiWeatherNight" class="h-[30px] w-[30px]" />
+                    </template>
+                    <template #rightIcon>
+                        <SvgIcon
+                            type="mdi"
+                            :path="mdiWeatherSunny"
+                            class="h-[30px] w-[30px]"
+                        /> </template
+                ></BaseToggle>
+            </div>
+            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
+                <p class="font-pkmEmerald text-[24px]">Shiny Only:</p>
+                <BaseToggle :isEnabled="store.isShiny" :toggle="store.toggleShiny">
+                    <template #leftIcon>
+                        <SvgIcon type="mdi" :path="mdiStarOutline" class="h-[30px] w-[30px]" />
+                    </template>
+                    <template #rightIcon>
+                        <SvgIcon
+                            type="mdi"
+                            :path="mdiStarOffOutline"
+                            class="h-[30px] w-[30px]"
+                        /> </template
+                ></BaseToggle>
+            </div>
+            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
+                <p class="font-pkmEmerald text-[24px]">Hint Mode:</p>
+                <BaseToggle
+                    :isEnabled="store.isHintMode"
+                    :toggle="store.toggleHintMode"
+                >
+                    <template #leftIcon>
+                        <SvgIcon type="mdi" :path="mdiFlowerOutline" class="h-[30px] w-[30px]" />
+                    </template>
+                    <template #rightIcon>
+                        <SvgIcon
+                            type="mdi"
+                            :path="mdiSwordCross"
+                            class="h-[30px] w-[30px]"
+                        /> </template
+                ></BaseToggle>
+            </div>
         </div>
     </BaseDialog>
 </template>
@@ -54,14 +60,12 @@ import {
     mdiStarOutline,
     mdiWeatherNight,
     mdiWeatherSunny,
-    mdiCoffin,
-    mdiEmoticonExcitedOutline,
+    mdiFlowerOutline,
+    mdiSwordCross
 } from '@mdi/js';
 import { useStore } from '../../stores/store.js';
-import { useDark, useToggle } from '@vueuse/core';
+
 const store = useStore();
-const isDark = useDark();
-const toggleDark = useToggle(isDark);
 
 const props = defineProps({
     isVisible: Boolean,

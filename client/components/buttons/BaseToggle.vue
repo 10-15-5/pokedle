@@ -1,5 +1,5 @@
 <template>
-    <div class="card relative flex h-10 w-20 flex-row dark:!bg-dark-border" @click="toggle()">
+    <div class="card relative flex !h-10 !w-20 flex-row dark:!bg-dark-border" @click="toggle()">
         <div
             class="flex h-full w-full cursor-pointer items-center justify-center  rounded-l-sm"
             :class="isEnabled ? '' : ' bg-red-500 dark:bg-red-400'"

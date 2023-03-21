@@ -39,6 +39,12 @@ func GetPreviousSecretPokemon(c *gin.Context) {
 }
 
 func NewSecretPokemon(c *gin.Context) {
+
+	if os.Getenv("ENVIRONMENT") == "production" {
+		c.JSON(http.StatusBadRequest, "This operation is not supported in production environment")
+		return
+	}
+
 	currentSecretPokemon, _ := services.GetSecretPokemon()
 
 	pokemonData := data.GetPokemonData()

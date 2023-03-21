@@ -1,7 +1,7 @@
 import allPokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import { guessState, guessType } from '../constants.js';
 
-const getGuessResults = (pokemonName, secretPokemon) => {
+const getGuessResults = (pokemonName, secretPokemon, color) => {
     const pokemonData = allPokemonData.find((e) => e.name === pokemonName);
 
     if (!pokemonData) throw Error('No pokemon data found');
@@ -82,7 +82,8 @@ const getGuessResults = (pokemonName, secretPokemon) => {
 
     return {
         isCorrectGuess: pokemonName === secretPokemon.name,
-        fields: result
+        color,
+        fields: result,
     }
 };
 

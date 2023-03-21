@@ -3,10 +3,10 @@
         <div
             class="min-h-screen w-full"
             :class="{
-                'background-white': !(isDark && store.isDifficultyInsane),
-                'background-black': isDark && !store.isDifficultyInsane,
-                'background-white-difficulty-insane': !isDark && store.isDifficultyInsane,
-                'background-black-difficulty-insane': isDark && store.isDifficultyInsane,
+                'background-white': !store.isDark && !store.isHintMode,
+                'background-black': store.isDark && !store.isHintMode,
+                'background-white-pokemon-collage': !store.isDark && store.isHintMode,
+                'background-black-pokemon-collage': store.isDark && store.isHintMode,
             }"
         >
             <ThemeButton class="absolute right-0" />
@@ -30,21 +30,23 @@ import ThemeButton from './components/buttons/ThemeButton.vue';
 import { reactive, ref, onBeforeMount } from 'vue';
 import * as apiService from './services/api/apiService.js';
 import { useStore } from './stores/store.js';
-import { useDark } from '@vueuse/core';
+import moment from 'moment-timezone';
 
-const isDark = useDark();
 const store = useStore();
 
 onBeforeMount(async () => {
+    store.loadTheme();
+    loadIsHintMode();
+    loadIsShiny();
     const user = await getOrCreateUser();
+
+    console.log('Loaded at: ' + moment().toString());
+    console.log('ENVIRONMENT: ' + ENVIRONMENT);
     console.log(user);
 
     if (user) {
         store.setUser(user);
     }
-
-    loadIsShiny();
-    loadIsDifficultyInsane();
 });
 
 const getOrCreateUser = async () => {
@@ -71,45 +73,41 @@ const loadIsShiny = () => {
     }
 };
 
-const loadIsDifficultyInsane = () => {
-    const isDifficultyInsaneString = localStorage.getItem('isDifficultyInsane');
-    console.log(isDifficultyInsaneString);
-    if (isDifficultyInsaneString && isDifficultyInsaneString === 'true') {
-        store.setDifficultyInsane(true);
-        return;
+const loadIsHintMode = () => {
+    if (localStorage.isHintMode === 'true') {
+        store.setHintMode(true);
+    } else {
+        store.setHintMode(false);
     }
 };
+
 </script>
 
 <style scoped>
-html.dark {
-    color-scheme: dark;
+.background-white-pokemon-collage {
+    background-image: url('./client/assets/backgrounds/background-white-pokemon-collage.png');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+}
+
+.background-black-pokemon-collage {
+    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
+        url('./client/assets/backgrounds/background-black-pokemon-collage.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-attachment: fixed;
 }
 
 .background-white {
-    background-image: url('./client/assets/backgrounds/background-white.png');
+    background-image: url('./client/assets/backgrounds/background-white.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;
 }
 
 .background-black {
-    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
-        url('./client/assets/backgrounds/background-black.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-.background-white-difficulty-insane {
-    background-image: url('./client/assets/backgrounds/background-white-trainer-red.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-.background-black-difficulty-insane {
-    background-image: url('./client/assets/backgrounds/background-black-cubone.jpeg');
+    background-image: url('./client/assets/backgrounds/background-black.jpeg');
     background-size: cover;
     background-repeat: no-repeat;
     background-attachment: fixed;

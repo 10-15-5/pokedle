@@ -1,3 +1,5 @@
+import moment from "moment-timezone"
+
 const guessState = {
     CorrectGuess: "CorrectGuess",
     PartlyCorrectGuess: "PartlyCorrectGuess",
@@ -8,7 +10,8 @@ const guessState = {
 const guessType = {
     Pokemon: 'Pokemon',
     Text: 'Text',
-    Habitat: 'Habitat'
+    Habitat: 'Habitat',
+    Blackout: 'Blackout'
 }
 
 const guessFieldTitles = {
@@ -52,6 +55,13 @@ const Habitats = {
 
 const TotalResultCardFlipDelay = 2750;
 
+const DateOfFirstPokeldeGameClassic = moment('Marts 16, 2023 00:00:00 UTC');
+
+const ClassicGuessesNeededForHintOne = 4;
+const ClassicGuessesNeededForHintTwo = 6;
+const ClassicGuessesNeededForHintThree = 8;
+
+
 export {
     guessState,
     guessFieldTitles,
@@ -60,4 +70,8 @@ export {
     guessType,
     TotalResultCardFlipDelay,
     getGuessFieldTooltipsFromIndex,
+    DateOfFirstPokeldeGameClassic,
+    ClassicGuessesNeededForHintOne,
+    ClassicGuessesNeededForHintTwo,
+    ClassicGuessesNeededForHintThree
 }

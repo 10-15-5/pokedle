@@ -1229,7 +1229,7 @@
         "generation": 1,
         "legendary": "no",
         "evolutionState": 1,
-        "isFullyEvolved": "yes",
+        "isFullyEvolved": "no",
         "habitat": "cave",
         "color": "gray",
         "flavorText": "There is a magnet in its brain that prevents an ___ from losing direction while tunneling. As it grows older, its body becomes steadily rounder and smoother."
@@ -1605,7 +1605,7 @@
         "type2": "psychic",
         "generation": 1,
         "legendary": "no",
-        "evolutionState": 1,
+        "evolutionState": 2,
         "isFullyEvolved": "yes",
         "habitat": "urban",
         "color": "red",
@@ -1775,7 +1775,7 @@
         "generation": 1,
         "legendary": "no",
         "evolutionState": 1,
-        "isFullyEvolved": "yes",
+        "isFullyEvolved": "no",
         "habitat": "urban",
         "color": "pink",
         "flavorText": "It is capable of reverting itself entirely back to program data in order to enter cyberspace. A ___ is copy- protected so it cannot be duplicated."
@@ -2230,7 +2230,7 @@
         "generation": 2,
         "legendary": "no",
         "evolutionState": 1,
-        "isFullyEvolved": "yes",
+        "isFullyEvolved": "no",
         "habitat": "forest",
         "color": "yellow",
         "flavorText": "It is still inept at retaining electricity. When it is startled, it discharges power accidentally. It gets better at holding power as it grows older."

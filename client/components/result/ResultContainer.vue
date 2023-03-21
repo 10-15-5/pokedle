@@ -6,7 +6,7 @@
         <div v-for="(field, k, i) in guessResult.fields" :key="k" :value="field">
             <ResultSquare
                 :pokemon="removeSpecialCharactersExceptDashFromString(field.name)"
-                :color="color"
+                :color="guessResult.color"
                 :guessResult="field.guessState"
                 :habitat="field.habitat"
                 :flipDelay="i - 1"
@@ -28,7 +28,6 @@ const store = useStore();
 const props = defineProps({
     pokemonName: String,
     guessResult: Object,
-    color: String,
 });
 
 const isAllFieldsCorrectButIncorrectPokemon = ref(false);
