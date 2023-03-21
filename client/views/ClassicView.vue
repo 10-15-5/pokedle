@@ -142,7 +142,7 @@ const setDailyGamesWonCount = async () => {
 };
 
 onBeforeMount(async () => {
-    await Promise.all([loadGameData(), setDailyGamesWonCount()]);
+    await Promise.all([loadClassicGameData(), setDailyGamesWonCount()]);
 });
 
 const playWinnerSound = () => {
@@ -385,19 +385,7 @@ const removePokemonsFromGuessPool = () => {
 
 const setNewDate = () => (localStorage.dayOfLastUpdate = moment().date());
 
-const setNewSecretPokemon = async () => {
-    const response = await apiService.newSecretPokemon();
-    Object.assign(secretPokemon, response.data);
-    localStorage.secretPokemon = JSON.stringify(secretPokemon);
-};
-
-const setSecretPokemon = async () => {
-    const response = await apiService.getSecretPokemon();
-    Object.assign(secretPokemon, response.data);
-    localStorage.secretPokemon = JSON.stringify(secretPokemon);
-};
-
-const loadGameData = async () => {
+const loadClassicGameData = async () => {
     const dayOfLastUpdate = localStorage.dayOfLastUpdate;
     if (!dayOfLastUpdate) setNewDate();
 
