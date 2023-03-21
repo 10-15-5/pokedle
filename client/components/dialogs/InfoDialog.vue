@@ -72,7 +72,6 @@
                 <li>Translation 🇯🇵 🇪🇸 🇮🇳 🇨🇳 🇩🇪 🇫🇷</li>
                 <li>Design / Styling 🧑‍🎨 🎨</li>
                 <li>Feature Development 👷‍♂️</li>
-                <li>CI / CD - GCP GKE/Kubernetes ♻️</li>
             </ul>
             <hr class="divider" />
             <h1 class="mb-2 text-center font-pkmEmerald text-[32px] uppercase">Credit</h1>
