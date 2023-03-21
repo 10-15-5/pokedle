@@ -4,13 +4,18 @@
         <!-- Google tag (gtag.js) -->
         <script async src="https://www.googletagmanager.com/gtag/js?id=G-66GPY85PB5"></script>
         <script>
-            window.dataLayer = window.dataLayer || [];
-            function gtag() {
-                dataLayer.push(arguments);
-            }
-            gtag('js', new Date());
+            if (document.location.hostname.search("pokedle.gg") !== -1) {
+                console.log(import.meta.env);
+                window.dataLayer = window.dataLayer || [];
 
-            gtag('config', 'G-66GPY85PB5');
+                function gtag() {
+                    dataLayer.push(arguments);
+                }
+
+                gtag('js', new Date());
+
+                gtag('config', 'G-66GPY85PB5');
+            }
         </script>
         <link rel="icon" href="client/assets/logo/squirtle.png" />
         <title>Pokedle - A Visual Pokemon Wordle Game!</title>
