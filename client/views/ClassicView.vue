@@ -76,7 +76,7 @@
         <button class="card p-2 text-xs hover:!bg-blue-400" @click="setNewGame">
             Set New Game
         </button>
-        <button class="card p-2 text-xs hover:!bg-pink-400" @click="lauchConfetti">Confetti</button>
+        <button class="card p-2 text-xs hover:!bg-pink-400" @click="launchConfetti(false,false)">Confetti</button>
         <button class="card p-2 text-xs hover:!bg-pink-400" @click="playWinnerSound">
             WIN SOUND
         </button>
@@ -96,7 +96,7 @@ import DailyGamesWonContainer from '../components/DailyGamesWonContainer.vue';
 import ThemeButton from '../components/buttons/ThemeButton.vue';
 import { getGuessResults } from '../services/guess';
 import * as apiService from '../services/api/apiService.js';
-import confetti from 'canvas-confetti';
+import {launchConfetti} from '../services/confetti.js'
 import { useStore } from '../stores/store.js';
 import ResultSquare from '../components/result/ResultSquare.vue';
 import { reactive, ref, onBeforeMount, computed } from 'vue';
@@ -143,14 +143,10 @@ const setDailyGamesWonCount = async () => {
 onBeforeMount(async () => {
     store.loadTheme();
 
-    const [user] = await Promise.all([loadGameData(), setDailyGamesWonCount()]);
+    await Promise.all([loadGameData(), setDailyGamesWonCount()]);
 
     console.log('Loaded at: ' + moment().toString());
     console.log('ENVIRONMENT: ' + ENVIRONMENT);
-
-    if (user) {
-        store.setUser(user);
-    }
 });
 
 const playWinnerSound = () => {
@@ -322,7 +318,7 @@ const decideGame = (guess) => {
             playWinnerSound();
         }, TotalResultCardFlipDelay - 500);
         setTimeout(() => {
-            lauchConfetti();
+            launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
             store.setIsClassicGameWon(true);
             console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
             incrementGamesWonCount();
@@ -465,70 +461,6 @@ const setNewGame = async () => {
     await updateYesterdaysPokemon();
 };
 
-const lauchConfetti = () => {
-    var duration = 3 * 1000;
-    var animationEnd = moment() + duration;
-    var particleCount = 200;
-    var defaults = {
-        startVelocity: 25,
-        spread: 360,
-        ticks: 300,
-        zIndex: 0,
-        scalar: 1.4,
-    };
-
-    if (colors.at(-1) === 'shiny' || componentStore.guesses.length === 1) {
-        defaults.shapes = ['star'];
-        defaults.scalar = 1.1;
-        particleCount = 90;
-        if (colors.at(-1) === 'shiny' && componentStore.guesses.length === 1) {
-            defaults.colors = ['9EFD38', '32CD32', 'A8E4A0', '98FB98', '7CFC00'];
-        } else if (colors.at(-1) === 'shiny') {
-            defaults.colors = ['FFE400', 'FFBD00', 'E89400', 'FFCA6C', 'FDFFB8'];
-        } else if (componentStore.guesses.length === 1) {
-            defaults.colors = ['00E5EE', '00FFFF', 'E0FFFF', '98F5FF'];
-        }
-    }
-
-    const randomInRange = (min, max) => {
-        return Math.random() * (max - min) + min;
-    };
-
-    const fire = () => {
-        var timeLeft = animationEnd - moment();
-
-        if (timeLeft <= 0) {
-            return clearInterval(lauchConfetti);
-        }
-
-        var currParticleCount = particleCount * (timeLeft / duration);
-        // since particles fall down, start a bit higher than random
-        confetti(
-            Object.assign({}, defaults, {
-                currParticleCount,
-                origin: {
-                    x: randomInRange(0.1, 0.3),
-                    y: Math.random() - 0.4,
-                },
-            })
-        );
-        confetti(
-            Object.assign({}, defaults, {
-                currParticleCount,
-                origin: {
-                    x: randomInRange(0.7, 0.9),
-                    y: Math.random() - 0.4,
-                },
-            })
-        );
-    };
-
-    fire();
-
-    setInterval(() => {
-        fire();
-    }, 250);
-};
 </script>
 
 <style scoped>
