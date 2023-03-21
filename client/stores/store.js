@@ -3,10 +3,12 @@ import { computed, reactive, ref } from 'vue';
 
 export const useStore = defineStore('store', () => {
     const user = reactive({});
-    const isClassicGameWon = ref(false);
     const isShiny = ref(false);
     const theme = ref('');
     const isHintMode = ref(false);
+    
+    const isClassicGameWon = ref(false);
+    const isFlavortextGameWon = ref(false);
 
     const setShiny = (isShinyParam) => {
         isShiny.value = isShinyParam;
@@ -60,6 +62,11 @@ export const useStore = defineStore('store', () => {
         localStorage.isClassicGameWon = `${isWon}`;
     };
 
+    const setIsFlavortextGameWon = (isWon) => {
+        isFlavortextGameWon.value = isWon;
+        localStorage.isFlavortextGameWon = `${isWon}`;
+    };
+
     return {
         user,
         isClassicGameWon,
@@ -67,6 +74,7 @@ export const useStore = defineStore('store', () => {
         isHintMode,
         theme,
         isDark,
+        isFlavortextGameWon,
         setUser,
         setIsClassicGameWon,
         toggleShiny,
@@ -76,5 +84,6 @@ export const useStore = defineStore('store', () => {
         setTheme,
         toggleTheme,
         loadTheme,
+        setIsFlavortextGameWon
     };
 });

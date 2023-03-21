@@ -87,4 +87,24 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
     };
 };
 
-export { getGuessResults };
+const removePokemonNameFromArray = (name, names, componentStore) => {
+    let guessRemovedFromList = false;
+    let removedName = '';
+
+    const updatedNames = names.filter((e) => {
+        if (!guessRemovedFromList && e.startsWith(name.toLowerCase())) {
+            removedName = e;
+            guessRemovedFromList = true;
+        } else return {};
+    });
+
+    return {
+        removedName,
+        updatedNames,
+    };
+};
+
+const getRandomColor = () =>
+    localStorage.isShiny === 'true' ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal';
+
+export { getGuessResults, removePokemonNameFromArray, getRandomColor };

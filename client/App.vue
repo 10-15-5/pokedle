@@ -19,7 +19,7 @@
                 </RouterLink>
                 <HeaderContainer />
             </div>
-            <RouterView />
+            <RouterView class="mt-6" />
         </div>
         <div v-if="isDevelopment" class="flex items-center justify-center">
         <button class="card p-2 text-xs hover:!bg-green-400" @click="revealPokemon">Reveal</button>
@@ -47,8 +47,10 @@ import * as apiService from './services/api/apiService.js';
 import { useStore } from './stores/store.js';
 import moment from 'moment-timezone';
 import { launchConfetti } from './services/confetti';
-import { setNewSecretPokemon, setSecretPokemon, clearLocalstorageClassic } from './services/classic.js';
+import { setNewSecretPokemonClassic, setSecretPokemonClassic } from './services/classic.js';
+import { clearLocalStorageGameMode } from './services/localStorage';
 import { playWinnerSound } from './services/sound';
+import {GameModes} from './constants'
 
 const store = useStore();
 
@@ -104,9 +106,12 @@ const loadIsHintMode = () => {
 const getNewGame = async () => {
 
     //Classic
-    clearLocalstorageClassic();
-    await setSecretPokemon();
+    clearLocalStorageGameMode(GameModes.Classic);
+    await setSecretPokemonClassic();
 
+    //Flavortext
+    clearLocalStorageGameMode(GameModes.Flavortext)
+    //TODO: implement
 
     location.reload();
 };
@@ -115,10 +120,13 @@ const getNewGame = async () => {
 const setNewGame = async () => {
 
     //Classic
-    clearLocalstorageClassic();
-    await setNewSecretPokemon();
+    clearLocalStorageGameMode(GameModes.Classic);
+    await setNewSecretPokemonClassic();
 
-    
+    //Flavortext
+    clearLocalStorageGameMode(GameModes.Flavortext)
+    //TODO: implement
+
     location.reload();  
 };
 

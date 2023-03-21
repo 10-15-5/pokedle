@@ -61,6 +61,11 @@ const ClassicGuessesNeededForHintOne = 4;
 const ClassicGuessesNeededForHintTwo = 6;
 const ClassicGuessesNeededForHintThree = 8;
 
+const GameModes = {
+    Classic: 'Classic',
+    Flavortext: 'Flavortext'
+}
+
 export {
     guessState,
     guessFieldTitles,
@@ -73,4 +78,5 @@ export {
     ClassicGuessesNeededForHintOne,
     ClassicGuessesNeededForHintTwo,
     ClassicGuessesNeededForHintThree,
+    GameModes
 };

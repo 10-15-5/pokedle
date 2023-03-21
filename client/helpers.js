@@ -19,4 +19,17 @@ const getCurrentClassicPokemonNumber = () => {
     return Math.round((todayInMS - DateOfFirstPokeldeGameClassic.valueOf()) / oneDayInMS);
 };
 
-export { removeSpecialCharactersExceptDashFromString, getCookie, getCurrentClassicPokemonNumber };
+const lowerCaseAndCapitalizeWord = (word) => {
+
+    if(typeof word !== 'string') throw new Error("word must be string");
+
+    const lowerCaseWord = word.toLowerCase();
+    const capitalizedWord = lowerCaseWord.charAt(0).toUpperCase() + lowerCaseWord.slice(1);
+
+    return {
+        lowerCaseWord,
+        capitalizedWord,
+    }
+}
+
+export { removeSpecialCharactersExceptDashFromString, getCookie, getCurrentClassicPokemonNumber,lowerCaseAndCapitalizeWord };
