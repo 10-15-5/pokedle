@@ -21,18 +21,36 @@
             </div>
             <RouterView />
         </div>
+        <div v-if="isDevelopment" class="flex items-center justify-center">
+        <button class="card p-2 text-xs hover:!bg-green-400" @click="revealPokemon">Reveal</button>
+        <button class="card p-2 text-xs hover:!bg-purple-400" @click="getNewGame">
+            Get New Game
+        </button>
+        <button class="card p-2 text-xs hover:!bg-blue-400" @click="setNewGame">
+            Set New Game
+        </button>
+        <button class="card p-2 text-xs hover:!bg-pink-400" @click="launchConfetti(false, false)">
+            Confetti
+        </button>
+        <button class="card p-2 text-xs hover:!bg-pink-400" @click="playWinnerSound">
+            WIN SOUND
+        </button>
+    </div>
     </div>
 </template>
 
 <script setup>
 import HeaderContainer from './components/headerIcons/HeaderIconContainer.vue';
 import ThemeButton from './components/buttons/ThemeButton.vue';
-import { reactive, ref, onBeforeMount } from 'vue';
+import { reactive, ref, onBeforeMount, computed } from 'vue';
 import * as apiService from './services/api/apiService.js';
 import { useStore } from './stores/store.js';
 import moment from 'moment-timezone';
+import { launchConfetti } from './services/confetti';
 
 const store = useStore();
+
+const isDevelopment = computed(() => ENVIRONMENT === 'development');
 
 onBeforeMount(async () => {
     store.loadTheme();
@@ -49,6 +67,20 @@ onBeforeMount(async () => {
         store.setUser(user);
     }
 });
+
+const setNewSecretPokemon = async () => {
+    const response = await apiService.newSecretPokemon();
+    //Object.assign(secretPokemon, response.data);
+    console.log(response);
+    localStorage.secretPokemon = JSON.stringify(response.data);
+};
+
+const setSecretPokemon = async () => {
+    const response = await apiService.getSecretPokemon();
+    //Object.assign(secretPokemon, response.data);
+    console.log(response);
+    localStorage.secretPokemon = JSON.stringify(response.data);
+};
 
 const getOrCreateUser = async () => {
     const userId = localStorage.userId;
@@ -79,6 +111,31 @@ const loadIsHintMode = () => {
     } else {
         store.setHintMode(false);
     }
+};
+
+const getNewGame = async () => {
+    localStorage.removeItem('secretPokemon');
+    localStorage.removeItem('guesses');
+    localStorage.removeItem('colors');
+    localStorage.removeItem('isClassicGameWon');
+    await setSecretPokemon();
+    location.reload();
+};
+
+// Force update pokemon in DB
+const setNewGame = async () => {
+    localStorage.removeItem('secretPokemon');
+    localStorage.removeItem('guesses');
+    localStorage.removeItem('colors');
+    localStorage.removeItem('isClassicGameWon');  
+    await setNewSecretPokemon();
+    location.reload();  
+};
+
+const revealPokemon = async () => {
+    console.log(localStorage.secretPokemon);
+    const backendResponse = await apiService.getSecretPokemon();
+    console.log(backendResponse.data);
 };
 </script>
 

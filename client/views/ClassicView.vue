@@ -68,21 +68,6 @@
         </div>
         <PreviousPokemonCard v-else :pokemonName="yesterdaysPokemon.name" />
     </div>
-    <div v-if="isDevelopment" class="flex items-center justify-center">
-        <button class="card p-2 text-xs hover:!bg-green-400" @click="revealPokemon">Reveal</button>
-        <button class="card p-2 text-xs hover:!bg-purple-400" @click="getNewGame">
-            Get New Game
-        </button>
-        <button class="card p-2 text-xs hover:!bg-blue-400" @click="setNewGame">
-            Set New Game
-        </button>
-        <button class="card p-2 text-xs hover:!bg-pink-400" @click="launchConfetti(false, false)">
-            Confetti
-        </button>
-        <button class="card p-2 text-xs hover:!bg-pink-400" @click="playWinnerSound">
-            WIN SOUND
-        </button>
-    </div>
 </template>
 
 <script setup>
@@ -113,8 +98,6 @@ import { getCurrentClassicPokemonNumber } from '../helpers.js';
 import moment from 'moment-timezone';
 
 const store = useStore();
-
-const isDevelopment = computed(() => ENVIRONMENT === 'development');
 
 const getSortedPokemonNames = () => pokemonData.map((pokemonInfo) => pokemonInfo.name).sort();
 
@@ -386,6 +369,7 @@ const removePokemonsFromGuessPool = () => {
 const setNewDate = () => (localStorage.dayOfLastUpdate = moment().date());
 
 const loadClassicGameData = async () => {
+    console.log("load classic");
     const dayOfLastUpdate = localStorage.dayOfLastUpdate;
     if (!dayOfLastUpdate) setNewDate();
 
@@ -410,12 +394,6 @@ const loadClassicGameData = async () => {
     updateYesterdaysPokemon();
 };
 
-const revealPokemon = async () => {
-    console.log(localStorage.secretPokemon);
-    const backendResponse = await apiService.getSecretPokemon();
-    console.log(backendResponse.data);
-};
-
 const newGame = async () => {
     localStorage.removeItem('secretPokemon');
     localStorage.removeItem('guesses');
@@ -425,22 +403,9 @@ const newGame = async () => {
     instantIsClassicGameWon.value = false;
     componentStore.guesses.splice(0);
     componentStore.pokemonNames = getSortedPokemonNames();
-    setNewDate();
     store.setIsClassicGameWon(false);
 };
 
-const getNewGame = async () => {
-    await newGame();
-    await setSecretPokemon();
-    await updateYesterdaysPokemon();
-};
-
-// Force update pokemon in DB
-const setNewGame = async () => {
-    await newGame();
-    await setNewSecretPokemon();
-    await updateYesterdaysPokemon();
-};
 </script>
 
 <style scoped>
