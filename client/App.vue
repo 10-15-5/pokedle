@@ -47,6 +47,8 @@ import * as apiService from './services/api/apiService.js';
 import { useStore } from './stores/store.js';
 import moment from 'moment-timezone';
 import { launchConfetti } from './services/confetti';
+import { setNewSecretPokemon, setSecretPokemon, clearLocalstorageClassic } from './services/classic.js';
+import { playWinnerSound } from './services/sound';
 
 const store = useStore();
 
@@ -67,20 +69,6 @@ onBeforeMount(async () => {
         store.setUser(user);
     }
 });
-
-const setNewSecretPokemon = async () => {
-    const response = await apiService.newSecretPokemon();
-    //Object.assign(secretPokemon, response.data);
-    console.log(response);
-    localStorage.secretPokemon = JSON.stringify(response.data);
-};
-
-const setSecretPokemon = async () => {
-    const response = await apiService.getSecretPokemon();
-    //Object.assign(secretPokemon, response.data);
-    console.log(response);
-    localStorage.secretPokemon = JSON.stringify(response.data);
-};
 
 const getOrCreateUser = async () => {
     const userId = localStorage.userId;
@@ -114,26 +102,28 @@ const loadIsHintMode = () => {
 };
 
 const getNewGame = async () => {
-    localStorage.removeItem('secretPokemon');
-    localStorage.removeItem('guesses');
-    localStorage.removeItem('colors');
-    localStorage.removeItem('isClassicGameWon');
+
+    //Classic
+    clearLocalstorageClassic();
     await setSecretPokemon();
+
+
     location.reload();
 };
 
 // Force update pokemon in DB
 const setNewGame = async () => {
-    localStorage.removeItem('secretPokemon');
-    localStorage.removeItem('guesses');
-    localStorage.removeItem('colors');
-    localStorage.removeItem('isClassicGameWon');  
+
+    //Classic
+    clearLocalstorageClassic();
     await setNewSecretPokemon();
+
+    
     location.reload();  
 };
 
 const revealPokemon = async () => {
-    console.log(localStorage.secretPokemon);
+    console.log(localStorage.classicSecretPokemon);
     const backendResponse = await apiService.getSecretPokemon();
     console.log(backendResponse.data);
 };

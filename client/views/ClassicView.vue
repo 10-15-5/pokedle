@@ -96,6 +96,8 @@ import {
 } from '../constants.js';
 import { getCurrentClassicPokemonNumber } from '../helpers.js';
 import moment from 'moment-timezone';
+import { setSecretPokemon, clearLocalstorageClassic } from '../services/classic';
+import { playWinnerSound } from '../services/sound';
 
 const store = useStore();
 
@@ -127,17 +129,6 @@ const setDailyGamesWonCount = async () => {
 onBeforeMount(async () => {
     await Promise.all([loadClassicGameData(), setDailyGamesWonCount()]);
 });
-
-const playWinnerSound = () => {
-    const audioEmeraldWinMusic = new Audio('/client/assets/audio/emerald-winner.mp3');
-    const audioFireworks = new Audio('/client/assets/audio/fireworks.mp3');
-
-    audioEmeraldWinMusic.volume = 0.2;
-    audioFireworks.volume = 0.15;
-
-    audioEmeraldWinMusic.play();
-    audioFireworks.play();
-};
 
 const removePokemonFromGuessPool = (guess) => {
     let guessRemovedFromList = false;
@@ -312,11 +303,11 @@ const updateYesterdaysPokemon = async () => {
 };
 
 const addGuessesToLocalStorage = () => {
-    localStorage.guesses = JSON.stringify(componentStore.guesses);
+    localStorage.classicGuesses = JSON.stringify(componentStore.guesses);
 };
 
 const addColorsToLocalStorage = () => {
-    localStorage.colors = JSON.stringify(colors);
+    localStorage.classicColors = JSON.stringify(colors);
 };
 
 const submitGuess = (guess) => {
@@ -331,26 +322,27 @@ const submitGuess = (guess) => {
     addGuessesToLocalStorage();
     addColorsToLocalStorage();
     setHintTwo();
-
     decideGame(pokemonName);
 };
 
-const loadSecretPokemon = () =>
-    Object.assign(secretPokemon, JSON.parse(localStorage.secretPokemon));
+const loadSecretPokemon = () => {
+    if (!localStorage.classicSecretPokemon) return;
+    Object.assign(secretPokemon, JSON.parse(localStorage.classicSecretPokemon));
+};
 
 const loadGuesses = () => {
-    const guesses = localStorage.guesses;
+    const guesses = localStorage.classicGuesses;
     if (guesses) componentStore.guesses = JSON.parse(guesses);
 };
 
 const loadColors = () => {
-    const loadedColors = localStorage.getItem('colors');
+    const loadedColors = localStorage.classicColors;
     if (loadedColors) colors = JSON.parse(loadedColors);
 };
 
 const loadIsClassicGameWon = () => {
     const loadedIsClassicGameWon = localStorage.isClassicGameWon;
-    if (loadedIsClassicGameWon === 'true') {
+    if (loadedIsClassicGameWon && loadedIsClassicGameWon === 'true') {
         store.setIsClassicGameWon(true);
     } else {
         store.setIsClassicGameWon(false);
@@ -369,7 +361,6 @@ const removePokemonsFromGuessPool = () => {
 const setNewDate = () => (localStorage.dayOfLastUpdate = moment().date());
 
 const loadClassicGameData = async () => {
-    console.log("load classic");
     const dayOfLastUpdate = localStorage.dayOfLastUpdate;
     if (!dayOfLastUpdate) setNewDate();
 
@@ -381,29 +372,20 @@ const loadClassicGameData = async () => {
         secretPokemon &&
         secretPokemon?.name === currSecretPokemon?.name
     ) {
+        //Load
         loadColors();
         loadGuesses();
         loadIsClassicGameWon();
         removePokemonsFromGuessPool();
     } else {
-        newGame();
+        //Fresh game
+        clearLocalstorageClassic();
+        store.setIsClassicGameWon(false);
         await setSecretPokemon();
     }
     setNewDate();
     setHintTwo();
     updateYesterdaysPokemon();
-};
-
-const newGame = async () => {
-    localStorage.removeItem('secretPokemon');
-    localStorage.removeItem('guesses');
-    localStorage.removeItem('colors');
-    localStorage.removeItem('isClassicGameWon');
-    colors = [];
-    instantIsClassicGameWon.value = false;
-    componentStore.guesses.splice(0);
-    componentStore.pokemonNames = getSortedPokemonNames();
-    store.setIsClassicGameWon(false);
 };
 
 </script>
