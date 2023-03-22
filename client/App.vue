@@ -77,11 +77,11 @@ const getOrCreateUser = async () => {
 
     console.log(userId);
     if (userId) {
-        await apiService.updateUserStreak(userId);
+        await apiService.updateUserStreaks(userId);
         const response = await apiService.getUser(userId);
         return response.data.user;
     }
-
+    
     const response = await apiService.createUser();
     const { user } = response.data;
     localStorage.userId = user._id;
@@ -134,7 +134,7 @@ const setNewGame = async () => {
 
 const revealPokemon = async () => {
     console.log(localStorage.classicSecretPokemon);
-    const backendResponse = await apiService.getSecretPokemon();
+    const backendResponse = await apiService.getClassicSecretPokemon();
     console.log(backendResponse.data);
 };
 </script>

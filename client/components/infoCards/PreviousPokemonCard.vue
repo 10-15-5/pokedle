@@ -8,8 +8,6 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
-import { getPreviousSecretPokemon } from '../../services/api/apiService.js';
 
 const props = defineProps({
     pokemonName: String,

@@ -33,8 +33,8 @@ import { launchConfetti } from '../services/confetti.js';
 import { GameModes } from '../constants';
 import * as apiService from '../services/api/apiService.js';
 import moment from 'moment';
-import { setNewSecretPokemonFlavortext, setSecretPokemonFlavortext  } from '../services/flavortext';
 import { clearLocalStorageGameMode, setNewDate, addColorsToLocalStorage, addGuessesToLocalStorage } from '../services/localStorage';
+import { setSecretPokemon } from '../services/game';
 
 
 const store = useStore();
@@ -60,9 +60,8 @@ onBeforeMount(async () => {
 
 const setDailyGamesWonCount = async () => {
     const date = moment().format('YYYY-MM-DD');
-    return     //TODO: implement
     const res = await apiService.getDailyStats(date);
-    dailyGamesWon.value = res.data.gamesWon;
+    dailyGamesWon.value = res.data.flavortextGamesWon;
 };
 
 const loadSecretPokemon = () => {
@@ -70,12 +69,16 @@ const loadSecretPokemon = () => {
     Object.assign(secretPokemon, JSON.parse(localStorage.flavortextSecretPokemon));
 };
 
+const updateYesterdaysPokemon = async () => {
+    yesterdaysPokemon.value = (await apiService.getFlavortextPreviousSecretPokemon()).data;
+};
+
 const loadFlavortextGameData = async () => {
     const dayOfLastUpdate = localStorage.dayOfLastUpdate;
     if (!dayOfLastUpdate) setNewDate();
 
     loadSecretPokemon();
-    const currSecretPokemon = await (await apiService.getSecretPokemon()).data; //TODO: Implement
+    const currSecretPokemon = await (await apiService.getFlavortextSecretPokemon()).data;
 
     if (
         parseInt(dayOfLastUpdate) == moment().date() &&
@@ -91,10 +94,10 @@ const loadFlavortextGameData = async () => {
         //Fresh game TODO: Implement
         clearLocalStorageGameMode(GameModes.Flavortext);
         store.setIsFlavortextGameWon(false);
-        await setSecretPokemonFlavortext();
+        await setSecretPokemon(GameModes.Flavortext);
         setNewDate();
     }
-    updateYesterdaysPokemon(); //TODO: Implement
+    updateYesterdaysPokemon();
 };
 
 const decideGame = (guess) => {

@@ -242,7 +242,7 @@ const setHintTwo = () => {
 };
 
 const incrementGamesWonCount = async () => {
-    const response = await apiService.updateDailyGamesWonCount(componentStore.guesses.length);
+    const response = await apiService.updateStatsClassicWins(componentStore.guesses.length);
     dailyGamesWon.value = response.data.dailyStats.gamesWon;
     dailyFirstTryWins.value = response.data.dailyStats.firstTryWins;
 };
@@ -250,7 +250,7 @@ const incrementGamesWonCount = async () => {
 const updateUserWithGameWon = async () => {
     const userId = localStorage.userId;
     if (userId) {
-        const response = await apiService.updateUserWithGameWon(
+        const response = await apiService.updateUserClassicWins(
             userId,
             componentStore.guesses.length
         );
@@ -278,7 +278,7 @@ const decideGame = (guess) => {
 };
 
 const updateYesterdaysPokemon = async () => {
-    yesterdaysPokemon.value = (await apiService.getPreviousSecretPokemon()).data;
+    yesterdaysPokemon.value = (await apiService.getClassicPreviousSecretPokemon()).data;
 };
 
 const submitGuess = (guess) => {
@@ -335,7 +335,7 @@ const loadClassicGameData = async () => {
     if (!dayOfLastUpdate) setNewDate();
 
     loadSecretPokemon();
-    const currSecretPokemon = await (await apiService.getSecretPokemon()).data;
+    const currSecretPokemon = await (await apiService.getClassicSecretPokemon()).data;
 
     if (
         parseInt(dayOfLastUpdate) == moment().date() &&

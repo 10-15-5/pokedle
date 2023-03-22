@@ -30,8 +30,8 @@ func SetupRoutes(router *gin.Engine) {
 		api.PATCH("/users/:userId", controllers.UpdateUserStreaks) //To update streak on load
 		api.POST("/users", controllers.CreateUser)
 
-		api.POST("/users/:userId/classic-game-won", controllers.HandleUserClassicGameWon)
-		api.POST("/users/:userId/flavortext-game-won", controllers.HandleUserFlavortextGameWon)
+		api.POST("/users/:userId/classic-wins", controllers.HandleUserClassicGameWon)
+		api.POST("/users/:userId/flavortext-wins", controllers.HandleUserFlavortextGameWon)
 	}
 
 	// curl http://localhost:3000/health --include --header "Content-Type: application/json" --request "GET"

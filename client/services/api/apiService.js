@@ -1,33 +1,40 @@
 import { apiClient } from '../api/httpClient.js';
 
-const getSecretPokemon = () => apiClient().get(`secret-pokemons`);
+const getClassicSecretPokemon = () => apiClient().get(`classic-secret-pokemons`);
+const getClassicPreviousSecretPokemon = () => apiClient().get(`classic-previous-secret-pokemons`);
+const newClassicSecretPokemon = () => apiClient().post(`classic-secret-pokemons`);
+const updateUserClassicWins = (userId, numberOfGuesses) =>
+    apiClient().post(`users/${userId}/classic-wins`, { numberOfGuesses });
 
-const getPreviousSecretPokemon = () => apiClient().get(`previous-secret-pokemons`);
+const getFlavortextSecretPokemon = () => apiClient().get(`flavortext-secret-pokemons`);
+const getFlavortextPreviousSecretPokemon = () => apiClient().get(`flavortext-previous-secret-pokemons`);
+const newFlavortextSecretPokemon = () => apiClient().post(`flavortext-secret-pokemons`);
+const updateUserFlavortextWins = (userId, numberOfGuesses) =>
+    apiClient().post(`users/${userId}/flavortext-wins`, { numberOfGuesses });
 
-const newSecretPokemon = () => apiClient().post(`secret-pokemons`);
-
-const updateDailyGamesWonCount = (numberOfGuesses) =>
-    apiClient().post(`games-won`, { numberOfGuesses });
-
+const updateStatsClassicWins = (numberOfGuesses) => apiClient().post(`classic-games-won`, { numberOfGuesses });
+const updateStatsFlavortextWins = (numberOfGuesses) => apiClient().post(`classic-games-won`, { numberOfGuesses });
 const getDailyStats = (date) => apiClient().get(`daily-stats/${date}`);
 
 const getUser = (userId) => apiClient().get(`users/${userId}`);
 
 const createUser = () => apiClient().post(`users`);
 
-const updateUserStreak = (userId) => apiClient().patch(`users/${userId}`);
-
-const updateUserWithGameWon = (userId, numberOfGuesses) =>
-    apiClient().post(`users/${userId}/gamesWon`, { numberOfGuesses });
+const updateUserStreaks = (userId) => apiClient().patch(`users/${userId}`);
 
 export {
-    getSecretPokemon,
-    newSecretPokemon,
-    updateDailyGamesWonCount,
+    getClassicSecretPokemon,
+    newClassicSecretPokemon,
+    getClassicPreviousSecretPokemon,
+    updateStatsClassicWins,
+    updateUserClassicWins,
+    getFlavortextSecretPokemon,
+    getFlavortextPreviousSecretPokemon,
+    newFlavortextSecretPokemon,
+    updateStatsFlavortextWins,
+    updateUserFlavortextWins,
     getDailyStats,
     createUser,
     getUser,
-    updateUserWithGameWon,
-    updateUserStreak,
-    getPreviousSecretPokemon,
+    updateUserStreaks,
 };
