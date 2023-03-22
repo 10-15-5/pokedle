@@ -22,20 +22,12 @@
             <RouterView class="mt-6" />
         </div>
         <div v-if="isDevelopment" class="flex items-center justify-center">
-        <button class="card p-2 text-xs hover:!bg-green-400" @click="revealPokemon">Reveal</button>
-        <button class="card p-2 text-xs hover:!bg-purple-400" @click="getNewGame">
-            Get New Game
-        </button>
-        <button class="card p-2 text-xs hover:!bg-blue-400" @click="setNewGame">
-            Set New Game
-        </button>
-        <button class="card p-2 text-xs hover:!bg-pink-400" @click="launchConfetti(false, false)">
-            Confetti
-        </button>
-        <button class="card p-2 text-xs hover:!bg-pink-400" @click="playWinnerSound">
-            WIN SOUND
-        </button>
-    </div>
+            <button class="card p-2 text-xs hover:!bg-green-400" @click="revealPokemon">Reveal</button>
+            <button class="card p-2 text-xs hover:!bg-purple-400" @click="getNewGame">Get New Game</button>
+            <button class="card p-2 text-xs hover:!bg-blue-400" @click="setNewGame">Set New Game</button>
+            <button class="card p-2 text-xs hover:!bg-pink-400" @click="launchConfetti(false, false)">Confetti</button>
+            <button class="card p-2 text-xs hover:!bg-pink-400" @click="playWinnerSound">WIN SOUND</button>
+        </div>
     </div>
 </template>
 
@@ -50,7 +42,7 @@ import { launchConfetti } from './services/confetti';
 import { setNewSecretPokemon, setSecretPokemon } from './services/game.js';
 import { clearLocalStorageGameMode } from './services/localStorage';
 import { playWinnerSound } from './services/sound';
-import {GameModes} from './constants'
+import { GameModes } from './constants';
 
 const store = useStore();
 
@@ -81,7 +73,7 @@ const getOrCreateUser = async () => {
         const response = await apiService.getUser(userId);
         return response.data.user;
     }
-    
+
     const response = await apiService.createUser();
     const { user } = response.data;
     localStorage.userId = user._id;
@@ -104,14 +96,13 @@ const loadIsHintMode = () => {
 };
 
 const getNewGame = async () => {
-
     //Classic
     clearLocalStorageGameMode(GameModes.Classic);
-    await setSecretPokemon(GameModes.Classic)
+    await setSecretPokemon(GameModes.Classic);
 
     //Flavortext
-    clearLocalStorageGameMode(GameModes.Flavortext)
-    await setSecretPokemon(GameModes.Flavortext)
+    clearLocalStorageGameMode(GameModes.Flavortext);
+    await setSecretPokemon(GameModes.Flavortext);
     //TODO: implement
 
     location.reload();
@@ -119,23 +110,28 @@ const getNewGame = async () => {
 
 // Force update pokemon in DB
 const setNewGame = async () => {
-
     //Classic
     clearLocalStorageGameMode(GameModes.Classic);
     await setNewSecretPokemon(GameModes.Classic);
 
     //Flavortext
-    clearLocalStorageGameMode(GameModes.Flavortext)
+    clearLocalStorageGameMode(GameModes.Flavortext);
     await setNewSecretPokemon(GameModes.Flavortext);
-    //TODO: implement
 
-    location.reload();  
+    location.reload();
 };
 
 const revealPokemon = async () => {
-    console.log(localStorage.classicSecretPokemon);
-    const backendResponse = await apiService.getClassicSecretPokemon();
-    console.log(backendResponse.data);
+    const [responseClassic, responseFlavortext] = await Promise.all([
+        apiService.getClassicSecretPokemon(),
+        apiService.getFlavortextSecretPokemon(),
+    ]);
+
+    const classicSecret = JSON.parse(localStorage.classicSecretPokemon)
+    console.log(`Classic Secret: LS: ${classicSecret.name}, DB: ${responseClassic.data.name}`);
+
+    const flavortextSecret = JSON.parse(localStorage.flavortextSecretPokemon)
+    console.log(`Flavortext Secret: LS: ${flavortextSecret.name}, DB: ${responseFlavortext.data.name}`);
 };
 </script>
 

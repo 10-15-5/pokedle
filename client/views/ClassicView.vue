@@ -243,8 +243,8 @@ const setHintTwo = () => {
 
 const incrementGamesWonCount = async () => {
     const response = await apiService.updateStatsClassicWins(componentStore.guesses.length);
-    dailyGamesWon.value = response.data.dailyStats.gamesWon;
-    dailyFirstTryWins.value = response.data.dailyStats.firstTryWins;
+    dailyGamesWon.value = response.data.classicDailyStats.gamesWon;
+    dailyFirstTryWins.value = response.data.classicDailyStats.firstTryWins;
 };
 
 const updateUserWithGameWon = async () => {

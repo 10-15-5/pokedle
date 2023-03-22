@@ -51,12 +51,7 @@ const dailyFirstTryWins = ref(0);
 const yesterdaysPokemon = ref('');
 //Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
 let colors = [];
-
 const secretPokemon = reactive({});
-
-onBeforeMount(async () => {
-    await Promise.all([loadFlavortextGameData(), setDailyGamesWonCount()]);
-});
 
 const setDailyGamesWonCount = async () => {
     const date = moment().format('YYYY-MM-DD');
@@ -64,13 +59,95 @@ const setDailyGamesWonCount = async () => {
     dailyGamesWon.value = res.data.flavortextGamesWon;
 };
 
+onBeforeMount(async () => {
+    await Promise.all([loadFlavortextGameData(), setDailyGamesWonCount()]);
+});
+
+const incrementGamesWonCount = async () => {
+    const response = await apiService.updateStatsFlavortextWins(componentStore.guesses.length);
+    dailyGamesWon.value = response.data.flavortextDailyStats.gamesWon;
+    dailyFirstTryWins.value = response.data.flavortextDailyStats.firstTryWins;
+};
+
+const updateUserWithGameWon = async () => {
+    const userId = localStorage.userId;
+    if (userId) {
+        const response = await apiService.updateUserFlavortextWins(
+            userId,
+            componentStore.guesses.length
+        );
+        store.setUser(response.data.user);
+    }
+};
+
+const decideGame = (guess) => {
+    if (guess === secretPokemon.name) {
+        //Wait for all cards to flip
+        setTimeout(() => {
+            playWinnerSound();
+        }, 400);
+        setTimeout(() => {
+            launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
+            store.setIsFlavortextGameWon(true);
+            console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
+            incrementGamesWonCount();
+            updateUserWithGameWon(); 
+        }, 1000);
+    } else {
+        console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
+    }
+};
+
+const updateYesterdaysPokemon = async () => {
+    yesterdaysPokemon.value = (await apiService.getFlavortextPreviousSecretPokemon()).data;
+};
+
+const submitGuess = (guess) => {
+    if (!guess) return;
+
+    const { removedName, updatedNames } = removePokemonNameFromArray(guess, componentStore.pokemonNames, componentStore);
+
+    if (updatedNames.length >= componentStore.pokemonNames.length) return;
+
+    colors.push(getRandomColor());
+    componentStore.guesses.unshift(removedName);
+    componentStore.pokemonNames = updatedNames;
+    addGuessesToLocalStorage(GameModes.Flavortext, componentStore.guesses);
+    addColorsToLocalStorage(GameModes.Flavortext, colors);
+    decideGame(removedName);
+};
+
 const loadSecretPokemon = () => {
     if (!localStorage.flavortextSecretPokemon) return;
     Object.assign(secretPokemon, JSON.parse(localStorage.flavortextSecretPokemon));
 };
 
-const updateYesterdaysPokemon = async () => {
-    yesterdaysPokemon.value = (await apiService.getFlavortextPreviousSecretPokemon()).data;
+const loadGuesses = () => {
+    const guesses = localStorage.flavortextGuesses;
+    if (guesses) componentStore.guesses = JSON.parse(guesses);
+};
+
+const loadColors = () => {
+    const loadedColors = localStorage.flavortextColors;
+    if (loadedColors) colors = JSON.parse(loadedColors);
+};
+
+const loadIsFlavortextGameWon = () => {
+    const loadedIsFlavortextGameWon = localStorage.isFlavortextGameWon;
+    if (loadedIsFlavortextGameWon && loadedIsFlavortextGameWon === 'true') {
+        store.setIsFlavortextGameWon(true);
+    } else {
+        store.setIsFlavortextGameWon(false);
+    }
+};
+
+const removePokemonsFromGuessPool = () => {
+    componentStore.pokemonNames = componentStore.pokemonNames.filter((pokemon) => {
+        for (const guessedPokemon of componentStore.guesses) {
+            if (guessedPokemon === pokemon) return false;
+        }
+        return true;
+    });
 };
 
 const loadFlavortextGameData = async () => {
@@ -88,7 +165,7 @@ const loadFlavortextGameData = async () => {
         //Load TODO: Implement
         loadColors();
         loadGuesses();
-        loadIsClassicGameWon();
+        loadIsFlavortextGameWon();
         removePokemonsFromGuessPool();
     } else {
         //Fresh game TODO: Implement
@@ -98,38 +175,5 @@ const loadFlavortextGameData = async () => {
         setNewDate();
     }
     updateYesterdaysPokemon();
-};
-
-const decideGame = (guess) => {
-    if (guess === secretPokemon.name) {
-        //Wait for all cards to flip
-        setTimeout(() => {
-            playWinnerSound();
-        }, 400);
-        setTimeout(() => {
-            launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
-            store.setIsClassicGameWon(true);
-            console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
-            incrementGamesWonCount(); //TODO: implement
-            updateUserWithGameWon(); //TODO: implement
-        }, 1000);
-    } else {
-        console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
-    }
-};
-
-const submitGuess = (guess) => {
-    if (!guess) return;
-
-    const { removedName, updatedNames } = removePokemonNameFromArray(guess, componentStore.pokemonNames, componentStore);
-
-    if (updatedNames.length >= componentStore.pokemonNames.length) return;
-
-    colors.push(getRandomColor());
-    componentStore.guesses.unshift(removedName);
-    componentStore.pokemonNames = updatedNames;
-    addGuessesToLocalStorage(GameModes.Flavortext, componentStore.guesses);
-    addColorsToLocalStorage(GameModes.Flavortext, colors);
-    decideGame(removedName);
 };
 </script>
