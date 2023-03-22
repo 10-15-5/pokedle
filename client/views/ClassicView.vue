@@ -95,7 +95,7 @@ import {
 } from '../constants.js';
 import { getCurrentClassicPokemonNumber } from '../helpers.js';
 import moment from 'moment-timezone';
-import { setSecretPokemonClassic } from '../services/classic';
+import { setSecretPokemon } from '../services/game';
 import { playWinnerSound } from '../services/sound';
 import { clearLocalStorageGameMode, setNewDate, addColorsToLocalStorage, addGuessesToLocalStorage } from '../services/localStorage';
 
@@ -351,7 +351,7 @@ const loadClassicGameData = async () => {
         //Fresh game
         clearLocalStorageGameMode(GameModes.Classic);
         store.setIsClassicGameWon(false);
-        await setSecretPokemonClassic();
+        await setSecretPokemon(GameModes.Classic);
         setNewDate();
     }
     setHintTwo();

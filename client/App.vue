@@ -47,7 +47,7 @@ import * as apiService from './services/api/apiService.js';
 import { useStore } from './stores/store.js';
 import moment from 'moment-timezone';
 import { launchConfetti } from './services/confetti';
-import { setNewSecretPokemonClassic, setSecretPokemonClassic } from './services/classic.js';
+import { setNewSecretPokemon, setSecretPokemon } from './services/game.js';
 import { clearLocalStorageGameMode } from './services/localStorage';
 import { playWinnerSound } from './services/sound';
 import {GameModes} from './constants'
@@ -107,10 +107,11 @@ const getNewGame = async () => {
 
     //Classic
     clearLocalStorageGameMode(GameModes.Classic);
-    await setSecretPokemonClassic();
+    await setSecretPokemon(GameModes.Classic)
 
     //Flavortext
     clearLocalStorageGameMode(GameModes.Flavortext)
+    await setSecretPokemon(GameModes.Flavortext)
     //TODO: implement
 
     location.reload();
@@ -121,10 +122,11 @@ const setNewGame = async () => {
 
     //Classic
     clearLocalStorageGameMode(GameModes.Classic);
-    await setNewSecretPokemonClassic();
+    await setNewSecretPokemon(GameModes.Classic);
 
     //Flavortext
     clearLocalStorageGameMode(GameModes.Flavortext)
+    await setNewSecretPokemon(GameModes.Flavortext);
     //TODO: implement
 
     location.reload();  
