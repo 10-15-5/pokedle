@@ -30,10 +30,10 @@ func GetPokemonRepository(mongoClient *mongo.Client) *pokemonRepository {
 	return r
 }
 
-func (r *pokemonRepository) InsertNewPokemon(ctx context.Context, pokemon models.Pokemon) (*mongo.InsertOneResult, error) {
+func (r *pokemonRepository) InsertNewPokemon(ctx context.Context, pokemon models.Pokemon, collection string) (*mongo.InsertOneResult, error) {
 	fmt.Println("Pokemon:", pokemon)
 
-	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collection)
 	fmt.Println("Collection fetched")
 
 	result, err := coll.InsertOne(context.TODO(), pokemon)
@@ -42,8 +42,8 @@ func (r *pokemonRepository) InsertNewPokemon(ctx context.Context, pokemon models
 	return result, err
 }
 
-func (r *pokemonRepository) FindCurrentSecretPokemon(ctx context.Context) (models.Pokemon, error) {
-	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+func (r *pokemonRepository) FindCurrentSecretPokemon(ctx context.Context, collection string) (models.Pokemon, error) {
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collection)
 
 	options := options.FindOne().SetSort(bson.M{"_id": -1})
 
@@ -54,8 +54,8 @@ func (r *pokemonRepository) FindCurrentSecretPokemon(ctx context.Context) (model
 	return secretPokemon, err
 }
 
-func (r *pokemonRepository) FindLastTwoSecretPokemon(ctx context.Context) ([]models.Pokemon, error) {
-	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+func (r *pokemonRepository) FindLastTwoSecretPokemon(ctx context.Context, collection string) ([]models.Pokemon, error) {
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collection)
 
 	options := options.Find().SetSort(bson.M{"_id": -1}).SetLimit(2)
 
@@ -70,9 +70,9 @@ func (r *pokemonRepository) FindLastTwoSecretPokemon(ctx context.Context) ([]mod
 	return secretPokemons, err
 }
 
-func (r *pokemonRepository) FindRecentSecretPokemons(ctx context.Context, limit int) []models.Pokemon {
+func (r *pokemonRepository) FindLastSecretPokemons(ctx context.Context, limit int, collection string) []models.Pokemon {
 
-	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collection)
 
 	var secretPokemons []models.Pokemon
 

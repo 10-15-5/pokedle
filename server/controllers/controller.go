@@ -18,40 +18,84 @@ type NumberOfGuessesRequest struct {
 	NumberOfGuesses int `json:"numberOfGuesses" bson:"numberOfGuesses" binding:"required"`
 }
 
-func GetSecretPokemon(c *gin.Context) {
-	secretPokemon, err := services.GetSecretPokemon()
+func GetClassicSecretPokemon(c *gin.Context) {
+	secretPokemon, err := services.GetClassicSecretPokemon()
 
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	c.IndentedJSON(http.StatusOK, secretPokemon)
 }
 
-func GetPreviousSecretPokemon(c *gin.Context) {
-	secretPokemon, err := services.GetPreviousSecretPokemon()
+func GetFlavortextSecretPokemon(c *gin.Context) {
+	secretPokemon, err := services.GetFlavortextSecretPokemon()
 
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	c.IndentedJSON(http.StatusOK, secretPokemon)
 }
 
-func NewSecretPokemon(c *gin.Context) {
+func GetClassicPreviousSecretPokemon(c *gin.Context) {
+	secretPokemon, err := services.GetClassicPreviousSecretPokemon()
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, secretPokemon)
+}
+
+func GetFlavortextPreviousSecretPokemon(c *gin.Context) {
+	secretPokemon, err := services.GetFlavortextPreviousSecretPokemon()
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, secretPokemon)
+}
+
+func NewClassicSecretPokemon(c *gin.Context) {
 
 	if os.Getenv("ENVIRONMENT") == "production" {
 		c.JSON(http.StatusBadRequest, "This operation is not supported in production environment")
 		return
 	}
 
-	currentSecretPokemon, _ := services.GetSecretPokemon()
+	currentSecretPokemon, _ := services.GetClassicSecretPokemon()
 
 	pokemonData := data.GetPokemonData()
 
-	secretPokemon := services.NewSecretPokemon(currentSecretPokemon, pokemonData)
+	secretPokemon := services.ClassicNewSecretPokemon(currentSecretPokemon, pokemonData)
 
 	c.IndentedJSON(http.StatusOK, secretPokemon)
+
+	//TODO: also reset dailySecretPokemon for Flavortext
+}
+
+func NewFlavortextSecretPokemon(c *gin.Context) {
+
+	if os.Getenv("ENVIRONMENT") == "production" {
+		c.JSON(http.StatusBadRequest, "This operation is not supported in production environment")
+		return
+	}
+
+	currentSecretPokemon, _ := services.GetClassicSecretPokemon()
+
+	pokemonData := data.GetPokemonData()
+
+	secretPokemon := services.FlavortextNewSecretPokemon(currentSecretPokemon, pokemonData)
+
+	c.IndentedJSON(http.StatusOK, secretPokemon)
+
+	//TODO: also reset dailySecretPokemon for Flavortext
 }
 
 func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
@@ -67,6 +111,7 @@ func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
 	//TODO: increment daily first try wins
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	c.JSON(http.StatusOK, gin.H{"dailyStats": dailyStats})
@@ -78,6 +123,7 @@ func GetDailyStats(c *gin.Context) {
 
 	if err != nil && err != mongo.ErrNoDocuments {
 		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	c.JSON(http.StatusOK, dailyStats)
@@ -90,6 +136,7 @@ func CreateUser(c *gin.Context) {
 
 	if err := services.SaveUser(user); err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
+		return
 	}
 
 	c.SetSameSite(http.SameSiteNoneMode)
@@ -107,6 +154,7 @@ func GetUser(c *gin.Context) {
 
 	if err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	user := services.GetUser(mongoUserId)
@@ -123,20 +171,21 @@ func UpdateUserStreak(c *gin.Context) {
 
 	if err != nil {
 		c.AbortWithStatus(http.StatusBadRequest)
+		return
 	}
 
 	user := services.GetUser(mongoUserId)
 
 	var streak int
 
-	if len(user.GamesWon) > 0 {
+	if len(user.ClassicGamesWon) > 0 {
 
-		lastGameWon := user.GamesWon[len(user.GamesWon)-1]
+		lastGameWon := user.ClassicGamesWon[len(user.ClassicGamesWon)-1]
 
-		streak = services.CalculateStreak(lastGameWon, user.CurrentStreak)
+		streak = services.CalculateStreak(lastGameWon, user.ClassicCurrentStreak)
 	}
 
-	if streak != user.CurrentStreak {
+	if streak != user.ClassicCurrentStreak {
 		services.UpdateUserStreak(mongoUserId, streak)
 		c.AbortWithStatusJSON(200, gin.H{"msg": "Streak Updated"})
 	}
@@ -168,16 +217,16 @@ func UpdateUserGameWon(c *gin.Context) {
 
 	user := services.GetUser(mongoUserId)
 
-	gameWon := models.GameWon{
+	gameWon := models.ClassicGameWon{
 		NumberOfGuesses: updateUserGameWonRequest.NumberOfGuesses,
 		CreatedAt:       time.Now(),
 	}
 
 	var streak int
 
-	if len(user.GamesWon) > 0 {
+	if len(user.ClassicGamesWon) > 0 {
 
-		lastGameWon := user.GamesWon[len(user.GamesWon)-1]
+		lastGameWon := user.ClassicGamesWon[len(user.ClassicGamesWon)-1]
 
 		//TODO: test this and then comment out untill 1 guess a day is implemented
 		if services.DateEqual(time.Now(), lastGameWon.CreatedAt) {
@@ -185,12 +234,12 @@ func UpdateUserGameWon(c *gin.Context) {
 			return
 		}
 
-		streak = services.CalculateStreak(lastGameWon, user.CurrentStreak)
+		streak = services.CalculateStreak(lastGameWon, user.ClassicCurrentStreak)
 	}
 
 	streak++
 
-	maxStreak := int(math.Max(float64(streak), float64(user.MaxStreak)))
+	maxStreak := int(math.Max(float64(streak), float64(user.ClassicMaxStreak)))
 
 	isFirstTryWin := services.If(updateUserGameWonRequest.NumberOfGuesses == 1, 1, 0)
 

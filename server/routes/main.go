@@ -12,13 +12,14 @@ func SetupRoutes(router *gin.Engine) {
 	//TODO: split routes
 	api := router.Group("/api")
 	{
-		// curl http://localhost:3000/api/secret-pokemons --include --header "Content-Type: application/json" --request "GET"
-		api.GET("/secret-pokemons", controllers.GetSecretPokemon)
-		api.GET("/previous-secret-pokemons", controllers.GetPreviousSecretPokemon)
-		// curl http://localhost:3000/api/secret-pokemons --include --header "Content-Type: application/json" --request "POST"
-		api.POST("/secret-pokemons", controllers.NewSecretPokemon)
+		api.GET("/classic-secret-pokemons", controllers.GetClassicSecretPokemon)
+		api.GET("/classic-previous-secret-pokemons", controllers.GetClassicPreviousSecretPokemon)
+		api.POST("/classic-secret-pokemons", controllers.NewClassicSecretPokemon)
 
-		// curl http://localhost:3000/api/games-won --include --header "Content-Type: application/json" --request "POST"
+		api.GET("/flavortext-secret-pokemons", controllers.GetFlavortextSecretPokemon)
+		api.GET("/flavortext-previous-secret-pokemons", controllers.GetFlavortextPreviousSecretPokemon)
+		api.POST("/flavortext-secret-pokemons", controllers.NewFlavortextSecretPokemon)
+
 		api.POST("/games-won", controllers.UpdateCurrentDailyStatsWithGamesWon)
 
 		// curl http://localhost:3000/api/daily-stats/21321 --request "GET"

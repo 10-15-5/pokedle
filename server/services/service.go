@@ -17,23 +17,47 @@ import (
 
 var MongoClient *mongo.Client
 
-func GetSecretPokemon() (models.Pokemon, error) {
+func GetClassicSecretPokemon() (models.Pokemon, error) {
 
 	r := secretPokemon.GetPokemonRepository(MongoClient)
 
-	return r.FindCurrentSecretPokemon(context.TODO())
+	return r.FindCurrentSecretPokemon(context.TODO(), ClassicSecretPokemons)
 }
 
-func GetPreviousSecretPokemon() (models.Pokemon, error) {
+func GetFlavortextSecretPokemon() (models.Pokemon, error) {
 
 	r := secretPokemon.GetPokemonRepository(MongoClient)
 
-	secretPokemons, err := r.FindLastTwoSecretPokemon(context.TODO())
+	return r.FindCurrentSecretPokemon(context.TODO(), FlavortextSecretPokemons)
+}
+
+func GetClassicPreviousSecretPokemon() (models.Pokemon, error) {
+
+	r := secretPokemon.GetPokemonRepository(MongoClient)
+
+	secretPokemons, err := r.FindLastTwoSecretPokemon(context.TODO(), ClassicSecretPokemons)
 
 	return secretPokemons[1], err
 }
 
-func NewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.Pokemon) models.Pokemon {
+func GetFlavortextPreviousSecretPokemon() (models.Pokemon, error) {
+
+	r := secretPokemon.GetPokemonRepository(MongoClient)
+
+	secretPokemons, err := r.FindLastTwoSecretPokemon(context.TODO(), FlavortextSecretPokemons)
+
+	return secretPokemons[1], err
+}
+
+func ClassicNewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.Pokemon) models.Pokemon {
+	return newSecretPokemon(currentSecretPokemon, pokemonData, ClassicSecretPokemons)
+}
+
+func FlavortextNewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.Pokemon) models.Pokemon {
+	return newSecretPokemon(currentSecretPokemon, pokemonData, FlavortextSecretPokemons)
+}
+
+func newSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.Pokemon, collection string) models.Pokemon {
 	containsRandomPokemon := true
 
 	var randomPokemon models.Pokemon
@@ -49,13 +73,20 @@ func NewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.
 
 	r := secretPokemon.GetPokemonRepository(MongoClient)
 
-	r.InsertNewPokemon(context.TODO(), randomPokemon)
+	r.InsertNewPokemon(context.TODO(), randomPokemon, collection)
 
 	fmt.Println("SecretPokemon Updated.")
 	return randomPokemon
 }
 
-func UpdateDailySecretPokemon() error {
+func UpdateClassicDailySecretPokemon() error {
+	return UpdateDailySecretPokemon(ClassicSecretPokemons)
+}
+func UpdateFlavortextDailySecretPokemon() error {
+	return UpdateDailySecretPokemon(FlavortextSecretPokemons)
+}
+
+func UpdateDailySecretPokemon(collection string) error {
 	pokemonData := data.GetPokemonData()
 
 	if pokemonData == nil {
@@ -64,7 +95,7 @@ func UpdateDailySecretPokemon() error {
 
 	r := secretPokemon.GetPokemonRepository(MongoClient)
 
-	recentSecretPokemons := r.FindRecentSecretPokemons(context.TODO(), 30)
+	recentSecretPokemons := r.FindLastSecretPokemons(context.TODO(), 30, collection)
 
 	//TODO: if recentSecretPokemons.length > 30 remove oldest doc
 
@@ -89,7 +120,7 @@ func UpdateDailySecretPokemon() error {
 		containsRandomPokemon = containsPokemonName(randomPokemon.Name, recentSecretPokemons)
 	}
 
-	_, err := r.InsertNewPokemon(context.TODO(), randomPokemon)
+	_, err := r.InsertNewPokemon(context.TODO(), randomPokemon, ClassicSecretPokemons)
 	if err != nil {
 		fmt.Println("Error when inserting pokemon")
 	}
@@ -131,7 +162,7 @@ func SaveUser(newUser models.User) error {
 	return r.InsertNewUser(newUser)
 }
 
-func CalculateStreak(lastGameWon models.GameWon, currStreak int) int {
+func CalculateStreak(lastGameWon models.ClassicGameWon, currStreak int) int {
 
 	today := time.Now()
 	yesterday := today.Add(-24 * time.Hour)
@@ -145,7 +176,7 @@ func CalculateStreak(lastGameWon models.GameWon, currStreak int) int {
 
 func FindAndUpdateUserWithGameWon(
 	userId primitive.ObjectID,
-	gameWon models.GameWon,
+	gameWon models.ClassicGameWon,
 	currentStreak int,
 	maxStreak int,
 	isFirstTryWin int,
