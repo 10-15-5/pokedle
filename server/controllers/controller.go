@@ -14,10 +14,6 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
-type NumberOfGuessesRequest struct {
-	NumberOfGuesses int `json:"numberOfGuesses" bson:"numberOfGuesses" binding:"required"`
-}
-
 func GetClassicSecretPokemon(c *gin.Context) {
 	secretPokemon, err := services.GetClassicSecretPokemon()
 
@@ -98,7 +94,11 @@ func NewFlavortextSecretPokemon(c *gin.Context) {
 	//TODO: also reset dailySecretPokemon for Flavortext
 }
 
-func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
+type NumberOfGuessesRequest struct {
+	NumberOfGuesses int `json:"numberOfGuesses" bson:"numberOfGuesses" binding:"required"`
+}
+
+func UpdateClassicCurrentDailyStatsGamesWon(c *gin.Context) {
 
 	var updateUserGameWonRequest NumberOfGuessesRequest
 
@@ -107,7 +107,26 @@ func UpdateCurrentDailyStatsWithGamesWon(c *gin.Context) {
 		return
 	}
 
-	dailyStats, err := services.UpdateCurrentDailyStatsWithGamesWon(updateUserGameWonRequest.NumberOfGuesses)
+	dailyStats, err := services.UpdateClassicCurrentDailyStatsGamesWon(updateUserGameWonRequest.NumberOfGuesses)
+	//TODO: increment daily first try wins
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"dailyStats": dailyStats})
+}
+
+func UpdateFlavortextCurrentDailyStatsGamesWon(c *gin.Context) {
+
+	var updateUserGameWonRequest NumberOfGuessesRequest
+
+	if err := c.ShouldBindJSON(&updateUserGameWonRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	dailyStats, err := services.UpdateFlavortextCurrentDailyStatsGamesWon(updateUserGameWonRequest.NumberOfGuesses)
 	//TODO: increment daily first try wins
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
@@ -163,7 +182,7 @@ func GetUser(c *gin.Context) {
 
 }
 
-func UpdateUserStreak(c *gin.Context) {
+func UpdateUserStreaks(c *gin.Context) {
 
 	userId := c.Param("userId")
 
@@ -176,24 +195,49 @@ func UpdateUserStreak(c *gin.Context) {
 
 	user := services.GetUser(mongoUserId)
 
-	var streak int
+	var streakClassic = services.CalculateStreak(user.ClassicGamesWon, user.ClassicCurrentStreak)
+	var streakFlavortext = services.CalculateStreak(user.FlavortextGamesWon, user.ClassicCurrentStreak)
 
-	if len(user.ClassicGamesWon) > 0 {
-
-		lastGameWon := user.ClassicGamesWon[len(user.ClassicGamesWon)-1]
-
-		streak = services.CalculateStreak(lastGameWon, user.ClassicCurrentStreak)
-	}
-
-	if streak != user.ClassicCurrentStreak {
-		services.UpdateUserStreak(mongoUserId, streak)
+	if streakClassic != user.ClassicCurrentStreak || streakFlavortext != user.FlavortextCurrentStreak {
+		services.UpdateUserStreaks(mongoUserId, streakClassic, streakFlavortext)
 		c.AbortWithStatusJSON(200, gin.H{"msg": "Streak Updated"})
+		return
 	}
 
 	c.AbortWithStatus(200)
 }
 
-func UpdateUserGameWon(c *gin.Context) {
+func HandleUserClassicGameWon(c *gin.Context) {
+
+	userId := c.Param("userId")
+	mongoUserId, err := primitive.ObjectIDFromHex(userId)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "UserId string is not a valid ObjectID")
+		return
+	}
+
+	user := services.GetUser(mongoUserId)
+
+	UpdateUserGameWon(c, services.Classic, user.ClassicGamesWon, user)
+}
+
+func HandleUserFlavortextGameWon(c *gin.Context) {
+
+	userId := c.Param("userId")
+	mongoUserId, err := primitive.ObjectIDFromHex(userId)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "UserId string is not a valid ObjectID")
+		return
+	}
+
+	user := services.GetUser(mongoUserId)
+
+	UpdateUserGameWon(c, services.Flavortext, user.FlavortextGamesWon, user)
+}
+
+func UpdateUserGameWon(c *gin.Context, gameMode string, gamesWon []models.GameWon, user models.User) {
 
 	var updateUserGameWonRequest NumberOfGuessesRequest
 
@@ -207,34 +251,24 @@ func UpdateUserGameWon(c *gin.Context) {
 		return
 	}
 
-	userId := c.Param("userId")
-	mongoUserId, err := primitive.ObjectIDFromHex(userId)
-
-	if err != nil {
-		c.JSON(http.StatusBadRequest, "UserId string is not a valid ObjectID")
-		return
-	}
-
-	user := services.GetUser(mongoUserId)
-
-	gameWon := models.ClassicGameWon{
+	gameWon := models.GameWon{
 		NumberOfGuesses: updateUserGameWonRequest.NumberOfGuesses,
 		CreatedAt:       time.Now(),
 	}
 
 	var streak int
 
-	if len(user.ClassicGamesWon) > 0 {
+	if len(gamesWon) > 0 {
 
-		lastGameWon := user.ClassicGamesWon[len(user.ClassicGamesWon)-1]
+		lastGameWon := gamesWon[len(gamesWon)-1]
 
 		//TODO: test this and then comment out untill 1 guess a day is implemented
 		if services.DateEqual(time.Now(), lastGameWon.CreatedAt) {
 			c.JSON(http.StatusBadRequest, "User has already won a game today")
 			return
 		}
-
-		streak = services.CalculateStreak(lastGameWon, user.ClassicCurrentStreak)
+		//TODO: fix vv
+		streak = services.CalculateStreak(gamesWon, user.ClassicCurrentStreak)
 	}
 
 	streak++
@@ -243,7 +277,7 @@ func UpdateUserGameWon(c *gin.Context) {
 
 	isFirstTryWin := services.If(updateUserGameWonRequest.NumberOfGuesses == 1, 1, 0)
 
-	updatedUser := services.FindAndUpdateUserWithGameWon(mongoUserId, gameWon, streak, maxStreak, isFirstTryWin)
+	updatedUser := services.FindAndUpdateUserWithGameWon(user.ID, gameWon, streak, maxStreak, isFirstTryWin, gameMode)
 
 	c.JSON(http.StatusOK, gin.H{"user": updatedUser})
 }

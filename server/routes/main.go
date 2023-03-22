@@ -20,18 +20,18 @@ func SetupRoutes(router *gin.Engine) {
 		api.GET("/flavortext-previous-secret-pokemons", controllers.GetFlavortextPreviousSecretPokemon)
 		api.POST("/flavortext-secret-pokemons", controllers.NewFlavortextSecretPokemon)
 
-		api.POST("/games-won", controllers.UpdateCurrentDailyStatsWithGamesWon)
+		api.POST("/classic-games-won", controllers.UpdateClassicCurrentDailyStatsGamesWon)
 
-		// curl http://localhost:3000/api/daily-stats/21321 --request "GET"
+		api.POST("/flavortext-games-won", controllers.UpdateFlavortextCurrentDailyStatsGamesWon)
+
 		api.GET("/daily-stats/:date", controllers.GetDailyStats)
 
 		api.GET("/users/:userId", controllers.GetUser)
-
-		api.PATCH("/users/:userId", controllers.UpdateUserStreak)
-
+		api.PATCH("/users/:userId", controllers.UpdateUserStreaks) //To update streak on load
 		api.POST("/users", controllers.CreateUser)
 
-		api.POST("/users/:userId/gamesWon", controllers.UpdateUserGameWon)
+		api.POST("/users/:userId/classic-game-won", controllers.HandleUserClassicGameWon)
+		api.POST("/users/:userId/flavortext-game-won", controllers.HandleUserFlavortextGameWon)
 	}
 
 	// curl http://localhost:3000/health --include --header "Content-Type: application/json" --request "GET"

@@ -24,7 +24,7 @@ func GetPokemonRepository(mongoClient *mongo.Client) *dailyStatsRepository {
 	return r
 }
 
-func (r *dailyStatsRepository) UpdateDailyGuessCount(ctx context.Context, date string, isFirstTryWin int, numberOfGuesses int) (models.DailyStats, error) {
+func (r *dailyStatsRepository) UpdateClassicDailyStats(ctx context.Context, date string, isFirstTryWin int, numberOfGuesses int) (models.DailyStats, error) {
 	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
 
 	options := options.FindOneAndUpdate().SetUpsert(true).SetReturnDocument(options.After)
@@ -35,9 +35,31 @@ func (r *dailyStatsRepository) UpdateDailyGuessCount(ctx context.Context, date s
 		bson.M{"date": date},
 		bson.M{
 			"$inc": bson.M{
-				"gamesWon":        1,
-				"firstTryWins":    isFirstTryWin,
-				"numberOfGuesses": numberOfGuesses,
+				"classicGamesWon":        1,
+				"classicFirstTryWins":    isFirstTryWin,
+				"classicNumberOfGuesses": numberOfGuesses,
+			},
+		},
+		options,
+	).Decode(&result)
+
+	return result, err
+}
+
+func (r *dailyStatsRepository) UpdateFeaturetextDailyStats(ctx context.Context, date string, isFirstTryWin int, numberOfGuesses int) (models.DailyStats, error) {
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+
+	options := options.FindOneAndUpdate().SetUpsert(true).SetReturnDocument(options.After)
+
+	var result models.DailyStats
+	err := coll.FindOneAndUpdate(
+		context.Background(),
+		bson.M{"date": date},
+		bson.M{
+			"$inc": bson.M{
+				"flavortextGamesWon":        1,
+				"flavortextFirstTryWins":    isFirstTryWin,
+				"flavortextNumberOfGuesses": numberOfGuesses,
 			},
 		},
 		options,

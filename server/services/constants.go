@@ -6,3 +6,8 @@ const (
 	DailyStats               = "dailyStats"
 	Users                    = "users"
 )
+
+const (
+	Classic    = "classic"
+	Flavortext = "flavortext"
+)

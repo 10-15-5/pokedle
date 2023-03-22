@@ -1,11 +1,11 @@
 package models
 
 type DailyStats struct {
-	Date                      string `json:"date"`
-	ClassicGamesWon           int    `json:"classicGamesWon"`
-	ClassicFirstTryWins       int    `json:"classicFirstTryWins"`
-	ClassicNumberOfGuesses    int    `json:"classicNumberOfGuesses"`
-	FlavortextGamesWon        int    `json:"flavortextGamesWon"`
-	FlavortextFirstTryWins    int    `json:"flavortextFirstTryWins"`
-	FlavortextNumberOfGuesses int    `json:"flavortextNumberOfGuesses"`
+	Date                      string `bson:"date" json:"date"`
+	ClassicGamesWon           int    `bson:"classicGamesWon" json:"classicGamesWon"`
+	ClassicFirstTryWins       int    `bson:"classicFirstTryWins" json:"classicFirstTryWins"`
+	ClassicNumberOfGuesses    int    `bson:"classicNumberOfGuesses" json:"classicNumberOfGuesses"`
+	FlavortextGamesWon        int    `bson:"flavortextGamesWon" json:"flavortextGamesWon"`
+	FlavortextFirstTryWins    int    `bson:"flavortextFirstTryWins" json:"flavortextFirstTryWins"`
+	FlavortextNumberOfGuesses int    `bson:"flavortextNumberOfGuesses" json:"flavortextNumberOfGuesses"`
 }

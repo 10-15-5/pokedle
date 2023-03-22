@@ -52,7 +52,7 @@ func (r *userRepository) InsertNewUser(user models.User) error {
 	return err
 }
 
-func (r *userRepository) InsertNewGameWon(
+func (r *userRepository) InsertNewClassicGameWon(
 	userId primitive.ObjectID,
 	gameWon models.GameWon,
 	currentStreak int,
@@ -71,9 +71,40 @@ func (r *userRepository) InsertNewGameWon(
 	result := coll.FindOneAndUpdate(context.Background(),
 		bson.M{"_id": userId},
 		bson.M{
-			"$push": bson.M{"gamesWon": gameWon},
-			"$set":  bson.M{"currentStreak": currentStreak, "maxStreak": maxStreak, "updatedAt": time.Now()},
-			"$inc":  bson.M{"firstTryWins": isFirstTryWin},
+			"$push": bson.M{"classicGamesWon": gameWon},
+			"$set":  bson.M{"classicCurrentStreak": currentStreak, "classicMaxStreak": maxStreak, "updatedAt": time.Now()},
+			"$inc":  bson.M{"classicFirstTryWins": isFirstTryWin},
+		},
+		&opt)
+
+	var user models.User
+
+	result.Decode(&user)
+
+	return user
+}
+func (r *userRepository) InsertNewFlavortextGameWon(
+	userId primitive.ObjectID,
+	gameWon models.GameWon,
+	currentStreak int,
+	maxStreak int,
+	isFirstTryWin int,
+) models.User {
+
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+
+	after := options.After
+
+	opt := options.FindOneAndUpdateOptions{
+		ReturnDocument: &after,
+	}
+
+	result := coll.FindOneAndUpdate(context.Background(),
+		bson.M{"_id": userId},
+		bson.M{
+			"$push": bson.M{"flavortextGamesWon": gameWon},
+			"$set":  bson.M{"flavortextCurrentStreak": currentStreak, "flavortextMaxStreak": maxStreak, "updatedAt": time.Now()},
+			"$inc":  bson.M{"flavortextFirstTryWins": isFirstTryWin},
 		},
 		&opt)
 
@@ -84,9 +115,10 @@ func (r *userRepository) InsertNewGameWon(
 	return user
 }
 
-func (r *userRepository) UpdateUserStreak(
+func (r *userRepository) UpdateClassicUserStreak(
 	userId primitive.ObjectID,
 	currentStreak int,
+	flavortextStreak int,
 ) {
 
 	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
@@ -94,6 +126,6 @@ func (r *userRepository) UpdateUserStreak(
 	coll.UpdateByID(
 		context.Background(),
 		userId,
-		bson.M{"$set": bson.M{"currentStreak": currentStreak}},
+		bson.M{"$set": bson.M{"classicCurrentStreak": currentStreak, "flavortextCurrentStreak": flavortextStreak}},
 	)
 }

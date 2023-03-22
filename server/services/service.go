@@ -130,14 +130,26 @@ func UpdateDailySecretPokemon(collection string) error {
 	return err
 }
 
-func UpdateCurrentDailyStatsWithGamesWon(numberOfGuesses int) (models.DailyStats, error) {
+func UpdateClassicCurrentDailyStatsGamesWon(numberOfGuesses int) (models.DailyStats, error) {
 	r := dailyStats.GetPokemonRepository(MongoClient)
 
 	currentDate := time.Now().Format("2006-01-02")
 
 	isFirstTryWin := If(numberOfGuesses == 1, 1, 0)
 
-	result, err := r.UpdateDailyGuessCount(context.TODO(), currentDate, isFirstTryWin, numberOfGuesses)
+	result, err := r.UpdateClassicDailyStats(context.TODO(), currentDate, isFirstTryWin, numberOfGuesses)
+
+	return result, err
+}
+
+func UpdateFlavortextCurrentDailyStatsGamesWon(numberOfGuesses int) (models.DailyStats, error) {
+	r := dailyStats.GetPokemonRepository(MongoClient)
+
+	currentDate := time.Now().Format("2006-01-02")
+
+	isFirstTryWin := If(numberOfGuesses == 1, 1, 0)
+
+	result, err := r.UpdateFeaturetextDailyStats(context.TODO(), currentDate, isFirstTryWin, numberOfGuesses)
 
 	return result, err
 }
@@ -162,37 +174,50 @@ func SaveUser(newUser models.User) error {
 	return r.InsertNewUser(newUser)
 }
 
-func CalculateStreak(lastGameWon models.ClassicGameWon, currStreak int) int {
+func CalculateStreak(gamesWon []models.GameWon, currStreak int) int {
+	if len(gamesWon) > 0 {
 
-	today := time.Now()
-	yesterday := today.Add(-24 * time.Hour)
+		lastGameWon := gamesWon[len(gamesWon)-1]
+		today := time.Now()
+		yesterday := today.Add(-24 * time.Hour)
 
-	if DateEqual(yesterday, lastGameWon.CreatedAt) || DateEqual(today, lastGameWon.CreatedAt) {
-		return currStreak
+		if DateEqual(yesterday, lastGameWon.CreatedAt) || DateEqual(today, lastGameWon.CreatedAt) {
+			return currStreak
+		}
+
+		return 0
 	}
 
-	return 0
+	return currStreak
 }
 
 func FindAndUpdateUserWithGameWon(
 	userId primitive.ObjectID,
-	gameWon models.ClassicGameWon,
+	gameWon models.GameWon,
 	currentStreak int,
 	maxStreak int,
 	isFirstTryWin int,
+	gameMode string,
 ) models.User {
 
 	r := user.GetUserRepository(MongoClient)
 
-	return r.InsertNewGameWon(userId, gameWon, currentStreak, maxStreak, isFirstTryWin)
+	switch gameMode {
+	case Classic:
+		return r.InsertNewClassicGameWon(userId, gameWon, currentStreak, maxStreak, isFirstTryWin)
+	case Flavortext:
+		return r.InsertNewFlavortextGameWon(userId, gameWon, currentStreak, maxStreak, isFirstTryWin)
+	}
+	panic("No gameMode Passed")
 }
 
-func UpdateUserStreak(
+func UpdateUserStreaks(
 	userId primitive.ObjectID,
-	currentStreak int,
+	classicStreak int,
+	flavortextStreak int,
 ) {
 
 	r := user.GetUserRepository(MongoClient)
 
-	r.UpdateUserStreak(userId, currentStreak)
+	r.UpdateClassicUserStreak(userId, classicStreak, flavortextStreak)
 }
