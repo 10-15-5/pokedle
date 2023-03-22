@@ -55,7 +55,7 @@ const Habitats = {
 
 const TotalResultCardFlipDelay = 2750;
 
-const DateOfFirstPokeldeGameClassic = moment('Marts 16, 2023 00:00:00 UTC');
+const DateOfFirstPokeldeGameClassic = moment.utc('16/03/2023', 'DD/MM/YYYY');
 
 const ClassicGuessesNeededForHintOne = 4;
 const ClassicGuessesNeededForHintTwo = 6;

@@ -87,7 +87,7 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
     };
 };
 
-const removePokemonNameFromArray = (name, names, componentStore) => {
+const removePokemonNameFromArray = (name, names) => {
     let guessRemovedFromList = false;
     let removedName = '';
 

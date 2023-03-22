@@ -42,7 +42,7 @@ import { launchConfetti } from './services/confetti';
 import { setNewSecretPokemon, setSecretPokemon } from './services/game.js';
 import { clearLocalStorageGameMode } from './services/localStorage';
 import { playWinnerSound } from './services/sound';
-import { GameModes } from './constants';
+import { GameModes, DateOfFirstPokeldeGameClassic } from './constants';
 
 const store = useStore();
 
@@ -58,6 +58,8 @@ onBeforeMount(async () => {
     console.log('Loaded at: ' + moment().toString());
     console.log('ENVIRONMENT: ' + ENVIRONMENT);
     console.log(user);
+    console.log("DateOfFirstPokeldeGameClassic: " + DateOfFirstPokeldeGameClassic.toString());
+    console.log(moment().toString());
 
     if (user) {
         store.setUser(user);

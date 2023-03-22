@@ -1,8 +1,9 @@
 import * as apiService from './api/apiService.js';
 import { GameModes } from '../constants';
+import moment from 'moment-timezone';
 
 const setNewSecretPokemon = async (gameMode) => {
-    let response
+    let response;
 
     switch (gameMode) {
         case GameModes.Classic:
@@ -12,16 +13,15 @@ const setNewSecretPokemon = async (gameMode) => {
 
         case GameModes.Flavortext:
             response = await apiService.newFlavortextSecretPokemon();
-            localStorage.flavortextSecretPokemon = JSON.stringify(response.data);            
+            localStorage.flavortextSecretPokemon = JSON.stringify(response.data);
             break;
         default:
-            break;
+            throw new Error('Gamemode Required');
     }
-    //Object.assign(secretPokemon, response.data);
 };
 
 const setSecretPokemon = async (gameMode) => {
-    let response
+    let response;
 
     switch (gameMode) {
         case GameModes.Classic:
@@ -31,12 +31,42 @@ const setSecretPokemon = async (gameMode) => {
 
         case GameModes.Flavortext:
             response = await apiService.getFlavortextSecretPokemon();
-            localStorage.flavortextSecretPokemon = JSON.stringify(response.data);            
+            localStorage.flavortextSecretPokemon = JSON.stringify(response.data);
             break;
         default:
-            break;
+            throw new Error('Gamemode Required');
     }
-
 };
 
-export { setNewSecretPokemon, setSecretPokemon };
+const getDailyGamesWonCount = async (gameMode) => {
+    const date = moment().format('YYYY-MM-DD');
+
+    const res = await apiService.getDailyStats(date);
+
+    switch (gameMode) {
+        case GameModes.Classic:
+            return res.data.classicGamesWon;
+        case GameModes.Flavortext:
+            return res.data.flavortextGamesWon;
+        default:
+            throw new Error('Gamemode Required');
+    }
+};
+
+const updateUserWithGameWon = async (gameMode, length) => {
+    const userId = localStorage.userId;
+    let response;
+
+    switch (gameMode) {
+        case GameModes.Classic:
+            response = await apiService.updateUserClassicWins(userId, length);
+            return response.data.user;
+        case GameModes.Flavortext:
+            response = await apiService.updateUserFlavortextWins(userId, length);
+            return response.data.user;
+        default:
+            throw new Error('Gamemode Required');
+    }
+};
+
+export { setNewSecretPokemon, setSecretPokemon, getDailyGamesWonCount, updateUserWithGameWon };

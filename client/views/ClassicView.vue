@@ -20,9 +20,7 @@
         >
             <template #hint1>
                 <div class="flex flex-col items-center gap-2 sm:gap-1">
-                    <span class="card w-full justify-center py-1 sm:py-0">{{
-                        hintTwo.header
-                    }}</span>
+                    <span class="card w-full justify-center py-1 sm:py-0">{{ hintTwo.header }}</span>
                     <ResultSquare
                         :color="hintTwo.color"
                         :guessResult="hintTwo.guessResult"
@@ -38,11 +36,7 @@
             <template #hint3>
                 <div class="flex flex-col items-center gap-2 sm:gap-1">
                     <span class="card w-full justify-center py-1 sm:py-0">Shape</span>
-                    <ResultSquare
-                        :pokemon="secretPokemon.name"
-                        :type="guessType.Blackout"
-                        :color="'normal'"
-                    />
+                    <ResultSquare :pokemon="secretPokemon.name" :type="guessType.Blackout" :color="'normal'" />
                 </div>
             </template>
         </HintContainer>
@@ -57,13 +51,7 @@
                 :key="guess"
                 :value="guess"
                 :pokemonName="guess"
-                :guessResult="
-                    getGuessResults(
-                        guess,
-                        secretPokemon,
-                        colors[componentStore.guesses.length - 1 - i]
-                    )
-                "
+                :guessResult="getGuessResults(guess, secretPokemon, colors[componentStore.guesses.length - 1 - i])"
             />
         </div>
         <PreviousPokemonCard v-else :pokemonName="yesterdaysPokemon.name" />
@@ -91,13 +79,18 @@ import {
     guessType,
     TotalResultCardFlipDelay,
     ClassicGuessesNeededForHintOne,
-    GameModes
+    GameModes,
 } from '../constants.js';
 import { getCurrentClassicPokemonNumber } from '../helpers.js';
 import moment from 'moment-timezone';
-import { setSecretPokemon } from '../services/game';
+import { setSecretPokemon, getDailyGamesWonCount } from '../services/game';
 import { playWinnerSound } from '../services/sound';
-import { clearLocalStorageGameMode, setNewDate, addColorsToLocalStorage, addGuessesToLocalStorage } from '../services/localStorage';
+import {
+    clearLocalStorageGameMode,
+    setNewDate,
+    addColorsToLocalStorage,
+    addGuessesToLocalStorage,
+} from '../services/localStorage';
 
 const store = useStore();
 
@@ -118,9 +111,7 @@ const hintTwo = reactive({});
 const instantIsClassicGameWon = ref(false);
 
 const setDailyGamesWonCount = async () => {
-    const date = moment().format('YYYY-MM-DD');
-    const res = await apiService.getDailyStats(date);
-    dailyGamesWon.value = res.data.gamesWon;
+    dailyGamesWon.value = await getDailyGamesWonCount(GameModes.Classic);
 };
 
 onBeforeMount(async () => {
@@ -141,8 +132,7 @@ const emojiResults = computed(() => {
 
             var emoji = '';
             if (res.fields[`${field}`].guessState == guessState.CorrectGuess) emoji = '🟩';
-            else if (res.fields[`${field}`].guessState == guessState.PartlyCorrectGuess)
-                emoji = '🟧';
+            else if (res.fields[`${field}`].guessState == guessState.PartlyCorrectGuess) emoji = '🟧';
             else {
                 emoji = '🟥';
             }
@@ -156,9 +146,7 @@ const emojiResults = computed(() => {
 
 const classicTwitterText = computed(() => {
     const sub1 =
-        componentStore.guesses.length === 1
-            ? 'FIRST TRY 🌟🥳🌠🏆'
-            : `in ${componentStore.guesses.length} tries!🕵️🔎`;
+        componentStore.guesses.length === 1 ? 'FIRST TRY 🌟🥳🌠🏆' : `in ${componentStore.guesses.length} tries!🕵️🔎`;
 
     const header = `I guessed the #${getCurrentClassicPokemonNumber()} hidden #Pokedle Pokémon ${sub1}\n`;
 
@@ -247,17 +235,6 @@ const incrementGamesWonCount = async () => {
     dailyFirstTryWins.value = response.data.classicDailyStats.firstTryWins;
 };
 
-const updateUserWithGameWon = async () => {
-    const userId = localStorage.userId;
-    if (userId) {
-        const response = await apiService.updateUserClassicWins(
-            userId,
-            componentStore.guesses.length
-        );
-        store.setUser(response.data.user);
-    }
-};
-
 const decideGame = (guess) => {
     if (guess === secretPokemon.name) {
         instantIsClassicGameWon.value = true;
@@ -265,12 +242,13 @@ const decideGame = (guess) => {
         setTimeout(() => {
             playWinnerSound();
         }, TotalResultCardFlipDelay - 500);
-        setTimeout(() => {
+        setTimeout(async () => {
             launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
             store.setIsClassicGameWon(true);
             console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
             incrementGamesWonCount();
-            updateUserWithGameWon();
+            const user = await updateUserWithGameWon(GameModes.Classic, componentStore.guesses.length);
+            store.setUser(user);
         }, TotalResultCardFlipDelay);
     } else {
         console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
@@ -284,14 +262,14 @@ const updateYesterdaysPokemon = async () => {
 const submitGuess = (guess) => {
     if (!guess || instantIsClassicGameWon.value) return;
 
-    const { removedName, updatedNames } = removePokemonNameFromArray(guess, componentStore.pokemonNames, componentStore);
+    const { removedName, updatedNames } = removePokemonNameFromArray(guess, componentStore.pokemonNames);
 
     if (updatedNames.length >= componentStore.pokemonNames.length) return;
 
     colors.push(getRandomColor());
     componentStore.guesses.unshift(removedName);
     componentStore.pokemonNames = updatedNames;
-    addGuessesToLocalStorage(GameModes.Classic,componentStore.guesses);
+    addGuessesToLocalStorage(GameModes.Classic, componentStore.guesses);
     addColorsToLocalStorage(GameModes.Classic, colors);
     setHintTwo();
     decideGame(removedName);
