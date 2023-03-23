@@ -53,16 +53,16 @@ const getDailyGamesWonCount = async (gameMode) => {
     }
 };
 
-const updateUserWithGameWon = async (gameMode, length) => {
+const updateUserWithGameWon = async (gameMode, numberOfGuesses) => {
     const userId = localStorage.userId;
     let response;
 
     switch (gameMode) {
         case GameModes.Classic:
-            response = await apiService.updateUserClassicWins(userId, length);
+            response = await apiService.updateUserClassicWins(userId, numberOfGuesses);
             return response.data.user;
         case GameModes.Flavortext:
-            response = await apiService.updateUserFlavortextWins(userId, length);
+            response = await apiService.updateUserFlavortextWins(userId, numberOfGuesses);
             return response.data.user;
         default:
             throw new Error('Gamemode Required');

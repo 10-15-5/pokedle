@@ -1,11 +1,16 @@
 <template>
     <div class="flex flex-col items-center justify-center gap-y-4">
+        <GameWinContainer
+        v-if="store.isFlavortextGameWon"
+        :pokemon="componentStore.guesses[0]"
+        :color="colors.at(-1)"
+        />
+        <div class="card font-pkmEmerald text-xl p-4 w-[450px] text-justify italic">"{{ secretPokemon.flavorText }}"</div>
         <SearchField
             v-if="!store.isFlavortextGameWon"
             :pokemonNames="componentStore.pokemonNames"
             @submit-guess="submitGuess"
         />
-        <GameWinContainer v-else :pokemon="componentStore.guesses[0]" :color="colors.at(-1)" />
         <HintContainer
             v-if="!store.isFlavortextGameWon && componentStore.guesses.length"
             :numberOfGuesses="componentStore.guesses.length"
@@ -17,17 +22,36 @@
             <template #hint2> HINT 2 </template>
             <template #hint3> HINT 3 </template>
         </HintContainer>
+        <DailyGamesWonContainer
+            v-if="!componentStore.guesses.length || store.isFlavortextGameWon"
+            :dailyGamesWon="dailyGamesWon"
+        />
+        <div v-if="componentStore.guesses.length">
+            <SingeResultContainer
+                v-for="(guess, i) in componentStore.guesses"
+                :key="guess"
+                :value="guess"
+                :pokemonName="guess"
+                :color="colors[componentStore.guesses.length - 1 - i]"
+                :isCorrect="isCorrectGuess(guess, secretPokemon.name)"
+            />
+        </div>
+        <PreviousPokemonCard v-else :pokemonName="yesterdaysPokemon.name" />
+
     </div>
 </template>
 
 <script setup>
 import SearchField from '../components/SearchField.vue';
 import GameWinContainer from '../components/GameWinContainer.vue';
+import SingeResultContainer from '../components/result/SingeResultContainer.vue';
+import DailyGamesWonContainer from '../components/infoCards/DailyGamesWonContainer.vue';
+import PreviousPokemonCard from '../components/infoCards/PreviousPokemonCard.vue';
 import { reactive, ref, onBeforeMount } from 'vue';
 import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import { useStore } from '../stores/store.js';
 import HintContainer from '../components/hints/HintContainer.vue';
-import { removePokemonNameFromArray, getRandomColor } from '../services/guess';
+import { removePokemonNameFromArray, getRandomColor, isCorrectGuess } from '../services/guess';
 import { playWinnerSound } from '../services/sound';
 import { launchConfetti } from '../services/confetti.js';
 import { GameModes } from '../constants';
@@ -63,29 +87,27 @@ const setDailyGamesWonCount = async () => {
 
 onBeforeMount(async () => {
     await Promise.all([loadFlavortextGameData(), setDailyGamesWonCount()]);
+    console.log(secretPokemon);
 });
 
 //TODO: can refactor?
 const incrementGamesWonCount = async () => {
     const response = await apiService.updateStatsFlavortextWins(componentStore.guesses.length);
-    dailyGamesWon.value = response.data.flavortextDailyStats.gamesWon;
-    dailyFirstTryWins.value = response.data.flavortextDailyStats.firstTryWins;
+    dailyGamesWon.value = response.data.dailyStats.flavortextGamesWon;
+    dailyFirstTryWins.value = response.data.dailyStats.flavortextFirstTryWins;
 };
 
-const decideGame = (guess) => {
+const decideGame = async (guess) => {
     if (guess === secretPokemon.name) {
         //Wait for all cards to flip
-        setTimeout(() => {
-            playWinnerSound();
-        }, 400);
-        setTimeout(async () => {
-            launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
-            store.setIsFlavortextGameWon(true);
-            console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
-            incrementGamesWonCount();
-            const user = await updateUserWithGameWon(GameModes.Flavortext, componentStore.guesses.length);
-            store.setUser(user);
-        }, 1000);
+        playWinnerSound();
+
+        launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
+        store.setIsFlavortextGameWon(true);
+        console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
+        incrementGamesWonCount();
+        const user = await updateUserWithGameWon(GameModes.Flavortext, componentStore.guesses.length);
+        store.setUser(user);
     } else {
         console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
     }

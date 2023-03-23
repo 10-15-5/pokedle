@@ -1,5 +1,5 @@
 import allPokemonData from '../../server/data/pokemonData-v5-flavorText.json';
-import { guessState, guessType } from '../constants.js';
+import { GuessState, GuessType } from '../constants.js';
 
 const getGuessResults = (pokemonName, secretPokemon, color) => {
     const pokemonData = allPokemonData.find((e) => e.name === pokemonName);
@@ -9,75 +9,75 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
     const result = {
         name: {
             name: pokemonName,
-            guessState: guessState.None,
-            type: guessType.Pokemon,
+            guessState: GuessState.None,
+            type: GuessType.Pokemon,
         },
         type1: {
             text: pokemonData.type1,
             guessState:
                 pokemonData.type1 === secretPokemon.type1
-                    ? guessState.CorrectGuess
-                    : guessState.WrongGuess,
-            type: guessType.Text,
+                    ? GuessState.CorrectGuess
+                    : GuessState.WrongGuess,
+            type: GuessType.Text,
         },
         type2: {
             text: !pokemonData.type2 ? 'None' : pokemonData.type2,
             guessState:
                 pokemonData.type2 === secretPokemon.type2
-                    ? guessState.CorrectGuess
-                    : guessState.WrongGuess,
-            type: guessType.Text,
+                    ? GuessState.CorrectGuess
+                    : GuessState.WrongGuess,
+            type: GuessType.Text,
         },
         evolutionLevel: {
             text: '' + pokemonData.evolutionState,
             guessState:
                 pokemonData.evolutionState === secretPokemon.evolutionState
-                    ? guessState.CorrectGuess
-                    : guessState.WrongGuess,
-            type: guessType.Text,
+                    ? GuessState.CorrectGuess
+                    : GuessState.WrongGuess,
+            type: GuessType.Text,
         },
         isFullyEvolved: {
             text: '' + pokemonData.isFullyEvolved,
             guessState:
                 pokemonData.isFullyEvolved === secretPokemon.isFullyEvolved
-                    ? guessState.CorrectGuess
-                    : guessState.WrongGuess,
-            type: guessType.Text,
+                    ? GuessState.CorrectGuess
+                    : GuessState.WrongGuess,
+            type: GuessType.Text,
         },
         color: {
             text: pokemonData.color,
             guessState:
                 pokemonData.color === secretPokemon.color
-                    ? guessState.CorrectGuess
-                    : guessState.WrongGuess,
-            type: guessType.Text,
+                    ? GuessState.CorrectGuess
+                    : GuessState.WrongGuess,
+            type: GuessType.Text,
         },
         habitat: {
             habitat: pokemonData.habitat,
             guessState:
                 pokemonData.habitat === secretPokemon.habitat
-                    ? guessState.CorrectGuess
-                    : guessState.WrongGuess,
-            type: guessType.Habitat,
+                    ? GuessState.CorrectGuess
+                    : GuessState.WrongGuess,
+            type: GuessType.Habitat,
         },
         generation: {
             text: 'Gen ' + pokemonData.generation,
             guessState:
                 pokemonData.generation === secretPokemon.generation
-                    ? guessState.CorrectGuess
-                    : guessState.WrongGuess,
-            type: guessType.Text,
+                    ? GuessState.CorrectGuess
+                    : GuessState.WrongGuess,
+            type: GuessType.Text,
         },
     };
 
     if (
-        result.type1.guessState !== guessState.CorrectGuess &&
-        result.type2.guessState !== guessState.CorrectGuess
+        result.type1.guessState !== GuessState.CorrectGuess &&
+        result.type2.guessState !== GuessState.CorrectGuess
     ) {
         if (pokemonData.type1 === secretPokemon.type2)
-            result.type1.guessState = guessState.PartlyCorrectGuess;
+            result.type1.guessState = GuessState.PartlyCorrectGuess;
         if (pokemonData.type2 === secretPokemon.type1)
-            result.type2.guessState = guessState.PartlyCorrectGuess;
+            result.type2.guessState = GuessState.PartlyCorrectGuess;
     }
 
     return {
@@ -86,6 +86,8 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
         fields: result,
     };
 };
+
+const isCorrectGuess = (pokemonName, secretPokemonName) => pokemonName === secretPokemonName;
 
 const removePokemonNameFromArray = (name, names) => {
     let guessRemovedFromList = false;
@@ -107,4 +109,4 @@ const removePokemonNameFromArray = (name, names) => {
 const getRandomColor = () =>
     localStorage.isShiny === 'true' ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal';
 
-export { getGuessResults, removePokemonNameFromArray, getRandomColor };
+export { getGuessResults, removePokemonNameFromArray, getRandomColor,isCorrectGuess };

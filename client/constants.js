@@ -1,20 +1,20 @@
 import moment from 'moment-timezone';
 
-const guessState = {
+const GuessState = {
     CorrectGuess: 'CorrectGuess',
     PartlyCorrectGuess: 'PartlyCorrectGuess',
     WrongGuess: 'WrongGuess',
     None: 'None',
 };
 
-const guessType = {
+const GuessType = {
     Pokemon: 'Pokemon',
     Text: 'Text',
     Habitat: 'Habitat',
     Blackout: 'Blackout',
 };
 
-const guessFieldTitles = {
+const GuessFieldTitles = {
     Pokemon: 'Pokemon',
     Type1: 'Type 1',
     Type2: 'Type 2',
@@ -67,11 +67,11 @@ const GameModes = {
 }
 
 export {
-    guessState,
-    guessFieldTitles,
+    GuessState,
+    GuessFieldTitles,
     Habitats,
     GuessFieldTooltips,
-    guessType,
+    GuessType,
     TotalResultCardFlipDelay,
     getGuessFieldTooltipsFromIndex,
     DateOfFirstPokeldeGameClassic,

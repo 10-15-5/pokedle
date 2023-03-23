@@ -36,7 +36,7 @@
             <template #hint3>
                 <div class="flex flex-col items-center gap-2 sm:gap-1">
                     <span class="card w-full justify-center py-1 sm:py-0">Shape</span>
-                    <ResultSquare :pokemon="secretPokemon.name" :type="guessType.Blackout" :color="'normal'" />
+                    <ResultSquare :pokemon="secretPokemon.name" :type="GuessType.Blackout" :color="'normal'" />
                 </div>
             </template>
         </HintContainer>
@@ -45,12 +45,11 @@
             :dailyGamesWon="dailyGamesWon"
         />
         <div v-if="componentStore.guesses.length" class="mb-20 flex flex-col gap-y-2 sm:gap-y-1">
-            <ResultHeader class="mb-n1 sm:!mb-0" />
-            <ResultContainer
+            <ResultsHeader class="mb-n1 sm:!mb-0" />
+            <ResultsContainer
                 v-for="(guess, i) in componentStore.guesses"
                 :key="guess"
                 :value="guess"
-                :pokemonName="guess"
                 :guessResult="getGuessResults(guess, secretPokemon, colors[componentStore.guesses.length - 1 - i])"
             />
         </div>
@@ -59,8 +58,8 @@
 </template>
 
 <script setup>
-import ResultContainer from '../components/result/ResultContainer.vue';
-import ResultHeader from '../components/result/ResultHeader.vue';
+import ResultsContainer from '../components/result/ResultsContainer.vue';
+import ResultsHeader from '../components/result/ResultsHeader.vue';
 import GameWinContainer from '../components/GameWinContainer.vue';
 import HintContainer from '../components/hints/HintContainer.vue';
 import PreviousPokemonCard from '../components/infoCards/PreviousPokemonCard.vue';
@@ -74,16 +73,16 @@ import { useStore } from '../stores/store.js';
 import ResultSquare from '../components/result/ResultSquare.vue';
 import { reactive, ref, onBeforeMount, computed } from 'vue';
 import {
-    guessFieldTitles,
-    guessState,
-    guessType,
+    GuessFieldTitles,
+    GuessState,
+    GuessType,
     TotalResultCardFlipDelay,
     ClassicGuessesNeededForHintOne,
     GameModes,
 } from '../constants.js';
 import { getCurrentClassicPokemonNumber } from '../helpers.js';
 import moment from 'moment-timezone';
-import { setSecretPokemon, getDailyGamesWonCount } from '../services/game';
+import { setSecretPokemon, getDailyGamesWonCount, updateUserWithGameWon } from '../services/game';
 import { playWinnerSound } from '../services/sound';
 import {
     clearLocalStorageGameMode,
@@ -131,8 +130,8 @@ const emojiResults = computed(() => {
             if (field === 'name') continue; //Skip name field
 
             var emoji = '';
-            if (res.fields[`${field}`].guessState == guessState.CorrectGuess) emoji = '🟩';
-            else if (res.fields[`${field}`].guessState == guessState.PartlyCorrectGuess) emoji = '🟧';
+            if (res.fields[`${field}`].guessState == GuessState.CorrectGuess) emoji = '🟩';
+            else if (res.fields[`${field}`].guessState == GuessState.PartlyCorrectGuess) emoji = '🟧';
             else {
                 emoji = '🟥';
             }
@@ -198,32 +197,32 @@ const setHintTwo = () => {
 
     results.forEach((res) => {
         for (const field in res) {
-            if (res[field] === guessState.CorrectGuess) {
+            if (res[field] === GuessState.CorrectGuess) {
                 result[field] = false;
             }
         }
     });
 
     const hint = {
-        guessResult: guessState.CorrectGuess,
+        guessResult: GuessState.CorrectGuess,
     };
 
     if (result.type1) {
-        hint.header = guessFieldTitles.Type1;
+        hint.header = GuessFieldTitles.Type1;
         hint.guessText = secretPokemon.type1;
-        hint.type = guessType.Text;
+        hint.type = GuessType.Text;
     } else if (result.type2) {
-        hint.header = guessFieldTitles.Type2;
+        hint.header = GuessFieldTitles.Type2;
         hint.guessText = secretPokemon.type2;
-        hint.type = guessType.Text;
+        hint.type = GuessType.Text;
     } else if (result.color) {
-        hint.header = guessFieldTitles.Color;
+        hint.header = GuessFieldTitles.Color;
         hint.guessText = secretPokemon.color;
-        hint.type = guessType.Text;
+        hint.type = GuessType.Text;
     } else {
-        hint.header = guessFieldTitles.Habitat;
+        hint.header = GuessFieldTitles.Habitat;
         hint.habitat = secretPokemon.habitat;
-        hint.type = guessType.Habitat;
+        hint.type = GuessType.Habitat;
     }
 
     Object.assign(hintTwo, hint);
@@ -231,8 +230,8 @@ const setHintTwo = () => {
 
 const incrementGamesWonCount = async () => {
     const response = await apiService.updateStatsClassicWins(componentStore.guesses.length);
-    dailyGamesWon.value = response.data.classicDailyStats.gamesWon;
-    dailyFirstTryWins.value = response.data.classicDailyStats.firstTryWins;
+    dailyGamesWon.value = response.data.dailyStats.classicGamesWon;
+    dailyFirstTryWins.value = response.data.dailyStats.classicFirstTryWins;
 };
 
 const decideGame = (guess) => {

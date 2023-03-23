@@ -1,7 +1,7 @@
 <template>
     <div class="relative">
         <div
-            v-if="type === guessType.Pokemon && color === 'shiny'"
+            v-if="type === GuessType.Pokemon && color === 'shiny'"
             class="z-1 absolute mt-[-10px] ml-[46px] flex h-[22px] w-[22px] items-center justify-center sm:ml-[30px] sm:mt-[-10px]"
         >
             <SvgIcon
@@ -29,7 +29,7 @@
                     variant="outlined"
                 >
                     <img
-                        v-if="type === guessType.Pokemon"
+                        v-if="type === GuessType.Pokemon"
                         class="pokemon-bg bg-neutral-200 bg-no-repeat dark:!bg-neutral-700"
                         :src="
                             'https://img.pokemondb.net/sprites/ruby-sapphire/' +
@@ -42,7 +42,7 @@
                         alt="pokemon sprite"
                     />
                     <div
-                        v-if="type === guessType.Blackout"
+                        v-if="type === GuessType.Blackout"
                         class="bg-white bg-no-repeat dark:!bg-neutral-300"
                     >
                         <img
@@ -58,7 +58,7 @@
                         />
                     </div>
                     <div
-                        v-if="type === guessType.Habitat"
+                        v-if="type === GuessType.Habitat"
                         class="h-[39px] overflow-hidden rounded-[50%] border-2 border-light-border dark:!border-dark-border sm:h-[30px]"
                     >
                         <img
@@ -68,7 +68,7 @@
                         />
                     </div>
                     <p
-                        v-if="type === guessType.Text"
+                        v-if="type === GuessType.Text"
                         class="pt-1 pl-[2px] font-pkmEmerald text-[16px] capitalize dark:font-bold dark:text-dark-text sm:text-[12px] sm:font-bold"
                     >
                         {{ guessText }}
@@ -88,7 +88,7 @@
 </template>
 
 <script setup>
-import { guessState, guessType } from '../../constants.js';
+import { GuessState, GuessType } from '../../constants.js';
 import { computed, onBeforeMount, onMounted, ref } from 'vue';
 import { getHabitatImage } from '../../services/assets.js';
 import { VueFlip } from 'vue-flip';
@@ -111,7 +111,7 @@ const props = defineProps({
 const isCardFaceDown = ref(true);
 
 onBeforeMount(() => {
-    if (props.flipDelay === undefined || store.isClassicGameWon || props.type === guessType.Pokemon)
+    if (props.flipDelay === undefined || store.isClassicGameWon || props.type === GuessType.Pokemon)
         isCardFaceDown.value = false;
 });
 
@@ -123,11 +123,11 @@ onMounted(() => {
 
 const getColor = computed(() => {
     switch (props.guessResult) {
-        case guessState.CorrectGuess:
+        case GuessState.CorrectGuess:
             return store.isDark ? '#10b981' : 'rgb(70, 217, 48)';
-        case guessState.PartlyCorrectGuess:
+        case GuessState.PartlyCorrectGuess:
             return store.isDark ? '#fb923c' : 'rgb(237, 159, 43)';
-        case guessState.WrongGuess:
+        case GuessState.WrongGuess:
             return store.isDark ? '#f87171' : 'rgb(237, 59, 43)';
         default:
             return 'transparent';

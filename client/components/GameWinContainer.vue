@@ -9,7 +9,7 @@
         <SquareContent
             :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"
             :color="props.color"
-            :type="guessType.Pokemon"
+            :type="GuessType.Pokemon"
         />
         <p class="mt-2 font-pkmEmerald text-[14px]">
             Next Pokemon Will Appear In :&nbsp;
@@ -25,7 +25,7 @@
 import { onBeforeMount, ref } from 'vue';
 import SquareContent from './result/ResultSquare.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../helpers';
-import { guessType } from '../constants';
+import { GuessType } from '../constants';
 import TweetButton from './buttons/TweetButton.vue';
 import moment from 'moment-timezone';
 

@@ -18,15 +18,14 @@
 </template>
 
 <script setup>
-import ResultSquare from '../result/ResultSquare.vue';
+import ResultSquare from './ResultSquare.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../../helpers.js';
-import { guessState, TotalResultCardFlipDelay } from '../../constants.js';
+import { GuessState, TotalResultCardFlipDelay } from '../../constants.js';
 import { useStore } from '../../stores/store.js';
 import { onMounted, ref } from 'vue';
 const store = useStore();
 
 const props = defineProps({
-    pokemonName: String,
     guessResult: Object,
 });
 
@@ -40,7 +39,7 @@ onMounted(() => {
     const arr = Object.values(props.guessResult.fields);
 
     const isAllFieldsCorrectGuess = arr.every(
-        (e, idx) => idx < 1 || e.guessState === guessState.CorrectGuess
+        (e, idx) => idx < 1 || e.guessState === GuessState.CorrectGuess
     );
 
     const delay = store.isClassicGameWon ? 0 : TotalResultCardFlipDelay;
