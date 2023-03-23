@@ -58,7 +58,7 @@ onBeforeMount(async () => {
     console.log('Loaded at: ' + moment().toString());
     console.log('ENVIRONMENT: ' + ENVIRONMENT);
     console.log(user);
-    console.log("DateOfFirstPokeldeGameClassic: " + DateOfFirstPokeldeGameClassic.toString());
+    console.log('DateOfFirstPokeldeGameClassic: ' + DateOfFirstPokeldeGameClassic.toString());
     console.log(moment().toString());
 
     if (user) {
@@ -97,43 +97,50 @@ const loadIsHintMode = () => {
     }
 };
 
-const getNewGame = async () => {
-    //Classic
+const clearLocalStorageAllGameModes = () => {
     clearLocalStorageGameMode(GameModes.Classic);
-    await setSecretPokemon(GameModes.Classic);
-
-    //Flavortext
     clearLocalStorageGameMode(GameModes.Flavortext);
-    await setSecretPokemon(GameModes.Flavortext);
-    //TODO: implement
+    clearLocalStorageGameMode(GameModes.Silhouette);
+};
+
+const getNewGame = async () => {
+    clearLocalStorageAllGameModes();
+    await Promise.all([
+        setSecretPokemon(GameModes.Classic),
+        setSecretPokemon(GameModes.Flavortext),
+        setSecretPokemon(GameModes.Silhouette),
+    ]);
 
     location.reload();
 };
 
 // Force update pokemon in DB
 const setNewGame = async () => {
-    //Classic
-    clearLocalStorageGameMode(GameModes.Classic);
-    await setNewSecretPokemon(GameModes.Classic);
-
-    //Flavortext
-    clearLocalStorageGameMode(GameModes.Flavortext);
-    await setNewSecretPokemon(GameModes.Flavortext);
+    clearLocalStorageAllGameModes();
+    await Promise.all([
+        setNewSecretPokemon(GameModes.Classic),
+        setNewSecretPokemon(GameModes.Flavortext),
+        setNewSecretPokemon(GameModes.Silhouette),
+    ]);
 
     location.reload();
 };
 
 const revealPokemon = async () => {
-    const [responseClassic, responseFlavortext] = await Promise.all([
+    const [responseClassic, responseFlavortext, responseSilhouette] = await Promise.all([
         apiService.getClassicSecretPokemon(),
         apiService.getFlavortextSecretPokemon(),
+        apiService.getSilhouetteSecretPokemon(),
     ]);
 
-    const classicSecret = JSON.parse(localStorage.classicSecretPokemon)
+    const classicSecret = JSON.parse(localStorage.classicSecretPokemon);
     console.log(`Classic Secret: LS: ${classicSecret.name}, DB: ${responseClassic.data.name}`);
 
-    const flavortextSecret = JSON.parse(localStorage.flavortextSecretPokemon)
+    const flavortextSecret = JSON.parse(localStorage.flavortextSecretPokemon);
     console.log(`Flavortext Secret: LS: ${flavortextSecret.name}, DB: ${responseFlavortext.data.name}`);
+
+    const silhouetteSecret = JSON.parse(localStorage.silhouetteSecretPokemon);
+    console.log(`Silhouette Secret: LS: ${silhouetteSecret.name}, DB: ${responseSilhouette.data.name}`);
 };
 </script>
 

@@ -15,6 +15,10 @@ const setNewSecretPokemon = async (gameMode) => {
             response = await apiService.newFlavortextSecretPokemon();
             localStorage.flavortextSecretPokemon = JSON.stringify(response.data);
             break;
+        case GameModes.Silhouette:
+            response = await apiService.newSilhouetteSecretPokemon();
+            localStorage.silhouetteSecretPokemon = JSON.stringify(response.data);
+            break;
         default:
             throw new Error('Gamemode Required');
     }
@@ -28,10 +32,13 @@ const setSecretPokemon = async (gameMode) => {
             response = await apiService.getClassicSecretPokemon();
             localStorage.classicSecretPokemon = JSON.stringify(response.data);
             break;
-
         case GameModes.Flavortext:
             response = await apiService.getFlavortextSecretPokemon();
             localStorage.flavortextSecretPokemon = JSON.stringify(response.data);
+            break;
+        case GameModes.Silhouette:
+            response = await apiService.getSilhouetteSecretPokemon();
+            localStorage.silhouetteSecretPokemon = JSON.stringify(response.data);
             break;
         default:
             throw new Error('Gamemode Required');
