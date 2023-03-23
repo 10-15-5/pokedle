@@ -1,11 +1,13 @@
 <template>
-    <div class="flex flex-col items-center justify-center gap-y-4">
+    <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
         <GameWinContainer
-        v-if="store.isFlavortextGameWon"
-        :pokemon="componentStore.guesses[0]"
-        :color="colors.at(-1)"
+            v-if="store.isFlavortextGameWon"
+            :pokemon="componentStore.guesses[0]"
+            :color="colors.at(-1)"
         />
-        <div class="card font-pkmEmerald text-xl p-4 w-[450px] text-justify italic">"{{ secretPokemon.flavorText }}"</div>
+        <div v-else class="card w-[450px] p-4 text-justify font-pkmEmerald text-xl italic">
+            "{{ secretPokemon.flavorText }}"
+        </div>
         <SearchField
             v-if="!store.isFlavortextGameWon"
             :pokemonNames="componentStore.pokemonNames"
@@ -23,10 +25,11 @@
             <template #hint3> HINT 3 </template>
         </HintContainer>
         <DailyGamesWonContainer
-            v-if="!componentStore.guesses.length || store.isFlavortextGameWon"
+            v-if="!componentStore.guesses.length"
             :dailyGamesWon="dailyGamesWon"
         />
-        <div v-if="componentStore.guesses.length">
+        <div v-if="componentStore.guesses.length" class="flex flex-col gap-1">
+            <SingleResultHeader :headerText="GuessType.Pokemon" />
             <SingeResultContainer
                 v-for="(guess, i) in componentStore.guesses"
                 :key="guess"
@@ -37,13 +40,13 @@
             />
         </div>
         <PreviousPokemonCard v-else :pokemonName="yesterdaysPokemon.name" />
-
     </div>
 </template>
 
 <script setup>
 import SearchField from '../components/SearchField.vue';
 import GameWinContainer from '../components/GameWinContainer.vue';
+import SingleResultHeader from '../components/result/SingleResultHeader.vue';
 import SingeResultContainer from '../components/result/SingeResultContainer.vue';
 import DailyGamesWonContainer from '../components/infoCards/DailyGamesWonContainer.vue';
 import PreviousPokemonCard from '../components/infoCards/PreviousPokemonCard.vue';
@@ -54,7 +57,7 @@ import HintContainer from '../components/hints/HintContainer.vue';
 import { removePokemonNameFromArray, getRandomColor, isCorrectGuess } from '../services/guess';
 import { playWinnerSound } from '../services/sound';
 import { launchConfetti } from '../services/confetti.js';
-import { GameModes } from '../constants';
+import { GameModes, GuessType } from '../constants';
 import * as apiService from '../services/api/apiService.js';
 import moment from 'moment';
 import {
@@ -87,7 +90,6 @@ const setDailyGamesWonCount = async () => {
 
 onBeforeMount(async () => {
     await Promise.all([loadFlavortextGameData(), setDailyGamesWonCount()]);
-    console.log(secretPokemon);
 });
 
 //TODO: can refactor?

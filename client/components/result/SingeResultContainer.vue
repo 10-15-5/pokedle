@@ -1,6 +1,6 @@
 <template>
     <div
-        class="card p-2 sm:!p-1"
+        class="single-result-container"
         :class="
             isCorrect
                 ? ' bg-light-emerald  dark:bg-dark-emerald'

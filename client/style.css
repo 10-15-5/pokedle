@@ -35,6 +35,9 @@
     .hint-tab-header-active {
         @apply bg-gray-100 dark:bg-zinc-700 text-black dark:text-white
     }
+    .single-result-container {
+        @apply card py-2 px-14 sm:py-1 sm:px-8
+    }
 }
 
 .p-dialog {

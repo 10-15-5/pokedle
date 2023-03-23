@@ -16,10 +16,10 @@
             @keydown.arrow-up="scrollUp"
             autocomplete="off"
         />
-        <div class="absolute z-10">
+        <div class="absolute z-20">
             <VirtualScroller
                 v-if="filteredPokemons.length && isSearchFieldActive"
-                class="card absolute z-10 mt-[-2px] w-[200px]"
+                class="card mt-[-2px] w-[200px]"
                 :class="getSearchSuggestionsHeight"
                 :items="filteredPokemons"
                 :itemSize="itemSize"

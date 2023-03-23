@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center justify-center gap-y-4">
+    <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
         <SearchField
             v-if="!store.isClassicGameWon"
             :pokemonNames="componentStore.pokemonNames"
@@ -11,6 +11,9 @@
             :twitterText="classicTwitterText"
             :color="colors.at(-1)"
         />
+        <RouterLink v-if="store.isClassicGameWon" to="/flavortext">
+            <GameModeButton :gameMode="GameModes.Flavortext" />
+        </RouterLink>
         <HintContainer
             v-if="!store.isClassicGameWon && componentStore.guesses.length"
             :numberOfGuesses="componentStore.guesses.length"
@@ -40,11 +43,8 @@
                 </div>
             </template>
         </HintContainer>
-        <DailyGamesWonContainer
-            v-if="!componentStore.guesses.length || store.isClassicGameWon"
-            :dailyGamesWon="dailyGamesWon"
-        />
-        <div v-if="componentStore.guesses.length" class="mb-20 flex flex-col gap-y-2 sm:gap-y-1">
+        <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="dailyGamesWon" />
+        <div v-if="componentStore.guesses.length" class="flex flex-col gap-y-2 sm:gap-y-1">
             <ResultsHeader class="mb-n1 sm:!mb-0" />
             <ResultsContainer
                 v-for="(guess, i) in componentStore.guesses"
@@ -64,6 +64,7 @@ import GameWinContainer from '../components/GameWinContainer.vue';
 import HintContainer from '../components/hints/HintContainer.vue';
 import PreviousPokemonCard from '../components/infoCards/PreviousPokemonCard.vue';
 import SearchField from '../components/SearchField.vue';
+import GameModeButton from '../components/buttons/GameModeButton.vue';
 import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import DailyGamesWonContainer from '../components/infoCards/DailyGamesWonContainer.vue';
 import { getGuessResults, removePokemonNameFromArray, getRandomColor } from '../services/guess';
