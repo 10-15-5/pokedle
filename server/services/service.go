@@ -31,6 +31,13 @@ func GetFlavortextSecretPokemon() (models.Pokemon, error) {
 	return r.FindCurrentSecretPokemon(context.TODO(), FlavortextSecretPokemons)
 }
 
+func GetSilhouetteSecretPokemon() (models.Pokemon, error) {
+
+	r := secretPokemon.GetPokemonRepository(MongoClient)
+
+	return r.FindCurrentSecretPokemon(context.TODO(), SilhouetteSecretPokemons)
+}
+
 func GetClassicPreviousSecretPokemon() (models.Pokemon, error) {
 
 	r := secretPokemon.GetPokemonRepository(MongoClient)
@@ -49,12 +56,25 @@ func GetFlavortextPreviousSecretPokemon() (models.Pokemon, error) {
 	return secretPokemons[1], err
 }
 
+func GetSilhouettePreviousSecretPokemon() (models.Pokemon, error) {
+
+	r := secretPokemon.GetPokemonRepository(MongoClient)
+
+	secretPokemons, err := r.FindLastTwoSecretPokemon(context.TODO(), SilhouetteSecretPokemons)
+
+	return secretPokemons[1], err
+}
+
 func ClassicNewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.Pokemon) models.Pokemon {
 	return newSecretPokemon(currentSecretPokemon, pokemonData, ClassicSecretPokemons)
 }
 
 func FlavortextNewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.Pokemon) models.Pokemon {
 	return newSecretPokemon(currentSecretPokemon, pokemonData, FlavortextSecretPokemons)
+}
+
+func SilhouetteNewSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.Pokemon) models.Pokemon {
+	return newSecretPokemon(currentSecretPokemon, pokemonData, SilhouetteSecretPokemons)
 }
 
 func newSecretPokemon(currentSecretPokemon models.Pokemon, pokemonData []models.Pokemon, collection string) models.Pokemon {
@@ -154,6 +174,18 @@ func UpdateFlavortextCurrentDailyStatsGamesWon(numberOfGuesses int) (models.Dail
 	return result, err
 }
 
+func UpdateSilhouetteCurrentDailyStatsGamesWon(numberOfGuesses int) (models.DailyStats, error) {
+	r := dailyStats.GetPokemonRepository(MongoClient)
+
+	currentDate := time.Now().Format("2006-01-02")
+
+	isFirstTryWin := If(numberOfGuesses == 1, 1, 0)
+
+	result, err := r.UpdateSilhouetteDailyStats(context.TODO(), currentDate, isFirstTryWin, numberOfGuesses)
+
+	return result, err
+}
+
 func GetDailyStats(date string) (models.DailyStats, error) {
 	r := dailyStats.GetPokemonRepository(MongoClient)
 
@@ -207,8 +239,10 @@ func FindAndUpdateUserWithGameWon(
 		return r.InsertNewClassicGameWon(userId, gameWon, currentStreak, maxStreak, isFirstTryWin)
 	case Flavortext:
 		return r.InsertNewFlavortextGameWon(userId, gameWon, currentStreak, maxStreak, isFirstTryWin)
+	case Silhouette:
+		return r.InsertNewSilhouetteGameWon(userId, gameWon, currentStreak, maxStreak, isFirstTryWin)
 	}
-	panic("No gameMode Passed")
+	panic("No gameMode parameter")
 }
 
 func UpdateUserStreaks(

@@ -83,6 +83,7 @@ func (r *userRepository) InsertNewClassicGameWon(
 
 	return user
 }
+
 func (r *userRepository) InsertNewFlavortextGameWon(
 	userId primitive.ObjectID,
 	gameWon models.GameWon,
@@ -105,6 +106,38 @@ func (r *userRepository) InsertNewFlavortextGameWon(
 			"$push": bson.M{"flavortextGamesWon": gameWon},
 			"$set":  bson.M{"flavortextCurrentStreak": currentStreak, "flavortextMaxStreak": maxStreak, "updatedAt": time.Now()},
 			"$inc":  bson.M{"flavortextFirstTryWins": isFirstTryWin},
+		},
+		&opt)
+
+	var user models.User
+
+	result.Decode(&user)
+
+	return user
+}
+
+func (r *userRepository) InsertNewSilhouetteGameWon(
+	userId primitive.ObjectID,
+	gameWon models.GameWon,
+	currentStreak int,
+	maxStreak int,
+	isFirstTryWin int,
+) models.User {
+
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+
+	after := options.After
+
+	opt := options.FindOneAndUpdateOptions{
+		ReturnDocument: &after,
+	}
+
+	result := coll.FindOneAndUpdate(context.Background(),
+		bson.M{"_id": userId},
+		bson.M{
+			"$push": bson.M{"silhouetteGamesWon": gameWon},
+			"$set":  bson.M{"silhouetteCurrentStreak": currentStreak, "silhouetteMaxStreak": maxStreak, "updatedAt": time.Now()},
+			"$inc":  bson.M{"silhouetteFirstTryWins": isFirstTryWin},
 		},
 		&opt)
 

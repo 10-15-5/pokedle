@@ -23,6 +23,10 @@ type User struct {
 	FlavortextMaxStreak     int                `json:"flavortextMaxStreak" bson:"flavortextMaxStreak"`
 	FlavortextFirstTryWins  int                `json:"flavortextFirstTryWins" bson:"flavortextFirstTryWins"`
 	FlavortextGamesWon      []GameWon          `json:"flavortextGamesWon" bson:"flavortextGamesWon"`
+	SilhouetteCurrentStreak int                `json:"silhouetteCurrentStreak" bson:"silhouetteCurrentStreak"`
+	SilhouetteMaxStreak     int                `json:"silhouetteMaxStreak" bson:"silhouetteMaxStreak"`
+	SilhouetteFirstTryWins  int                `json:"silhouetteFirstTryWins" bson:"silhouetteFirstTryWins"`
+	SilhouetteGamesWon      []GameWon          `json:"silhouetteGamesWon" bson:"silhouetteGamesWon"`
 }
 
 func NewUser() User {
@@ -41,6 +45,10 @@ func NewUser() User {
 		FlavortextMaxStreak:     0,
 		FlavortextFirstTryWins:  0,
 		FlavortextGamesWon:      []GameWon{},
+		SilhouetteCurrentStreak: 0,
+		SilhouetteMaxStreak:     0,
+		SilhouetteFirstTryWins:  0,
+		SilhouetteGamesWon:      []GameWon{},
 	}
 
 	return user

@@ -68,6 +68,28 @@ func (r *dailyStatsRepository) UpdateFeaturetextDailyStats(ctx context.Context, 
 	return result, err
 }
 
+func (r *dailyStatsRepository) UpdateSilhouetteDailyStats(ctx context.Context, date string, isFirstTryWin int, numberOfGuesses int) (models.DailyStats, error) {
+	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
+
+	options := options.FindOneAndUpdate().SetUpsert(true).SetReturnDocument(options.After)
+
+	var result models.DailyStats
+	err := coll.FindOneAndUpdate(
+		context.Background(),
+		bson.M{"date": date},
+		bson.M{
+			"$inc": bson.M{
+				"silhouetteGamesWon":        1,
+				"silhouetteFirstTryWins":    isFirstTryWin,
+				"silhouetteNumberOfGuesses": numberOfGuesses,
+			},
+		},
+		options,
+	).Decode(&result)
+
+	return result, err
+}
+
 func (r *dailyStatsRepository) GetDailyStats(ctx context.Context, date string) (models.DailyStats, error) {
 	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
 

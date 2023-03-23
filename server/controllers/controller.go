@@ -14,6 +14,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 )
 
+// CLASSIC
 func GetClassicSecretPokemon(c *gin.Context) {
 	secretPokemon, err := services.GetClassicSecretPokemon()
 
@@ -25,30 +26,8 @@ func GetClassicSecretPokemon(c *gin.Context) {
 	c.IndentedJSON(http.StatusOK, secretPokemon)
 }
 
-func GetFlavortextSecretPokemon(c *gin.Context) {
-	secretPokemon, err := services.GetFlavortextSecretPokemon()
-
-	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
-		return
-	}
-
-	c.IndentedJSON(http.StatusOK, secretPokemon)
-}
-
 func GetClassicPreviousSecretPokemon(c *gin.Context) {
 	secretPokemon, err := services.GetClassicPreviousSecretPokemon()
-
-	if err != nil {
-		c.AbortWithStatus(http.StatusInternalServerError)
-		return
-	}
-
-	c.IndentedJSON(http.StatusOK, secretPokemon)
-}
-
-func GetFlavortextPreviousSecretPokemon(c *gin.Context) {
-	secretPokemon, err := services.GetFlavortextPreviousSecretPokemon()
 
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
@@ -73,7 +52,29 @@ func NewClassicSecretPokemon(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, secretPokemon)
 
-	//TODO: also reset dailySecretPokemon for Flavortext
+}
+
+// FLAVORTEXT
+func GetFlavortextSecretPokemon(c *gin.Context) {
+	secretPokemon, err := services.GetFlavortextSecretPokemon()
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, secretPokemon)
+}
+
+func GetFlavortextPreviousSecretPokemon(c *gin.Context) {
+	secretPokemon, err := services.GetFlavortextPreviousSecretPokemon()
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, secretPokemon)
 }
 
 func NewFlavortextSecretPokemon(c *gin.Context) {
@@ -91,7 +92,46 @@ func NewFlavortextSecretPokemon(c *gin.Context) {
 
 	c.IndentedJSON(http.StatusOK, secretPokemon)
 
-	//TODO: also reset dailySecretPokemon for Flavortext
+}
+
+// SILHOUETTE
+func GetSilhouetteSecretPokemon(c *gin.Context) {
+	secretPokemon, err := services.GetSilhouetteSecretPokemon()
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, secretPokemon)
+}
+
+func GetSilhouettePreviousSecretPokemon(c *gin.Context) {
+	secretPokemon, err := services.GetSilhouettePreviousSecretPokemon()
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	c.IndentedJSON(http.StatusOK, secretPokemon)
+}
+
+func NewSilhouetteSecretPokemon(c *gin.Context) {
+
+	if os.Getenv("ENVIRONMENT") == "production" {
+		c.JSON(http.StatusBadRequest, "This operation is not supported in production environment")
+		return
+	}
+
+	currentSecretPokemon, _ := services.GetSilhouetteSecretPokemon()
+
+	pokemonData := data.GetPokemonData()
+
+	secretPokemon := services.SilhouetteNewSecretPokemon(currentSecretPokemon, pokemonData)
+
+	c.IndentedJSON(http.StatusOK, secretPokemon)
+
 }
 
 type NumberOfGuessesRequest struct {
@@ -108,7 +148,7 @@ func UpdateClassicCurrentDailyStatsGamesWon(c *gin.Context) {
 	}
 
 	dailyStats, err := services.UpdateClassicCurrentDailyStatsGamesWon(updateUserGameWonRequest.NumberOfGuesses)
-	//TODO: increment daily first try wins
+
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
@@ -127,7 +167,26 @@ func UpdateFlavortextCurrentDailyStatsGamesWon(c *gin.Context) {
 	}
 
 	dailyStats, err := services.UpdateFlavortextCurrentDailyStatsGamesWon(updateUserGameWonRequest.NumberOfGuesses)
-	//TODO: increment daily first try wins
+
+	if err != nil {
+		c.AbortWithStatus(http.StatusInternalServerError)
+		return
+	}
+
+	c.JSON(http.StatusOK, gin.H{"dailyStats": dailyStats})
+}
+
+func UpdateSilhouetteCurrentDailyStatsGamesWon(c *gin.Context) {
+
+	var updateUserGameWonRequest NumberOfGuessesRequest
+
+	if err := c.ShouldBindJSON(&updateUserGameWonRequest); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	dailyStats, err := services.UpdateSilhouetteCurrentDailyStatsGamesWon(updateUserGameWonRequest.NumberOfGuesses)
+
 	if err != nil {
 		c.AbortWithStatus(http.StatusInternalServerError)
 		return
@@ -235,6 +294,21 @@ func HandleUserFlavortextGameWon(c *gin.Context) {
 	user := services.GetUser(mongoUserId)
 
 	UpdateUserGameWon(c, services.Flavortext, user.FlavortextGamesWon, user)
+}
+
+func HandleUserSilhouetteGameWon(c *gin.Context) {
+
+	userId := c.Param("userId")
+	mongoUserId, err := primitive.ObjectIDFromHex(userId)
+
+	if err != nil {
+		c.JSON(http.StatusBadRequest, "UserId string is not a valid ObjectID")
+		return
+	}
+
+	user := services.GetUser(mongoUserId)
+
+	UpdateUserGameWon(c, services.Silhouette, user.SilhouetteGamesWon, user)
 }
 
 func UpdateUserGameWon(c *gin.Context, gameMode string, gamesWon []models.GameWon, user models.User) {

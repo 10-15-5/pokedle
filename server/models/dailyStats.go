@@ -8,4 +8,7 @@ type DailyStats struct {
 	FlavortextGamesWon        int    `bson:"flavortextGamesWon" json:"flavortextGamesWon"`
 	FlavortextFirstTryWins    int    `bson:"flavortextFirstTryWins" json:"flavortextFirstTryWins"`
 	FlavortextNumberOfGuesses int    `bson:"flavortextNumberOfGuesses" json:"flavortextNumberOfGuesses"`
+	SilhouetteGamesWon        int    `bson:"silhouetteGamesWon" json:"silhouetteGamesWon"`
+	SilhouetteFirstTryWins    int    `bson:"silhouetteFirstTryWins" json:"silhouetteFirstTryWins"`
+	SilhouetteNumberOfGuesses int    `bson:"silhouetteNumberOfGuesses" json:"silhouetteNumberOfGuesses"`
 }
