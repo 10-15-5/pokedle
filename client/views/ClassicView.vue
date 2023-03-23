@@ -168,14 +168,14 @@ const classicTwitterText = computed(() => {
     return header + emojiBody + moreGuesses + footer;
 });
 
-const setHintTwo = () => {
-    //TODO: make hint numbers constants
+const setHintOne = () => {
     if (
         componentStore.guesses.length < ClassicGuessesNeededForHintOne ||
         (hintTwo.header && componentStore.guesses.length > ClassicGuessesNeededForHintOne)
-    )
+    ) {
         return;
-
+    }
+    
     const firstFiveGuesses = componentStore.guesses.slice(
         Math.max(componentStore.guesses.length - ClassicGuessesNeededForHintOne, 0)
     );
@@ -271,7 +271,7 @@ const submitGuess = (guess) => {
     componentStore.pokemonNames = updatedNames;
     addGuessesToLocalStorage(GameModes.Classic, componentStore.guesses);
     addColorsToLocalStorage(GameModes.Classic, colors);
-    setHintTwo();
+    setHintOne();
     decideGame(removedName);
 };
 
@@ -332,7 +332,7 @@ const loadClassicGameData = async () => {
         await setSecretPokemon(GameModes.Classic);
         setNewDate();
     }
-    setHintTwo();
+    setHintOne();
     updateYesterdaysPokemon();
 };
 </script>

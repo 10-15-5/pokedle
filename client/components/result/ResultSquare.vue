@@ -103,7 +103,10 @@ const props = defineProps({
     guessText: String,
     pokemon: String,
     habitat: String,
-    color: String,
+    color: {
+        String,
+        default: 'normal'
+    },
     flipDelay: Number,
     type: String,
 });

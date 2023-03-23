@@ -20,14 +20,20 @@
             :stylingHintTwo="''"
             :stylingHintThree="''"
         >
-            <template #hint1>HINT 1 </template>
+            <template #hint1
+                ><div class="flex flex-row items-center justify-center gap-6 sm:gap-1">
+                    <div v-for="(field, i) in hintOne"
+                    :key="i"
+                    :value="field"
+                    class="flex flex-col gap-1">
+                        <span class="card items-center justify-center py-1 sm:py-0">{{ field.title }}</span>
+                        <ResultSquare :guessResult="field.guessState" :guessText="field.text" :type="field.type" />
+                    </div></div
+            ></template>
             <template #hint2> HINT 2 </template>
             <template #hint3> HINT 3 </template>
         </HintContainer>
-        <DailyGamesWonContainer
-            v-if="!componentStore.guesses.length"
-            :dailyGamesWon="dailyGamesWon"
-        />
+        <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="dailyGamesWon" />
         <div v-if="componentStore.guesses.length" class="flex flex-col gap-1">
             <SingleResultHeader :headerText="GuessType.Pokemon" />
             <SingeResultContainer
@@ -47,6 +53,7 @@
 import SearchField from '../components/SearchField.vue';
 import GameWinContainer from '../components/GameWinContainer.vue';
 import SingleResultHeader from '../components/result/SingleResultHeader.vue';
+import ResultSquare from '../components/result/ResultSquare.vue';
 import SingeResultContainer from '../components/result/SingeResultContainer.vue';
 import DailyGamesWonContainer from '../components/infoCards/DailyGamesWonContainer.vue';
 import PreviousPokemonCard from '../components/infoCards/PreviousPokemonCard.vue';
@@ -54,10 +61,17 @@ import { reactive, ref, onBeforeMount } from 'vue';
 import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import { useStore } from '../stores/store.js';
 import HintContainer from '../components/hints/HintContainer.vue';
-import { removePokemonNameFromArray, getRandomColor, isCorrectGuess } from '../services/guess';
+import { removePokemonNameFromArray, getRandomColor, isCorrectGuess, getGuessResults } from '../services/guess';
 import { playWinnerSound } from '../services/sound';
 import { launchConfetti } from '../services/confetti.js';
-import { GameModes, GuessType } from '../constants';
+import {
+    GameModes,
+    GuessType,
+    GuessFieldTitles,
+    ClassicGuessesNeededForHintOne,
+    ClassicGuessesNeededForHintTwo,
+    ClassicGuessesNeededForHintThree,
+} from '../constants';
 import * as apiService from '../services/api/apiService.js';
 import moment from 'moment';
 import {
@@ -77,6 +91,8 @@ const componentStore = reactive({
     guesses: [],
 });
 
+const hintOne = reactive([]);
+
 const dailyGamesWon = ref(0);
 const dailyFirstTryWins = ref(0);
 const yesterdaysPokemon = ref('');
@@ -91,6 +107,23 @@ const setDailyGamesWonCount = async () => {
 onBeforeMount(async () => {
     await Promise.all([loadFlavortextGameData(), setDailyGamesWonCount()]);
 });
+
+const setHintOne = () => {
+    console.log(hintOne);
+    if (hintOne.length) {
+        return;
+    }
+
+    const { fields: correctFields } = getGuessResults(secretPokemon.name, secretPokemon);
+    
+    const titles = Object.keys(GuessFieldTitles);
+    const correctFieldsWithTitles = Object.keys(correctFields).map((f,i) => ({
+        ...correctFields[f],
+        title: GuessFieldTitles[titles.at(i)],
+    }));
+
+    hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2]);
+};
 
 //TODO: can refactor?
 const incrementGamesWonCount = async () => {
@@ -197,6 +230,7 @@ const loadFlavortextGameData = async () => {
         await setSecretPokemon(GameModes.Flavortext);
         setNewDate();
     }
+    setHintOne();
     updateYesterdaysPokemon();
 };
 </script>
