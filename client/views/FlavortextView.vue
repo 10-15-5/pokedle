@@ -4,6 +4,7 @@
             v-if="store.isFlavortextGameWon"
             :pokemon="componentStore.guesses[0]"
             :color="colors.at(-1)"
+            :twitterText="flavortextTwitterText()"
         />
         <div v-else class="card w-[450px] p-4 text-justify font-pkmEmerald text-xl italic">
             "{{ secretPokemon.flavorText }}"
@@ -16,22 +17,39 @@
         <HintContainer
             v-if="!store.isFlavortextGameWon && componentStore.guesses.length"
             :numberOfGuesses="componentStore.guesses.length"
-            :stylingHintOne="''"
-            :stylingHintTwo="''"
-            :stylingHintThree="''"
+            :stylingHintThree="'flex justify-center'"
+            :guessesRequiredForHintOne="FlavortextGuessesNeededForHintOne"
+            :guessesRequiredForHintTwo="FlavortextGuessesNeededForHintTwo"
+            :guessesRequiredForHintThree="FlavortextGuessesNeededForHintThree"
         >
             <template #hint1
-                ><div class="flex flex-row items-center justify-center gap-6 sm:gap-1">
-                    <div v-for="(field, i) in hintOne"
-                    :key="i"
-                    :value="field"
-                    class="flex flex-col gap-1">
+                ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
+                    <div v-for="(field, i) in hintOne" :key="i" :value="field" class="flex flex-col gap-1">
                         <span class="card items-center justify-center py-1 sm:py-0">{{ field.title }}</span>
                         <ResultSquare :guessResult="field.guessState" :guessText="field.text" :type="field.type" />
+                    </div>
+                </div>
+            </template>
+            <template #hint2>
+                <div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
+                    <div v-for="(field, i) in hintTwo" :key="i" :value="field" class="flex flex-col gap-1">
+                        <span class="card items-center justify-center py-1 sm:py-0">{{ field.title }}</span>
+                        <ResultSquare
+                            :guessResult="field.guessState"
+                            :guessText="field.text"
+                            :type="field.type"
+                            :habitat="field.habitat"
+                        />
+                    </div>
+                </div>
+            </template>
+            <template #hint3
+                ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
+                    <div class="flex flex-col gap-1">
+                        <span class="card items-center justify-center py-1 sm:py-0">Shape</span>
+                        <ResultSquare :pokemon="secretPokemon.name" :type="GuessType.Blackout" />
                     </div></div
             ></template>
-            <template #hint2> HINT 2 </template>
-            <template #hint3> HINT 3 </template>
         </HintContainer>
         <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="dailyGamesWon" />
         <div v-if="componentStore.guesses.length" class="flex flex-col gap-1">
@@ -68,9 +86,9 @@ import {
     GameModes,
     GuessType,
     GuessFieldTitles,
-    ClassicGuessesNeededForHintOne,
-    ClassicGuessesNeededForHintTwo,
-    ClassicGuessesNeededForHintThree,
+    FlavortextGuessesNeededForHintOne,
+    FlavortextGuessesNeededForHintTwo,
+    FlavortextGuessesNeededForHintThree,
 } from '../constants';
 import * as apiService from '../services/api/apiService.js';
 import moment from 'moment';
@@ -81,6 +99,7 @@ import {
     addGuessesToLocalStorage,
 } from '../services/localStorage';
 import { setSecretPokemon, getDailyGamesWonCount, updateUserWithGameWon } from '../services/game';
+import { getCurrentFlavortextPokemonNumber } from '../helpers.js';
 
 const store = useStore();
 
@@ -92,6 +111,7 @@ const componentStore = reactive({
 });
 
 const hintOne = reactive([]);
+const hintTwo = reactive([]);
 
 const dailyGamesWon = ref(0);
 const dailyFirstTryWins = ref(0);
@@ -108,21 +128,33 @@ onBeforeMount(async () => {
     await Promise.all([loadFlavortextGameData(), setDailyGamesWonCount()]);
 });
 
+const flavortextTwitterText = () => {
+    const sub1 =
+        componentStore.guesses.length === 1 ? 'FIRST TRY 🤯🤩⚡️✨' : `in ${componentStore.guesses.length} tries!🍉🍓🫧`;
+
+    const header = `I guessed the #${getCurrentFlavortextPokemonNumber()} flavortext #Pokedle Pokémon ${sub1}\n\n`;
+
+    const footer = `Play at pokedle.gg 🎮!`;
+
+    return header + footer;
+}
+
 const setHintOne = () => {
-    console.log(hintOne);
-    if (hintOne.length) {
+
+    if (hintOne.length || hintTwo.length) {
         return;
     }
 
     const { fields: correctFields } = getGuessResults(secretPokemon.name, secretPokemon);
-    
+
     const titles = Object.keys(GuessFieldTitles);
-    const correctFieldsWithTitles = Object.keys(correctFields).map((f,i) => ({
+    const correctFieldsWithTitles = Object.keys(correctFields).map((f, i) => ({
         ...correctFields[f],
         title: GuessFieldTitles[titles.at(i)],
     }));
-
-    hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2]);
+    correctFieldsWithTitles[7].title = 'Gen';
+    hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2]); //Type 1, Type 2
+    hintTwo.push(correctFieldsWithTitles[6], correctFieldsWithTitles[7]); //Habitat, Gen
 };
 
 //TODO: can refactor?

@@ -3,7 +3,7 @@
         class="single-result-container"
         :class="
             isCorrect
-                ? ' bg-light-emerald  dark:bg-dark-emerald'
+                ? ' bg-dark-emerald  dark:bg-light-emerald'
                 :'!bg-red-300 dark:!bg-red-900'
         "
     >

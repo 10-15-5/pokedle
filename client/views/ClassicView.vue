@@ -20,6 +20,9 @@
             :stylingHintOne="'flex justify-center'"
             :stylingHintTwo="''"
             :stylingHintThree="'flex justify-center'"
+            :guessesRequiredForHintOne="ClassicGuessesNeededForHintOne"
+            :guessesRequiredForHintTwo="ClassicGuessesNeededForHintTwo"
+            :guessesRequiredForHintThree="ClassicGuessesNeededForHintThree"
         >
             <template #hint1>
                 <div class="flex flex-col items-center gap-2 sm:gap-1">
@@ -39,7 +42,7 @@
             <template #hint3>
                 <div class="flex flex-col items-center gap-2 sm:gap-1">
                     <span class="card w-full justify-center py-1 sm:py-0">Shape</span>
-                    <ResultSquare :pokemon="secretPokemon.name" :type="GuessType.Blackout" :color="'normal'" />
+                    <ResultSquare :pokemon="secretPokemon.name" :type="GuessType.Blackout" />
                 </div>
             </template>
         </HintContainer>
@@ -80,6 +83,8 @@ import {
     TotalResultCardFlipDelay,
     ClassicGuessesNeededForHintOne,
     GameModes,
+ClassicGuessesNeededForHintTwo,
+ClassicGuessesNeededForHintThree,
 } from '../constants.js';
 import { getCurrentClassicPokemonNumber } from '../helpers.js';
 import moment from 'moment-timezone';
@@ -144,11 +149,11 @@ const emojiResults = computed(() => {
     return emojiResults;
 });
 
-const classicTwitterText = computed(() => {
+const classicTwitterText = () => {
     const sub1 =
         componentStore.guesses.length === 1 ? 'FIRST TRY 🌟🥳🌠🏆' : `in ${componentStore.guesses.length} tries!🕵️🔎`;
 
-    const header = `I guessed the #${getCurrentClassicPokemonNumber()} hidden #Pokedle Pokémon ${sub1}\n`;
+    const header = `I guessed the #${getCurrentClassicPokemonNumber()} classic hidden #Pokedle Pokémon ${sub1}\n`;
 
     var emojiBody = '';
 
@@ -166,7 +171,7 @@ const classicTwitterText = computed(() => {
     const footer = `Play at pokedle.gg 🎮!`;
 
     return header + emojiBody + moreGuesses + footer;
-});
+};
 
 const setHintOne = () => {
     if (

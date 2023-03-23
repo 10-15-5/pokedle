@@ -80,11 +80,6 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import {
-    ClassicGuessesNeededForHintOne,
-    ClassicGuessesNeededForHintTwo,
-    ClassicGuessesNeededForHintThree,
-} from '../../constants';
 
 const props = defineProps({
     numberOfGuesses: {
@@ -94,6 +89,10 @@ const props = defineProps({
     stylingHintOne: String,
     stylingHintTwo: String,
     stylingHintThree: String,
+    guessesRequiredForHintOne: Number,
+    guessesRequiredForHintTwo: Number,
+    guessesRequiredForHintThree: Number,
+
 });
 
 const hints = ['hint1', 'hint2', 'hint3'];
@@ -101,16 +100,16 @@ const selectedHint = ref('hint1');
 const isShowHints = ref(false);
 
 const guessesRemainingForHintOne = computed(
-    () => ClassicGuessesNeededForHintOne - props.numberOfGuesses
+    () => props.guessesRequiredForHintOne - props.numberOfGuesses
 );
 const isHintOneUnlocked = computed(
-    () => ClassicGuessesNeededForHintOne - props.numberOfGuesses <= 0
+    () => props.guessesRequiredForHintOne - props.numberOfGuesses <= 0
 );
 const isHintTwoUnlocked = computed(
-    () => ClassicGuessesNeededForHintTwo - props.numberOfGuesses <= 0
+    () => props.guessesRequiredForHintTwo - props.numberOfGuesses <= 0
 );
 const isHintThreeUnlocked = computed(
-    () => ClassicGuessesNeededForHintThree - props.numberOfGuesses <= 0
+    () => props.guessesRequiredForHintThree - props.numberOfGuesses <= 0
 );
 
 const isShowHintOne = computed(() => selectedHint.value === hints[0]);

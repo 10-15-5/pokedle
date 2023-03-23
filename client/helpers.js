@@ -1,5 +1,7 @@
 import moment from 'moment-timezone';
-import { DateOfFirstPokeldeGameClassic } from './constants.js';
+import { DateOfFirstPokeldeGameClassic, DateOfFirstPokeldeGameFlavortext } from './constants.js';
+
+const oneDayInMS = 1000 * 60 * 60 * 24;
 
 const removeSpecialCharactersExceptDashFromString = (text) => {
     if (!text) return '';
@@ -12,11 +14,15 @@ const getCookie = (document) =>
     );
 
 const getCurrentClassicPokemonNumber = () => {
-    const oneDayInMS = 1000 * 60 * 60 * 24;
-
     const todayInMS = moment();
 
     return Math.round((todayInMS - DateOfFirstPokeldeGameClassic.valueOf()) / oneDayInMS);
+};
+
+const getCurrentFlavortextPokemonNumber = () => {
+    const todayInMS = moment();
+
+    return Math.round((todayInMS - DateOfFirstPokeldeGameFlavortext.valueOf()) / oneDayInMS);
 };
 
 const lowerCaseAndCapitalizeWord = (word) => {
@@ -32,4 +38,4 @@ const lowerCaseAndCapitalizeWord = (word) => {
     }
 }
 
-export { removeSpecialCharactersExceptDashFromString, getCookie, getCurrentClassicPokemonNumber,lowerCaseAndCapitalizeWord };
+export { removeSpecialCharactersExceptDashFromString, getCookie, getCurrentClassicPokemonNumber,lowerCaseAndCapitalizeWord,getCurrentFlavortextPokemonNumber };

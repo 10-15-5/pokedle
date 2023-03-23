@@ -56,15 +56,20 @@ const Habitats = {
 const TotalResultCardFlipDelay = 2750;
 
 const DateOfFirstPokeldeGameClassic = moment.utc('16/03/2023', 'DD/MM/YYYY');
+const DateOfFirstPokeldeGameFlavortext = moment.utc('27/03/2023', 'DD/MM/YYYY');
 
 const ClassicGuessesNeededForHintOne = 4;
 const ClassicGuessesNeededForHintTwo = 6;
 const ClassicGuessesNeededForHintThree = 8;
 
+const FlavortextGuessesNeededForHintOne = 2;
+const FlavortextGuessesNeededForHintTwo = 4;
+const FlavortextGuessesNeededForHintThree = 6;
+
 const GameModes = {
     Classic: 'Classic',
-    Flavortext: 'Flavortext'
-}
+    Flavortext: 'Flavortext',
+};
 
 export {
     GuessState,
@@ -75,8 +80,12 @@ export {
     TotalResultCardFlipDelay,
     getGuessFieldTooltipsFromIndex,
     DateOfFirstPokeldeGameClassic,
+    DateOfFirstPokeldeGameFlavortext,
     ClassicGuessesNeededForHintOne,
     ClassicGuessesNeededForHintTwo,
     ClassicGuessesNeededForHintThree,
-    GameModes
+    FlavortextGuessesNeededForHintOne,
+    FlavortextGuessesNeededForHintTwo,
+    FlavortextGuessesNeededForHintThree,
+    GameModes,
 };
