@@ -2,6 +2,7 @@ import { createRouter, createWebHistory } from 'vue-router';
 import HomeView from '../views/HomeView.vue';
 import ClassicView from '../views/ClassicView.vue';
 import FlavorTextView from '../views/FlavortextView.vue';
+import SilhouetteView from '../views/SilhuetView.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -24,6 +25,11 @@ const router = createRouter({
             path: '/flavortext',
             name: 'flavortext',
             component: FlavorTextView,
+        },
+        {
+            path: '/silhouette',
+            name: 'silhouette',
+            component: SilhouetteView,
         },
     ],
 });

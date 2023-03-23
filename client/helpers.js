@@ -1,5 +1,9 @@
 import moment from 'moment-timezone';
-import { DateOfFirstPokeldeGameClassic, DateOfFirstPokeldeGameFlavortext } from './constants.js';
+import {
+    DateOfFirstPokeldeGameClassic,
+    DateOfFirstPokeldeGameFlavortext,
+    DateOfFirstPokeldeGameSilhouette,
+} from './constants.js';
 
 const oneDayInMS = 1000 * 60 * 60 * 24;
 
@@ -9,9 +13,7 @@ const removeSpecialCharactersExceptDashFromString = (text) => {
 };
 
 const getCookie = (document) =>
-    Object.fromEntries(
-        document.cookie.split('; ').map((v) => v.split(/=(.*)/s).map(decodeURIComponent))
-    );
+    Object.fromEntries(document.cookie.split('; ').map((v) => v.split(/=(.*)/s).map(decodeURIComponent)));
 
 const getCurrentClassicPokemonNumber = () => {
     const todayInMS = moment();
@@ -25,9 +27,14 @@ const getCurrentFlavortextPokemonNumber = () => {
     return Math.round((todayInMS - DateOfFirstPokeldeGameFlavortext.valueOf()) / oneDayInMS);
 };
 
-const lowerCaseAndCapitalizeWord = (word) => {
+const getCurrentSilhouettePokemonNumber = () => {
+    const todayInMS = moment();
 
-    if(typeof word !== 'string') throw new Error("word must be string");
+    return Math.round((todayInMS - DateOfFirstPokeldeGameSilhouette.valueOf()) / oneDayInMS);
+};
+
+const lowerCaseAndCapitalizeWord = (word) => {
+    if (typeof word !== 'string') throw new Error('word must be string');
 
     const lowerCaseWord = word.toLowerCase();
     const capitalizedWord = lowerCaseWord.charAt(0).toUpperCase() + lowerCaseWord.slice(1);
@@ -35,7 +42,14 @@ const lowerCaseAndCapitalizeWord = (word) => {
     return {
         lowerCaseWord,
         capitalizedWord,
-    }
-}
+    };
+};
 
-export { removeSpecialCharactersExceptDashFromString, getCookie, getCurrentClassicPokemonNumber,lowerCaseAndCapitalizeWord,getCurrentFlavortextPokemonNumber };
+export {
+    removeSpecialCharactersExceptDashFromString,
+    getCookie,
+    getCurrentClassicPokemonNumber,
+    lowerCaseAndCapitalizeWord,
+    getCurrentFlavortextPokemonNumber,
+    getCurrentSilhouettePokemonNumber,
+};

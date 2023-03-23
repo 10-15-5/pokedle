@@ -48,6 +48,8 @@ const getDailyGamesWonCount = async (gameMode) => {
             return res.data.classicGamesWon;
         case GameModes.Flavortext:
             return res.data.flavortextGamesWon;
+        case GameModes.Silhouette:
+            return res.data.silhouetteGamesWon;
         default:
             throw new Error('Gamemode Required');
     }
@@ -64,6 +66,8 @@ const updateUserWithGameWon = async (gameMode, numberOfGuesses) => {
         case GameModes.Flavortext:
             response = await apiService.updateUserFlavortextWins(userId, numberOfGuesses);
             return response.data.user;
+        case GameModes.Silhouette:
+            response = await apiService.updateUserSilhouetteWins(userId, numberOfGuesses);
         default:
             throw new Error('Gamemode Required');
     }

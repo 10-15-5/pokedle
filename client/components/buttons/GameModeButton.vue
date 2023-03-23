@@ -10,12 +10,19 @@
             class="mt-[-4px] h-11 w-11 text-teal-500"
             :path="mdiMessageQuestion"
         />
+        <SvgIcon
+            v-else-if="gameMode === GameModes.Silhouette"
+            type="mdi"
+            class="mt-[-4px] h-11 w-11 text-teal-500"
+            :path="mdiAccountQuestion"
+        />
+    
     </div>
 </template>
 
 <script setup>
 import SvgIcon from '@jamescoyle/vue-icon';
-import { mdiHelpCircle, mdiMessageQuestion } from '@mdi/js';
+import { mdiHelpCircle, mdiMessageQuestion, mdiAccountQuestion } from '@mdi/js';
 import { GameModes } from '../../constants';
 const props = defineProps({
     gameMode: String,

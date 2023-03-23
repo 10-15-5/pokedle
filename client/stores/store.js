@@ -9,6 +9,7 @@ export const useStore = defineStore('store', () => {
     
     const isClassicGameWon = ref(false);
     const isFlavortextGameWon = ref(false);
+    const isSilhouetteGameWon = ref(false);
 
     const setShiny = (isShinyParam) => {
         isShiny.value = isShinyParam;
@@ -67,6 +68,11 @@ export const useStore = defineStore('store', () => {
         localStorage.isFlavortextGameWon = `${isWon}`;
     };
 
+    const setIsSilhouetteGameWon = (isWon) => {
+        isSilhouetteGameWon.value = isWon;
+        localStorage.isSilhouetteGameWon = `${isWon}`;
+    };
+
     return {
         user,
         isClassicGameWon,
@@ -75,6 +81,7 @@ export const useStore = defineStore('store', () => {
         theme,
         isDark,
         isFlavortextGameWon,
+        isSilhouetteGameWon,
         setUser,
         setIsClassicGameWon,
         toggleShiny,
@@ -84,6 +91,7 @@ export const useStore = defineStore('store', () => {
         setTheme,
         toggleTheme,
         loadTheme,
-        setIsFlavortextGameWon
+        setIsFlavortextGameWon,
+        setIsSilhouetteGameWon
     };
 });

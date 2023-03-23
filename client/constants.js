@@ -57,6 +57,7 @@ const TotalResultCardFlipDelay = 2750;
 
 const DateOfFirstPokeldeGameClassic = moment.utc('16/03/2023', 'DD/MM/YYYY');
 const DateOfFirstPokeldeGameFlavortext = moment.utc('27/03/2023', 'DD/MM/YYYY');
+const DateOfFirstPokeldeGameSilhouette = moment.utc('27/03/2023', 'DD/MM/YYYY');
 
 const ClassicGuessesNeededForHintOne = 4;
 const ClassicGuessesNeededForHintTwo = 6;
@@ -66,9 +67,14 @@ const FlavortextGuessesNeededForHintOne = 2;
 const FlavortextGuessesNeededForHintTwo = 4;
 const FlavortextGuessesNeededForHintThree = 6;
 
+const SilhouetteGuessesNeededForHintOne = 2;
+const SilhouetteGuessesNeededForHintTwo = 3;
+const SilhouetteGuessesNeededForHintThree = 4;
+
 const GameModes = {
     Classic: 'Classic',
     Flavortext: 'Flavortext',
+    Silhouette: 'Silhouette',
 };
 
 export {
@@ -87,5 +93,9 @@ export {
     FlavortextGuessesNeededForHintOne,
     FlavortextGuessesNeededForHintTwo,
     FlavortextGuessesNeededForHintThree,
+    DateOfFirstPokeldeGameSilhouette,
+    SilhouetteGuessesNeededForHintOne,
+    SilhouetteGuessesNeededForHintTwo,
+    SilhouetteGuessesNeededForHintThree,
     GameModes,
 };
