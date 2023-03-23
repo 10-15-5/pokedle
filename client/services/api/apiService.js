@@ -34,19 +34,23 @@ const updateUserStreaks = (userId) => apiClient().patch(`users/${userId}`);
 
 export {
     getClassicSecretPokemon,
-    newClassicSecretPokemon,
     getClassicPreviousSecretPokemon,
+    newClassicSecretPokemon,
     updateStatsClassicWins,
     updateUserClassicWins,
+
     getFlavortextSecretPokemon,
     getFlavortextPreviousSecretPokemon,
     newFlavortextSecretPokemon,
     updateStatsFlavortextWins,
     updateUserFlavortextWins,
+
     getSilhouetteSecretPokemon,
-    getSilhouetteSecretPokemon,
+    getSilhouettePreviousSecretPokemon,
+    newSilhouetteSecretPokemon,
     updateStatsSilhouetteWins,
     updateUserSilhouetteWins,
+    
     getDailyStats,
     createUser,
     getUser,
