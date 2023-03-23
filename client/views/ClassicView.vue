@@ -8,7 +8,7 @@
         <GameWinContainer
             v-if="store.isClassicGameWon"
             :pokemon="componentStore.guesses[0]"
-            :twitterText="classicTwitterText"
+            :twitterText="classicTwitterText()"
             :color="colors.at(-1)"
         />
         <RouterLink v-if="store.isClassicGameWon" to="/flavortext">

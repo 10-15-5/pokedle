@@ -6,7 +6,7 @@
             :color="colors.at(-1)"
             :twitterText="flavortextTwitterText()"
         />
-        <div v-else class="card w-[450px] p-4 text-justify font-pkmEmerald text-xl italic">
+        <div v-else class="card w-[450px] sm:w-[350px] p-4 text-justify font-pkmEmerald text-xl sm:text-base italic">
             "{{ secretPokemon.flavorText }}"
         </div>
         <SearchField
