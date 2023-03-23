@@ -12,8 +12,18 @@ const newFlavortextSecretPokemon = () => apiClient().post(`flavortext-secret-pok
 const updateUserFlavortextWins = (userId, numberOfGuesses) =>
     apiClient().post(`users/${userId}/flavortext-wins`, { numberOfGuesses });
 
+const getSilhouetteSecretPokemon = () => apiClient().get(`silhouette-secret-pokemons`);
+const getSilhouettePreviousSecretPokemon = () => apiClient().get(`silhouette-previous-secret-pokemons`);
+const newSilhouetteSecretPokemon = () => apiClient().post(`silhouette-secret-pokemons`);
+const updateUserSilhouetteWins = (userId, numberOfGuesses) =>
+    apiClient().post(`users/${userId}/silhouette-wins`, { numberOfGuesses });
+
 const updateStatsClassicWins = (numberOfGuesses) => apiClient().post(`classic-games-won`, { numberOfGuesses });
 const updateStatsFlavortextWins = (numberOfGuesses) => apiClient().post(`flavortext-games-won`, { numberOfGuesses });
+const updateStatsSilhouetteWins = (numberOfGuesses) => apiClient().post(`silhouette-games-won`, { numberOfGuesses });
+
+
+
 const getDailyStats = (date) => apiClient().get(`daily-stats/${date}`);
 
 const getUser = (userId) => apiClient().get(`users/${userId}`);
@@ -33,6 +43,10 @@ export {
     newFlavortextSecretPokemon,
     updateStatsFlavortextWins,
     updateUserFlavortextWins,
+    getSilhouetteSecretPokemon,
+    getSilhouetteSecretPokemon,
+    updateStatsSilhouetteWins,
+    updateUserSilhouetteWins,
     getDailyStats,
     createUser,
     getUser,
