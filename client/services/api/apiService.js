@@ -13,7 +13,7 @@ const updateUserFlavortextWins = (userId, numberOfGuesses) =>
     apiClient().post(`users/${userId}/flavortext-wins`, { numberOfGuesses });
 
 const updateStatsClassicWins = (numberOfGuesses) => apiClient().post(`classic-games-won`, { numberOfGuesses });
-const updateStatsFlavortextWins = (numberOfGuesses) => apiClient().post(`classic-games-won`, { numberOfGuesses });
+const updateStatsFlavortextWins = (numberOfGuesses) => apiClient().post(`flavortext-games-won`, { numberOfGuesses });
 const getDailyStats = (date) => apiClient().get(`daily-stats/${date}`);
 
 const getUser = (userId) => apiClient().get(`users/${userId}`);
