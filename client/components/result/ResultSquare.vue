@@ -15,45 +15,23 @@
                 class="absolute z-10 h-[20px] w-[20px] text-yellow-500 sm:h-[14px] sm:w-[14px]"
             />
         </div>
-        <VueFlip
-            v-model="isCardFaceDown"
-            transition="1s"
-            class="!h-[60px] !w-[60px] sm:!h-[43px] sm:!w-[43px]"
-            :height="'1px'"
-            :width="'1px'"
-        >
+        <VueFlip v-model="isCardFaceDown" transition="1s" :height="cardSize" :width="cardSize">
             <template v-slot:front>
-                <div
-                    class="result-card rounded"
-                    :style="{ 'background-color': getColor }"
-                    variant="outlined"
-                >
+                <div class="result-card rounded" :style="{ 'background-color': getColor }" variant="outlined">
                     <img
                         v-if="type === GuessType.Pokemon"
                         class="pokemon-bg bg-neutral-200 bg-no-repeat dark:!bg-neutral-700"
-                        :src="
-                            'https://img.pokemondb.net/sprites/ruby-sapphire/' +
-                            color +
-                            '/' +
-                            pokemon +
-                            '.png'
-                        "
+                        :src="'https://img.pokemondb.net/sprites/ruby-sapphire/' + color + '/' + pokemon + '.png'"
                         :title="pokemon"
                         alt="pokemon sprite"
                     />
                     <div
                         v-if="type === GuessType.Blackout"
-                        class="bg-white bg-no-repeat dark:!bg-neutral-300"
+                        class="w-full rounded bg-white bg-no-repeat dark:!bg-neutral-300"
                     >
                         <img
-                            class="brightness-0"
-                            :src="
-                                'https://img.pokemondb.net/sprites/ruby-sapphire/' +
-                                color +
-                                '/' +
-                                pokemon +
-                                '.png'
-                            "
+                            class="w-full brightness-0"
+                            :src="'https://img.pokemondb.net/sprites/ruby-sapphire/' + color + '/' + pokemon + '.png'"
                             alt="pokemon sprite"
                         />
                     </div>
@@ -61,11 +39,7 @@
                         v-if="type === GuessType.Habitat"
                         class="h-[39px] overflow-hidden rounded-[50%] border-2 border-light-border dark:!border-dark-border sm:h-[30px]"
                     >
-                        <img
-                            :src="getHabitatImage(habitat)"
-                            :title="`${habitat}`"
-                            :alt="`${habitat}`"
-                        />
+                        <img :src="getHabitatImage(habitat)" :title="`${habitat}`" :alt="`${habitat}`" />
                     </div>
                     <p
                         v-if="type === GuessType.Text"
@@ -77,10 +51,7 @@
             </template>
             <template v-slot:back>
                 <div class="result-card bg-neutral-200 dark:!bg-neutral-800" variant="outlined">
-                    <img
-                        :src="'./client/assets/result-cards/pokemon-cardback-pixel.png'"
-                        alt="pokemon sprite"
-                    />
+                    <img :src="'./client/assets/result-cards/pokemon-cardback-pixel.png'" alt="pokemon sprite" />
                 </div>
             </template>
         </VueFlip>
@@ -89,7 +60,7 @@
 
 <script setup>
 import { GuessState, GuessType } from '../../constants.js';
-import { computed, onBeforeMount, onMounted, ref } from 'vue';
+import { computed, onBeforeMount, onMounted, ref, onUnmounted } from 'vue';
 import { getHabitatImage } from '../../services/assets.js';
 import { VueFlip } from 'vue-flip';
 import { useStore } from '../../stores/store';
@@ -105,23 +76,42 @@ const props = defineProps({
     habitat: String,
     color: {
         String,
-        default: 'normal'
+        default: 'normal',
     },
     flipDelay: Number,
     type: String,
+    isLarge: 
+        Boolean,   
 });
 
+const windowWidth = ref(window.innerWidth);
 const isCardFaceDown = ref(true);
+
+const cardSize = computed(() => {
+    if (!props.isLarge) {
+        if (windowWidth.value > 576) return '60px';
+        else if (windowWidth.value <= 576) return '43px';
+    } else {
+        if (windowWidth.value > 576) return '100px';
+        else if (windowWidth.value <= 576) return '80px';
+    }
+});
 
 onBeforeMount(() => {
     if (props.flipDelay === undefined || store.isClassicGameWon || props.type === GuessType.Pokemon)
         isCardFaceDown.value = false;
 });
+const onWidthChange = () => (windowWidth.value = window.innerWidth);
 
 onMounted(() => {
+    window.addEventListener('resize', onWidthChange);
     setTimeout(() => {
         isCardFaceDown.value = false;
     }, props.flipDelay * 350);
+});
+
+onUnmounted(() => {
+    window.removeEventListener('resize', onWidthChange);
 });
 
 const getColor = computed(() => {

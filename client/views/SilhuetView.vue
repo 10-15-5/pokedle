@@ -6,6 +6,16 @@
             :color="colors.at(-1)"
             :twitterText="silhouetteTwitterText()"
         />
+        <div v-else class="card relative flex flex-col items-center justify-center gap-3 py-4 px-8 sm:px-4 sm:text-sm">
+            <span class="card py-1 px-2 font-pkmEmerald">Silhouette, Rotated</span>
+            <ResultSquare
+                class="md:transform-none"
+                :class="getRotation"
+                :pokemon="secretPokemon.name"
+                :type="GuessType.Blackout"
+                :isLarge="true"
+            />
+        </div>
         <SearchField
             v-if="!store.isSilhouetteGameWon"
             :pokemonNames="componentStore.pokemonNames"
@@ -72,7 +82,7 @@ import ResultSquare from '../components/result/ResultSquare.vue';
 import SingeResultContainer from '../components/result/SingeResultContainer.vue';
 import DailyGamesWonContainer from '../components/infoCards/DailyGamesWonContainer.vue';
 import PreviousPokemonCard from '../components/infoCards/PreviousPokemonCard.vue';
-import { reactive, ref, onBeforeMount } from 'vue';
+import { reactive, ref, onBeforeMount, computed } from 'vue';
 import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import { useStore } from '../stores/store.js';
 import HintContainer from '../components/hints/HintContainer.vue';
@@ -117,6 +127,10 @@ const yesterdaysPokemon = ref('');
 let colors = [];
 const secretPokemon = reactive({});
 
+const rotate = ['!rotate-90', '!rotate-180', '!-rotate-90'];
+
+const getRotation = computed(() => rotate[Math.floor(Math.random() * rotate.length)]);
+
 const setDailyGamesWonCount = async () => {
     dailyGamesWon.value = await getDailyGamesWonCount(GameModes.Silhouette);
 };
@@ -134,10 +148,9 @@ const silhouetteTwitterText = () => {
     const footer = `Play at pokedle.gg 🎮!`;
 
     return header + footer;
-}
+};
 
 const setHintOne = () => {
-
     if (hintOne.length || hintTwo.length) {
         return;
     }
