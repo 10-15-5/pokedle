@@ -150,8 +150,9 @@ func (r *userRepository) InsertNewSilhouetteGameWon(
 
 func (r *userRepository) UpdateClassicUserStreak(
 	userId primitive.ObjectID,
-	currentStreak int,
+	classicStreak int,
 	flavortextStreak int,
+	silhouetteStreak int,
 ) {
 
 	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
@@ -159,6 +160,6 @@ func (r *userRepository) UpdateClassicUserStreak(
 	coll.UpdateByID(
 		context.Background(),
 		userId,
-		bson.M{"$set": bson.M{"classicCurrentStreak": currentStreak, "flavortextCurrentStreak": flavortextStreak}},
+		bson.M{"$set": bson.M{"classicCurrentStreak": classicStreak, "flavortextCurrentStreak": flavortextStreak, "silhouetteCurrentStreak": silhouetteStreak}},
 	)
 }

@@ -255,10 +255,11 @@ func UpdateUserStreaks(c *gin.Context) {
 	user := services.GetUser(mongoUserId)
 
 	var streakClassic = services.CalculateStreak(user.ClassicGamesWon, user.ClassicCurrentStreak)
-	var streakFlavortext = services.CalculateStreak(user.FlavortextGamesWon, user.ClassicCurrentStreak)
+	var streakFlavortext = services.CalculateStreak(user.FlavortextGamesWon, user.FlavortextCurrentStreak)
+	var streakSilhouette = services.CalculateStreak(user.SilhouetteGamesWon, user.SilhouetteCurrentStreak)
 
-	if streakClassic != user.ClassicCurrentStreak || streakFlavortext != user.FlavortextCurrentStreak {
-		services.UpdateUserStreaks(mongoUserId, streakClassic, streakFlavortext)
+	if streakClassic != user.ClassicCurrentStreak || streakFlavortext != user.FlavortextCurrentStreak || streakSilhouette != user.SilhouetteCurrentStreak {
+		services.UpdateUserStreaks(mongoUserId, streakClassic, streakFlavortext, streakSilhouette)
 		c.AbortWithStatusJSON(200, gin.H{"msg": "Streak Updated"})
 		return
 	}

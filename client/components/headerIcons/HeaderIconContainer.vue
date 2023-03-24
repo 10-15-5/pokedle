@@ -3,7 +3,7 @@
         <HeaderIcon>
             <p class="text-[30px] sm:!text-[26px]">🔥</p>
             <p class="streak-count mt-2 font-pkmEmerald text-light-text dark:text-gray-600">
-                {{ store.user.classicCurrentStreak }} 
+                {{ store.user.flavortextCurrentStreak }} 
             </p>
            <!-- TODO: ABOVE ^switch out streak depending on page -->
         </HeaderIcon>

@@ -249,9 +249,10 @@ func UpdateUserStreaks(
 	userId primitive.ObjectID,
 	classicStreak int,
 	flavortextStreak int,
+	silhouetteStreak int,
 ) {
 
 	r := user.GetUserRepository(MongoClient)
 
-	r.UpdateClassicUserStreak(userId, classicStreak, flavortextStreak)
+	r.UpdateClassicUserStreak(userId, classicStreak, flavortextStreak, silhouetteStreak)
 }
