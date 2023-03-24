@@ -11,8 +11,8 @@
             :twitterText="classicTwitterText()"
             :color="colors.at(-1)"
         />
-        <RouterLink v-if="store.isClassicGameWon" to="/flavortext">
-            <GameModeButton :gameMode="GameModes.Flavortext" />
+        <RouterLink v-if="store.isClassicGameWon" to="/silhouette">
+            <GameModeButton :gameMode="GameModes.Silhouette" />
         </RouterLink>
         <HintContainer
             v-if="!store.isClassicGameWon && componentStore.guesses.length"

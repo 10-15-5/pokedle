@@ -16,6 +16,9 @@
                 :isLarge="true"
             />
         </div>
+        <RouterLink v-if="store.isSilhouetteGameWon" to="/flavortext">
+            <GameModeButton :gameMode="GameModes.Flavortext" />
+        </RouterLink>
         <SearchField
             v-if="!store.isSilhouetteGameWon"
             :pokemonNames="componentStore.pokemonNames"
@@ -66,6 +69,7 @@
 <script setup>
 import SearchField from '../components/SearchField.vue';
 import GameWinContainer from '../components/GameWinContainer.vue';
+import GameModeButton from '../components/buttons/GameModeButton.vue';
 import SingleResultHeader from '../components/result/SingleResultHeader.vue';
 import ResultSquare from '../components/result/ResultSquare.vue';
 import SingeResultContainer from '../components/result/SingeResultContainer.vue';
