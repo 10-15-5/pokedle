@@ -56,7 +56,7 @@
                 :guessResult="getGuessResults(guess, secretPokemon, colors[componentStore.guesses.length - 1 - i])"
             />
         </div>
-        <PreviousPokemonCard v-else :pokemonName="yesterdaysPokemon.name" />
+        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
     </div>
 </template>
 
@@ -339,7 +339,8 @@ const loadClassicGameData = async () => {
         //Fresh game
         clearLocalStorageGameMode(GameModes.Classic);
         store.setIsClassicGameWon(false);
-        await setSecretPokemon(GameModes.Classic);
+        setSecretPokemon(GameModes.Classic, currSecretPokemon);
+        loadSecretPokemon();
         setNewDate();
     }
     setHintOne();

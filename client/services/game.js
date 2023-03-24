@@ -25,7 +25,7 @@ const setNewSecretPokemon = async (gameMode) => {
     }
 };
 
-const setSecretPokemon = async (gameMode) => {
+const getAndSetSecretPokemon = async (gameMode) => {
     let response;
 
     switch (gameMode) {
@@ -45,6 +45,22 @@ const setSecretPokemon = async (gameMode) => {
             throw new Error('Gamemode Required');
     }
 };
+
+const setSecretPokemon = (gameMode, secretPokemon) => {
+    switch (gameMode) {
+        case GameModes.Classic:
+            localStorage.classicSecretPokemon = JSON.stringify(secretPokemon);
+            break;
+        case GameModes.Flavortext:
+            localStorage.flavortextSecretPokemon = JSON.stringify(secretPokemon);
+            break;
+        case GameModes.Silhouette:
+            localStorage.silhouetteSecretPokemon = JSON.stringify(secretPokemon);
+            break;
+        default:
+            throw new Error('Gamemode Required');
+    }
+}
 
 const getDailyGamesWonCount = async (gameMode) => {
     const date = moment().format('YYYY-MM-DD');
@@ -97,6 +113,7 @@ const updateCurrentUserStreakDisplay = async (gameMode) => {
 
 export {
     setNewSecretPokemon,
+    getAndSetSecretPokemon,
     setSecretPokemon,
     getDailyGamesWonCount,
     updateUserWithGameWon,

@@ -6,7 +6,7 @@
             :color="colors.at(-1)"
             :twitterText="silhouetteTwitterText()"
         />
-        <div v-else class="card relative flex flex-col items-center justify-center gap-3 py-4 px-8 sm:px-4 sm:text-sm">
+        <div v-else-if="secretPokemon.name" class="card relative flex flex-col items-center justify-center gap-3 py-4 px-8 sm:px-4 sm:text-sm">
             <span class="card py-1 px-2 font-pkmEmerald">Silhouette, Rotated</span>
             <ResultSquare
                 class="md:transform-none"
@@ -62,7 +62,7 @@
                 :isCorrect="isCorrectGuess(guess, secretPokemon.name)"
             />
         </div>
-        <PreviousPokemonCard v-else :pokemonName="yesterdaysPokemon.name" />
+        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
     </div>
 </template>
 
@@ -266,7 +266,8 @@ const loadSilhouetteGameData = async () => {
         //Fresh game TODO: Implement
         clearLocalStorageGameMode(GameModes.Silhouette);
         store.setIsSilhouetteGameWon(false);
-        await setSecretPokemon(GameModes.Silhouette);
+        setSecretPokemon(GameModes.Silhouette, currSecretPokemon);
+        loadSecretPokemon();
         setNewDate();
     }
     setHintOne();

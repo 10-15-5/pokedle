@@ -63,7 +63,7 @@
                 :isCorrect="isCorrectGuess(guess, secretPokemon.name)"
             />
         </div>
-        <PreviousPokemonCard v-else :pokemonName="yesterdaysPokemon.name" />
+        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
     </div>
 </template>
 
@@ -124,7 +124,6 @@ const yesterdaysPokemon = ref('');
 //Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
 let colors = [];
 const secretPokemon = reactive({});
-
 const setDailyGamesWonCount = async () => {
     dailyGamesWon.value = await getDailyGamesWonCount(GameModes.Flavortext);
 };
@@ -144,7 +143,7 @@ const flavortextTwitterText = () => {
     return header + footer;
 };
 
-const setHintOne = () => {
+const setHints = () => {
     if (hintOne.length || hintTwo.length) {
         return;
     }
@@ -263,10 +262,11 @@ const loadFlavortextGameData = async () => {
         //Fresh game TODO: Implement
         clearLocalStorageGameMode(GameModes.Flavortext);
         store.setIsFlavortextGameWon(false);
-        await setSecretPokemon(GameModes.Flavortext);
+        setSecretPokemon(GameModes.Flavortext, currSecretPokemon);
+        loadSecretPokemon();
         setNewDate();
     }
-    setHintOne();
+    setHints();
     updateCurrentUserStreakDisplay(GameModes.Flavortext);
 };
 </script>
