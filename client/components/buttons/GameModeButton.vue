@@ -1,22 +1,26 @@
 <template>
     <div
-        class="card flex w-[180px] flex-row items-center justify-between gap-2 px-2 pt-2 pb-1 text-2xl transition-all duration-100 ease-linear hover:scale-110 !font-pkmEmerald"
+        class="card flex w-[180px] flex-row items-center justify-between gap-2 px-2 pt-2 pb-1 !font-pkmEmerald text-2xl transition-all duration-100 ease-linear hover:scale-110 sm:w-[150px] sm:text-xl"
     >
         {{ gameMode }}
-        <SvgIcon v-if="gameMode === GameModes.Classic" type="mdi" class="mt-[-4px] h-10 w-10 text-teal-500" :path="mdiHelpCircle" />
+        <SvgIcon
+            v-if="gameMode === GameModes.Classic"
+            type="mdi"
+            class="mt-[-4px] h-11 w-11 text-teal-500 sm:h-9 sm:w-9"
+            :path="mdiHelpCircle"
+        />
         <SvgIcon
             v-else-if="gameMode === GameModes.Flavortext"
             type="mdi"
-            class="mt-[-4px] h-11 w-11 text-teal-500"
+            class="mt-[-4px] h-11 w-11 text-teal-500 sm:h-9 sm:w-9"
             :path="mdiMessageQuestion"
         />
         <SvgIcon
             v-else-if="gameMode === GameModes.Silhouette"
             type="mdi"
-            class="mt-[-4px] h-11 w-11 text-teal-500"
+            class="mt-[-4px] h-11 w-11 text-teal-500 sm:h-9 sm:w-9"
             :path="mdiAccountQuestion"
         />
-    
     </div>
 </template>
 

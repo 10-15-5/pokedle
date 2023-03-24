@@ -21,12 +21,12 @@
             </div>
             <RouterView class="mt-6" />
         </div>
-        <div v-if="isDevelopment" class="flex items-center justify-center">
-            <button class="card p-2 text-xs hover:!bg-green-400" @click="revealPokemon">Reveal</button>
-            <button class="card p-2 text-xs hover:!bg-purple-400" @click="getNewGame">Get New Game</button>
-            <button class="card p-2 text-xs hover:!bg-blue-400" @click="setNewGame">Set New Game</button>
-            <button class="card p-2 text-xs hover:!bg-pink-400" @click="launchConfetti(false, false)">Confetti</button>
-            <button class="card p-2 text-xs hover:!bg-pink-400" @click="playWinnerSound">WIN SOUND</button>
+        <div v-if="isDevelopment" class="flex items-center justify-center font-pkmEmerald">
+            <button class="card text-clip overflow-hidden whitespace-nowrap p-2 text-xs sm:text-[10px] hover:!bg-green-400" @click="revealPokemon">Reveal</button>
+            <button class="card text-clip overflow-hidden whitespace-nowrap p-2 text-xs hover:!bg-purple-400 sm:text-[10px]" @click="getNewGame">Get New Game</button>
+            <button class="card text-clip overflow-hidden whitespace-nowrap p-2 text-xs hover:!bg-blue-400 sm:text-[10px]" @click="setNewGame">Set New Game</button>
+            <button class="card text-clip overflow-hidden whitespace-nowrap p-2 text-xs hover:!bg-pink-400 sm:text-[10px]" @click="launchConfetti(false, false)">Confetti</button>
+            <button class="card text-clip overflow-hidden whitespace-nowrap p-2 text-xs hover:!bg-pink-400 sm:text-[10px]" @click="playWinnerSound">Win Sound</button>
         </div>
     </div>
 </template>
