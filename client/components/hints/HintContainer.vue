@@ -23,8 +23,8 @@
         </div>
         <div v-if="isShowHints" class="mr-3 flex flex-row justify-between">
             <div class="flex flex-row gap-2">
-                <div
-                    @click="selectHintFlavortext"
+                <div v-if="isHintOne"
+                    @click="selectHintCardOne"
                     class="hint-tab-header ml-1 flex gap-1"
                     :class="isShowHintOne ? 'hint-tab-header-active' : ''"
                 >
@@ -33,8 +33,8 @@
                         <span :class="isHintOneUnlocked ? 'pi pi-lock-open' : 'pi pi-lock'"></span>
                     </div>
                 </div>
-                <div
-                    @click="selectHintCardOne"
+                <div v-if="isHintTwo"
+                    @click="selectHintCardTwo"
                     class="hint-tab-header flex gap-1"
                     :class="isShowHintTwo ? 'hint-tab-header-active' : ''"
                 >
@@ -43,8 +43,8 @@
                         <span :class="isHintTwoUnlocked ? 'pi pi-lock-open' : 'pi pi-lock'"></span>
                     </div>
                 </div>
-                <div
-                    @click="selectHintCardTwo"
+                <div v-if="isHintThree"
+                    @click="selectHintCardThree"
                     class="hint-tab-header flex gap-1"
                     :class="isShowHintThree ? 'hint-tab-header-active' : ''"
                 >
@@ -99,6 +99,11 @@ const hints = ['hint1', 'hint2', 'hint3'];
 const selectedHint = ref('hint1');
 const isShowHints = ref(false);
 
+const isHintOne = computed(() => props.guessesRequiredForHintOne)
+const isHintTwo = computed(() => isHintOne.value && props.guessesRequiredForHintTwo)
+const isHintThree = computed(() => isHintTwo.value && props.guessesRequiredForHintThree)
+
+
 const guessesRemainingForHintOne = computed(
     () => props.guessesRequiredForHintOne - props.numberOfGuesses
 );
@@ -116,17 +121,17 @@ const isShowHintOne = computed(() => selectedHint.value === hints[0]);
 const isShowHintTwo = computed(() => selectedHint.value === hints[1]);
 const isShowHintThree = computed(() => selectedHint.value === hints[2]);
 
-const selectHintFlavortext = () => {
+const selectHintCardOne = () => {
     if (isHintOneUnlocked.value) {
         selectedHint.value = hints[0];
     }
 };
-const selectHintCardOne = () => {
+const selectHintCardTwo = () => {
     if (isHintTwoUnlocked.value) {
         selectedHint.value = hints[1];
     }
 };
-const selectHintCardTwo = () => {
+const selectHintCardThree = () => {
     if (isHintThreeUnlocked.value) {
         selectedHint.value = hints[2];
     }

@@ -67,9 +67,8 @@ const FlavortextGuessesNeededForHintOne = 2;
 const FlavortextGuessesNeededForHintTwo = 4;
 const FlavortextGuessesNeededForHintThree = 6;
 
-const SilhouetteGuessesNeededForHintOne = 2;
-const SilhouetteGuessesNeededForHintTwo = 3;
-const SilhouetteGuessesNeededForHintThree = 4;
+const SilhouetteGuessesNeededForHintOne = 1;
+const SilhouetteGuessesNeededForHintTwo = 2;
 
 const GameModes = {
     Classic: 'Classic',
@@ -96,6 +95,5 @@ export {
     DateOfFirstPokeldeGameSilhouette,
     SilhouetteGuessesNeededForHintOne,
     SilhouetteGuessesNeededForHintTwo,
-    SilhouetteGuessesNeededForHintThree,
     GameModes,
 };

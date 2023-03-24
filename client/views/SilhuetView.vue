@@ -27,7 +27,6 @@
             :stylingHintThree="'flex justify-center'"
             :guessesRequiredForHintOne="SilhouetteGuessesNeededForHintOne"
             :guessesRequiredForHintTwo="SilhouetteGuessesNeededForHintTwo"
-            :guessesRequiredForHintThree="SilhouetteGuessesNeededForHintThree"
         >
             <template #hint1
                 ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
@@ -39,24 +38,14 @@
             </template>
             <template #hint2>
                 <div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
-                    <div v-for="(field, i) in hintTwo" :key="i" :value="field" class="flex flex-col gap-1">
-                        <span class="card items-center justify-center py-1 sm:py-0">{{ field.title }}</span>
-                        <ResultSquare
-                            :guessResult="field.guessState"
-                            :guessText="field.text"
-                            :type="field.type"
-                            :habitat="field.habitat"
-                        />
-                    </div>
+                    <p>
+                        Secret Pokemon Starts With The Letter:
+                        <b class="text-lg text-light-orange dark:!text-dark-orange">
+                            {{ secretPokemon.name.charAt(0).toUpperCase() }}</b
+                        >
+                    </p>
                 </div>
             </template>
-            <template #hint3
-                ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
-                    <div class="flex flex-col gap-1">
-                        <span class="card items-center justify-center py-1 sm:py-0">Shape</span>
-                        <ResultSquare :pokemon="secretPokemon.name" :type="GuessType.Blackout" />
-                    </div></div
-            ></template>
         </HintContainer>
         <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="dailyGamesWon" />
         <div v-if="componentStore.guesses.length" class="flex flex-col gap-1">
@@ -95,7 +84,6 @@ import {
     GuessFieldTitles,
     SilhouetteGuessesNeededForHintOne,
     SilhouetteGuessesNeededForHintTwo,
-    SilhouetteGuessesNeededForHintThree,
 } from '../constants';
 import * as apiService from '../services/api/apiService.js';
 import moment from 'moment';
@@ -118,7 +106,6 @@ const componentStore = reactive({
 });
 
 const hintOne = reactive([]);
-const hintTwo = reactive([]);
 
 const dailyGamesWon = ref(0);
 const dailyFirstTryWins = ref(0);
@@ -151,7 +138,7 @@ const silhouetteTwitterText = () => {
 };
 
 const setHintOne = () => {
-    if (hintOne.length || hintTwo.length) {
+    if (hintOne.length) {
         return;
     }
 
@@ -163,8 +150,7 @@ const setHintOne = () => {
         title: GuessFieldTitles[titles.at(i)],
     }));
     correctFieldsWithTitles[7].title = 'Gen';
-    hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2]); //Type 1, Type 2
-    hintTwo.push(correctFieldsWithTitles[6], correctFieldsWithTitles[7]); //Habitat, Gen
+    hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2], correctFieldsWithTitles[5]); //Type 1, Type 2
 };
 
 //TODO: can refactor?
