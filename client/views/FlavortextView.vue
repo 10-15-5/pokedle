@@ -130,7 +130,7 @@ const setDailyGamesWonCount = async () => {
 };
 
 onBeforeMount(async () => {
-    await Promise.all([loadFlavortextGameData(), setDailyGamesWonCount()]);
+    await Promise.all([loadFlavortextGameData(), setDailyGamesWonCount(), updateYesterdaysPokemon()]);
 });
 
 const flavortextTwitterText = () => {
@@ -267,7 +267,6 @@ const loadFlavortextGameData = async () => {
         setNewDate();
     }
     setHintOne();
-    updateYesterdaysPokemon();
     updateCurrentUserStreakDisplay(GameModes.Flavortext);
 };
 </script>

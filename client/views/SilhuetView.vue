@@ -132,7 +132,7 @@ const setDailyGamesWonCount = async () => {
 };
 
 onBeforeMount(async () => {
-    await Promise.all([loadSilhouetteGameData(), setDailyGamesWonCount()]);
+    await Promise.all([loadSilhouetteGameData(), setDailyGamesWonCount(), updateYesterdaysPokemon()]);
 });
 
 const silhouetteTwitterText = () => {
@@ -270,7 +270,6 @@ const loadSilhouetteGameData = async () => {
         setNewDate();
     }
     setHintOne();
-    updateYesterdaysPokemon();
     updateCurrentUserStreakDisplay(GameModes.Silhouette);
 };
 </script>

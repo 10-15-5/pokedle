@@ -83,12 +83,17 @@ import {
     TotalResultCardFlipDelay,
     ClassicGuessesNeededForHintOne,
     GameModes,
-ClassicGuessesNeededForHintTwo,
-ClassicGuessesNeededForHintThree,
+    ClassicGuessesNeededForHintTwo,
+    ClassicGuessesNeededForHintThree,
 } from '../constants.js';
 import { getCurrentClassicPokemonNumber } from '../helpers.js';
 import moment from 'moment-timezone';
-import { setSecretPokemon, getDailyGamesWonCount, updateUserWithGameWon, updateCurrentUserStreakDisplay } from '../services/game';
+import {
+    setSecretPokemon,
+    getDailyGamesWonCount,
+    updateUserWithGameWon,
+    updateCurrentUserStreakDisplay,
+} from '../services/game';
 import { playWinnerSound } from '../services/sound';
 import {
     clearLocalStorageGameMode,
@@ -120,7 +125,7 @@ const setDailyGamesWonCount = async () => {
 };
 
 onBeforeMount(async () => {
-    await Promise.all([loadClassicGameData(), setDailyGamesWonCount()]);
+    await Promise.all([loadClassicGameData(), setDailyGamesWonCount(), updateYesterdaysPokemon()]);
 });
 
 const emojiResults = computed(() => {
@@ -180,7 +185,7 @@ const setHintOne = () => {
     ) {
         return;
     }
-    
+
     const firstFiveGuesses = componentStore.guesses.slice(
         Math.max(componentStore.guesses.length - ClassicGuessesNeededForHintOne, 0)
     );
@@ -338,7 +343,6 @@ const loadClassicGameData = async () => {
         setNewDate();
     }
     setHintOne();
-    updateYesterdaysPokemon();
     updateCurrentUserStreakDisplay(GameModes.Classic);
 };
 </script>
