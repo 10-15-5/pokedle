@@ -2,8 +2,7 @@ import allPokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import { GuessState, GuessType } from '../constants.js';
 
 const getGuessResults = (pokemonName, secretPokemon, color) => {
-    console.log(pokemonName);
-    console.log(secretPokemon);
+
     const pokemonData = allPokemonData.find((e) => e.name === pokemonName);
 
     if (!pokemonData) throw Error('No pokemon data found');

@@ -22,11 +22,36 @@
             <RouterView class="mt-6" />
         </div>
         <div v-if="isDevelopment" class="flex items-center justify-center font-pkmEmerald">
-            <button class="card text-clip overflow-hidden whitespace-nowrap p-2 text-xs sm:text-[10px] hover:!bg-green-400" @click="revealPokemon">Reveal</button>
-            <button class="card text-clip overflow-hidden whitespace-nowrap p-2 text-xs hover:!bg-purple-400 sm:text-[10px]" @click="getNewGame">Get New Game</button>
-            <button class="card text-clip overflow-hidden whitespace-nowrap p-2 text-xs hover:!bg-blue-400 sm:text-[10px]" @click="setNewGame">Set New Game</button>
-            <button class="card text-clip overflow-hidden whitespace-nowrap p-2 text-xs hover:!bg-pink-400 sm:text-[10px]" @click="launchConfetti(false, false)">Confetti</button>
-            <button class="card text-clip overflow-hidden whitespace-nowrap p-2 text-xs hover:!bg-pink-400 sm:text-[10px]" @click="playWinnerSound">Win Sound</button>
+            <button
+                class="card overflow-hidden text-clip whitespace-nowrap p-2 text-xs hover:!bg-green-400 sm:text-[10px]"
+                @click="revealPokemon"
+            >
+                Reveal
+            </button>
+            <button
+                class="card overflow-hidden text-clip whitespace-nowrap p-2 text-xs hover:!bg-purple-400 sm:text-[10px]"
+                @click="getNewGame"
+            >
+                Get New Game
+            </button>
+            <button
+                class="card overflow-hidden text-clip whitespace-nowrap p-2 text-xs hover:!bg-blue-400 sm:text-[10px]"
+                @click="setNewGame"
+            >
+                Set New Game
+            </button>
+            <button
+                class="card overflow-hidden text-clip whitespace-nowrap p-2 text-xs hover:!bg-pink-400 sm:text-[10px]"
+                @click="launchConfetti(false, false)"
+            >
+                Confetti
+            </button>
+            <button
+                class="card overflow-hidden text-clip whitespace-nowrap p-2 text-xs hover:!bg-pink-400 sm:text-[10px]"
+                @click="playWinnerSound"
+            >
+                Win Sound
+            </button>
         </div>
     </div>
 </template>
@@ -39,7 +64,12 @@ import * as apiService from './services/api/apiService.js';
 import { useStore } from './stores/store.js';
 import moment from 'moment-timezone';
 import { launchConfetti } from './services/confetti';
-import { setNewSecretPokemon, setSecretPokemon, updateCurrentUserStreakDisplay } from './services/game.js';
+import {
+    setNewSecretPokemon,
+    setSecretPokemon,
+    updateCurrentUserStreakDisplay,
+    getAndSetSecretPokemon,
+} from './services/game.js';
 import { clearLocalStorageGameMode } from './services/localStorage';
 import { playWinnerSound } from './services/sound';
 import { GameModes, DateOfFirstPokeldeGameClassic } from './constants';
@@ -64,7 +94,7 @@ onBeforeMount(async () => {
     if (user) {
         store.setUser(user);
     }
-    if(!store.currentStreak) updateCurrentUserStreakDisplay(GameModes.Classic)
+    if (!store.currentStreak) updateCurrentUserStreakDisplay(GameModes.Classic);
 });
 
 const getOrCreateUser = async () => {
@@ -104,12 +134,13 @@ const clearLocalStorageAllGameModes = () => {
     clearLocalStorageGameMode(GameModes.Silhouette);
 };
 
+//Get most resent db entries
 const getNewGame = async () => {
     clearLocalStorageAllGameModes();
     await Promise.all([
-        setSecretPokemon(GameModes.Classic),
-        setSecretPokemon(GameModes.Flavortext),
-        setSecretPokemon(GameModes.Silhouette),
+        getAndSetSecretPokemon(GameModes.Classic),
+        getAndSetSecretPokemon(GameModes.Flavortext),
+        getAndSetSecretPokemon(GameModes.Silhouette),
     ]);
 
     location.reload();
