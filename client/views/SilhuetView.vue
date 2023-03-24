@@ -132,7 +132,9 @@ onBeforeMount(async () => {
 
 const silhouetteTwitterText = () => {
     const sub1 =
-        componentStore.guesses.length === 1 ? 'FIRST TRY 🤯🤩⚡️✨' : `in ${componentStore.guesses.length} tries!🍉🍓🫧`;
+        componentStore.guesses.length === 1
+            ? 'FIRST TRY 🎰🍀🥳🤩'
+            : `in ${componentStore.guesses.length} tries!🍇🥭🍒💖`;
 
     const header = `I guessed the #${getCurrentSilhouettePokemonNumber()} silhouette #Pokedle Pokémon ${sub1}\n\n`;
 
