@@ -11,6 +11,8 @@ export const useStore = defineStore('store', () => {
     const isFlavortextGameWon = ref(false);
     const isSilhouetteGameWon = ref(false);
 
+    const currentStreak = ref(0);
+
     const setShiny = (isShinyParam) => {
         isShiny.value = isShinyParam;
         localStorage.isShiny = `${isShiny.value}`;
@@ -73,6 +75,10 @@ export const useStore = defineStore('store', () => {
         localStorage.isSilhouetteGameWon = `${isWon}`;
     };
 
+    const setCurrentStreak = (val) => {
+       currentStreak.value = val;
+    }
+
     return {
         user,
         isClassicGameWon,
@@ -82,6 +88,7 @@ export const useStore = defineStore('store', () => {
         isDark,
         isFlavortextGameWon,
         isSilhouetteGameWon,
+        currentStreak,
         setUser,
         setIsClassicGameWon,
         toggleShiny,
@@ -92,6 +99,7 @@ export const useStore = defineStore('store', () => {
         toggleTheme,
         loadTheme,
         setIsFlavortextGameWon,
-        setIsSilhouetteGameWon
+        setIsSilhouetteGameWon,
+        setCurrentStreak
     };
 });

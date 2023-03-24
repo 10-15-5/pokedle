@@ -6,7 +6,7 @@
             :color="colors.at(-1)"
             :twitterText="flavortextTwitterText()"
         />
-        <div v-else class="card w-[450px] sm:w-[350px] p-4 text-justify font-pkmEmerald text-xl sm:text-base italic">
+        <div v-else class="card w-[450px] p-4 text-justify font-pkmEmerald text-xl italic sm:w-[350px] sm:text-base">
             "{{ secretPokemon.flavorText }}"
         </div>
         <SearchField
@@ -98,7 +98,12 @@ import {
     addColorsToLocalStorage,
     addGuessesToLocalStorage,
 } from '../services/localStorage';
-import { setSecretPokemon, getDailyGamesWonCount, updateUserWithGameWon } from '../services/game';
+import {
+    setSecretPokemon,
+    getDailyGamesWonCount,
+    updateUserWithGameWon,
+    updateCurrentUserStreakDisplay,
+} from '../services/game';
 import { getCurrentFlavortextPokemonNumber } from '../helpers.js';
 
 const store = useStore();
@@ -137,10 +142,9 @@ const flavortextTwitterText = () => {
     const footer = `Play at pokedle.gg 🎮!`;
 
     return header + footer;
-}
+};
 
 const setHintOne = () => {
-
     if (hintOne.length || hintTwo.length) {
         return;
     }
@@ -264,5 +268,6 @@ const loadFlavortextGameData = async () => {
     }
     setHintOne();
     updateYesterdaysPokemon();
+    updateCurrentUserStreakDisplay(GameModes.Flavortext);
 };
 </script>

@@ -1,6 +1,7 @@
 import * as apiService from './api/apiService.js';
 import { GameModes } from '../constants';
 import moment from 'moment-timezone';
+import { useStore } from '../stores/store.js';
 
 const setNewSecretPokemon = async (gameMode) => {
     let response;
@@ -80,4 +81,24 @@ const updateUserWithGameWon = async (gameMode, numberOfGuesses) => {
     }
 };
 
-export { setNewSecretPokemon, setSecretPokemon, getDailyGamesWonCount, updateUserWithGameWon };
+const updateCurrentUserStreakDisplay = async (gameMode) => {
+    const store = useStore();
+    switch (gameMode) {
+        case GameModes.Classic:
+            return store.setCurrentStreak(store.user.classicCurrentStreak);
+        case GameModes.Flavortext:
+            return store.setCurrentStreak(store.user.flavortextCurrentStreak);
+        case GameModes.Silhouette:
+            return store.setCurrentStreak(store.user.silhouetteCurrentStreak);
+        default:
+            throw new Error('Gamemode Required');
+    }
+};
+
+export {
+    setNewSecretPokemon,
+    setSecretPokemon,
+    getDailyGamesWonCount,
+    updateUserWithGameWon,
+    updateCurrentUserStreakDisplay,
+};

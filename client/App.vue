@@ -39,7 +39,7 @@ import * as apiService from './services/api/apiService.js';
 import { useStore } from './stores/store.js';
 import moment from 'moment-timezone';
 import { launchConfetti } from './services/confetti';
-import { setNewSecretPokemon, setSecretPokemon } from './services/game.js';
+import { setNewSecretPokemon, setSecretPokemon, updateCurrentUserStreakDisplay } from './services/game.js';
 import { clearLocalStorageGameMode } from './services/localStorage';
 import { playWinnerSound } from './services/sound';
 import { GameModes, DateOfFirstPokeldeGameClassic } from './constants';
@@ -64,6 +64,7 @@ onBeforeMount(async () => {
     if (user) {
         store.setUser(user);
     }
+    if(!store.currentStreak) updateCurrentUserStreakDisplay(GameModes.Classic)
 });
 
 const getOrCreateUser = async () => {

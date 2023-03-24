@@ -88,7 +88,7 @@ ClassicGuessesNeededForHintThree,
 } from '../constants.js';
 import { getCurrentClassicPokemonNumber } from '../helpers.js';
 import moment from 'moment-timezone';
-import { setSecretPokemon, getDailyGamesWonCount, updateUserWithGameWon } from '../services/game';
+import { setSecretPokemon, getDailyGamesWonCount, updateUserWithGameWon, updateCurrentUserStreakDisplay } from '../services/game';
 import { playWinnerSound } from '../services/sound';
 import {
     clearLocalStorageGameMode,
@@ -339,6 +339,7 @@ const loadClassicGameData = async () => {
     }
     setHintOne();
     updateYesterdaysPokemon();
+    updateCurrentUserStreakDisplay(GameModes.Classic);
 };
 </script>
 

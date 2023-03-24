@@ -9,6 +9,13 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue';
 import GameModeButton from '../components/buttons/GameModeButton.vue';
 import { GameModes } from '../constants';
+import { updateCurrentUserStreakDisplay } from '../services/game';
+import { useStore } from '../stores/store';
+const store = useStore();
+onMounted(() => {
+    updateCurrentUserStreakDisplay(GameModes.Classic);
+})
 </script>

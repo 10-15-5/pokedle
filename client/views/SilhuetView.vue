@@ -97,7 +97,12 @@ import {
     addColorsToLocalStorage,
     addGuessesToLocalStorage,
 } from '../services/localStorage';
-import { setSecretPokemon, getDailyGamesWonCount, updateUserWithGameWon } from '../services/game';
+import {
+    setSecretPokemon,
+    getDailyGamesWonCount,
+    updateUserWithGameWon,
+    updateCurrentUserStreakDisplay,
+} from '../services/game';
 import { getCurrentSilhouettePokemonNumber } from '../helpers.js';
 
 const store = useStore();
@@ -266,5 +271,6 @@ const loadSilhouetteGameData = async () => {
     }
     setHintOne();
     updateYesterdaysPokemon();
+    updateCurrentUserStreakDisplay(GameModes.Silhouette);
 };
 </script>
