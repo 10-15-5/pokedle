@@ -167,11 +167,12 @@ const revealPokemon = async () => {
     const classicSecret = JSON.parse(localStorage.classicSecretPokemon);
     console.log(`Classic Secret: LS: ${classicSecret.name}, DB: ${responseClassic.data.name}`);
 
+    const silhouetteSecret = JSON.parse(localStorage.silhouetteSecretPokemon);
+    console.log(`Silhouette Secret: LS: ${silhouetteSecret.name}, DB: ${responseSilhouette.data.name}`);
+    
     const flavortextSecret = JSON.parse(localStorage.flavortextSecretPokemon);
     console.log(`Flavortext Secret: LS: ${flavortextSecret.name}, DB: ${responseFlavortext.data.name}`);
 
-    const silhouetteSecret = JSON.parse(localStorage.silhouetteSecretPokemon);
-    console.log(`Silhouette Secret: LS: ${silhouetteSecret.name}, DB: ${responseSilhouette.data.name}`);
 };
 </script>
 

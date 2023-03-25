@@ -25,7 +25,7 @@
         <SearchField
             v-if="!store.isSilhouetteGameWon"
             :pokemonNames="componentStore.pokemonNames"
-            @submit-guess="submitGuess"
+            @submitGuess="submitGuess"
         />
         <HintContainer
             v-if="!store.isSilhouetteGameWon && componentStore.guesses.length"

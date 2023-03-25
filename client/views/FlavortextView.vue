@@ -12,7 +12,7 @@
         <SearchField
             v-if="!store.isFlavortextGameWon"
             :pokemonNames="componentStore.pokemonNames"
-            @submit-guess="submitGuess"
+            @submitGuess="submitGuess"
         />
         <HintContainer
             v-if="!store.isFlavortextGameWon && componentStore.guesses.length"
