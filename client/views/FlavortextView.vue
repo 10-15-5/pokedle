@@ -156,8 +156,9 @@ const setHints = () => {
         title: GuessFieldTitles[titles.at(i)],
     }));
     correctFieldsWithTitles[7].title = 'Gen';
+    correctFieldsWithTitles[3].title = 'Evol. Lvl'
     hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2]); //Type 1, Type 2
-    hintTwo.push(correctFieldsWithTitles[6], correctFieldsWithTitles[7]); //Habitat, Gen
+    hintTwo.push(correctFieldsWithTitles[3] ,correctFieldsWithTitles[6], correctFieldsWithTitles[7]); //Habitat, Gen
 };
 
 //TODO: can refactor?
