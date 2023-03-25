@@ -2,17 +2,20 @@
     <div class="relative">
         <div
             v-if="type === GuessType.Pokemon && color === 'shiny'"
-            class="z-1 absolute mt-[-10px] ml-[46px] flex h-[22px] w-[22px] items-center justify-center sm:ml-[30px] sm:mt-[-10px]"
+            class="z-1 absolute mt-[-10px] flex h-[22px] w-[22px] items-center justify-center  sm:mt-[-10px]"
+            :class="shinyStarMarginLeft"
         >
             <SvgIcon
                 type="mdi"
                 :path="mdiStar"
-                class="absolute z-10 h-[30px] w-[30px] text-black dark:!text-dark-border sm:h-[22px] sm:w-[22px]"
+                class="absolute z-10 text-black dark:!text-dark-border"
+                :class="shinyStarSizeOutline"
             />
             <SvgIcon
                 type="mdi"
                 :path="mdiStar"
-                class="absolute z-10 h-[20px] w-[20px] text-yellow-500 sm:h-[14px] sm:w-[14px]"
+                class="absolute z-10 text-yellow-500"
+                :class="shinyStarSize"
             />
         </div>
         <VueFlip v-model="isCardFaceDown" transition="1s" :height="cardSize" :width="cardSize">
@@ -96,6 +99,31 @@ const cardSize = computed(() => {
         else if (windowWidth.value <= 576) return '80px';
     }
 });
+
+const shinyStarMarginLeft = computed(() => {
+    if (!props.isLarge) {
+        return 'ml-[46px] sm:ml-[30px]'
+    } else {
+        return 'ml-[86px] sm:ml-[66px]'
+    }
+});
+
+const shinyStarSizeOutline = computed(() => {
+    if (!props.isLarge) {
+        return 'h-[30px] w-[30px] sm:h-[22px] sm:w-[22px]'
+    } else {
+        return 'h-[45px] w-[45px] sm:h-[35px] sm:w-[35px]'
+    }
+});
+
+const shinyStarSize = computed(() => {
+    if (!props.isLarge) {
+        return 'h-[20px] w-[20px] sm:h-[14px] sm:w-[14px]'
+    } else {
+        return 'h-[33px] w-[33px] sm:h-[24px] sm:w-[24px]'
+    }
+});
+
 
 onBeforeMount(() => {
     if (props.flipDelay === undefined || store.isClassicGameWon || props.type === GuessType.Pokemon)
