@@ -1,23 +1,24 @@
 <template>
-    <div class="card flex flex-col items-center justify-center p-5 py-2 sm:p-3">
-        <p class="fontbo font-pkmEmerald text-[32px] !text-light-emerald dark:!text-dark-emerald">
+    <div class="card flex flex-col items-center justify-center px-5 py-2">
+        <p class="fontbo font-pkmEmerald text-[32px] sm:text-[28px] !text-light-emerald dark:!text-dark-emerald">
             VICTORY!
         </p>
-        <p class="mb-3 font-pkmEmerald text-[18px] capitalize">
+        <p class="mb-3 font-pkmEmerald text-[18px] sm:text-[16px] capitalize">
             You Guessed: <b class="!text-light-emerald dark:!text-dark-emerald"> {{ pokemon }} </b>
         </p>
         <SquareContent
             :pokemon="removeSpecialCharactersExceptDashFromString(pokemon)"
             :color="props.color"
             :type="GuessType.Pokemon"
+            :isLarge="true"
         />
-        <p class="mt-2 font-pkmEmerald text-[14px]">
+        <p class="mt-3 font-pkmEmerald text-[14px] sm:text-[12px]">
             Next Pokemon Will Appear In :&nbsp;
             <b class="text-light-orange dark:!text-dark-orange">
                 {{ ' ' + hoursRemaining + ' : ' + minRemaining + ' : ' + secRemaining }}</b
             >
         </p>
-        <TweetButton class="mt-3" :twitterText="twitterText" />
+        <TweetButton class="mt-2" :twitterText="twitterText" />
     </div>
 </template>
 
