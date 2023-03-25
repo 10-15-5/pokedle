@@ -156,9 +156,9 @@ const setHints = () => {
         title: GuessFieldTitles[titles.at(i)],
     }));
     correctFieldsWithTitles[7].title = 'Gen';
-    correctFieldsWithTitles[3].title = 'Evol. Lvl'
+    correctFieldsWithTitles[3].title = 'Evol. Lvl';
     hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2]); //Type 1, Type 2
-    hintTwo.push(correctFieldsWithTitles[3] ,correctFieldsWithTitles[6], correctFieldsWithTitles[7]); //Habitat, Gen
+    hintTwo.push(correctFieldsWithTitles[3], correctFieldsWithTitles[6], correctFieldsWithTitles[7]); //Habitat, Gen
 };
 
 //TODO: can refactor?
@@ -176,8 +176,10 @@ const decideGame = async (guess) => {
         launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
         store.setIsFlavortextGameWon(true);
         console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
-        incrementGamesWonCount();
-        const user = await updateUserWithGameWon(GameModes.Flavortext, componentStore.guesses.length);
+        const [user] = await Promise.all([
+            updateUserWithGameWon(GameModes.Flavortext, componentStore.guesses.length),
+            incrementGamesWonCount(),
+        ]);
         store.setUser(user);
     } else {
         console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
@@ -188,7 +190,7 @@ const updateYesterdaysPokemon = async () => {
     yesterdaysPokemon.value = (await apiService.getFlavortextPreviousSecretPokemon()).data;
 };
 
-const submitGuess = (guess) => {
+const submitGuess = async (guess) => {
     if (!guess) return;
 
     const { removedName, updatedNames } = removePokemonNameFromArray(guess, componentStore.pokemonNames);
@@ -200,7 +202,7 @@ const submitGuess = (guess) => {
     componentStore.pokemonNames = updatedNames;
     addGuessesToLocalStorage(GameModes.Flavortext, componentStore.guesses);
     addColorsToLocalStorage(GameModes.Flavortext, colors);
-    decideGame(removedName);
+    await decideGame(removedName);
 };
 
 //TODO: can refactor?
@@ -254,13 +256,11 @@ const loadFlavortextGameData = async () => {
         secretPokemon &&
         secretPokemon?.name === currSecretPokemon?.name
     ) {
-        //Load TODO: Implement
         loadColors();
         loadGuesses();
         loadIsFlavortextGameWon();
         removePokemonsFromGuessPool();
     } else {
-        //Fresh game TODO: Implement
         clearLocalStorageGameMode(GameModes.Flavortext);
         store.setIsFlavortextGameWon(false);
         setSecretPokemon(GameModes.Flavortext, currSecretPokemon);

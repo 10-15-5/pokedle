@@ -6,7 +6,10 @@
             :color="colors.at(-1)"
             :twitterText="silhouetteTwitterText()"
         />
-        <div v-else-if="secretPokemon.name" class="card relative flex flex-col items-center justify-center gap-3 py-4 px-8 sm:px-4 sm:text-sm">
+        <div
+            v-else-if="secretPokemon.name"
+            class="card relative flex flex-col items-center justify-center gap-3 py-4 px-8 sm:px-4 sm:text-sm"
+        >
             <span class="card py-1 px-2 font-pkmEmerald">Silhouette, Rotated</span>
             <ResultSquare
                 class="md:transform-none"
@@ -179,8 +182,10 @@ const decideGame = async (guess) => {
         launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
         store.setIsSilhouetteGameWon(true);
         console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
-        incrementGamesWonCount();
-        const user = await updateUserWithGameWon(GameModes.Silhouette, componentStore.guesses.length);
+        const [user] = await Promise.all([
+            updateUserWithGameWon(GameModes.Silhouette, componentStore.guesses.length),
+            incrementGamesWonCount(),
+        ]);
         store.setUser(user);
     } else {
         console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
@@ -191,7 +196,7 @@ const updateYesterdaysPokemon = async () => {
     yesterdaysPokemon.value = (await apiService.getSilhouettePreviousSecretPokemon()).data;
 };
 
-const submitGuess = (guess) => {
+const submitGuess = async (guess) => {
     if (!guess) return;
 
     const { removedName, updatedNames } = removePokemonNameFromArray(guess, componentStore.pokemonNames);
@@ -203,7 +208,7 @@ const submitGuess = (guess) => {
     componentStore.pokemonNames = updatedNames;
     addGuessesToLocalStorage(GameModes.Silhouette, componentStore.guesses);
     addColorsToLocalStorage(GameModes.Silhouette, colors);
-    decideGame(removedName);
+    await decideGame(removedName);
 };
 
 //TODO: can refactor?
@@ -257,13 +262,11 @@ const loadSilhouetteGameData = async () => {
         secretPokemon &&
         secretPokemon?.name === currSecretPokemon?.name
     ) {
-        //Load TODO: Implement
         loadColors();
         loadGuesses();
         loadIsSilhouetteGameWon();
         removePokemonsFromGuessPool();
     } else {
-        //Fresh game TODO: Implement
         clearLocalStorageGameMode(GameModes.Silhouette);
         store.setIsSilhouetteGameWon(false);
         setSecretPokemon(GameModes.Silhouette, currSecretPokemon);

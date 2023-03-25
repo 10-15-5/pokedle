@@ -256,8 +256,10 @@ const decideGame = (guess) => {
             launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
             store.setIsClassicGameWon(true);
             console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
-            incrementGamesWonCount();
-            const user = await updateUserWithGameWon(GameModes.Classic, componentStore.guesses.length);
+            const [user] = await Promise.all([
+                updateUserWithGameWon(GameModes.Classic, componentStore.guesses.length),
+                incrementGamesWonCount(),
+            ]);
             store.setUser(user);
         }, TotalResultCardFlipDelay);
     } else {
@@ -269,7 +271,7 @@ const updateYesterdaysPokemon = async () => {
     yesterdaysPokemon.value = (await apiService.getClassicPreviousSecretPokemon()).data;
 };
 
-const submitGuess = (guess) => {
+const submitGuess = async (guess) => {
     if (!guess || instantIsClassicGameWon.value) return;
 
     const { removedName, updatedNames } = removePokemonNameFromArray(guess, componentStore.pokemonNames);
@@ -282,7 +284,7 @@ const submitGuess = (guess) => {
     addGuessesToLocalStorage(GameModes.Classic, componentStore.guesses);
     addColorsToLocalStorage(GameModes.Classic, colors);
     setHintOne();
-    decideGame(removedName);
+    await decideGame(removedName);
 };
 
 const loadSecretPokemon = () => {
