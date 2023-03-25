@@ -1,13 +1,13 @@
 <template>
     <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
         <GameWinContainer
-            v-if="store.isSilhouetteGameWon"
-            :pokemon="componentStore.guesses[0]"
+            v-if="store.isSilhouetteGameWon && secretPokemon.name"
             :color="colors.at(-1)"
+            :pokemon="secretPokemon.name"
             :twitterText="silhouetteTwitterText()"
         />
         <div
-            v-else-if="secretPokemon.name"
+            v-else-if="!store.isSilhouetteGameWon && secretPokemon.name"
             class="card relative flex flex-col items-center justify-center gap-3 py-4 px-8 sm:px-4 sm:text-sm"
         >
             <span class="card py-1 px-2 font-pkmEmerald">Silhouette, Rotated</span>

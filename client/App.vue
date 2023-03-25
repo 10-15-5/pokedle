@@ -66,7 +66,6 @@ import moment from 'moment-timezone';
 import { launchConfetti } from './services/confetti';
 import {
     setNewSecretPokemon,
-    setSecretPokemon,
     updateCurrentUserStreakDisplay,
     getAndSetSecretPokemon,
 } from './services/game.js';

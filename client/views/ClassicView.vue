@@ -6,8 +6,8 @@
             @submit-guess="submitGuess"
         />
         <GameWinContainer
-            v-if="store.isClassicGameWon"
-            :pokemon="componentStore.guesses[0]"
+            v-if="store.isClassicGameWon && secretPokemon.name"
+            :pokemon="secretPokemon.name"
             :twitterText="classicTwitterText()"
             :color="colors.at(-1)"
         />

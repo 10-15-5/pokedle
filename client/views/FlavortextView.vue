@@ -1,12 +1,12 @@
 <template>
     <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
         <GameWinContainer
-            v-if="store.isFlavortextGameWon"
-            :pokemon="componentStore.guesses[0]"
+            v-if="store.isFlavortextGameWon && secretPokemon.name"
+            :pokemon="secretPokemon.name"
             :color="colors.at(-1)"
             :twitterText="flavortextTwitterText()"
         />
-        <div v-else class="card w-[450px] p-4 text-justify font-pkmEmerald text-xl italic sm:w-[350px] sm:text-base">
+        <div v-else-if="!store.isFlavortextGameWon && secretPokemon.name" class="card w-[450px] p-4 text-justify font-pkmEmerald text-xl italic sm:w-[350px] sm:text-base">
             "{{ secretPokemon.flavorText }}"
         </div>
         <SearchField
