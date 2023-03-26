@@ -105,6 +105,9 @@ func UpdateClassicDailySecretPokemon() error {
 func UpdateFlavortextDailySecretPokemon() error {
 	return UpdateDailySecretPokemon(FlavortextSecretPokemons)
 }
+func UpdateSilhouetteDailySecretPokemon() error {
+	return UpdateDailySecretPokemon(SilhouetteSecretPokemons)
+}
 
 func UpdateDailySecretPokemon(collection string) error {
 	pokemonData := data.GetPokemonData()
@@ -140,7 +143,7 @@ func UpdateDailySecretPokemon(collection string) error {
 		containsRandomPokemon = containsPokemonName(randomPokemon.Name, recentSecretPokemons)
 	}
 
-	_, err := r.InsertNewPokemon(context.TODO(), randomPokemon, ClassicSecretPokemons)
+	_, err := r.InsertNewPokemon(context.TODO(), randomPokemon, collection)
 	if err != nil {
 		fmt.Println("Error when inserting pokemon")
 	}

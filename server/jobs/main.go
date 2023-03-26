@@ -18,5 +18,6 @@ func updateSecretPokemonJob(c *cron.Cron) {
 		fmt.Println("Job Running.....")
 		services.UpdateClassicDailySecretPokemon()
 		services.UpdateFlavortextDailySecretPokemon()
+		services.UpdateSilhouetteDailySecretPokemon()
 	})
 }
