@@ -26,14 +26,14 @@
                 ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <div v-for="(field, i) in hintOne" :key="i" :value="field" class="flex flex-col gap-1">
                         <span class="card items-center justify-center py-1 sm:py-0">{{ field.title }}</span>
-                        <ResultSquare :guessResult="field.guessState" :guessText="field.text" :type="field.type" />
+                        <ResultSquare :guessResult="field.guessState" :guessText="field.text" :type="field.type" :habitat="field.habitat" />
                     </div>
                 </div>
             </template>
             <template #hint2>
                 <div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <div v-for="(field, i) in hintTwo" :key="i" :value="field" class="flex flex-col gap-1">
-                        <span class="card items-center justify-center py-1 sm:py-0">{{ field.title }}</span>
+                        <span class="card items-center justify-center py-1 sm:py-0" :class="getTextSizeShortenedTitle(field.title)">{{ field.title }}</span>
                         <ResultSquare
                             :guessResult="field.guessState"
                             :guessText="field.text"
@@ -110,6 +110,12 @@ const store = useStore();
 
 const getSortedPokemonNames = () => pokemonData.map((pokemonInfo) => pokemonInfo.name).sort();
 
+const ShortenedFieldTitles = {
+    EvolutionLevel: 'Evol. Lvl.',
+    Evolutions: 'Fully Evol.',
+    Generation: 'Gen.',
+}
+
 const componentStore = reactive({
     pokemonNames: getSortedPokemonNames(),
     guesses: [],
@@ -143,6 +149,17 @@ const flavortextTwitterText = () => {
     return header + footer;
 };
 
+const getTextSizeShortenedTitle = (shortenedTitle) => {
+    switch(shortenedTitle){
+        case ShortenedFieldTitles.EvolutionLevel:
+            return 'text-[14px] sm:text-[10px]'
+        case ShortenedFieldTitles.Evolutions:
+            return 'text-[13px] sm:text-[10px]'
+        default:
+            return '';
+    }
+}
+
 const setHints = () => {
     if (hintOne.length || hintTwo.length) {
         return;
@@ -155,10 +172,13 @@ const setHints = () => {
         ...correctFields[f],
         title: GuessFieldTitles[titles.at(i)],
     }));
-    correctFieldsWithTitles[7].title = 'Gen';
-    correctFieldsWithTitles[3].title = 'Evol. Lvl';
-    hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2]); //Type 1, Type 2
-    hintTwo.push(correctFieldsWithTitles[3], correctFieldsWithTitles[6], correctFieldsWithTitles[7]); //Habitat, Gen
+
+    correctFieldsWithTitles[3].title = ShortenedFieldTitles.EvolutionLevel;
+    correctFieldsWithTitles[4].title = ShortenedFieldTitles.Evolutions;
+    correctFieldsWithTitles[7].title = ShortenedFieldTitles.Generation;
+
+    hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2], correctFieldsWithTitles[6]); //Type 1, Type 2, Habitat
+    hintTwo.push(correctFieldsWithTitles[3], correctFieldsWithTitles[4], correctFieldsWithTitles[7]); //Evolution lvl, isFullyEvolved, Gen
 };
 
 //TODO: can refactor?
