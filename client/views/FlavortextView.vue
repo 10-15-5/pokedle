@@ -175,14 +175,11 @@ const decideGame = async (guess) => {
 
         launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
         store.setIsFlavortextGameWon(true);
-        console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
         const [user] = await Promise.all([
             updateUserWithGameWon(GameModes.Flavortext, componentStore.guesses.length),
             incrementGamesWonCount(),
         ]);
         store.setUser(user);
-    } else {
-        console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
     }
 };
 

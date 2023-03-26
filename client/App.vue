@@ -99,7 +99,7 @@ onBeforeMount(async () => {
 const getOrCreateUser = async () => {
     const userId = localStorage.userId;
 
-    console.log(userId);
+    console.log("User From Storage: " + userId);
     if (userId) {
         await apiService.updateUserStreaks(userId);
         const response = await apiService.getUser(userId);
