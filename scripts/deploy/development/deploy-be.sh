@@ -1,9 +1,18 @@
 #!/bin/zsh
-echo "$PWD"
-docker build -t gabr0236/pokedle-server -f docker/development/go-server .
 
-docker tag gabr0236/pokedle-server \europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/pokedle-server
+if [ $# -lt 1 ]; then
+  echo "Error: Missing image tag. Usage: $1 IMAGE_TAG"
+  exit 1
+fi
 
-docker push europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/pokedle-server
+echo "param is: $1"
 
-echo "Building is complete"
+# Set variables
+IMAGE_NAME=pokedle-server-dev #Changed to '-dev'
+IMAGE_TAG=$1
+
+docker build -t gabr0236/$IMAGE_NAME -f docker/development/go-server .
+
+docker tag gabr0236/$IMAGE_NAME \europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/$IMAGE_NAME:$IMAGE_TAG
+
+docker push europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/$IMAGE_NAME:$IMAGE_TAG
