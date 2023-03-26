@@ -92,6 +92,7 @@ const updateUserWithGameWon = async (gameMode, numberOfGuesses) => {
             return response.data.user;
         case GameModes.Silhouette:
             response = await apiService.updateUserSilhouetteWins(userId, numberOfGuesses);
+            return response.data.user;
         default:
             throw new Error('Gamemode Required');
     }

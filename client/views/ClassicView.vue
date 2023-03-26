@@ -245,7 +245,7 @@ const incrementGamesWonCount = async () => {
     dailyFirstTryWins.value = response.data.dailyStats.classicFirstTryWins;
 };
 
-const decideGame = (guess) => {
+const decideGame = async (guess) => {
     if (guess === secretPokemon.name) {
         instantIsClassicGameWon.value = true;
         //Wait for all cards to flip
