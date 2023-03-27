@@ -279,7 +279,7 @@ func HandleUserClassicGameWon(c *gin.Context) {
 
 	user := services.GetUser(mongoUserId)
 
-	UpdateUserGameWon(c, services.Classic, user.ClassicGamesWon, user)
+	UpdateUserGameWon(c, services.Classic, user.ClassicGamesWon, user.ID, user.ClassicCurrentStreak, user.ClassicMaxStreak)
 }
 
 func HandleUserFlavortextGameWon(c *gin.Context) {
@@ -294,7 +294,7 @@ func HandleUserFlavortextGameWon(c *gin.Context) {
 
 	user := services.GetUser(mongoUserId)
 
-	UpdateUserGameWon(c, services.Flavortext, user.FlavortextGamesWon, user)
+	UpdateUserGameWon(c, services.Flavortext, user.FlavortextGamesWon, user.ID, user.FlavortextCurrentStreak, user.FlavortextMaxStreak)
 }
 
 func HandleUserSilhouetteGameWon(c *gin.Context) {
@@ -309,10 +309,10 @@ func HandleUserSilhouetteGameWon(c *gin.Context) {
 
 	user := services.GetUser(mongoUserId)
 
-	UpdateUserGameWon(c, services.Silhouette, user.SilhouetteGamesWon, user)
+	UpdateUserGameWon(c, services.Silhouette, user.SilhouetteGamesWon, user.ID, user.SilhouetteCurrentStreak, user.SilhouetteMaxStreak)
 }
 
-func UpdateUserGameWon(c *gin.Context, gameMode string, gamesWon []models.GameWon, user models.User) {
+func UpdateUserGameWon(c *gin.Context, gameMode string, gamesWon []models.GameWon, userId primitive.ObjectID, currentStreak int, maxStreak int) {
 
 	var updateUserGameWonRequest NumberOfGuessesRequest
 
@@ -337,22 +337,21 @@ func UpdateUserGameWon(c *gin.Context, gameMode string, gamesWon []models.GameWo
 
 		lastGameWon := gamesWon[len(gamesWon)-1]
 
-		//TODO: test this and then comment out untill 1 guess a day is implemented
 		if services.DateEqual(time.Now(), lastGameWon.CreatedAt) {
 			c.JSON(http.StatusBadRequest, "User has already won a game today")
 			return
 		}
-		//TODO: fix vv
-		streak = services.CalculateStreak(gamesWon, user.ClassicCurrentStreak)
+
+		streak = services.CalculateStreak(gamesWon, currentStreak)
 	}
 
 	streak++
 
-	maxStreak := int(math.Max(float64(streak), float64(user.ClassicMaxStreak)))
+	newMaxStreak := int(math.Max(float64(currentStreak), float64(maxStreak)))
 
 	isFirstTryWin := services.If(updateUserGameWonRequest.NumberOfGuesses == 1, 1, 0)
 
-	updatedUser := services.FindAndUpdateUserWithGameWon(user.ID, gameWon, streak, maxStreak, isFirstTryWin, gameMode)
+	updatedUser := services.FindAndUpdateUserWithGameWon(userId, gameWon, streak, newMaxStreak, isFirstTryWin, gameMode)
 
 	c.JSON(http.StatusOK, gin.H{"user": updatedUser})
 }
