@@ -20,7 +20,7 @@
             />
         </div>
         <RouterLink v-if="store.isSilhouetteGameWon" to="/flavortext">
-            <GameModeButton :gameMode="GameModes.Flavortext" />
+            <GameModeButton :gameMode="GameModes.Flavortext" :isAttention="true" />
         </RouterLink>
         <SearchField
             v-if="!store.isSilhouetteGameWon"

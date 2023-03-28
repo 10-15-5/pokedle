@@ -12,7 +12,7 @@
             :color="colors.at(-1)"
         />
         <RouterLink v-if="store.isClassicGameWon" to="/silhouette">
-            <GameModeButton :gameMode="GameModes.Silhouette" />
+            <GameModeButton :gameMode="GameModes.Silhouette" :isAttention="true" />
         </RouterLink>
         <HintContainer
             v-if="!store.isClassicGameWon && componentStore.guesses.length"
