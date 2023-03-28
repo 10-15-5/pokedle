@@ -81,6 +81,7 @@ onBeforeMount(async () => {
     store.loadTheme();
     loadIsHintMode();
     loadIsShiny();
+    loadIsSound();
 
     const user = await getOrCreateUser();
 
@@ -124,6 +125,14 @@ const loadIsHintMode = () => {
         store.setHintMode(true);
     } else {
         store.setHintMode(false);
+    }
+};
+
+const loadIsSound = () => {
+    if (localStorage.isSound === 'false') {
+        store.setSound(false);
+    } else {
+        store.setSound(true);
     }
 };
 

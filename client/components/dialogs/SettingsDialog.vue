@@ -44,6 +44,20 @@
                         /> </template
                 ></BaseToggle>
             </div>
+            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
+                <p class="font-pkmEmerald text-[24px]">Sound</p>
+                <BaseToggle :isEnabled="store.isSound" :toggle="store.toggleSound">
+                    <template #leftIcon>
+                        <SvgIcon type="mdi" :path="mdiVolumeHigh" class="h-[30px] w-[30px]" />
+                    </template>
+                    <template #rightIcon>
+                        <SvgIcon
+                            type="mdi"
+                            :path="mdiVolumeOff"
+                            class="h-[30px] w-[30px]"
+                        /> </template
+                ></BaseToggle>
+            </div>
         </div>
     </BaseDialog>
 </template>
@@ -59,6 +73,8 @@ import {
     mdiWeatherSunny,
     mdiFlowerOutline,
     mdiSwordCross,
+    mdiVolumeHigh,
+    mdiVolumeOff,
 } from '@mdi/js';
 import { useStore } from '../../stores/store.js';
 
