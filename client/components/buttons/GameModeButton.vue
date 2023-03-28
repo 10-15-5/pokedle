@@ -21,13 +21,7 @@
             class="mt-[-4px] h-11 w-11 text-teal-500 sm:h-9 sm:w-9"
             :path="mdiAccountQuestion"
         />
-
-        <div v-if="isAttention" class="absolute right-0 top-0 mt-[-7px] mr-[-8px]">
-            <span class="relative flex h-4 w-4">
-                <span class="absolute inline-flex h-full w-full animate-ping rounded-full bg-sky-400 opacity-75"></span>
-                <span class="relative inline-flex h-4 w-4 rounded-full bg-teal-300"></span>
-            </span>
-        </div>
+        <NotificationAnimation v-if="isAttention" />
     </div>
 </template>
 
@@ -35,6 +29,7 @@
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiHelpCircle, mdiMessageQuestion, mdiAccountQuestion } from '@mdi/js';
 import { GameModes } from '../../constants';
+import NotificationAnimation from '../animations/NotificationAnimation.vue';
 const props = defineProps({
     gameMode: String,
     isAttention: Boolean,
