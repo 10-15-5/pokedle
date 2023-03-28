@@ -19,7 +19,7 @@
                 </RouterLink>
                 <HeaderContainer />
             </div>
-            <RouterView class="mt-6" />
+            <RouterView v-if="isLoaded" class="mt-6" />
         </div>
         <div v-if="isDevelopment" class="flex items-center justify-center font-pkmEmerald">
             <button
@@ -74,7 +74,7 @@ import { playWinnerSound } from './services/sound';
 import { GameModes, DateOfFirstPokeldeGameClassic } from './constants';
 
 const store = useStore();
-
+const isLoaded = ref(false)
 const isDevelopment = computed(() => ENVIRONMENT === 'development');
 
 onBeforeMount(async () => {
@@ -95,6 +95,8 @@ onBeforeMount(async () => {
         store.setUser(user);
     }
     if (!store.currentStreak) updateCurrentUserStreakDisplay(GameModes.Classic);
+
+    isLoaded.value=true;
 });
 
 const getOrCreateUser = async () => {
