@@ -63,9 +63,7 @@ export const useStore = defineStore('store', () => {
     };
 
     const toggleSound = () => {
-        console.log("ENTER: " + isSound.value);
         setSound(!isSound.value);
-        console.log("EXIT: " + isSound.value);
     };
 
     const setUser = (newUser) => {
