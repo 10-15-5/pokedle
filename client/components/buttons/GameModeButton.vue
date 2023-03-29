@@ -1,8 +1,8 @@
 <template>
     <div
-        class="card flex w-[180px] flex-row items-center justify-between gap-2 px-2 pt-2 pb-1 !font-pkmEmerald text-2xl transition-all duration-100 ease-linear hover:scale-110 sm:w-[150px] sm:text-xl"
+        class="card relative flex w-[180px] flex-row items-center justify-between gap-2 px-2 pt-2 pb-1 !font-pkmEmerald text-2xl transition-all duration-100 ease-linear hover:scale-110 sm:w-[150px] sm:text-xl"
     >
-        {{ gameMode }}
+        <span class="relative">{{ gameMode }}</span>
         <SvgIcon
             v-if="gameMode === GameModes.Classic"
             type="mdi"
@@ -21,6 +21,7 @@
             class="mt-[-4px] h-11 w-11 text-teal-500 sm:h-9 sm:w-9"
             :path="mdiAccountQuestion"
         />
+        <NotificationAnimation v-if="isAttention" />
     </div>
 </template>
 
@@ -28,7 +29,9 @@
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiHelpCircle, mdiMessageQuestion, mdiAccountQuestion } from '@mdi/js';
 import { GameModes } from '../../constants';
+import NotificationAnimation from '../animations/NotificationAnimation.vue';
 const props = defineProps({
     gameMode: String,
+    isAttention: Boolean,
 });
 </script>

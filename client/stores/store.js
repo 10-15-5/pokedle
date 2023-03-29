@@ -6,7 +6,8 @@ export const useStore = defineStore('store', () => {
     const isShiny = ref(false);
     const theme = ref('');
     const isHintMode = ref(false);
-    
+    const isSound = ref(true)
+
     const isClassicGameWon = ref(false);
     const isFlavortextGameWon = ref(false);
     const isSilhouetteGameWon = ref(false);
@@ -56,6 +57,15 @@ export const useStore = defineStore('store', () => {
         setHintMode(!isHintMode.value);
     };
 
+    const setSound = (sound) => {
+        isSound.value = sound;
+        localStorage.isSound = `${isSound.value}`;
+    };
+
+    const toggleSound = () => {
+        setSound(!isSound.value);
+    };
+
     const setUser = (newUser) => {
         Object.assign(user, newUser);
     };
@@ -86,6 +96,7 @@ export const useStore = defineStore('store', () => {
         isHintMode,
         theme,
         isDark,
+        isSound,
         isFlavortextGameWon,
         isSilhouetteGameWon,
         currentStreak,
@@ -100,6 +111,8 @@ export const useStore = defineStore('store', () => {
         loadTheme,
         setIsFlavortextGameWon,
         setIsSilhouetteGameWon,
-        setCurrentStreak
+        setCurrentStreak,
+        setSound,
+        toggleSound,
     };
 });

@@ -1,5 +1,6 @@
 
 const playWinnerSound = () => {
+    if(localStorage.isSound !== 'true') return;
     const audioEmeraldWinMusic = new Audio('/client/assets/audio/emerald-winner.mp3');
     const audioFireworks = new Audio('/client/assets/audio/fireworks.mp3');
 
