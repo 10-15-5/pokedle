@@ -2,8 +2,9 @@
     <div class="relative">
         <input
             ref="inputField"
-            class="card w-[200px] p-4 font-pkmEmerald focus:outline-none"
+            class="card relative w-[200px] p-4 font-pkmEmerald focus:outline-none"
             type="text"
+            :class="filteredPokemons.length && isSearchFieldActive ? ' z-40' : ''"
             placeholder="Type Pokemon..."
             v-model="searchTerm"
             @keypress.enter="submitGuess(filteredPokemons[idx === -1 ? 0 : idx])"
@@ -58,14 +59,7 @@ import { useClickOutside } from '../composables/useClickOutside.js';
 
 const itemSize = 52;
 
-const searchFieldHeights = [
-    '!h-[0px]',
-    '!h-[52px]',
-    '!h-[104px]',
-    '!h-[156px]',
-    '!h-[208px]',
-    '!h-[260px]',
-];
+const searchFieldHeights = ['!h-[0px]', '!h-[52px]', '!h-[104px]', '!h-[156px]', '!h-[208px]', '!h-[260px]'];
 
 const isSearchFieldActive = ref(false);
 const searchTerm = ref('');
@@ -86,8 +80,7 @@ const props = defineProps({
 });
 
 const getHover = (index) => {
-    if (idx.value === index)
-        return '!bg-neutral-100 !text-light-emerald dark:!bg-neutral-600 dark:!text-dark-emerald';
+    if (idx.value === index) return '!bg-neutral-100 !text-light-emerald dark:!bg-neutral-600 dark:!text-dark-emerald';
 };
 
 const virtualScroller = ref(null);
@@ -130,9 +123,7 @@ const filteredPokemons = computed(() => {
 });
 
 const getSearchSuggestionsHeight = computed(() =>
-    filteredPokemons.value.length >= 5
-        ? searchFieldHeights[5]
-        : searchFieldHeights[filteredPokemons.value.length]
+    filteredPokemons.value.length >= 5 ? searchFieldHeights[5] : searchFieldHeights[filteredPokemons.value.length]
 );
 
 const submitGuess = (pokemonName) => {
@@ -147,16 +138,4 @@ const submitGuess = (pokemonName) => {
     height: 35px;
 }
 
-.search-suggestions {
-    display: flex;
-    gap: 14%;
-    justify-content: left;
-    padding: 8px;
-}
-
-p {
-    font-family: pkmEmerald;
-    font-size: 16px;
-    text-transform: capitalize;
-}
 </style>
