@@ -245,7 +245,7 @@ const incrementGamesWonCount = async () => {
     dailyFirstTryWins.value = response.data.dailyStats.classicFirstTryWins;
 };
 
-const decideGame = (guess) => {
+const decideGame = async (guess) => {
     if (guess === secretPokemon.name) {
         instantIsClassicGameWon.value = true;
         //Wait for all cards to flip
@@ -255,15 +255,12 @@ const decideGame = (guess) => {
         setTimeout(async () => {
             launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
             store.setIsClassicGameWon(true);
-            console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
             const [user] = await Promise.all([
                 updateUserWithGameWon(GameModes.Classic, componentStore.guesses.length),
                 incrementGamesWonCount(),
             ]);
             store.setUser(user);
         }, TotalResultCardFlipDelay);
-    } else {
-        console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
     }
 };
 

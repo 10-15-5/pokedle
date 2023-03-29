@@ -1,9 +1,26 @@
 #!/bin/zsh
-echo "$PWD"
-docker build -t gabr0236/pokedle-server -f docker/production/go-server .
 
-docker tag gabr0236/pokedle-server \europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/pokedle-server
+# Require tag param
+if [ $# -lt 1 ]; then
+  echo "Error: Missing image tag. Usage: $1 IMAGE_TAG"
+  exit 1
+fi
 
-docker push europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/pokedle-server
+# Set variables
+IMAGE_NAME=pokedle-server 
+DEPLOYMENT_NAME=pokedle-server
+CONTAINER_NAME=pokedle-server-sha256-1
+IMAGE_PATH=docker/production/go-server
+IMAGE_TAG=$1
 
-echo "Building is complete"
+# Build Docker image locally
+docker build -t gabr0236/$IMAGE_NAME -f $IMAGE_PATH .
+
+# Tag image
+docker tag gabr0236/$IMAGE_NAME \europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/$IMAGE_NAME:$IMAGE_TAG
+
+# Push Docker image to GCP Artifact Registry
+docker push europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/$IMAGE_NAME:$IMAGE_TAG
+
+# Update Deployment To Use New Image
+kubectl set image deployment/$DEPLOYMENT_NAME $CONTAINER_NAME=europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/$IMAGE_NAME:$IMAGE_TAG
