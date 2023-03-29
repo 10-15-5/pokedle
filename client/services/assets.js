@@ -24,4 +24,29 @@ const getHabitatImage = (habitat) => {
     return '';
 };
 
-export { getHabitatImage };
+const getRandomPokemonAnimation = () => {
+    const random = Math.floor(Math.random() * 8);
+
+    switch (random) {
+        case 1:
+            return '/client/assets/moving-sprites/charmander.png';
+        case 2:
+            return '/client/assets/moving-sprites/elekid.png';
+        case 3:
+            return '/client/assets/moving-sprites/gulpin.png';
+        case 4:
+            return '/client/assets/moving-sprites/mudkip.png';
+        case 5:
+            return '/client/assets/moving-sprites/ponytar.png';
+        case 6:
+            return '/client/assets/moving-sprites/ralts.png';
+        case 7:
+            return '/client/assets/moving-sprites/squirdle.png';
+        case 8:
+            return '/client/assets/moving-sprites/torchic.png';
+        default:
+            return '/client/assets/moving-sprites/whooper.png';
+    }
+};
+
+export { getHabitatImage, getRandomPokemonAnimation };
