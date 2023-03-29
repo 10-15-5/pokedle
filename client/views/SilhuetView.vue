@@ -1,5 +1,5 @@
 <template>
-    <!-- <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
+    <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
         <GameWinContainer
             v-if="store.isSilhouetteGameWon && secretPokemon.name"
             :color="colors.at(-1)"
@@ -66,9 +66,9 @@
             />
         </div>
         <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
-    </div> -->
+    </div>
 </template>
-<!-- 
+
 <script setup>
 import SearchField from '../components/SearchField.vue';
 import GameWinContainer from '../components/GameWinContainer.vue';
@@ -82,9 +82,7 @@ import { reactive, ref, onBeforeMount, computed } from 'vue';
 import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import { useStore } from '../stores/store.js';
 import HintContainer from '../components/hints/HintContainer.vue';
-import { removePokemonNameFromArray, getRandomColor, isCorrectGuess, getGuessResults } from '../services/guess';
-import { playWinnerSound } from '../services/sound';
-import { launchConfetti } from '../services/confetti.js';
+import { isCorrectGuess, getGuessResults } from '../services/guess';
 import {
     GameModes,
     GuessType,
@@ -92,24 +90,12 @@ import {
     SilhouetteGuessesNeededForHintOne,
     SilhouetteGuessesNeededForHintTwo,
 } from '../constants';
-import * as apiService from '../services/api/apiService.js';
-import moment from 'moment';
-import {
-    clearLocalStorageGameMode,
-    setNewDate,
-    addColorsToLocalStorage,
-    addGuessesToLocalStorage,
-} from '../services/localStorage';
-import {
-    setSecretPokemon,
-    getDailyGamesWonCount,
-    updateUserWithGameWon,
-    updateCurrentUserStreakDisplay,
-} from '../services/game';
 import { getCurrentSilhouettePokemonNumber } from '../helpers.js';
+import * as localStorageService from '../services/localStorage.js';
+import * as game from '../services/game';
 
 const store = useStore();
-
+const GAME_MODE = GameModes.Silhouette;
 const getSortedPokemonNames = () => pokemonData.map((pokemonInfo) => pokemonInfo.name).sort();
 
 const componentStore = reactive({
@@ -135,7 +121,7 @@ const setDailyGamesWonCount = async () => {
 };
 
 onBeforeMount(async () => {
-    await Promise.all([loadSilhouetteGameData(), setDailyGamesWonCount(), updateYesterdaysPokemon()]);
+    await Promise.all([loadSilhouetteGameData(), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
 });
 
 const silhouetteTwitterText = () => {
@@ -167,110 +153,45 @@ const setHintOne = () => {
     hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2], correctFieldsWithTitles[5]); //Type 1, Type 2
 };
 
-//TODO: can refactor?
-const incrementGamesWonCount = async () => {
-    const response = await apiService.updateStatsSilhouetteWins(componentStore.guesses.length);
-    dailyGamesWon.value = response.data.dailyStats.silhouetteGamesWon;
-    dailyFirstTryWins.value = response.data.dailyStats.silhouetteFirstTryWins;
-};
-
-const decideGame = async (guess) => {
-    if (guess === secretPokemon.name) {
-        //Wait for all cards to flip
-        playWinnerSound();
-
-        launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
-        store.setIsSilhouetteGameWon(true);
-        const [user] = await Promise.all([
-            updateUserWithGameWon(GameModes.Silhouette, componentStore.guesses.length),
-            incrementGamesWonCount(),
-        ]);
-        store.setUser(user);
-    }
-};
-
 const updateYesterdaysPokemon = async () => {
-    yesterdaysPokemon.value = (await apiService.getSilhouettePreviousSecretPokemon()).data;
+    yesterdaysPokemon.value = await game.getYesterdaysPokemon(GAME_MODE);
 };
+
 
 const submitGuess = async (guess) => {
-    if (!guess) return;
-
-    const { removedName, updatedNames } = removePokemonNameFromArray(guess, componentStore.pokemonNames);
-
-    if (updatedNames.length >= componentStore.pokemonNames.length) return;
-
-    colors.push(getRandomColor());
-    componentStore.guesses.unshift(removedName);
-    componentStore.pokemonNames = updatedNames;
-    addGuessesToLocalStorage(GameModes.Silhouette, componentStore.guesses);
-    addColorsToLocalStorage(GameModes.Silhouette, colors);
-    await decideGame(removedName);
+    const pokemonName = game.submitGuess(GAME_MODE, guess, componentStore, colors);
+    if (!pokemonName) return;
+    await game.decideGame(GAME_MODE, pokemonName, secretPokemon.name, colors.at(-1), componentStore.guesses.length);
 };
 
-//TODO: can refactor?
-const loadSecretPokemon = () => {
-    if (!localStorage.silhouetteSecretPokemon) return;
-    Object.assign(secretPokemon, JSON.parse(localStorage.silhouetteSecretPokemon));
+const loadExistingGameData = () => {
+    colors = localStorageService.getColorsFromLocalStorage(GAME_MODE);
+    componentStore.guesses = localStorageService.getGuessesFromLocalStorage(GAME_MODE);
+    game.loadAndSetIsGameWon(GAME_MODE);
+    game.removeAllGuessedPokemonsFromGuessPool(componentStore);
 };
 
-//TODO: can refactor?
-const loadGuesses = () => {
-    const guesses = localStorage.silhouetteGuesses;
-    if (guesses) componentStore.guesses = JSON.parse(guesses);
+const startNewGame = (currSecretPokemon) => {
+    localStorageService.clearLocalStorageGameMode(GAME_MODE);
+    game.setIsGameWon(GAME_MODE, false);
+    localStorageService.setSecretPokemonToLocalStorage(GAME_MODE, currSecretPokemon);
+    localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
+    localStorageService.setNewDate();
 };
 
-//TODO: can refactor?
-const loadColors = () => {
-    const loadedColors = localStorage.silhouetteColors;
-    if (loadedColors) colors = JSON.parse(loadedColors);
-};
-
-//TODO: can refactor?
-const loadIsSilhouetteGameWon = () => {
-    const loadedIsSilhouetteGameWon = localStorage.isSilhouetteGameWon;
-    if (loadedIsSilhouetteGameWon && loadedIsSilhouetteGameWon === 'true') {
-        store.setIsSilhouetteGameWon(true);
-    } else {
-        store.setIsSilhouetteGameWon(false);
-    }
-};
-
-//TODO: can refactor?
-const removePokemonsFromGuessPool = () => {
-    componentStore.pokemonNames = componentStore.pokemonNames.filter((pokemon) => {
-        for (const guessedPokemon of componentStore.guesses) {
-            if (guessedPokemon === pokemon) return false;
-        }
-        return true;
-    });
-};
-
-//TODO: can refactor?
 const loadSilhouetteGameData = async () => {
     const dayOfLastUpdate = localStorage.dayOfLastUpdate;
-    if (!dayOfLastUpdate) setNewDate();
+    if (!dayOfLastUpdate) localStorageService.setNewDate();
 
-    loadSecretPokemon();
-    const currSecretPokemon = await (await apiService.getSilhouetteSecretPokemon()).data;
+    localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
+    const currSecretPokemon = await game.getCurrentSecretPokemon(GAME_MODE);
 
-    if (
-        parseInt(dayOfLastUpdate) == moment().date() &&
-        secretPokemon &&
-        secretPokemon?.name === currSecretPokemon?.name
-    ) {
-        loadColors();
-        loadGuesses();
-        loadIsSilhouetteGameWon();
-        removePokemonsFromGuessPool();
+    if (game.shouldLoadExistingGameData(dayOfLastUpdate, secretPokemon, currSecretPokemon)) {
+        loadExistingGameData();
     } else {
-        clearLocalStorageGameMode(GameModes.Silhouette);
-        store.setIsSilhouetteGameWon(false);
-        setSecretPokemon(GameModes.Silhouette, currSecretPokemon);
-        loadSecretPokemon();
-        setNewDate();
+        startNewGame(currSecretPokemon);
     }
     setHintOne();
-    updateCurrentUserStreakDisplay(GameModes.Silhouette);
+    game.updateCurrentUserStreakDisplay(GAME_MODE);
 };
-</script> -->
+</script>

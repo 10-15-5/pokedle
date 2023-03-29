@@ -102,6 +102,24 @@ const updateUserWithGameWon = async (gameMode, numberOfGuesses) => {
     }
 };
 
+const getYesterdaysPokemon = async (gameMode) => {
+    let response;
+
+    switch (gameMode) {
+        case GameModes.Classic:
+            response = await apiService.getClassicPreviousSecretPokemon();
+            return response.data;
+        case GameModes.Flavortext:
+            response = await apiService.getFlavortextPreviousSecretPokemon();
+            return response.data;
+        case GameModes.Silhouette:
+            response = await apiService.getSilhouettePreviousSecretPokemon();
+            return response.data;
+        default:
+            throw new Error('Gamemode Required');
+    }
+};
+
 const updateCurrentUserStreakDisplay = async (gameMode) => {
     const store = useStore();
     switch (gameMode) {
@@ -192,29 +210,28 @@ const shouldLoadExistingGameData = (dayOfLastUpdate, localStorageSecretPokemon, 
     localStorageSecretPokemon &&
     localStorageSecretPokemon?.name === databaseSecretPokemon?.name;
 
-
 const loadAndSetIsGameWon = (gameMode) => {
     const { capitalizedWord } = lowerCaseAndCapitalizeWord(gameMode);
 
     const loadedIsGameWon = localStorage.getItem(`is${capitalizedWord}GameWon`);
 
     if (loadedIsGameWon && loadedIsGameWon === 'true') {
-        setIsGameWon(gameMode,true)
+        setIsGameWon(gameMode, true);
     } else {
-        setIsGameWon(gameMode,false)
+        setIsGameWon(gameMode, false);
     }
 };
 
 const setIsGameWon = (gameMode, isWon) => {
     const store = useStore();
-    
+
     switch (gameMode) {
         case GameModes.Classic:
-            return store.setIsClassicGameWon(isWon)
+            return store.setIsClassicGameWon(isWon);
         case GameModes.Flavortext:
-            return store.setIsFlavortextGameWon(isWon)
+            return store.setIsFlavortextGameWon(isWon);
         case GameModes.Silhouette:
-            return store.setIsSilhouetteGameWon(isWon)
+            return store.setIsSilhouetteGameWon(isWon);
         default:
             throw new Error('Gamemode Required');
     }
@@ -242,5 +259,6 @@ export {
     shouldLoadExistingGameData,
     loadAndSetIsGameWon,
     removeAllGuessedPokemonsFromGuessPool,
-    setIsGameWon
+    setIsGameWon,
+    getYesterdaysPokemon,
 };

@@ -46,7 +46,7 @@ const setSecretPokemonToLocalStorage = (gameMode, secretPokemon) => {
 const setSecretPokemonFromLocalStorage = (gameMode, secretPokemon) => {
     switch (gameMode) {
         case GameModes.Classic:
-            if (localStorage.flavortextSecretPokemon) {
+            if (localStorage.classicSecretPokemon) {
                 Object.assign(secretPokemon, JSON.parse(localStorage.classicSecretPokemon));
             }
             return;
@@ -56,7 +56,7 @@ const setSecretPokemonFromLocalStorage = (gameMode, secretPokemon) => {
             }
             return;
         case GameModes.Silhouette:
-            if (localStorage.flavortextSecretPokemon) {
+            if (localStorage.silhouetteSecretPokemon) {
                 Object.assign(secretPokemon, JSON.parse(localStorage.silhouetteSecretPokemon));
             }
             return;

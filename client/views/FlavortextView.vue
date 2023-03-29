@@ -135,6 +135,17 @@ onBeforeMount(async () => {
     await Promise.all([loadFlavortextGameData(), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
 });
 
+const getTextSizeShortenedTitle = (shortenedTitle) => {
+    switch (shortenedTitle) {
+        case ShortenedFieldTitles.EvolutionLevel:
+            return 'text-[14px] sm:text-[10px]';
+        case ShortenedFieldTitles.Evolutions:
+            return 'text-[13px] sm:text-[10px]';
+        default:
+            return '';
+    }
+};
+
 const flavortextTwitterText = () => {
     const sub1 =
         componentStore.guesses.length === 1 ? 'FIRST TRY 🤯🤩⚡️✨' : `in ${componentStore.guesses.length} tries!🍉🍓🫧`;
@@ -146,16 +157,6 @@ const flavortextTwitterText = () => {
     return header + footer;
 };
 
-const getTextSizeShortenedTitle = (shortenedTitle) => {
-    switch (shortenedTitle) {
-        case ShortenedFieldTitles.EvolutionLevel:
-            return 'text-[14px] sm:text-[10px]';
-        case ShortenedFieldTitles.Evolutions:
-            return 'text-[13px] sm:text-[10px]';
-        default:
-            return '';
-    }
-};
 
 const setHints = () => {
     if (hintOne.length || hintTwo.length) {
@@ -179,7 +180,7 @@ const setHints = () => {
 };
 
 const updateYesterdaysPokemon = async () => {
-    yesterdaysPokemon.value = (await apiService.getFlavortextPreviousSecretPokemon()).data;
+    yesterdaysPokemon.value = await game.getYesterdaysPokemon(GAME_MODE);
 };
 
 const submitGuess = async (guess) => {
@@ -203,9 +204,7 @@ const startNewGame = (currSecretPokemon) => {
     localStorageService.setNewDate();
 };
 
-//TODO: can refactor?
 const loadFlavortextGameData = async () => {
-
     const dayOfLastUpdate = localStorage.dayOfLastUpdate;
     if (!dayOfLastUpdate) localStorageService.setNewDate();
 
@@ -213,13 +212,9 @@ const loadFlavortextGameData = async () => {
     const currSecretPokemon = await game.getCurrentSecretPokemon(GAME_MODE);
 
     if (game.shouldLoadExistingGameData(dayOfLastUpdate, secretPokemon, currSecretPokemon)) {
-
         loadExistingGameData();
-
     } else {
-
         startNewGame(currSecretPokemon);
-
     }
     setHints();
     game.updateCurrentUserStreakDisplay(GAME_MODE);
