@@ -1,6 +1,6 @@
 <template>
     <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
-        <!-- <SearchField
+        <SearchField
             v-if="!store.isClassicGameWon"
             :pokemonNames="componentStore.pokemonNames"
             @submit-guess="submitGuess"
@@ -56,11 +56,11 @@
                 :guessResult="getGuessResults(guess, secretPokemon, colors[componentStore.guesses.length - 1 - i])"
             />
         </div>
-        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" /> -->
+        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
     </div>
 </template>
 
-<!-- <script setup>
+<script setup>
 import ResultsContainer from '../components/result/ResultsContainer.vue';
 import ResultsHeader from '../components/result/ResultsHeader.vue';
 import GameWinContainer from '../components/GameWinContainer.vue';
@@ -348,7 +348,7 @@ const loadClassicGameData = async () => {
     setHintOne();
     updateCurrentUserStreakDisplay(GameModes.Classic);
 };
-</script> -->
+</script>
 
 <style scoped>
 html.dark {
