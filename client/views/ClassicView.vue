@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
+    <!-- <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
         <SearchField
             v-if="!store.isClassicGameWon"
             :pokemonNames="componentStore.pokemonNames"
@@ -57,9 +57,9 @@
             />
         </div>
         <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
-    </div>
+    </div> -->
 </template>
-
+<!-- 
 <script setup>
 import ResultsContainer from '../components/result/ResultsContainer.vue';
 import ResultsHeader from '../components/result/ResultsHeader.vue';
@@ -345,7 +345,7 @@ const loadClassicGameData = async () => {
     setHintOne();
     updateCurrentUserStreakDisplay(GameModes.Classic);
 };
-</script>
+</script> -->
 
 <style scoped>
 html.dark {

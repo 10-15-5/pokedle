@@ -30,7 +30,7 @@
             </button>
             <button
                 class="card overflow-hidden text-clip whitespace-nowrap p-2 text-xs hover:!bg-purple-400 sm:text-[10px]"
-                @click="getNewGame"
+                @click="getCurrentGame"
             >
                 Get New Game
             </button>
@@ -65,16 +65,16 @@ import { useStore } from './stores/store.js';
 import moment from 'moment-timezone';
 import { launchConfetti } from './services/confetti';
 import {
-    setNewSecretPokemon,
+    getAndSetNewSecretPokemon,
     updateCurrentUserStreakDisplay,
-    getAndSetSecretPokemon,
+    getAndSetCurrentSecretPokemon,
 } from './services/game.js';
 import { clearLocalStorageGameMode } from './services/localStorage';
 import { playWinnerSound } from './services/sound';
 import { GameModes, DateOfFirstPokeldeGameClassic } from './constants';
 
 const store = useStore();
-const isLoaded = ref(false)
+const isLoaded = ref(false);
 const isDevelopment = computed(() => ENVIRONMENT === 'development');
 
 onBeforeMount(async () => {
@@ -96,13 +96,13 @@ onBeforeMount(async () => {
     }
     if (!store.currentStreak) updateCurrentUserStreakDisplay(GameModes.Classic);
 
-    isLoaded.value=true;
+    isLoaded.value = true;
 });
 
 const getOrCreateUser = async () => {
     const userId = localStorage.userId;
 
-    console.log("User From Storage: " + userId);
+    console.log('User From Storage: ' + userId);
     if (userId) {
         await apiService.updateUserStreaks(userId);
         const response = await apiService.getUser(userId);
@@ -145,12 +145,12 @@ const clearLocalStorageAllGameModes = () => {
 };
 
 //Get most resent db entries
-const getNewGame = async () => {
+const getCurrentGame = async () => {
     clearLocalStorageAllGameModes();
     await Promise.all([
-        getAndSetSecretPokemon(GameModes.Classic),
-        getAndSetSecretPokemon(GameModes.Flavortext),
-        getAndSetSecretPokemon(GameModes.Silhouette),
+        getAndSetCurrentSecretPokemon(GameModes.Classic),
+        getAndSetCurrentSecretPokemon(GameModes.Flavortext),
+        getAndSetCurrentSecretPokemon(GameModes.Silhouette),
     ]);
 
     location.reload();
@@ -160,9 +160,9 @@ const getNewGame = async () => {
 const setNewGame = async () => {
     clearLocalStorageAllGameModes();
     await Promise.all([
-        setNewSecretPokemon(GameModes.Classic),
-        setNewSecretPokemon(GameModes.Flavortext),
-        setNewSecretPokemon(GameModes.Silhouette),
+        getAndSetNewSecretPokemon(GameModes.Classic),
+        getAndSetNewSecretPokemon(GameModes.Flavortext),
+        getAndSetNewSecretPokemon(GameModes.Silhouette),
     ]);
 
     location.reload();
@@ -180,10 +180,9 @@ const revealPokemon = async () => {
 
     const silhouetteSecret = JSON.parse(localStorage.silhouetteSecretPokemon);
     console.log(`Silhouette Secret: LS: ${silhouetteSecret.name}, DB: ${responseSilhouette.data.name}`);
-    
+
     const flavortextSecret = JSON.parse(localStorage.flavortextSecretPokemon);
     console.log(`Flavortext Secret: LS: ${flavortextSecret.name}, DB: ${responseFlavortext.data.name}`);
-
 };
 </script>
 

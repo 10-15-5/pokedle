@@ -6,7 +6,10 @@
             :color="colors.at(-1)"
             :twitterText="flavortextTwitterText()"
         />
-        <div v-else-if="!store.isFlavortextGameWon && secretPokemon.name" class="card w-[450px] p-4 text-justify font-pkmEmerald text-xl italic sm:w-[350px] sm:text-base">
+        <div
+            v-else-if="!store.isFlavortextGameWon && secretPokemon.name"
+            class="card w-[450px] p-4 text-justify font-pkmEmerald text-xl italic sm:w-[350px] sm:text-base"
+        >
             "{{ secretPokemon.flavorText }}"
         </div>
         <SearchField
@@ -26,14 +29,23 @@
                 ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <div v-for="(field, i) in hintOne" :key="i" :value="field" class="flex flex-col gap-1">
                         <span class="card items-center justify-center py-1 sm:py-0">{{ field.title }}</span>
-                        <ResultSquare :guessResult="field.guessState" :guessText="field.text" :type="field.type" :habitat="field.habitat" />
+                        <ResultSquare
+                            :guessResult="field.guessState"
+                            :guessText="field.text"
+                            :type="field.type"
+                            :habitat="field.habitat"
+                        />
                     </div>
                 </div>
             </template>
             <template #hint2>
                 <div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <div v-for="(field, i) in hintTwo" :key="i" :value="field" class="flex flex-col gap-1">
-                        <span class="card items-center justify-center py-1 sm:py-0" :class="getTextSizeShortenedTitle(field.title)">{{ field.title }}</span>
+                        <span
+                            class="card items-center justify-center py-1 sm:py-0"
+                            :class="getTextSizeShortenedTitle(field.title)"
+                            >{{ field.title }}</span
+                        >
                         <ResultSquare
                             :guessResult="field.guessState"
                             :guessText="field.text"
@@ -92,12 +104,7 @@ import {
 } from '../constants';
 import * as apiService from '../services/api/apiService.js';
 import moment from 'moment';
-import {
-    clearLocalStorageGameMode,
-    setNewDate,
-    addColorsToLocalStorage,
-    addGuessesToLocalStorage,
-} from '../services/localStorage';
+import * as localStorageService from '../services/localStorage.js';
 import * as game from '../services/game';
 import { getCurrentFlavortextPokemonNumber } from '../helpers.js';
 
@@ -109,7 +116,7 @@ const ShortenedFieldTitles = {
     EvolutionLevel: 'Evol. Lvl.',
     Evolutions: 'Fully Evol.',
     Generation: 'Gen.',
-}
+};
 
 const componentStore = reactive({
     pokemonNames: getSortedPokemonNames(),
@@ -120,10 +127,9 @@ const hintOne = reactive([]);
 const hintTwo = reactive([]);
 
 const yesterdaysPokemon = ref('');
-//Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
-let colors = [];
 const secretPokemon = reactive({});
 
+let colors = [];
 
 onBeforeMount(async () => {
     await Promise.all([loadFlavortextGameData(), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
@@ -141,15 +147,15 @@ const flavortextTwitterText = () => {
 };
 
 const getTextSizeShortenedTitle = (shortenedTitle) => {
-    switch(shortenedTitle){
+    switch (shortenedTitle) {
         case ShortenedFieldTitles.EvolutionLevel:
-            return 'text-[14px] sm:text-[10px]'
+            return 'text-[14px] sm:text-[10px]';
         case ShortenedFieldTitles.Evolutions:
-            return 'text-[13px] sm:text-[10px]'
+            return 'text-[13px] sm:text-[10px]';
         default:
             return '';
     }
-}
+};
 
 const setHints = () => {
     if (hintOne.length || hintTwo.length) {
@@ -177,72 +183,43 @@ const updateYesterdaysPokemon = async () => {
 };
 
 const submitGuess = async (guess) => {
-    const pokemonName = game.submitGuess(GAME_MODE,guess, componentStore, colors);
-    if(!pokemonName) return;
-    await game.decideGame(GAME_MODE,pokemonName,secretPokemon.name,colors.at(-1),componentStore.guesses.length);
+    const pokemonName = game.submitGuess(GAME_MODE, guess, componentStore, colors);
+    if (!pokemonName) return;
+    await game.decideGame(GAME_MODE, pokemonName, secretPokemon.name, colors.at(-1), componentStore.guesses.length);
 };
 
-//TODO: can refactor?
-const loadSecretPokemon = () => {
-    if (!localStorage.flavortextSecretPokemon) return;
-    Object.assign(secretPokemon, JSON.parse(localStorage.flavortextSecretPokemon));
+const loadExistingGameData = () => {
+    colors = localStorageService.getColorsFromLocalStorage(GAME_MODE);
+    componentStore.guesses = localStorageService.getGuessesFromLocalStorage(GAME_MODE);
+    game.loadAndSetIsGameWon(GAME_MODE);
+    game.removeAllGuessedPokemonsFromGuessPool(componentStore);
 };
 
-//TODO: can refactor?
-const loadGuesses = () => {
-    const guesses = localStorage.flavortextGuesses;
-    if (guesses) componentStore.guesses = JSON.parse(guesses);
-};
-
-//TODO: can refactor?
-const loadColors = () => {
-    const loadedColors = localStorage.flavortextColors;
-    if (loadedColors) colors = JSON.parse(loadedColors);
-};
-
-//TODO: can refactor?
-const loadIsFlavortextGameWon = () => {
-    const loadedIsFlavortextGameWon = localStorage.isFlavortextGameWon;
-    if (loadedIsFlavortextGameWon && loadedIsFlavortextGameWon === 'true') {
-        store.setIsFlavortextGameWon(true);
-    } else {
-        store.setIsFlavortextGameWon(false);
-    }
-};
-
-//TODO: can refactor?
-const removePokemonsFromGuessPool = () => {
-    componentStore.pokemonNames = componentStore.pokemonNames.filter((pokemon) => {
-        for (const guessedPokemon of componentStore.guesses) {
-            if (guessedPokemon === pokemon) return false;
-        }
-        return true;
-    });
+const startNewGame = (currSecretPokemon) => {
+    localStorageService.clearLocalStorageGameMode(GAME_MODE);
+    game.setIsGameWon(GAME_MODE, false);
+    localStorageService.setSecretPokemonToLocalStorage(GAME_MODE, currSecretPokemon);
+    localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
+    localStorageService.setNewDate();
 };
 
 //TODO: can refactor?
 const loadFlavortextGameData = async () => {
+
     const dayOfLastUpdate = localStorage.dayOfLastUpdate;
-    if (!dayOfLastUpdate) setNewDate();
+    if (!dayOfLastUpdate) localStorageService.setNewDate();
 
-    loadSecretPokemon();
-    const currSecretPokemon = await (await apiService.getFlavortextSecretPokemon()).data;
+    localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
+    const currSecretPokemon = await game.getCurrentSecretPokemon(GAME_MODE);
 
-    if (
-        parseInt(dayOfLastUpdate) == moment().date() &&
-        secretPokemon &&
-        secretPokemon?.name === currSecretPokemon?.name
-    ) {
-        loadColors();
-        loadGuesses();
-        loadIsFlavortextGameWon();
-        removePokemonsFromGuessPool();
+    if (game.shouldLoadExistingGameData(dayOfLastUpdate, secretPokemon, currSecretPokemon)) {
+
+        loadExistingGameData();
+
     } else {
-        clearLocalStorageGameMode(GAME_MODE);
-        store.setIsFlavortextGameWon(false);
-        game.setSecretPokemon(GAME_MODE, currSecretPokemon);
-        loadSecretPokemon();
-        setNewDate();
+
+        startNewGame(currSecretPokemon);
+
     }
     setHints();
     game.updateCurrentUserStreakDisplay(GAME_MODE);

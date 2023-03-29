@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
+    <!-- <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
         <GameWinContainer
             v-if="store.isSilhouetteGameWon && secretPokemon.name"
             :color="colors.at(-1)"
@@ -66,9 +66,9 @@
             />
         </div>
         <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
-    </div>
+    </div> -->
 </template>
-
+<!-- 
 <script setup>
 import SearchField from '../components/SearchField.vue';
 import GameWinContainer from '../components/GameWinContainer.vue';
@@ -273,4 +273,4 @@ const loadSilhouetteGameData = async () => {
     setHintOne();
     updateCurrentUserStreakDisplay(GameModes.Silhouette);
 };
-</script>
+</script> -->

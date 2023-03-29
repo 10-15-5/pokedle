@@ -3,63 +3,62 @@ import { GameModes } from '../constants';
 import moment from 'moment-timezone';
 import { useStore } from '../stores/store.js';
 import { lowerCaseAndCapitalizeWord } from '../helpers.js';
-import { addColorsToLocalStorage, addGuessesToLocalStorage } from './localStorage.js';
-import {playWinnerSound} from '../services/sound.js';
-import {launchConfetti} from '../services/confetti.js';
+import { addColorsToLocalStorage, addGuessesToLocalStorage, setSecretPokemonToLocalStorage } from './localStorage.js';
+import { playWinnerSound } from '../services/sound.js';
+import { launchConfetti } from '../services/confetti.js';
 
-const setNewSecretPokemon = async (gameMode) => {
+const getAndSetNewSecretPokemon = async (gameMode) => {
     let response;
 
     switch (gameMode) {
         case GameModes.Classic:
             response = await apiService.newClassicSecretPokemon();
-            localStorage.classicSecretPokemon = JSON.stringify(response.data);
+            setSecretPokemonToLocalStorage(gameMode, response.data);
             break;
-
         case GameModes.Flavortext:
             response = await apiService.newFlavortextSecretPokemon();
-            localStorage.flavortextSecretPokemon = JSON.stringify(response.data);
+            setSecretPokemonToLocalStorage(gameMode, response.data);
             break;
         case GameModes.Silhouette:
             response = await apiService.newSilhouetteSecretPokemon();
-            localStorage.silhouetteSecretPokemon = JSON.stringify(response.data);
+            setSecretPokemonToLocalStorage(gameMode, response.data);
             break;
         default:
             throw new Error('Gamemode Required');
     }
 };
 
-const getAndSetSecretPokemon = async (gameMode) => {
+const getCurrentSecretPokemon = async (gameMode) => {
     let response;
 
     switch (gameMode) {
         case GameModes.Classic:
             response = await apiService.getClassicSecretPokemon();
-            localStorage.classicSecretPokemon = JSON.stringify(response.data);
-            break;
+            return response.data;
         case GameModes.Flavortext:
             response = await apiService.getFlavortextSecretPokemon();
-            localStorage.flavortextSecretPokemon = JSON.stringify(response.data);
-            break;
+            return response.data;
         case GameModes.Silhouette:
             response = await apiService.getSilhouetteSecretPokemon();
-            localStorage.silhouetteSecretPokemon = JSON.stringify(response.data);
-            break;
+            return response.data;
         default:
             throw new Error('Gamemode Required');
     }
 };
-
-const setSecretPokemon = (gameMode, secretPokemon) => {
+const getAndSetCurrentSecretPokemon = async (gameMode) => {
+    let pokemon;
     switch (gameMode) {
         case GameModes.Classic:
-            localStorage.classicSecretPokemon = JSON.stringify(secretPokemon);
+            pokemon = await getCurrentSecretPokemon(gameMode);
+            setSecretPokemonToLocalStorage(gameMode, pokemon);
             break;
         case GameModes.Flavortext:
-            localStorage.flavortextSecretPokemon = JSON.stringify(secretPokemon);
+            pokemon = await getCurrentSecretPokemon(gameMode);
+            setSecretPokemonToLocalStorage(gameMode, pokemon);
             break;
         case GameModes.Silhouette:
-            localStorage.silhouetteSecretPokemon = JSON.stringify(secretPokemon);
+            pokemon = await getCurrentSecretPokemon(gameMode);
+            setSecretPokemonToLocalStorage(gameMode, pokemon);
             break;
         default:
             throw new Error('Gamemode Required');
@@ -76,9 +75,9 @@ const setDailyGamesWonCount = async (gameMode) => {
         case GameModes.Classic:
             return store.setDailyClassicGamesWon(res.data.classicGamesWon);
         case GameModes.Flavortext:
-            return store.setDailyFlavortextGamesWon(res.data.classicGamesWon);
+            return store.setDailyFlavortextGamesWon(res.data.flavortextGamesWon);
         case GameModes.Silhouette:
-            return store.setDailySilhouetteGamesWon(res.data.classicGamesWon);
+            return store.setDailySilhouetteGamesWon(res.data.Silhouette);
         default:
             throw new Error('Gamemode Required');
     }
@@ -154,8 +153,7 @@ const removePokemonNameFromArray = (name, names) => {
     };
 };
 
-const getRandomColor = () =>
-    localStorage.isShiny === 'true' ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal';
+const getRandomColor = () => (localStorage.isShiny === 'true' ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal');
 
 const submitGuess = (gameMode, guess, componentStore, colors) => {
     if (!guess) return;
@@ -189,14 +187,60 @@ const decideGame = async (gameMode, guess, secretPokemonName, color, numberOfGue
     }
 };
 
+const shouldLoadExistingGameData = (dayOfLastUpdate, localStorageSecretPokemon, databaseSecretPokemon) =>
+    parseInt(dayOfLastUpdate) == moment().date() &&
+    localStorageSecretPokemon &&
+    localStorageSecretPokemon?.name === databaseSecretPokemon?.name;
+
+
+const loadAndSetIsGameWon = (gameMode) => {
+    const { capitalizedWord } = lowerCaseAndCapitalizeWord(gameMode);
+
+    const loadedIsGameWon = localStorage.getItem(`is${capitalizedWord}GameWon`);
+
+    if (loadedIsGameWon && loadedIsGameWon === 'true') {
+        setIsGameWon(gameMode,true)
+    } else {
+        setIsGameWon(gameMode,false)
+    }
+};
+
+const setIsGameWon = (gameMode, isWon) => {
+    const store = useStore();
+    
+    switch (gameMode) {
+        case GameModes.Classic:
+            return store.setIsClassicGameWon(isWon)
+        case GameModes.Flavortext:
+            return store.setIsFlavortextGameWon(isWon)
+        case GameModes.Silhouette:
+            return store.setIsSilhouetteGameWon(isWon)
+        default:
+            throw new Error('Gamemode Required');
+    }
+};
+
+const removeAllGuessedPokemonsFromGuessPool = (componentStore) => {
+    componentStore.pokemonNames = componentStore.pokemonNames.filter((pokemon) => {
+        for (const guessedPokemon of componentStore.guesses) {
+            if (guessedPokemon === pokemon) return false;
+        }
+        return true;
+    });
+};
+
 export {
-    setNewSecretPokemon,
-    getAndSetSecretPokemon,
-    setSecretPokemon,
+    getAndSetNewSecretPokemon,
+    getAndSetCurrentSecretPokemon,
     setDailyGamesWonCount,
     updateUserWithGameWon,
     updateCurrentUserStreakDisplay,
     submitGuess,
     decideGame,
     getRandomColor,
+    getCurrentSecretPokemon,
+    shouldLoadExistingGameData,
+    loadAndSetIsGameWon,
+    removeAllGuessedPokemonsFromGuessPool,
+    setIsGameWon
 };
