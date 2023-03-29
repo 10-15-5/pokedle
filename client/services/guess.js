@@ -1,5 +1,6 @@
 import allPokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import { GuessState, GuessType } from '../constants.js';
+import { getRandomColor } from './game';
 
 const getGuessResults = (pokemonName, secretPokemon, color) => {
 
@@ -90,24 +91,4 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
 
 const isCorrectGuess = (pokemonName, secretPokemonName) => pokemonName === secretPokemonName;
 
-const removePokemonNameFromArray = (name, names) => {
-    let guessRemovedFromList = false;
-    let removedName = '';
-
-    const updatedNames = names.filter((e) => {
-        if (!guessRemovedFromList && e.startsWith(name.toLowerCase())) {
-            removedName = e;
-            guessRemovedFromList = true;
-        } else return {};
-    });
-
-    return {
-        removedName,
-        updatedNames,
-    };
-};
-
-const getRandomColor = () =>
-    localStorage.isShiny === 'true' ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal';
-
-export { getGuessResults, removePokemonNameFromArray, getRandomColor,isCorrectGuess };
+export { getGuessResults,isCorrectGuess };

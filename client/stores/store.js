@@ -12,6 +12,14 @@ export const useStore = defineStore('store', () => {
     const isFlavortextGameWon = ref(false);
     const isSilhouetteGameWon = ref(false);
 
+    const dailyClassicGamesWon = ref(0);
+    const dailyFlavortextGamesWon = ref(0);
+    const dailySilhouetteGamesWon = ref(0);
+
+    const setDailyClassicGamesWon = (val) => dailyClassicGamesWon.value = val;
+    const setDailyFlavortextGamesWon = (val) => dailyFlavortextGamesWon.value = val;
+    const setDailySilhouetteGamesWon = (val) => dailySilhouetteGamesWon.value = val;
+
     const currentStreak = ref(0);
 
     const setShiny = (isShinyParam) => {
@@ -100,6 +108,9 @@ export const useStore = defineStore('store', () => {
         isFlavortextGameWon,
         isSilhouetteGameWon,
         currentStreak,
+        dailyClassicGamesWon,
+        dailyFlavortextGamesWon,
+        dailySilhouetteGamesWon,
         setUser,
         setIsClassicGameWon,
         toggleShiny,
@@ -114,5 +125,8 @@ export const useStore = defineStore('store', () => {
         setCurrentStreak,
         setSound,
         toggleSound,
+        setDailyClassicGamesWon,
+        setDailyFlavortextGamesWon,
+        setDailySilhouetteGamesWon,
     };
 });

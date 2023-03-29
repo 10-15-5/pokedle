@@ -2,6 +2,10 @@ import * as apiService from './api/apiService.js';
 import { GameModes } from '../constants';
 import moment from 'moment-timezone';
 import { useStore } from '../stores/store.js';
+import { lowerCaseAndCapitalizeWord } from '../helpers.js';
+import { addColorsToLocalStorage, addGuessesToLocalStorage } from './localStorage.js';
+import {playWinnerSound} from '../services/sound.js';
+import {launchConfetti} from '../services/confetti.js';
 
 const setNewSecretPokemon = async (gameMode) => {
     let response;
@@ -60,20 +64,21 @@ const setSecretPokemon = (gameMode, secretPokemon) => {
         default:
             throw new Error('Gamemode Required');
     }
-}
+};
 
-const getDailyGamesWonCount = async (gameMode) => {
+const setDailyGamesWonCount = async (gameMode) => {
+    const store = useStore();
+
     const date = moment().format('YYYY-MM-DD');
-
     const res = await apiService.getDailyStats(date);
 
     switch (gameMode) {
         case GameModes.Classic:
-            return res.data.classicGamesWon;
+            return store.setDailyClassicGamesWon(res.data.classicGamesWon);
         case GameModes.Flavortext:
-            return res.data.flavortextGamesWon;
+            return store.setDailyFlavortextGamesWon(res.data.classicGamesWon);
         case GameModes.Silhouette:
-            return res.data.silhouetteGamesWon;
+            return store.setDailySilhouetteGamesWon(res.data.classicGamesWon);
         default:
             throw new Error('Gamemode Required');
     }
@@ -92,6 +97,7 @@ const updateUserWithGameWon = async (gameMode, numberOfGuesses) => {
             return response.data.user;
         case GameModes.Silhouette:
             response = await apiService.updateUserSilhouetteWins(userId, numberOfGuesses);
+            return response.data.user;
         default:
             throw new Error('Gamemode Required');
     }
@@ -111,11 +117,86 @@ const updateCurrentUserStreakDisplay = async (gameMode) => {
     }
 };
 
+const incrementGamesWonCount = async (gameMode, numberOfGuesses) => {
+    const store = useStore();
+
+    let response;
+
+    switch (gameMode) {
+        case GameModes.Classic:
+            response = await apiService.updateStatsClassicWins(numberOfGuesses);
+            return store.setDailyClassicGamesWon(response.data.dailyStats.classicGamesWon);
+        case GameModes.Flavortext:
+            response = await apiService.updateStatsFlavortextWins(numberOfGuesses);
+            return store.setDailyFlavortextGamesWon(response.data.dailyStats.flavortextGamesWon);
+        case GameModes.Silhouette:
+            response = await apiService.updateStatsSilhouetteWins(numberOfGuesses);
+            return store.setDailySilhouetteGamesWon(response.data.dailyStats.silhouetteGamesWon);
+        default:
+            throw new Error('Gamemode Required');
+    }
+};
+
+const removePokemonNameFromArray = (name, names) => {
+    let guessRemovedFromList = false;
+    let removedName = '';
+
+    const updatedNames = names.filter((e) => {
+        if (!guessRemovedFromList && e.startsWith(name.toLowerCase())) {
+            removedName = e;
+            guessRemovedFromList = true;
+        } else return {};
+    });
+
+    return {
+        removedName,
+        updatedNames,
+    };
+};
+
+const getRandomColor = () =>
+    localStorage.isShiny === 'true' ? 'shiny' : Math.random() * 100 < 5 ? 'shiny' : 'normal';
+
+const submitGuess = (gameMode, guess, componentStore, colors) => {
+    if (!guess) return;
+
+    const { removedName, updatedNames } = removePokemonNameFromArray(guess, componentStore.pokemonNames);
+
+    if (updatedNames.length >= componentStore.pokemonNames.length) return;
+
+    colors.push(getRandomColor());
+    componentStore.guesses.unshift(removedName);
+    componentStore.pokemonNames = updatedNames;
+    addGuessesToLocalStorage(gameMode, componentStore.guesses);
+    addColorsToLocalStorage(gameMode, colors);
+
+    return removedName;
+};
+
+const decideGame = async (gameMode, guess, secretPokemonName, color, numberOfGuesses) => {
+    if (guess === secretPokemonName) {
+        const store = useStore();
+
+        playWinnerSound();
+
+        launchConfetti(color === 'shiny', numberOfGuesses === 1);
+        store.setIsFlavortextGameWon(true); //TODO: refactor this
+
+        const user = await updateUserWithGameWon(gameMode, numberOfGuesses);
+        await incrementGamesWonCount(gameMode, numberOfGuesses);
+
+        store.setUser(user);
+    }
+};
+
 export {
     setNewSecretPokemon,
     getAndSetSecretPokemon,
     setSecretPokemon,
-    getDailyGamesWonCount,
+    setDailyGamesWonCount,
     updateUserWithGameWon,
     updateCurrentUserStreakDisplay,
+    submitGuess,
+    decideGame,
+    getRandomColor,
 };

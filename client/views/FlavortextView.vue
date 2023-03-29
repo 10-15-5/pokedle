@@ -51,7 +51,7 @@
                     </div></div
             ></template>
         </HintContainer>
-        <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="dailyGamesWon" />
+        <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="store.dailyFlavortextGamesWon" />
         <div v-if="componentStore.guesses.length" class="flex flex-col gap-1">
             <SingleResultHeader :headerText="GuessType.Pokemon" />
             <SingeResultContainer
@@ -79,7 +79,7 @@ import { reactive, ref, onBeforeMount } from 'vue';
 import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import { useStore } from '../stores/store.js';
 import HintContainer from '../components/hints/HintContainer.vue';
-import { removePokemonNameFromArray, getRandomColor, isCorrectGuess, getGuessResults } from '../services/guess';
+import { isCorrectGuess, getGuessResults } from '../services/guess';
 import { playWinnerSound } from '../services/sound';
 import { launchConfetti } from '../services/confetti.js';
 import {
@@ -98,16 +98,11 @@ import {
     addColorsToLocalStorage,
     addGuessesToLocalStorage,
 } from '../services/localStorage';
-import {
-    setSecretPokemon,
-    getDailyGamesWonCount,
-    updateUserWithGameWon,
-    updateCurrentUserStreakDisplay,
-} from '../services/game';
+import * as game from '../services/game';
 import { getCurrentFlavortextPokemonNumber } from '../helpers.js';
 
 const store = useStore();
-
+const GAME_MODE = GameModes.Flavortext;
 const getSortedPokemonNames = () => pokemonData.map((pokemonInfo) => pokemonInfo.name).sort();
 
 const ShortenedFieldTitles = {
@@ -124,18 +119,14 @@ const componentStore = reactive({
 const hintOne = reactive([]);
 const hintTwo = reactive([]);
 
-const dailyGamesWon = ref(0);
-const dailyFirstTryWins = ref(0);
 const yesterdaysPokemon = ref('');
 //Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
 let colors = [];
 const secretPokemon = reactive({});
-const setDailyGamesWonCount = async () => {
-    dailyGamesWon.value = await getDailyGamesWonCount(GameModes.Flavortext);
-};
+
 
 onBeforeMount(async () => {
-    await Promise.all([loadFlavortextGameData(), setDailyGamesWonCount(), updateYesterdaysPokemon()]);
+    await Promise.all([loadFlavortextGameData(), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
 });
 
 const flavortextTwitterText = () => {
@@ -181,48 +172,14 @@ const setHints = () => {
     hintTwo.push(correctFieldsWithTitles[3], correctFieldsWithTitles[4], correctFieldsWithTitles[7]); //Evolution lvl, isFullyEvolved, Gen
 };
 
-//TODO: can refactor?
-const incrementGamesWonCount = async () => {
-    const response = await apiService.updateStatsFlavortextWins(componentStore.guesses.length);
-    dailyGamesWon.value = response.data.dailyStats.flavortextGamesWon;
-    dailyFirstTryWins.value = response.data.dailyStats.flavortextFirstTryWins;
-};
-
-const decideGame = async (guess) => {
-    if (guess === secretPokemon.name) {
-        //Wait for all cards to flip
-        playWinnerSound();
-
-        launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
-        store.setIsFlavortextGameWon(true);
-        console.log('🥳🎉🎊 Congrats! You guessed the secret pokemon: ' + guess);
-        const [user] = await Promise.all([
-            updateUserWithGameWon(GameModes.Flavortext, componentStore.guesses.length),
-            incrementGamesWonCount(),
-        ]);
-        store.setUser(user);
-    } else {
-        console.log('❌❌❌ Wrong Guess. The secret pokemon was not ' + guess + ' ❌❌❌');
-    }
-};
-
 const updateYesterdaysPokemon = async () => {
     yesterdaysPokemon.value = (await apiService.getFlavortextPreviousSecretPokemon()).data;
 };
 
 const submitGuess = async (guess) => {
-    if (!guess) return;
-
-    const { removedName, updatedNames } = removePokemonNameFromArray(guess, componentStore.pokemonNames);
-
-    if (updatedNames.length >= componentStore.pokemonNames.length) return;
-
-    colors.push(getRandomColor());
-    componentStore.guesses.unshift(removedName);
-    componentStore.pokemonNames = updatedNames;
-    addGuessesToLocalStorage(GameModes.Flavortext, componentStore.guesses);
-    addColorsToLocalStorage(GameModes.Flavortext, colors);
-    await decideGame(removedName);
+    const pokemonName = game.submitGuess(GAME_MODE,guess, componentStore, colors);
+    if(!pokemonName) return;
+    await game.decideGame(GAME_MODE,pokemonName,secretPokemon.name,colors.at(-1),componentStore.guesses.length);
 };
 
 //TODO: can refactor?
@@ -281,13 +238,13 @@ const loadFlavortextGameData = async () => {
         loadIsFlavortextGameWon();
         removePokemonsFromGuessPool();
     } else {
-        clearLocalStorageGameMode(GameModes.Flavortext);
+        clearLocalStorageGameMode(GAME_MODE);
         store.setIsFlavortextGameWon(false);
-        setSecretPokemon(GameModes.Flavortext, currSecretPokemon);
+        game.setSecretPokemon(GAME_MODE, currSecretPokemon);
         loadSecretPokemon();
         setNewDate();
     }
     setHints();
-    updateCurrentUserStreakDisplay(GameModes.Flavortext);
+    game.updateCurrentUserStreakDisplay(GAME_MODE);
 };
 </script>
