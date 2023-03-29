@@ -189,19 +189,36 @@ const submitGuess = (gameMode, guess, componentStore, colors) => {
     return removedName;
 };
 
-const decideGame = async (gameMode, guess, secretPokemonName, color, numberOfGuesses) => {
+const decideGame = async (
+    gameMode,
+    guess,
+    secretPokemonName,
+    color,
+    numberOfGuesses,
+    soundDelayMS = 0,
+    confettiDelayMS = 0,
+    winFunction = () => {}
+) => {
+
     if (guess === secretPokemonName) {
         const store = useStore();
 
-        playWinnerSound();
+        winFunction();
 
-        launchConfetti(color === 'shiny', numberOfGuesses === 1);
-        store.setIsFlavortextGameWon(true); //TODO: refactor this
+        setTimeout(() => {
+            playWinnerSound();
+        }, soundDelayMS);
 
-        const user = await updateUserWithGameWon(gameMode, numberOfGuesses);
-        await incrementGamesWonCount(gameMode, numberOfGuesses);
+        setTimeout(async () => {
+            launchConfetti(color === 'shiny', numberOfGuesses === 1);
 
-        store.setUser(user);
+            setIsGameWon(gameMode, true)
+
+            const user = await updateUserWithGameWon(gameMode, numberOfGuesses);
+            await incrementGamesWonCount(gameMode, numberOfGuesses);
+
+            store.setUser(user);
+        }, confettiDelayMS);
     }
 };
 

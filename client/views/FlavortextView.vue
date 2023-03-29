@@ -92,8 +92,6 @@ import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import { useStore } from '../stores/store.js';
 import HintContainer from '../components/hints/HintContainer.vue';
 import { isCorrectGuess, getGuessResults } from '../services/guess';
-import { playWinnerSound } from '../services/sound';
-import { launchConfetti } from '../services/confetti.js';
 import {
     GameModes,
     GuessType,
@@ -102,8 +100,6 @@ import {
     FlavortextGuessesNeededForHintTwo,
     FlavortextGuessesNeededForHintThree,
 } from '../constants';
-import * as apiService from '../services/api/apiService.js';
-import moment from 'moment';
 import * as localStorageService from '../services/localStorage.js';
 import * as game from '../services/game';
 import { getCurrentFlavortextPokemonNumber } from '../helpers.js';
@@ -112,24 +108,24 @@ const store = useStore();
 const GAME_MODE = GameModes.Flavortext;
 const getSortedPokemonNames = () => pokemonData.map((pokemonInfo) => pokemonInfo.name).sort();
 
-const ShortenedFieldTitles = {
-    EvolutionLevel: 'Evol. Lvl.',
-    Evolutions: 'Fully Evol.',
-    Generation: 'Gen.',
-};
-
 const componentStore = reactive({
     pokemonNames: getSortedPokemonNames(),
     guesses: [],
 });
 
+const secretPokemon = reactive({});
+const yesterdaysPokemon = ref('');
+
 const hintOne = reactive([]);
 const hintTwo = reactive([]);
 
-const yesterdaysPokemon = ref('');
-const secretPokemon = reactive({});
-
 let colors = [];
+
+const ShortenedFieldTitles = {
+    EvolutionLevel: 'Evol. Lvl.',
+    Evolutions: 'Fully Evol.',
+    Generation: 'Gen.',
+};
 
 onBeforeMount(async () => {
     await Promise.all([loadFlavortextGameData(), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
@@ -187,6 +183,7 @@ const submitGuess = async (guess) => {
     const pokemonName = game.submitGuess(GAME_MODE, guess, componentStore, colors);
     if (!pokemonName) return;
     await game.decideGame(GAME_MODE, pokemonName, secretPokemon.name, colors.at(-1), componentStore.guesses.length);
+    setHints()
 };
 
 const loadExistingGameData = () => {

@@ -53,7 +53,7 @@
                 </div>
             </template>
         </HintContainer>
-        <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="dailyGamesWon" />
+        <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="store.dailySilhouetteGamesWon" />
         <div v-if="componentStore.guesses.length" class="flex flex-col gap-1">
             <SingleResultHeader :headerText="GuessType.Pokemon" />
             <SingeResultContainer
@@ -103,22 +103,16 @@ const componentStore = reactive({
     guesses: [],
 });
 
+const secretPokemon = reactive({});
+const yesterdaysPokemon = ref('');
+
 const hintOne = reactive([]);
 
-const dailyGamesWon = ref(0);
-const dailyFirstTryWins = ref(0);
-const yesterdaysPokemon = ref('');
-//Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
 let colors = [];
-const secretPokemon = reactive({});
 
 const rotate = ['!rotate-90', '!rotate-180', '!-rotate-90'];
 
 const getRotation = computed(() => rotate[Math.floor(Math.random() * rotate.length)]);
-
-const setDailyGamesWonCount = async () => {
-    dailyGamesWon.value = await getDailyGamesWonCount(GameModes.Silhouette);
-};
 
 onBeforeMount(async () => {
     await Promise.all([loadSilhouetteGameData(), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
@@ -157,11 +151,11 @@ const updateYesterdaysPokemon = async () => {
     yesterdaysPokemon.value = await game.getYesterdaysPokemon(GAME_MODE);
 };
 
-
 const submitGuess = async (guess) => {
     const pokemonName = game.submitGuess(GAME_MODE, guess, componentStore, colors);
     if (!pokemonName) return;
     await game.decideGame(GAME_MODE, pokemonName, secretPokemon.name, colors.at(-1), componentStore.guesses.length);
+    setHintOne();
 };
 
 const loadExistingGameData = () => {

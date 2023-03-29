@@ -1,5 +1,5 @@
 <template>
-    <!-- <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
+    <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
         <SearchField
             v-if="!store.isClassicGameWon"
             :pokemonNames="componentStore.pokemonNames"
@@ -46,7 +46,7 @@
                 </div>
             </template>
         </HintContainer>
-        <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="dailyGamesWon" />
+        <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="store.dailyClassicGamesWon" />
         <div v-if="componentStore.guesses.length" class="flex flex-col gap-y-2 sm:gap-y-1">
             <ResultsHeader class="mb-n1 sm:!mb-0" />
             <ResultsContainer
@@ -57,9 +57,9 @@
             />
         </div>
         <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
-    </div> -->
+    </div>
 </template>
-<!-- 
+
 <script setup>
 import ResultsContainer from '../components/result/ResultsContainer.vue';
 import ResultsHeader from '../components/result/ResultsHeader.vue';
@@ -70,9 +70,7 @@ import SearchField from '../components/SearchField.vue';
 import GameModeButton from '../components/buttons/GameModeButton.vue';
 import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
 import DailyGamesWonContainer from '../components/infoCards/DailyGamesWonContainer.vue';
-import { getGuessResults, removePokemonNameFromArray, getRandomColor } from '../services/guess';
-import * as apiService from '../services/api/apiService.js';
-import { launchConfetti } from '../services/confetti.js';
+import { getGuessResults } from '../services/guess';
 import { useStore } from '../stores/store.js';
 import ResultSquare from '../components/result/ResultSquare.vue';
 import { reactive, ref, onBeforeMount, computed } from 'vue';
@@ -87,45 +85,29 @@ import {
     ClassicGuessesNeededForHintThree,
 } from '../constants.js';
 import { getCurrentClassicPokemonNumber } from '../helpers.js';
-import moment from 'moment-timezone';
-import {
-    setSecretPokemon,
-    getDailyGamesWonCount,
-    updateUserWithGameWon,
-    updateCurrentUserStreakDisplay,
-} from '../services/game';
-import { playWinnerSound } from '../services/sound';
-import {
-    clearLocalStorageGameMode,
-    setNewDate,
-    addColorsToLocalStorage,
-    addGuessesToLocalStorage,
-} from '../services/localStorage';
+import * as game from '../services/game';
+import * as localStorageService from '../services/localStorage';
 
 const store = useStore();
-
+const GAME_MODE = GameModes.Classic;
 const getSortedPokemonNames = () => pokemonData.map((pokemonInfo) => pokemonInfo.name).sort();
 
 const componentStore = reactive({
     pokemonNames: getSortedPokemonNames(),
     guesses: [],
 });
-
-const dailyGamesWon = ref(0);
-const dailyFirstTryWins = ref(0);
-const yesterdaysPokemon = ref('');
-//Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
-let colors = [];
 const secretPokemon = reactive({});
+const yesterdaysPokemon = ref('');
+
 const hintTwo = reactive({});
+
+let colors = [];
+
+//Updated as soon an correct pokemon is guessed, contrary to store.isGameWon Which is only updated after TotalResultCardFlipDelay
 const instantIsClassicGameWon = ref(false);
 
-const setDailyGamesWonCount = async () => {
-    dailyGamesWon.value = await getDailyGamesWonCount(GameModes.Classic);
-};
-
 onBeforeMount(async () => {
-    await Promise.all([loadClassicGameData(), setDailyGamesWonCount(), updateYesterdaysPokemon()]);
+    await Promise.all([loadClassicGameData(), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
 });
 
 const emojiResults = computed(() => {
@@ -239,145 +221,58 @@ const setHintOne = () => {
     Object.assign(hintTwo, hint);
 };
 
-const incrementGamesWonCount = async () => {
-    const response = await apiService.updateStatsClassicWins(componentStore.guesses.length);
-    dailyGamesWon.value = response.data.dailyStats.classicGamesWon;
-    dailyFirstTryWins.value = response.data.dailyStats.classicFirstTryWins;
-};
-
-const decideGame = async (guess) => {
-    if (guess === secretPokemon.name) {
-        instantIsClassicGameWon.value = true;
-        //Wait for all cards to flip
-        setTimeout(() => {
-            playWinnerSound();
-        }, TotalResultCardFlipDelay - 500);
-        setTimeout(async () => {
-            launchConfetti(colors.at(-1) === 'shiny', componentStore.guesses.length === 1);
-            store.setIsClassicGameWon(true);
-            const [user] = await Promise.all([
-                updateUserWithGameWon(GameModes.Classic, componentStore.guesses.length),
-                incrementGamesWonCount(),
-            ]);
-            store.setUser(user);
-        }, TotalResultCardFlipDelay);
-    }
-};
-
 const updateYesterdaysPokemon = async () => {
-    yesterdaysPokemon.value = (await apiService.getClassicPreviousSecretPokemon()).data;
+    yesterdaysPokemon.value = await game.getYesterdaysPokemon(GAME_MODE);
 };
 
 const submitGuess = async (guess) => {
-    if (!guess || instantIsClassicGameWon.value) return;
+    if (instantIsClassicGameWon.value) return;
 
-    const { removedName, updatedNames } = removePokemonNameFromArray(guess, componentStore.pokemonNames);
-
-    if (updatedNames.length >= componentStore.pokemonNames.length) return;
-
-    colors.push(getRandomColor());
-    componentStore.guesses.unshift(removedName);
-    componentStore.pokemonNames = updatedNames;
-    addGuessesToLocalStorage(GameModes.Classic, componentStore.guesses);
-    addColorsToLocalStorage(GameModes.Classic, colors);
-    setHintOne();
-    await decideGame(removedName);
-};
-
-const loadSecretPokemon = () => {
-    if (!localStorage.classicSecretPokemon) return;
-    Object.assign(secretPokemon, JSON.parse(localStorage.classicSecretPokemon));
-};
-
-const loadGuesses = () => {
-    const guesses = localStorage.classicGuesses;
-    if (guesses) componentStore.guesses = JSON.parse(guesses);
-};
-
-const loadColors = () => {
-    const loadedColors = localStorage.classicColors;
-    if (loadedColors) colors = JSON.parse(loadedColors);
-};
-
-const loadIsClassicGameWon = () => {
-    const loadedIsClassicGameWon = localStorage.isClassicGameWon;
-    if (loadedIsClassicGameWon && loadedIsClassicGameWon === 'true') {
-        store.setIsClassicGameWon(true);
-    } else {
-        store.setIsClassicGameWon(false);
-    }
-};
-
-const removePokemonsFromGuessPool = () => {
-    componentStore.pokemonNames = componentStore.pokemonNames.filter((pokemon) => {
-        for (const guessedPokemon of componentStore.guesses) {
-            if (guessedPokemon === pokemon) return false;
+    const pokemonName = game.submitGuess(GAME_MODE, guess, componentStore, colors);
+    if (!pokemonName) return;
+    await game.decideGame(
+        GAME_MODE,
+        pokemonName,
+        secretPokemon.name,
+        colors.at(-1),
+        componentStore.guesses.length,
+        TotalResultCardFlipDelay - 500,
+        TotalResultCardFlipDelay,
+        () => {
+            instantIsClassicGameWon.value = true;
         }
-        return true;
-    });
+    );
+    setHintOne();
+};
+
+const loadExistingGameData = () => {
+    colors = localStorageService.getColorsFromLocalStorage(GAME_MODE);
+    componentStore.guesses = localStorageService.getGuessesFromLocalStorage(GAME_MODE);
+    game.loadAndSetIsGameWon(GAME_MODE);
+    game.removeAllGuessedPokemonsFromGuessPool(componentStore);
+};
+
+const startNewGame = (currSecretPokemon) => {
+    localStorageService.clearLocalStorageGameMode(GAME_MODE);
+    game.setIsGameWon(GAME_MODE, false);
+    localStorageService.setSecretPokemonToLocalStorage(GAME_MODE, currSecretPokemon);
+    localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
+    localStorageService.setNewDate();
 };
 
 const loadClassicGameData = async () => {
     const dayOfLastUpdate = localStorage.dayOfLastUpdate;
-    if (!dayOfLastUpdate) setNewDate();
+    if (!dayOfLastUpdate) localStorageService.setNewDate();
 
-    loadSecretPokemon();
-    const currSecretPokemon = await (await apiService.getClassicSecretPokemon()).data;
+    localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
+    const currSecretPokemon = await game.getCurrentSecretPokemon(GAME_MODE);
 
-    if (
-        parseInt(dayOfLastUpdate) == moment().date() &&
-        secretPokemon &&
-        secretPokemon?.name === currSecretPokemon?.name
-    ) {
-        //Load
-        loadColors();
-        loadGuesses();
-        loadIsClassicGameWon();
-        removePokemonsFromGuessPool();
+    if (game.shouldLoadExistingGameData(dayOfLastUpdate, secretPokemon, currSecretPokemon)) {
+        loadExistingGameData();
     } else {
-        //Fresh game
-        clearLocalStorageGameMode(GameModes.Classic);
-        store.setIsClassicGameWon(false);
-        setSecretPokemon(GameModes.Classic, currSecretPokemon);
-        loadSecretPokemon();
-        setNewDate();
+        startNewGame(currSecretPokemon);
     }
     setHintOne();
-    updateCurrentUserStreakDisplay(GameModes.Classic);
+    game.updateCurrentUserStreakDisplay(GAME_MODE);
 };
-</script> -->
-
-<style scoped>
-html.dark {
-    color-scheme: dark;
-}
-
-.background-white {
-    background-image: url('../client/assets/backgrounds/background-white.png');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-.background-black {
-    background: linear-gradient(rgba(0, 0, 0, 0.25), rgba(0, 0, 0, 0.25)),
-        url('../client/assets/backgrounds/background-black.jpg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-.background-white-difficulty-insane {
-    background-image: url('../client/assets/backgrounds/background-white-trainer-red.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-
-.background-black-difficulty-insane {
-    background-image: url('../client/assets/backgrounds/background-black-cubone.jpeg');
-    background-size: cover;
-    background-repeat: no-repeat;
-    background-attachment: fixed;
-}
-</style>
+</script>
