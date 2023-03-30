@@ -287,7 +287,7 @@ const loadGameData = async (gameMode, setHints, secretPokemon, componentStore) =
     if (shouldLoadExistingGameData(dayOfLastUpdate, secretPokemon, currSecretPokemon)) {
         loadExistingGameData(gameMode,componentStore);
     } else {
-        startNewGame(currSecretPokemon,secretPokemon);
+        startNewGame(gameMode,currSecretPokemon,secretPokemon);
     }
     setHints();
     updateCurrentUserStreakDisplay(gameMode);
