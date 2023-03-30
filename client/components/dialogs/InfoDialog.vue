@@ -1,9 +1,9 @@
 <template>
     <BaseDialog :isVisible="isVisible" :onClose="onClose">
-        <div class="max-w-[700px] font-pkmEmerald text-[20px]">
+        <div class="max-w-[700px] font-pkmEmerald text-[20px] relative">
             <h1 class="mb-2 text-center text-[32px] uppercase">About</h1>
             <p>
-                Welcome to the world of POKéMON! <br />
+                Welcome to the world of POKéMON! <br /> <NotificationAnimation class="mt-11 mr-[305px] sm:mt-[51px] sm:mr-4" />
                 Every day a wild POKéMON from gen 1-3 will be hiding and its your job as a POKéMON
                 TRAINER to catch (guess) it!
             </p>
@@ -118,6 +118,7 @@
 </template>
 
 <script setup>
+import NotificationAnimation from '../animations/NotificationAnimation.vue';
 import BaseDialog from './BaseDialog.vue';
 
 const props = defineProps({

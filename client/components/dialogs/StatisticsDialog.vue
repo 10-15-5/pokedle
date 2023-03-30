@@ -3,7 +3,7 @@
         <div class="flex flex-col justify-center items-center relative">
             <h1 class="text-center font-pkmEmerald text-[32px] uppercase">STATISTICS</h1>
             <span class="w-fit text-center font-pkmEmerald text-[20px]"
-                >Coming Soon.... <NotificationAnimation class="!mt-[36px] !mr-[165px]" />
+                >Coming Soon.... <NotificationAnimation class="!mt-[36px] !mr-[165px] sm:!mt-[43px] sm:!mr-[35px]" />
             </span>
         </div>
     </BaseDialog>
