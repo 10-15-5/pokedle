@@ -107,7 +107,8 @@ let colors = [];
 const instantIsClassicGameWon = ref(false);
 
 onBeforeMount(async () => {
-    await Promise.all([loadClassicGameData(), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
+    await Promise.all([game.loadGameData(GAME_MODE, setHintOne, secretPokemon, componentStore), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
+    colors = localStorageService.getColorsFromLocalStorage(GAME_MODE);
 });
 
 const emojiResults = computed(() => {
@@ -245,34 +246,33 @@ const submitGuess = async (guess) => {
     setHintOne();
 };
 
-const loadExistingGameData = () => {
-    colors = localStorageService.getColorsFromLocalStorage(GAME_MODE);
-    componentStore.guesses = localStorageService.getGuessesFromLocalStorage(GAME_MODE);
-    game.loadAndSetIsGameWon(GAME_MODE);
-    game.removeAllGuessedPokemonsFromGuessPool(componentStore);
-};
+// const loadExistingGameData = () => {
+//     componentStore.guesses = localStorageService.getGuessesFromLocalStorage(GAME_MODE);
+//     game.loadAndSetIsGameWon(GAME_MODE);
+//     game.removeAllGuessedPokemonsFromGuessPool(componentStore);
+// };
 
-const startNewGame = (currSecretPokemon) => {
-    localStorageService.clearLocalStorageGameMode(GAME_MODE);
-    game.setIsGameWon(GAME_MODE, false);
-    localStorageService.setSecretPokemonToLocalStorage(GAME_MODE, currSecretPokemon);
-    localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
-    localStorageService.setNewDate();
-};
+// const startNewGame = (currSecretPokemon) => {
+//     localStorageService.clearLocalStorageGameMode(GAME_MODE);
+//     game.setIsGameWon(GAME_MODE, false);
+//     localStorageService.setSecretPokemonToLocalStorage(GAME_MODE, currSecretPokemon);
+//     localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
+//     localStorageService.setNewDate();
+// };
 
-const loadClassicGameData = async () => {
-    const dayOfLastUpdate = localStorage.dayOfLastUpdate;
-    if (!dayOfLastUpdate) localStorageService.setNewDate();
+// const loadClassicGameData = async () => {
+//     const dayOfLastUpdate = localStorage.dayOfLastUpdate;
+//     if (!dayOfLastUpdate) localStorageService.setNewDate();
 
-    localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
-    const currSecretPokemon = await game.getCurrentSecretPokemon(GAME_MODE);
+//     localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
+//     const currSecretPokemon = await game.getCurrentSecretPokemon(GAME_MODE);
 
-    if (game.shouldLoadExistingGameData(dayOfLastUpdate, secretPokemon, currSecretPokemon)) {
-        loadExistingGameData();
-    } else {
-        startNewGame(currSecretPokemon);
-    }
-    setHintOne();
-    game.updateCurrentUserStreakDisplay(GAME_MODE);
-};
+//     if (game.shouldLoadExistingGameData(dayOfLastUpdate, secretPokemon, currSecretPokemon)) {
+//         loadExistingGameData();
+//     } else {
+//         startNewGame(currSecretPokemon);
+//     }
+//     setHintOne();
+//     game.updateCurrentUserStreakDisplay(GAME_MODE);
+// };
 </script>

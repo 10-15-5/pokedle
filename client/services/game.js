@@ -3,7 +3,7 @@ import { GameModes } from '../constants';
 import moment from 'moment-timezone';
 import { useStore } from '../stores/store.js';
 import { lowerCaseAndCapitalizeWord } from '../helpers.js';
-import { addColorsToLocalStorage, addGuessesToLocalStorage, setSecretPokemonToLocalStorage } from './localStorage.js';
+import * as localStorageService from './localStorage.js'
 import { playWinnerSound } from '../services/sound.js';
 import { launchConfetti } from '../services/confetti.js';
 
@@ -13,15 +13,15 @@ const getAndSetNewSecretPokemon = async (gameMode) => {
     switch (gameMode) {
         case GameModes.Classic:
             response = await apiService.newClassicSecretPokemon();
-            setSecretPokemonToLocalStorage(gameMode, response.data);
+            localStorageService.setSecretPokemonToLocalStorage(gameMode, response.data);
             break;
         case GameModes.Flavortext:
             response = await apiService.newFlavortextSecretPokemon();
-            setSecretPokemonToLocalStorage(gameMode, response.data);
+            localStorageService.setSecretPokemonToLocalStorage(gameMode, response.data);
             break;
         case GameModes.Silhouette:
             response = await apiService.newSilhouetteSecretPokemon();
-            setSecretPokemonToLocalStorage(gameMode, response.data);
+            localStorageService.setSecretPokemonToLocalStorage(gameMode, response.data);
             break;
         default:
             throw new Error('Gamemode Required');
@@ -50,15 +50,15 @@ const getAndSetCurrentSecretPokemon = async (gameMode) => {
     switch (gameMode) {
         case GameModes.Classic:
             pokemon = await getCurrentSecretPokemon(gameMode);
-            setSecretPokemonToLocalStorage(gameMode, pokemon);
+            localStorageService.setSecretPokemonToLocalStorage(gameMode, pokemon);
             break;
         case GameModes.Flavortext:
             pokemon = await getCurrentSecretPokemon(gameMode);
-            setSecretPokemonToLocalStorage(gameMode, pokemon);
+            localStorageService.setSecretPokemonToLocalStorage(gameMode, pokemon);
             break;
         case GameModes.Silhouette:
             pokemon = await getCurrentSecretPokemon(gameMode);
-            setSecretPokemonToLocalStorage(gameMode, pokemon);
+            localStorageService.setSecretPokemonToLocalStorage(gameMode, pokemon);
             break;
         default:
             throw new Error('Gamemode Required');
@@ -183,8 +183,8 @@ const submitGuess = (gameMode, guess, componentStore, colors) => {
     colors.push(getRandomColor());
     componentStore.guesses.unshift(removedName);
     componentStore.pokemonNames = updatedNames;
-    addGuessesToLocalStorage(gameMode, componentStore.guesses);
-    addColorsToLocalStorage(gameMode, colors);
+    localStorageService.addGuessesToLocalStorage(gameMode, componentStore.guesses);
+    localStorageService.addColorsToLocalStorage(gameMode, colors);
 
     return removedName;
 };
@@ -263,6 +263,36 @@ const removeAllGuessedPokemonsFromGuessPool = (componentStore) => {
     });
 };
 
+const loadExistingGameData = (gameMode,componentStore) => {
+    componentStore.guesses = localStorageService.getGuessesFromLocalStorage(gameMode);
+    loadAndSetIsGameWon(gameMode);
+    removeAllGuessedPokemonsFromGuessPool(componentStore);
+};
+
+const startNewGame = (gameMode,currSecretPokemon,secretPokemon) => {
+    localStorageService.clearLocalStorageGameMode(gameMode);
+    setIsGameWon(gameMode, false);
+    localStorageService.setSecretPokemonToLocalStorage(gameMode, currSecretPokemon);
+    localStorageService.setSecretPokemonFromLocalStorage(gameMode, secretPokemon);
+    localStorageService.setNewDate();
+};
+
+const loadGameData = async (gameMode, setHints, secretPokemon, componentStore) => {
+    const dayOfLastUpdate = localStorage.dayOfLastUpdate;
+    if (!dayOfLastUpdate) localStorageService.setNewDate();
+
+    localStorageService.setSecretPokemonFromLocalStorage(gameMode, secretPokemon);
+    const currSecretPokemon = await getCurrentSecretPokemon(gameMode);
+
+    if (shouldLoadExistingGameData(dayOfLastUpdate, secretPokemon, currSecretPokemon)) {
+        loadExistingGameData(gameMode,componentStore);
+    } else {
+        startNewGame(currSecretPokemon,secretPokemon);
+    }
+    setHints();
+    updateCurrentUserStreakDisplay(gameMode);
+};
+
 export {
     getAndSetNewSecretPokemon,
     getAndSetCurrentSecretPokemon,
@@ -278,4 +308,5 @@ export {
     removeAllGuessedPokemonsFromGuessPool,
     setIsGameWon,
     getYesterdaysPokemon,
+    loadGameData
 };
