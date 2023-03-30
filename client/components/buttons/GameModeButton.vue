@@ -21,7 +21,7 @@
             class="mt-[-4px] h-11 w-11 text-teal-500 sm:h-9 sm:w-9"
             :path="mdiAccountQuestion"
         />
-        <NotificationAnimation v-if="isAttention" />
+        <CornerSpriteAnimation v-if="isAttention" />
     </div>
 </template>
 
@@ -29,7 +29,7 @@
 import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiHelpCircle, mdiMessageQuestion, mdiAccountQuestion } from '@mdi/js';
 import { GameModes } from '../../constants';
-import NotificationAnimation from '../animations/NotificationAnimation.vue';
+import CornerSpriteAnimation from '../animations/CornerSpriteAnimation.vue';
 const props = defineProps({
     gameMode: String,
     isAttention: Boolean,

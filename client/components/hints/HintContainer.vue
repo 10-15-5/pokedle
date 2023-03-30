@@ -3,7 +3,7 @@
         class="card relative min-w-[80px] max-w-[400px] flex-col font-pkmEmerald sm:max-w-[330px] sm:text-sm"
         :class="isShowHints ? 'w-[400px]' : ''"
     >
-        <NotificationAnimation v-if="!isShowHints && isHintOneUnlocked" :isShowNotification="isShowNotification"/>
+        <CornerSpriteAnimation v-if="!isShowHints && isHintOneUnlocked" :isShowNotification="isShowNotification"/>
         <p v-if="!isHintOneUnlocked" class="gap-2 p-2 px-3 sm:p-1 sm:px-2 sm:pt-2">
             Guess
             <b class="text-light-orange dark:text-dark-orange">
@@ -78,7 +78,7 @@
 
 <script setup>
 import { computed, ref } from 'vue';
-import NotificationAnimation from '../animations/NotificationAnimation.vue';
+import CornerSpriteAnimation from '../animations/CornerSpriteAnimation.vue';
 
 const props = defineProps({
     numberOfGuesses: {
