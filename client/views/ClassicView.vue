@@ -245,34 +245,4 @@ const submitGuess = async (guess) => {
     );
     setHintOne();
 };
-
-// const loadExistingGameData = () => {
-//     componentStore.guesses = localStorageService.getGuessesFromLocalStorage(GAME_MODE);
-//     game.loadAndSetIsGameWon(GAME_MODE);
-//     game.removeAllGuessedPokemonsFromGuessPool(componentStore);
-// };
-
-// const startNewGame = (currSecretPokemon) => {
-//     localStorageService.clearLocalStorageGameMode(GAME_MODE);
-//     game.setIsGameWon(GAME_MODE, false);
-//     localStorageService.setSecretPokemonToLocalStorage(GAME_MODE, currSecretPokemon);
-//     localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
-//     localStorageService.setNewDate();
-// };
-
-// const loadClassicGameData = async () => {
-//     const dayOfLastUpdate = localStorage.dayOfLastUpdate;
-//     if (!dayOfLastUpdate) localStorageService.setNewDate();
-
-//     localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
-//     const currSecretPokemon = await game.getCurrentSecretPokemon(GAME_MODE);
-
-//     if (game.shouldLoadExistingGameData(dayOfLastUpdate, secretPokemon, currSecretPokemon)) {
-//         loadExistingGameData();
-//     } else {
-//         startNewGame(currSecretPokemon);
-//     }
-//     setHintOne();
-//     game.updateCurrentUserStreakDisplay(GAME_MODE);
-// };
 </script>

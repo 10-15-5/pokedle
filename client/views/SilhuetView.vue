@@ -91,7 +91,6 @@ import {
     SilhouetteGuessesNeededForHintTwo,
 } from '../constants';
 import { getCurrentSilhouettePokemonNumber } from '../helpers.js';
-import * as localStorageService from '../services/localStorage.js';
 import * as game from '../services/game';
 
 const store = useStore();
@@ -115,7 +114,7 @@ const rotate = ['!rotate-90', '!rotate-180', '!-rotate-90'];
 const getRotation = computed(() => rotate[Math.floor(Math.random() * rotate.length)]);
 
 onBeforeMount(async () => {
-    await Promise.all([loadSilhouetteGameData(), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
+    await Promise.all([game.loadGameData(GAME_MODE,setHintOne, secretPokemon,componentStore), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
 });
 
 const silhouetteTwitterText = () => {
@@ -156,36 +155,5 @@ const submitGuess = async (guess) => {
     if (!pokemonName) return;
     await game.decideGame(GAME_MODE, pokemonName, secretPokemon.name, colors.at(-1), componentStore.guesses.length);
     setHintOne();
-};
-
-const loadExistingGameData = () => {
-    colors = localStorageService.getColorsFromLocalStorage(GAME_MODE);
-    componentStore.guesses = localStorageService.getGuessesFromLocalStorage(GAME_MODE);
-    game.loadAndSetIsGameWon(GAME_MODE);
-    game.removeAllGuessedPokemonsFromGuessPool(componentStore);
-};
-
-const startNewGame = (currSecretPokemon) => {
-    localStorageService.clearLocalStorageGameMode(GAME_MODE);
-    game.setIsGameWon(GAME_MODE, false);
-    localStorageService.setSecretPokemonToLocalStorage(GAME_MODE, currSecretPokemon);
-    localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
-    localStorageService.setNewDate();
-};
-
-const loadSilhouetteGameData = async () => {
-    const dayOfLastUpdate = localStorage.dayOfLastUpdate;
-    if (!dayOfLastUpdate) localStorageService.setNewDate();
-
-    localStorageService.setSecretPokemonFromLocalStorage(GAME_MODE, secretPokemon);
-    const currSecretPokemon = await game.getCurrentSecretPokemon(GAME_MODE);
-
-    if (game.shouldLoadExistingGameData(dayOfLastUpdate, secretPokemon, currSecretPokemon)) {
-        loadExistingGameData();
-    } else {
-        startNewGame(currSecretPokemon);
-    }
-    setHintOne();
-    game.updateCurrentUserStreakDisplay(GAME_MODE);
 };
 </script>
