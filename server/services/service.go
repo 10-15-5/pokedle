@@ -237,15 +237,7 @@ func FindAndUpdateUserWithGameWon(
 
 	r := user.GetUserRepository(MongoClient)
 
-	switch gameMode {
-	case Classic:
-		return r.InsertNewClassicGameWon(userId, gameWon, currentStreak, maxStreak, isFirstTryWin)
-	case Flavortext:
-		return r.InsertNewFlavortextGameWon(userId, gameWon, currentStreak, maxStreak, isFirstTryWin)
-	case Silhouette:
-		return r.InsertNewSilhouetteGameWon(userId, gameWon, currentStreak, maxStreak, isFirstTryWin)
-	}
-	panic("No gameMode parameter")
+	return r.InsertNewGameWon(userId, gameMode, gameWon, currentStreak, maxStreak, isFirstTryWin)
 }
 
 func UpdateUserStreaks(

@@ -52,8 +52,9 @@ func (r *userRepository) InsertNewUser(user models.User) error {
 	return err
 }
 
-func (r *userRepository) InsertNewClassicGameWon(
+func (r *userRepository) InsertNewGameWon(
 	userId primitive.ObjectID,
+	gameMode string,
 	gameWon models.GameWon,
 	currentStreak int,
 	maxStreak int,
@@ -71,73 +72,9 @@ func (r *userRepository) InsertNewClassicGameWon(
 	result := coll.FindOneAndUpdate(context.Background(),
 		bson.M{"_id": userId},
 		bson.M{
-			"$push": bson.M{"classicGamesWon": gameWon},
-			"$set":  bson.M{"classicCurrentStreak": currentStreak, "classicMaxStreak": maxStreak, "updatedAt": time.Now()},
-			"$inc":  bson.M{"classicFirstTryWins": isFirstTryWin},
-		},
-		&opt)
-
-	var user models.User
-
-	result.Decode(&user)
-
-	return user
-}
-
-func (r *userRepository) InsertNewFlavortextGameWon(
-	userId primitive.ObjectID,
-	gameWon models.GameWon,
-	currentStreak int,
-	maxStreak int,
-	isFirstTryWin int,
-) models.User {
-
-	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
-
-	after := options.After
-
-	opt := options.FindOneAndUpdateOptions{
-		ReturnDocument: &after,
-	}
-
-	result := coll.FindOneAndUpdate(context.Background(),
-		bson.M{"_id": userId},
-		bson.M{
-			"$push": bson.M{"flavortextGamesWon": gameWon},
-			"$set":  bson.M{"flavortextCurrentStreak": currentStreak, "flavortextMaxStreak": maxStreak, "updatedAt": time.Now()},
-			"$inc":  bson.M{"flavortextFirstTryWins": isFirstTryWin},
-		},
-		&opt)
-
-	var user models.User
-
-	result.Decode(&user)
-
-	return user
-}
-
-func (r *userRepository) InsertNewSilhouetteGameWon(
-	userId primitive.ObjectID,
-	gameWon models.GameWon,
-	currentStreak int,
-	maxStreak int,
-	isFirstTryWin int,
-) models.User {
-
-	coll := r.client.Database(os.Getenv("DATABASE")).Collection(collectionName)
-
-	after := options.After
-
-	opt := options.FindOneAndUpdateOptions{
-		ReturnDocument: &after,
-	}
-
-	result := coll.FindOneAndUpdate(context.Background(),
-		bson.M{"_id": userId},
-		bson.M{
-			"$push": bson.M{"silhouetteGamesWon": gameWon},
-			"$set":  bson.M{"silhouetteCurrentStreak": currentStreak, "silhouetteMaxStreak": maxStreak, "updatedAt": time.Now()},
-			"$inc":  bson.M{"silhouetteFirstTryWins": isFirstTryWin},
+			"$push": bson.M{gameMode + "GamesWon": gameWon},
+			"$set":  bson.M{gameMode + "CurrentStreak": currentStreak, gameMode + "MaxStreak": maxStreak, "updatedAt": time.Now()},
+			"$inc":  bson.M{gameMode + "FirstTryWins": isFirstTryWin},
 		},
 		&opt)
 
