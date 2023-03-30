@@ -16,6 +16,9 @@ coverage
 
 /cypress/videos/
 /cypress/screenshots/
+server/temp/*
+server/tmp/main
+
 
 # Editor directories and files
 .vscode/*
@@ -27,4 +30,3 @@ coverage
 *.sln
 *.sw?
 .env
-/server/tmp/*
