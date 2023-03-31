@@ -218,6 +218,7 @@ const decideGame = async (
             await incrementGamesWonCount(gameMode, numberOfGuesses);
 
             store.setUser(user);
+            updateCurrentUserStreakDisplay(gameMode)
         }, confettiDelayMS);
     }
 };
