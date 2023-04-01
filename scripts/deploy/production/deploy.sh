@@ -1,5 +1,12 @@
 #!/bin/zsh
 
+branch=$(git rev-parse --abbrev-ref HEAD)
+
+if [ "$branch" != "master" ]; then
+  echo "This script can only be run from the master branch."
+  exit 1
+fi
+
 if [ $# -lt 2 ]; then
   echo "Error: Missing image tag. Usage: $0 IMAGE_TAG_CLIENT IMAGE_TAG_SERVER"
   exit 1
