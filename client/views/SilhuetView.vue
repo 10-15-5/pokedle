@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
+    <div v-if="isLoaded" class="flex flex-col items-center justify-center gap-y-4 pb-20">
         <GameWinContainer
             v-if="store.isSilhouetteGameWon && secretPokemon.name"
             :color="colors.at(-1)"
@@ -102,6 +102,8 @@ const componentStore = reactive({
     guesses: [],
 });
 
+const isLoaded = ref(false);
+
 const secretPokemon = reactive({});
 const yesterdaysPokemon = ref('');
 
@@ -115,6 +117,7 @@ const getRotation = computed(() => rotate[Math.floor(Math.random() * rotate.leng
 
 onBeforeMount(async () => {
     await Promise.all([game.loadGameData(GAME_MODE,setHintOne, secretPokemon,componentStore), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
+    isLoaded.value = true;
 });
 
 const silhouetteTwitterText = () => {

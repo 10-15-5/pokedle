@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
+    <div v-if="isLoaded" class="flex flex-col items-center justify-center gap-y-4 pb-20">
         <GameWinContainer
             v-if="store.isFlavortextGameWon && secretPokemon.name"
             :pokemon="secretPokemon.name"
@@ -113,6 +113,8 @@ const componentStore = reactive({
     guesses: [],
 });
 
+const isLoaded = ref(false);
+
 const secretPokemon = reactive({});
 const yesterdaysPokemon = ref('');
 
@@ -129,6 +131,7 @@ const ShortenedFieldTitles = {
 
 onBeforeMount(async () => {
     await Promise.all([game.loadGameData(GAME_MODE,setHints,secretPokemon, componentStore), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
+    isLoaded.value=true;
 });
 
 const getTextSizeShortenedTitle = (shortenedTitle) => {

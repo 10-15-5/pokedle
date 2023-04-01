@@ -315,10 +315,8 @@ const getCurrentPokemonNumber = (gameMode, todayInMS) => {
         default:
             throw new Error('Gamemode Required');
     }
-    console.log((todayInMS - dateOfFirstPokedlePokemon.valueOf()) / oneDayInMS);
-    console.log(Math.floor((todayInMS - dateOfFirstPokedlePokemon.valueOf()) / oneDayInMS));
-    return Math.floor((todayInMS - dateOfFirstPokedlePokemon.valueOf()) / oneDayInMS);
 
+    return Math.floor((todayInMS - dateOfFirstPokedlePokemon.valueOf()) / oneDayInMS);
 };
 
 export {
@@ -337,5 +335,5 @@ export {
     setIsGameWon,
     getYesterdaysPokemon,
     loadGameData,
-    getCurrentPokemonNumber
+    getCurrentPokemonNumber,
 };

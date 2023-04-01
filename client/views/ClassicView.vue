@@ -1,5 +1,5 @@
 <template>
-    <div class="flex flex-col items-center justify-center gap-y-4 pb-20">
+    <div v-if="isLoaded" class="flex flex-col items-center justify-center gap-y-4 pb-20">
         <SearchField
             v-if="!store.isClassicGameWon"
             :pokemonNames="componentStore.pokemonNames"
@@ -73,7 +73,7 @@ import DailyGamesWonContainer from '../components/infoCards/DailyGamesWonContain
 import { getGuessResults } from '../services/guess';
 import { useStore } from '../stores/store.js';
 import ResultSquare from '../components/result/ResultSquare.vue';
-import { reactive, ref, onBeforeMount, computed } from 'vue';
+import { reactive, ref, onBeforeMount, computed,onMounted } from 'vue';
 import {
     GuessFieldTitles,
     GuessState,
@@ -96,6 +96,8 @@ const componentStore = reactive({
     pokemonNames: getSortedPokemonNames(),
     guesses: [],
 });
+const isLoaded = ref(false);
+
 const secretPokemon = reactive({});
 const yesterdaysPokemon = ref('');
 
@@ -109,6 +111,7 @@ const instantIsClassicGameWon = ref(false);
 onBeforeMount(async () => {
     await Promise.all([game.loadGameData(GAME_MODE, setHintOne, secretPokemon, componentStore), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
     colors = localStorageService.getColorsFromLocalStorage(GAME_MODE);
+    isLoaded.value=true;
 });
 
 const emojiResults = computed(() => {
