@@ -54,7 +54,7 @@
 
 <script setup>
 import { computed, ref, watch } from 'vue';
-import { removeSpecialCharactersExceptDashFromString } from '../helpers.js';
+import { removeSpecialCharactersExceptDashFromString } from '../services/helpers.js';
 import { useClickOutside } from '../composables/useClickOutside.js';
 
 const itemSize = 52;

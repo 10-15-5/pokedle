@@ -90,8 +90,8 @@ import {
     SilhouetteGuessesNeededForHintOne,
     SilhouetteGuessesNeededForHintTwo,
 } from '../constants';
-import { getCurrentSilhouettePokemonNumber } from '../helpers.js';
 import * as game from '../services/game';
+import moment from 'moment-timezone';
 
 const store = useStore();
 const GAME_MODE = GameModes.Silhouette;
@@ -123,7 +123,7 @@ const silhouetteTwitterText = () => {
             ? 'FIRST TRY 🎰🍀🥳🤩'
             : `in ${componentStore.guesses.length} tries!🍇🥭🍒💖`;
 
-    const header = `I guessed the #${getCurrentSilhouettePokemonNumber()} silhouette #Pokedle Pokémon ${sub1}\n\n`;
+    const header = `I guessed the #${game.getCurrentPokemonNumber(GAME_MODE, moment())} silhouette #Pokedle Pokémon ${sub1}\n\n`;
 
     const footer = `Play at pokedle.gg 🎮!`;
 

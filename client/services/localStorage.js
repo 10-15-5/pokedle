@@ -1,5 +1,5 @@
 import moment from 'moment-timezone';
-import { lowerCaseAndCapitalizeWord } from '../helpers';
+import { lowerCaseAndCapitalizeWord } from './helpers';
 import { GameModes } from '../constants';
 const setNewDate = () => (localStorage.dayOfLastUpdate = moment().date());
 

@@ -102,7 +102,7 @@ import {
 } from '../constants';
 import * as localStorageService from '../services/localStorage.js';
 import * as game from '../services/game';
-import { getCurrentFlavortextPokemonNumber } from '../helpers.js';
+import moment from 'moment-timezone';
 
 const store = useStore();
 const GAME_MODE = GameModes.Flavortext;
@@ -146,7 +146,7 @@ const flavortextTwitterText = () => {
     const sub1 =
         componentStore.guesses.length === 1 ? 'FIRST TRY 🤯🤩⚡️✨' : `in ${componentStore.guesses.length} tries!🍉🍓🫧`;
 
-    const header = `I guessed the #${getCurrentFlavortextPokemonNumber()} flavortext #Pokedle Pokémon ${sub1}\n\n`;
+    const header = `I guessed the #${game.getCurrentPokemonNumber(GAME_MODE, moment())} flavortext #Pokedle Pokémon ${sub1}\n\n`;
 
     const footer = `Play at pokedle.gg 🎮!`;
 

@@ -1,9 +1,14 @@
 import * as apiService from './api/apiService.js';
-import { GameModes } from '../constants';
+import {
+    GameModes,
+    DateOfFirstPokeldeGameClassic,
+    DateOfFirstPokeldeGameFlavortext,
+    DateOfFirstPokeldeGameSilhouette,
+} from '../constants';
 import moment from 'moment-timezone';
 import { useStore } from '../stores/store.js';
-import { lowerCaseAndCapitalizeWord } from '../helpers.js';
-import * as localStorageService from './localStorage.js'
+import { lowerCaseAndCapitalizeWord } from './helpers.js';
+import * as localStorageService from './localStorage.js';
 import { playWinnerSound } from '../services/sound.js';
 import { launchConfetti } from '../services/confetti.js';
 
@@ -199,7 +204,6 @@ const decideGame = async (
     confettiDelayMS = 0,
     winFunction = () => {}
 ) => {
-
     if (guess === secretPokemonName) {
         const store = useStore();
 
@@ -212,13 +216,13 @@ const decideGame = async (
         setTimeout(async () => {
             launchConfetti(color === 'shiny', numberOfGuesses === 1);
 
-            setIsGameWon(gameMode, true)
+            setIsGameWon(gameMode, true);
 
             const user = await updateUserWithGameWon(gameMode, numberOfGuesses);
             await incrementGamesWonCount(gameMode, numberOfGuesses);
 
             store.setUser(user);
-            updateCurrentUserStreakDisplay(gameMode)
+            updateCurrentUserStreakDisplay(gameMode);
         }, confettiDelayMS);
     }
 };
@@ -264,13 +268,13 @@ const removeAllGuessedPokemonsFromGuessPool = (componentStore) => {
     });
 };
 
-const loadExistingGameData = (gameMode,componentStore) => {
+const loadExistingGameData = (gameMode, componentStore) => {
     componentStore.guesses = localStorageService.getGuessesFromLocalStorage(gameMode);
     loadAndSetIsGameWon(gameMode);
     removeAllGuessedPokemonsFromGuessPool(componentStore);
 };
 
-const startNewGame = (gameMode,currSecretPokemon,secretPokemon) => {
+const startNewGame = (gameMode, currSecretPokemon, secretPokemon) => {
     localStorageService.clearLocalStorageGameMode(gameMode);
     setIsGameWon(gameMode, false);
     localStorageService.setSecretPokemonToLocalStorage(gameMode, currSecretPokemon);
@@ -286,12 +290,35 @@ const loadGameData = async (gameMode, setHints, secretPokemon, componentStore) =
     const currSecretPokemon = await getCurrentSecretPokemon(gameMode);
 
     if (shouldLoadExistingGameData(dayOfLastUpdate, secretPokemon, currSecretPokemon)) {
-        loadExistingGameData(gameMode,componentStore);
+        loadExistingGameData(gameMode, componentStore);
     } else {
-        startNewGame(gameMode,currSecretPokemon,secretPokemon);
+        startNewGame(gameMode, currSecretPokemon, secretPokemon);
     }
     setHints();
     updateCurrentUserStreakDisplay(gameMode);
+};
+
+const getCurrentPokemonNumber = (gameMode, todayInMS) => {
+    const oneDayInMS = 1000 * 60 * 60 * 24;
+    let dateOfFirstPokedlePokemon;
+
+    switch (gameMode) {
+        case GameModes.Classic:
+            dateOfFirstPokedlePokemon = DateOfFirstPokeldeGameClassic;
+            break;
+        case GameModes.Flavortext:
+            dateOfFirstPokedlePokemon = DateOfFirstPokeldeGameFlavortext;
+            break;
+        case GameModes.Silhouette:
+            dateOfFirstPokedlePokemon = DateOfFirstPokeldeGameSilhouette;
+            break;
+        default:
+            throw new Error('Gamemode Required');
+    }
+    console.log((todayInMS - dateOfFirstPokedlePokemon.valueOf()) / oneDayInMS);
+    console.log(Math.floor((todayInMS - dateOfFirstPokedlePokemon.valueOf()) / oneDayInMS));
+    return Math.floor((todayInMS - dateOfFirstPokedlePokemon.valueOf()) / oneDayInMS);
+
 };
 
 export {
@@ -309,5 +336,6 @@ export {
     removeAllGuessedPokemonsFromGuessPool,
     setIsGameWon,
     getYesterdaysPokemon,
-    loadGameData
+    loadGameData,
+    getCurrentPokemonNumber
 };

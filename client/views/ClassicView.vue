@@ -84,9 +84,9 @@ import {
     ClassicGuessesNeededForHintTwo,
     ClassicGuessesNeededForHintThree,
 } from '../constants.js';
-import { getCurrentClassicPokemonNumber } from '../helpers.js';
 import * as game from '../services/game';
 import * as localStorageService from '../services/localStorage';
+import moment from 'moment-timezone';
 
 const store = useStore();
 const GAME_MODE = GameModes.Classic;
@@ -141,7 +141,7 @@ const classicTwitterText = () => {
     const sub1 =
         componentStore.guesses.length === 1 ? 'FIRST TRY 🌟🥳🌠🏆' : `in ${componentStore.guesses.length} tries!🕵️🔎`;
 
-    const header = `I guessed the #${getCurrentClassicPokemonNumber()} classic hidden #Pokedle Pokémon ${sub1}\n`;
+    const header = `I guessed the #${game.getCurrentPokemonNumber(GAME_MODE, moment())} classic hidden #Pokedle Pokémon ${sub1}\n`;
 
     var emojiBody = '';
 

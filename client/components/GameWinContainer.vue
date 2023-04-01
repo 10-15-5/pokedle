@@ -25,7 +25,7 @@
 <script setup>
 import { onBeforeMount, ref } from 'vue';
 import SquareContent from './result/ResultSquare.vue';
-import { removeSpecialCharactersExceptDashFromString } from '../helpers';
+import { removeSpecialCharactersExceptDashFromString } from '../services/helpers';
 import { GuessType } from '../constants';
 import TweetButton from './buttons/TweetButton.vue';
 import moment from 'moment-timezone';
