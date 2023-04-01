@@ -64,8 +64,8 @@ const ClassicGuessesNeededForHintTwo = 6;
 const ClassicGuessesNeededForHintThree = 8;
 
 const FlavortextGuessesNeededForHintOne = 2;
-const FlavortextGuessesNeededForHintTwo = 4;
-const FlavortextGuessesNeededForHintThree = 6;
+const FlavortextGuessesNeededForHintTwo = 3;
+const FlavortextGuessesNeededForHintThree = 4;
 
 const SilhouetteGuessesNeededForHintOne = 1;
 const SilhouetteGuessesNeededForHintTwo = 2;
