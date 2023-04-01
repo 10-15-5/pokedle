@@ -82,7 +82,7 @@ const setDailyGamesWonCount = async (gameMode) => {
         case GameModes.Flavortext:
             return store.setDailyFlavortextGamesWon(res.data.flavortextGamesWon);
         case GameModes.Silhouette:
-            return store.setDailySilhouetteGamesWon(res.data.Silhouette);
+            return store.setDailySilhouetteGamesWon(res.data.silhouetteGamesWon);
         default:
             throw new Error('Gamemode Required');
     }
