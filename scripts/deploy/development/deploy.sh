@@ -23,13 +23,19 @@ IMAGE_TAG_SERVER=$2
 docker build -t gabr0236/$IMAGE_NAME_CLIENT -f $IMAGE_PATH_CLIENT . &
 docker build -t gabr0236/$IMAGE_NAME_SERVER -f $IMAGE_PATH_SERVER .
 
+wait 
+
 # Tag images
 docker tag gabr0236/$IMAGE_NAME_CLIENT \europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/$IMAGE_NAME_CLIENT:$IMAGE_TAG_CLIENT &
 docker tag gabr0236/$IMAGE_NAME_SERVER \europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/$IMAGE_NAME_SERVER:$IMAGE_TAG_SERVER
 
+wait 
+
 # Push Docker images to GCP Artifact Registry
 docker push europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/$IMAGE_NAME_CLIENT:$IMAGE_TAG_CLIENT &
 docker push europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/$IMAGE_NAME_SERVER:$IMAGE_TAG_SERVER
+
+wait 
 
 # Update Deployments To Use New Image
 kubectl set image deployment/$DEPLOYMENT_NAME_CLIENT $CONTAINER_NAME_CLIENT=europe-west1-docker.pkg.dev/encoded-might-376114/pokedle-repo/$IMAGE_NAME_CLIENT:$IMAGE_TAG_CLIENT &
