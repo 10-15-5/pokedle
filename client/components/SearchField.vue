@@ -80,7 +80,7 @@ const props = defineProps({
 });
 
 const getHover = (index) => {
-    if (idx.value === index) return '!bg-neutral-100 !text-light-emerald dark:!bg-neutral-600 dark:!text-dark-emerald';
+    if (idx.value === index) return '!bg-neutral-100 !text-light-emerald dark:!bg-neutral-600 dark:!text-green-300';
 };
 
 const virtualScroller = ref(null);
