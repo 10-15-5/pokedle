@@ -19,9 +19,6 @@
 import ResultSquare from './ResultSquare.vue';
 import { removeSpecialCharactersExceptDashFromString } from '../../services/helpers.js';
 import { GuessType } from '../../constants.js';
-import { useStore } from '../../stores/store.js';
-import { onMounted, ref } from 'vue';
-const store = useStore();
 
 const props = defineProps({
     pokemonName: String,

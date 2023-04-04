@@ -6,7 +6,7 @@
         "Silhouette": "Silhouette"
     },
     "close": "Close",
-    "info": {
+    "infoDialog": {
         "intro": {
             "welcome": "Welcome to the world of POKéMON!",
             "text":"Every day a wild POKéMON from gen 1-3 will be hiding and its your job as a POKéMON TRAINER to catch (guess) it!"
@@ -93,5 +93,32 @@
             "mail": "pokedle.contact@gmail.com",
             "twitter": "Twitter"
         }
+    },
+    "settingsDialog": {
+        "settings": "SETTINGS",
+        "darkMode": "DarkMode",
+        "shinyOnly": "Shiny Only",
+        "hintMode": "Hint Mode",
+        "sound": "Sound"
+    },
+    "statisticsDialog": {
+        "statistics": "STATISTICS",
+        "comingSoon": "Coming Soon...."
+    },
+    "hints": {
+        "guess": "Guess ",
+        "moreTimesForHint": "more times for a HINT",
+        "hint": "HINT"
+    },
+    "dailyGamesWon": {
+        "trainersAlreadyFoundOut": " Trainers Already Found Out!"
+    },
+    "previousPokemon": {
+        "yesterdaysPokemonWas": "Yesterdays Pokemon Was "
+    },
+    "gameWinContainer": {
+        "victory": "VICTORY!",
+        "youGuessed": "You Guessed: ",
+        "nextPokemonWillAppearIn": "Next Pokemon Will Appear In :"
     }
 }
