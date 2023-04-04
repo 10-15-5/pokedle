@@ -1,0 +1,97 @@
+{
+    "test": "TEST ENG",
+    "gameModes": {
+        "Classic": "Classic",
+        "Flavortext": "Flavortext",
+        "Silhouette": "Silhouette"
+    },
+    "close": "Close",
+    "info": {
+        "intro": {
+            "welcome": "Welcome to the world of POKéMON!",
+            "text":"Every day a wild POKéMON from gen 1-3 will be hiding and its your job as a POKéMON TRAINER to catch (guess) it!"
+        },
+        "howToPlay": {
+            "howToPlay": "How To Play",
+            "guessNumbered":{
+                "1": {
+                     "1": "1. Guess: ",
+                     "2": "Guess any random POKéMON",
+                     "3": "from gen 1-3",
+                     "4": ", since we currently have no clues. We will guess ",
+                     "5":"SQUIRTLE",
+                     "6": " here."
+                }, 
+                "2":{
+                    "1":"2. Guess: ",
+                    "2":"We now know that we are looking for a ",
+                    "3":"BLUE",
+                    "4":" POKéMON. Furthermore the POKéMON has to be in its ",
+                    "5":"final evolution stage",
+                    "6":". Lastly, the POKéMON is ",
+                    "7":"not",
+                    "8":" from gen 1. ",
+                    "9":"Let's guess ",
+                    "10":" HERACROSS ",
+                    "11":" since it matches these characteristics."
+                } , 
+                "3": {
+                    "1": "3. Guess: ",
+                    "2":"Now we know the hidden POKéMON ",
+                    "3":"must",
+                    "4":" be from gen 3. Since the hidden POKéMON cannot be a ",
+                    "5":"WATER TYPE",
+                    "6":", this leaves only a couple of possible options. ",
+                    "7":"Let's guess",
+                    "8":"SALAMANCE"
+                } , 
+                "4": {
+                    "1": "4. Guess: ",
+                    "2":"We now know that the POKéMON lives in ",
+                    "3":"ROUGH TERRAIN",
+                    "4":" and is in",
+                    "5":"evolution stage 3",
+                    "6":"This leaves only one POKéMON; ",
+                    "7": "METAGROSS"
+                }
+            }
+        },
+        "habitats": {
+            "habitats": "Habitats",
+            "takenFrom": "The Habitats used are all taken from ",
+            "bulbapedia": "Bulbapedia ",
+            "andInclude": "and include: "
+        },
+        "contribute": {
+            "contribute": "Contribute",
+            "wantToContribute": "Willing to contribute? Thats great! 🥳 You can find info on how to reach me at the bottom of this card.",
+            "helpNeeded": "At the time of this writing, some of the things I could use help with are:",
+            "animations": "Animations 🎥",
+            "translation": "Translation 🇯🇵 🇪🇸 🇮🇳 🇨🇳 🇫🇷",
+            "styling": "Design / Styling 🧑‍🎨 🎨",
+            "features": "Feature Development 👷‍♂️"
+        },
+        "credit": {
+            "credit": "Credit",
+            "intro": "Pokédle is created by Gabriel Haugbøl. I hope you enjoy playing along 😊🎮!",
+            "inspiredBy": "Pokédle is heavily inspired by ",
+            "loldle": "loldle.net",
+            "and": "and",
+            "wordle": "wordle",
+            "backgroundArtists": "Background artists",
+            "pokemonCollageBG": "- Gen 1-3 Collage black/white bg:",
+            "pokemonCollageBGCreator": "u/ZaryXYZ (reddit)",
+            "cuboneBG": " - Cubone Background:",
+            "cuboneBGCreator": " u/blizard72 (reddit)",
+            "mtSilverBG": "- Mt. Silver Battle Background: ",
+            "mtSilverBGCreator": "Serian",
+            "contactForCreditOrRemoval": "Original artist/creator of image(s), please DM for removal or credit."
+        },
+        "contact": {
+            "contact": "contact",
+            "intro": "If you have any questions/feedback/bug reports feel free to contact me on one of the following below:",
+            "mail": "pokedle.contact@gmail.com",
+            "twitter": "Twitter"
+        }
+    }
+}
