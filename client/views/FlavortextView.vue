@@ -100,9 +100,9 @@ import {
     FlavortextGuessesNeededForHintTwo,
     FlavortextGuessesNeededForHintThree,
 } from '../constants';
-import * as localStorageService from '../services/localStorage.js';
 import * as game from '../services/game';
 import moment from 'moment-timezone';
+import { getLanguage } from '../services/language';
 
 const store = useStore();
 const GAME_MODE = GameModes.Flavortext;
@@ -146,14 +146,17 @@ const getTextSizeShortenedTitle = (shortenedTitle) => {
 };
 
 const flavortextTwitterText = () => {
-    const sub1 =
-        componentStore.guesses.length === 1 ? 'FIRST TRY 🤯🤩⚡️✨' : `in ${componentStore.guesses.length} tries!🍉🍓🫧`;
+    const initialHeader =
+        componentStore.guesses.length === 1 ? getLanguage().twitterText.flavortext.headerFirstTry : getLanguage().twitterText.flavortext.headerXTries;
 
-    const header = `I guessed the #${game.getCurrentPokemonNumber(GAME_MODE, moment())} flavortext #Pokedle Pokémon ${sub1}\n\n`;
+    
+    const headerWithPokemonNumber = initialHeader.replace("§1§", game.getCurrentPokemonNumber(GAME_MODE, moment()));
 
-    const footer = `Play at pokedle.gg 🎮!`;
+    const headerWithNumberOfGuesses = headerWithPokemonNumber.replace("§2§", componentStore.guesses.length)
 
-    return header + footer;
+    const footer = getLanguage().twitterText.playAt;
+
+    return headerWithNumberOfGuesses + "\n\n" + footer;
 };
 
 

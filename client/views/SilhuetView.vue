@@ -121,16 +121,17 @@ onBeforeMount(async () => {
 });
 
 const silhouetteTwitterText = () => {
-    const sub1 =
-        componentStore.guesses.length === 1
-            ? 'FIRST TRY 🎰🍀🥳🤩'
-            : `in ${componentStore.guesses.length} tries!🍇🥭🍒💖`;
+    const initialHeader =
+        componentStore.guesses.length === 1 ? getLanguage().twitterText.silhouette.headerFirstTry : getLanguage().twitterText.silhouette.headerXTries;
 
-    const header = `I guessed the #${game.getCurrentPokemonNumber(GAME_MODE, moment())} silhouette #Pokedle Pokémon ${sub1}\n\n`;
+    
+    const headerWithPokemonNumber = initialHeader.replace("§1§", game.getCurrentPokemonNumber(GAME_MODE, moment()));
 
-    const footer = `Play at pokedle.gg 🎮!`;
+    const headerWithNumberOfGuesses = headerWithPokemonNumber.replace("§2§", componentStore.guesses.length)
 
-    return header + footer;
+    const footer = getLanguage().twitterText.playAt;
+
+    return headerWithNumberOfGuesses + "\n\n" + footer;
 };
 
 const setHintOne = () => {
