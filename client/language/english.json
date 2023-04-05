@@ -5,6 +5,15 @@
         "Flavortext": "Flavortext",
         "Silhouette": "Silhouette"
     },
+    "searchField": {
+        "typePokemon": "Type Pokemon..."
+    },
+    "guessType":{
+        "pokemon": "Pokemon",
+        "text": "Text",
+        "habitat": "Habitat",
+        "blackout": "Blackout"
+    },
     "close": "Close",
     "infoDialog": {
         "intro": {
@@ -94,6 +103,9 @@
             "twitter": "Twitter"
         }
     },
+    "silhouette": {
+        "silhouetteRotated": "Silhouette, Rotated"
+    },
     "settingsDialog": {
         "settings": "SETTINGS",
         "darkMode": "DarkMode",
@@ -108,7 +120,8 @@
     "hints": {
         "guess": "Guess ",
         "moreTimesForHint": "more times for a HINT",
-        "hint": "HINT"
+        "hint": "HINT",
+        "startsWith": "Secret Pokemon Starts With The Letter: "
     },
     "dailyGamesWon": {
         "trainersAlreadyFoundOut": " Trainers Already Found Out!"
@@ -120,6 +133,11 @@
         "victory": "VICTORY!",
         "youGuessed": "You Guessed: ",
         "nextPokemonWillAppearIn": "Next Pokemon Will Appear In :"
+    },
+    "shortenedFieldTitles": {
+        "evolutionLevel": "Evol. Lvl.",
+        "evolutions": "Fully Evol.",
+        "generation": "Gen."
     },
     "twitterText": {
         "playAt": "Play at pokedle.gg 🎮!",

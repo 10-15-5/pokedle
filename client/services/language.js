@@ -1,4 +1,4 @@
-import * as german from '../language/german.json';
+import * as test from '../language/test.json';
 import * as english from '../language/english.json';
 
 const setLanguage = (lang) => {
@@ -11,8 +11,8 @@ const getLanguage = () =>  {
     switch(localStorage.language) {
         case "english":
             return english;
-        case "german":
-            return german;
+        case "test":
+            return test;
         default:
             throw new Error("This should never happen")
     }

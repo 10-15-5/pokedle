@@ -65,7 +65,7 @@
         </HintContainer>
         <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="store.dailyFlavortextGamesWon" />
         <div v-if="componentStore.guesses.length" class="flex flex-col gap-1">
-            <SingleResultHeader :headerText="GuessType.Pokemon" />
+            <SingleResultHeader />
             <SingeResultContainer
                 v-for="(guess, i) in componentStore.guesses"
                 :key="guess"
@@ -123,12 +123,6 @@ const hintTwo = reactive([]);
 
 let colors = [];
 
-const ShortenedFieldTitles = {
-    EvolutionLevel: 'Evol. Lvl.',
-    Evolutions: 'Fully Evol.',
-    Generation: 'Gen.',
-};
-
 onBeforeMount(async () => {
     await Promise.all([game.loadGameData(GAME_MODE,setHints,secretPokemon, componentStore), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
     isLoaded.value=true;
@@ -136,9 +130,9 @@ onBeforeMount(async () => {
 
 const getTextSizeShortenedTitle = (shortenedTitle) => {
     switch (shortenedTitle) {
-        case ShortenedFieldTitles.EvolutionLevel:
+        case getLanguage().shortenedFieldTitles.evolutionLevel:
             return 'text-[14px] sm:text-[10px]';
-        case ShortenedFieldTitles.Evolutions:
+        case getLanguage().shortenedFieldTitles.evolutions:
             return 'text-[13px] sm:text-[10px]';
         default:
             return '';
@@ -173,9 +167,9 @@ const setHints = () => {
         title: GuessFieldTitles[titles.at(i)],
     }));
 
-    correctFieldsWithTitles[3].title = ShortenedFieldTitles.EvolutionLevel;
-    correctFieldsWithTitles[4].title = ShortenedFieldTitles.Evolutions;
-    correctFieldsWithTitles[7].title = ShortenedFieldTitles.Generation;
+    correctFieldsWithTitles[3].title = getLanguage().shortenedFieldTitles.evolutionLevel;
+    correctFieldsWithTitles[4].title =  getLanguage().shortenedFieldTitles.evolutions;
+    correctFieldsWithTitles[7].title =  getLanguage().shortenedFieldTitles.generation;
 
     hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2], correctFieldsWithTitles[6]); //Type 1, Type 2, Habitat
     hintTwo.push(correctFieldsWithTitles[3], correctFieldsWithTitles[4], correctFieldsWithTitles[7]); //Evolution lvl, isFullyEvolved, Gen

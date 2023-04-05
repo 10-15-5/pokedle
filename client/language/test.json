@@ -1,0 +1,160 @@
+{
+    "test": "TEST GERMAN",
+    "gameModes": {
+        "Classic": "XXXX",
+        "Flavortext": "XXXX",
+        "Silhouette": "XXXX"
+    },
+    "searchField": {
+        "typePokemon": "XXXX"
+    },
+    "guessType":{
+        "pokemon": "XXXX",
+        "text": "XXXX",
+        "habitat": "XXXX",
+        "blackout": "XXXX"
+    },
+    "close": "XXXX",
+    "infoDialog": {
+        "intro": {
+            "welcome": "XXXX",
+            "text":"XXXX"
+        },
+        "howToPlay": {
+            "howToPlay": "XXXX",
+            "guessNumbered":{
+                "1": {
+                     "1": "XXXX",
+                     "2": "XXXX",
+                     "3": "XXXX",
+                     "4": "XXXX",
+                     "5": "XXXX",
+                     "6": "XXXX"
+                }, 
+                "2":{
+                    "1":"XXXX",
+                    "2":"XXXX",
+                    "3":"XXXX",
+                    "4":"XXXX",
+                    "5":"XXXX",
+                    "6":"XXXX",
+                    "7":"XXXX",
+                    "8":"XXXX",
+                    "9":"XXXX",
+                    "10":"XXXX",
+                    "11":"XXXX"
+                } , 
+                "3": {
+                    "1":"XXXX",
+                    "2":"XXXX",
+                    "3":"XXXX",
+                    "4":"XXXX",
+                    "5":"XXXX",
+                    "6":"XXXX",
+                    "7":"XXXX",
+                    "8":"XXXX"
+                } , 
+                "4": {
+                    "1":"XXXX",
+                    "2":"XXXX",
+                    "3":"XXXX",
+                    "4":"XXXX",
+                    "5":"XXXX",
+                    "6":"XXXX",
+                    "7":"XXXX"
+                }
+            }
+        },
+        "habitats": {
+            "habitats": "XXXX",
+            "takenFrom": "XXXX",
+            "bulbapedia": "XXXX ",
+            "andInclude": "XXXX"
+        },
+        "contribute": {
+            "contribute": "XXXX",
+            "wantToContribute": "XXXX",
+            "helpNeeded": "XXXX",
+            "animations": "XXXX 🎥",
+            "translation": "XXXX 🇯🇵 🇪🇸 🇮🇳 🇨🇳 🇫🇷",
+            "styling": "XXXX 🧑‍🎨 🎨",
+            "features": "XXXX 👷‍♂️"
+        },
+        "credit": {
+            "credit": "XXXX",
+            "intro": "XXXX 😊🎮!",
+            "inspiredBy": "XXXX",
+            "loldle": "XXXX",
+            "and": "XXXX",
+            "wordle": "XXXX",
+            "backgroundArtists": "XXXX",
+            "pokemonCollageBG": "XXXX",
+            "pokemonCollageBGCreator": "XXXX",
+            "cuboneBG": "XXXX",
+            "cuboneBGCreator": "XXXX",
+            "mtSilverBG": "XXXX",
+            "mtSilverBGCreator": "XXXX",
+            "contactForCreditOrRemoval": "XXXX"
+        },
+        "contact": {
+            "contact": "XXXX",
+            "intro": "XXXX",
+            "mail": "XXXX",
+            "twitter": "XXXX"
+        }
+    },
+    "silhouette": {
+        "silhouetteRotated": "XXXX"
+    },
+    "settingsDialog": {
+        "settings": "XXXX",
+        "darkMode": "XXXX",
+        "shinyOnly": "XXXX",
+        "hintMode": "XXXX",
+        "sound": "XXXX"
+    },
+    "statisticsDialog": {
+        "statistics": "XXXX",
+        "comingSoon": "XXXX"
+    },
+    "hints": {
+        "guess": "XXXX",
+        "moreTimesForHint": "XXXX",
+        "hint": "XXXX",
+        "startsWith": "XXXX"
+
+    },
+    "dailyGamesWon": {
+        "trainersAlreadyFoundOut": "XXXX"
+    },
+    "previousPokemon": {
+        "yesterdaysPokemonWas": "XXXX"
+    },
+    "gameWinContainer": {
+        "victory": "XXXX",
+        "youGuessed": "XXXX",
+        "nextPokemonWillAppearIn": "XXXX"
+    },
+    "shortenedFieldTitles": {
+        "evolutionLevel": "XXXX",
+        "evolutions": "XXXX",
+        "generation": "XXXX"
+    },
+    "twitterText": {
+        "playAt": "XXXX",
+        "classic": {
+            "headerFirstTry":"XXXX",
+            "headerXTries":"XXXX",
+            "plusOneMoreGuess": "XXXX",
+            "plusXMoreGuesses": "XXXX"
+        },
+        "flavortext": {
+            "headerFirstTry":"XXXX",
+            "headerXTries":"XXXX"
+        },
+        "silhouette": {
+            "headerFirstTry":"XXXX",
+            "headerXTries":"XXXX"
+        }
+    }
+}

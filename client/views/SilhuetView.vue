@@ -10,7 +10,7 @@
             v-else-if="!store.isSilhouetteGameWon && secretPokemon.name"
             class="card relative flex flex-col items-center justify-center gap-3 py-4 px-8 sm:px-4 sm:text-sm"
         >
-            <span class="card py-1 px-2 font-pkmEmerald">Silhouette, Rotated</span>
+            <span class="card py-1 px-2 font-pkmEmerald">{{ getLanguage().silhouette.silhouetteRotated }}</span>
             <ResultSquare
                 class="md:transform-none"
                 :class="getRotation"
@@ -45,9 +45,10 @@
             <template #hint2>
                 <div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <p>
-                        Secret Pokemon Starts With The Letter:
+                        {{ getLanguage().hints.startsWith }}
                         <b class="text-lg text-light-orange dark:!text-dark-orange">
                             {{ secretPokemon.name.charAt(0).toUpperCase() }}</b
+                        
                         >
                     </p>
                 </div>
@@ -55,7 +56,7 @@
         </HintContainer>
         <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="store.dailySilhouetteGamesWon" />
         <div v-if="componentStore.guesses.length" class="flex flex-col gap-1">
-            <SingleResultHeader :headerText="GuessType.Pokemon" />
+            <SingleResultHeader />
             <SingeResultContainer
                 v-for="(guess, i) in componentStore.guesses"
                 :key="guess"
@@ -92,6 +93,7 @@ import {
 } from '../constants';
 import * as game from '../services/game';
 import moment from 'moment-timezone';
+import { getLanguage } from '../services/language';
 
 const store = useStore();
 const GAME_MODE = GameModes.Silhouette;

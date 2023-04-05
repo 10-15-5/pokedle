@@ -99,7 +99,7 @@
             <div class="w-full leading-8">
                 <p class="mb-2">{{ getLanguage().infoDialog.credit.intro }}</p>
                 <p class="mb-2">
-                    {{ getLanguage().infoDialog.credit.intro }}
+                    {{ getLanguage().infoDialog.credit.inspiredBy }}
                     <a class="link" href="https://loldle.net/">{{ getLanguage().infoDialog.credit.loldle }}</a>
                     {{ getLanguage().infoDialog.credit.and }}
                     <a href="https://www.nytimes.com/games/wordle/index.html" class="link">{{
@@ -124,7 +124,7 @@
                 <p>{{ getLanguage().infoDialog.credit.contactForCreditOrRemoval }}</p>
             </div>
             <hr class="divider" />
-            <h1 class="mb-2 text-center text-[32px] uppercase">{{ getLanguage().infoDialog.contact }}</h1>
+            <h1 class="mb-2 text-center text-[32px] uppercase">{{ getLanguage().infoDialog.contact.contact }}</h1>
             <p>
                 {{ getLanguage().infoDialog.contact.intro }}
                 <br />
