@@ -120,5 +120,14 @@
         "victory": "VICTORY!",
         "youGuessed": "You Guessed: ",
         "nextPokemonWillAppearIn": "Next Pokemon Will Appear In :"
+    },
+    "twitterText": {
+        "playAt": "Play at pokedle.gg 🎮!",
+        "classic": {
+            "headerFirstTry":"I guessed the #§1§ classic hidden #Pokedle Pokémon FIRST TRY 🌟🥳🌠🏆",
+            "headerXTries":"I guessed the #§1§ classic hidden #Pokedle Pokémon in §2§ tries!🕵️🔎",
+            "plusOneMoreGuess": "＋ 1 more guess.",
+            "plusXMoreGuesses": "＋ §1§ more guesses..."
+        }
     }
 }

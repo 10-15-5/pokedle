@@ -87,6 +87,7 @@ import {
 import * as game from '../services/game';
 import * as localStorageService from '../services/localStorage';
 import moment from 'moment-timezone';
+import { getLanguage } from '../services/language';
 
 const store = useStore();
 const GAME_MODE = GameModes.Classic;
@@ -141,10 +142,13 @@ const emojiResults = computed(() => {
 });
 
 const classicTwitterText = () => {
-    const sub1 =
-        componentStore.guesses.length === 1 ? 'FIRST TRY 🌟🥳🌠🏆' : `in ${componentStore.guesses.length} tries!🕵️🔎`;
+    const initialHeader =
+        componentStore.guesses.length === 1 ? getLanguage().twitterText.classic.headerFirstTry : getLanguage().twitterText.classic.headerXTries;
 
-    const header = `I guessed the #${game.getCurrentPokemonNumber(GAME_MODE, moment())} classic hidden #Pokedle Pokémon ${sub1}\n`;
+    
+    const headerWithPokemonNumber = initialHeader.replace("§1§", game.getCurrentPokemonNumber(GAME_MODE, moment()));
+
+    const headerWithNumberOfGuesses = headerWithPokemonNumber.replace("§2§", componentStore.guesses.length)
 
     var emojiBody = '';
 
@@ -152,16 +156,17 @@ const classicTwitterText = () => {
         emojiBody = emojiBody.concat(res + '\n');
     });
 
-    const moreGuesses =
-        componentStore.guesses.length > 4
-            ? `＋ ${componentStore.guesses.length - 4} more ${
-                  componentStore.guesses.length === 5 ? 'guess.' : 'guesses...'
-              }\n\n`
-            : '\n';
+    let moreGuesses = "";
+    if(componentStore.guesses.length>4){
+        moreGuesses = componentStore.guesses.length === 5 ? getLanguage().twitterText.classic.plusOneMoreGuess : getLanguage().twitterText.classic.plusXMoreGuesses;
+        moreGuesses = moreGuesses + "\n";
+    }
 
-    const footer = `Play at pokedle.gg 🎮!`;
+    const moreGuessesWithNumber = moreGuesses.replace("§1§", componentStore.guesses.length - 4);
 
-    return header + emojiBody + moreGuesses + footer;
+    const footer = getLanguage().twitterText.playAt;
+
+    return headerWithNumberOfGuesses + "\n\n" + emojiBody + "\n"  + moreGuessesWithNumber + footer;
 };
 
 const setHintOne = () => {

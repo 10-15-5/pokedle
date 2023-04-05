@@ -1,4 +1,5 @@
 <template>
+    <!-- TODO: NOT CURRENTLY IN USE!!!!!! -->
     <div
         class="card min-h-10 min-w-10 min flex max-w-[250px] flex-col items-center justify-center py-3 px-2 text-center font-pkmEmerald"
     >
