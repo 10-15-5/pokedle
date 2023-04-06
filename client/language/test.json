@@ -1,5 +1,5 @@
 {
-    "test": "TEST GERMAN",
+    "test": "TEST TEST",
     "gameModes": {
         "Classic": "XXXX",
         "Flavortext": "XXXX",
@@ -22,54 +22,28 @@
         },
         "howToPlay": {
             "howToPlay": "XXXX",
-            "guessNumbered":{
+            "guesses": {
                 "1": {
-                     "1": "XXXX",
-                     "2": "XXXX",
-                     "3": "XXXX",
-                     "4": "XXXX",
-                     "5": "XXXX",
-                     "6": "XXXX"
-                }, 
-                "2":{
-                    "1":"XXXX",
-                    "2":"XXXX",
-                    "3":"XXXX",
-                    "4":"XXXX",
-                    "5":"XXXX",
-                    "6":"XXXX",
-                    "7":"XXXX",
-                    "8":"XXXX",
-                    "9":"XXXX",
-                    "10":"XXXX",
-                    "11":"XXXX"
-                } , 
+                    "title": "XXXX",
+                    "text": "XXXX"
+                },
+                "2": {
+                    "title": "XXXX",
+                    "text": "XXXX"
+                },
                 "3": {
-                    "1":"XXXX",
-                    "2":"XXXX",
-                    "3":"XXXX",
-                    "4":"XXXX",
-                    "5":"XXXX",
-                    "6":"XXXX",
-                    "7":"XXXX",
-                    "8":"XXXX"
-                } , 
+                    "title": "XXXX",
+                    "text": "XXXX"
+                },
                 "4": {
-                    "1":"XXXX",
-                    "2":"XXXX",
-                    "3":"XXXX",
-                    "4":"XXXX",
-                    "5":"XXXX",
-                    "6":"XXXX",
-                    "7":"XXXX"
+                    "title": "XXXX",
+                    "text": "XXXX"
                 }
             }
         },
         "habitats": {
             "habitats": "XXXX",
-            "takenFrom": "XXXX",
-            "bulbapedia": "XXXX ",
-            "andInclude": "XXXX"
+            "takenFrom": "XXXX"
         },
         "contribute": {
             "contribute": "XXXX",
@@ -84,9 +58,6 @@
             "credit": "XXXX",
             "intro": "XXXX 😊🎮!",
             "inspiredBy": "XXXX",
-            "loldle": "XXXX",
-            "and": "XXXX",
-            "wordle": "XXXX",
             "backgroundArtists": "XXXX",
             "pokemonCollageBG": "XXXX",
             "pokemonCollageBGCreator": "XXXX",
@@ -99,7 +70,6 @@
         "contact": {
             "contact": "XXXX",
             "intro": "XXXX",
-            "mail": "XXXX",
             "twitter": "XXXX"
         }
     },

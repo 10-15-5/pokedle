@@ -13,44 +13,24 @@
             <hr class="divider" />
             <h1 class="mb-2 text-center font-pkmEmerald text-[32px] uppercase">How To Play</h1>
             <p class="my-2">
-                <b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[1][1] }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guessNumbered[1][2]
-                }}<b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[1][3] }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guessNumbered[1][4]
-                }}<b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[1][6] }}</b>
-                {{ getLanguage().infoDialog.howToPlay.guessNumbered[1][6] }}
+                <b>{{ getLanguage().infoDialog.howToPlay.guesses[1].title }}</b
+                >{{ getLanguage().infoDialog.howToPlay.guesses[1].text
+                }}
             </p>
             <p class="my-2">
-                <b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[2][1] }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guessNumbered[2][2]
-                }}<b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[2][3] }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guessNumbered[2][4]
-                }}<b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[2][5] }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guessNumbered[2][6]
-                }}<b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[2][7] }}</b>
-                {{ getLanguage().infoDialog.howToPlay.guessNumbered[2][8] }}<br />
-                {{ getLanguage().infoDialog.howToPlay.guessNumbered[2][9]
-                }}<b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[2][10] }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guessNumbered[2][11] }}
+                <b>{{ getLanguage().infoDialog.howToPlay.guesses[2].title }}</b
+                >{{ getLanguage().infoDialog.howToPlay.guesses[2].text
+                }}
             </p>
             <p class="my-2">
-                <b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[3][1] }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guessNumbered[3][2]
-                }}<b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[3][3] }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guessNumbered[3][4]
-                }}<b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[3][5] }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guessNumbered[3][6] }}<br />
-                {{ getLanguage().infoDialog.howToPlay.guessNumbered[3][7] }}
-                <b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[3][8] }}.</b>
+                <b>{{ getLanguage().infoDialog.howToPlay.guesses[3].title }}</b
+                >{{ getLanguage().infoDialog.howToPlay.guesses[3].text
+                }}
             </p>
             <p class="my-2">
-                <b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[4][1] }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guessNumbered[4][2]
-                }}<b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[4][3] }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guessNumbered[4][4] }}
-                <b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[4][5] }}</b> <br />
-                {{ getLanguage().infoDialog.howToPlay.guessNumbered[4][6]
-                }}<b>{{ getLanguage().infoDialog.howToPlay.guessNumbered[4][7] }}.</b>
+                <b>{{ getLanguage().infoDialog.howToPlay.guesses[4].title }}</b
+                >{{ getLanguage().infoDialog.howToPlay.guesses[4].text
+                }}
             </p>
             <img class="card mx-auto w-[600px]" :src="'./client/assets/game-examples/game-example.png'" />
 
@@ -59,11 +39,10 @@
                 {{ getLanguage().infoDialog.habitats.habitats }}
             </h1>
             <p>
-                {{ getLanguage().infoDialog.habitats.takenFrom }}
+                {{ getLanguage().infoDialog.habitats.sourcedFrom }}
                 <a class="link" href="https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_habitat">
-                    {{ getLanguage().infoDialog.habitats.bulbapedia }}
+                    Bulbapedia
                 </a>
-                {{ getLanguage().infoDialog.habitats.andInclude }}
             </p>
             <div class="grid grid-flow-col gap-1 p-2 sm:grid-flow-col sm:grid-rows-3">
                 <img :src="'./client/assets/habitats/cave.png'" title="cave" />
@@ -100,11 +79,8 @@
                 <p class="mb-2">{{ getLanguage().infoDialog.credit.intro }}</p>
                 <p class="mb-2">
                     {{ getLanguage().infoDialog.credit.inspiredBy }}
-                    <a class="link" href="https://loldle.net/">{{ getLanguage().infoDialog.credit.loldle }}</a>
-                    {{ getLanguage().infoDialog.credit.and }}
-                    <a href="https://www.nytimes.com/games/wordle/index.html" class="link">{{
-                        getLanguage().infoDialog.credit.wordle
-                    }}</a
+                    <a class="link" href="https://loldle.net/">loldle.net</a>,
+                    <a href="https://www.nytimes.com/games/wordle/index.html" class="link">wordle</a
                     >.
                 </p>
                 <p>
@@ -130,7 +106,7 @@
                 <br />
                 &#8594;
                 <a class="link ml-2 text-[24px] font-bold" href="mailto: pokedle.contact@gmail.com">
-                    {{ getLanguage().infoDialog.contact.mail }}
+                    pokedle.contact@gmail.com
                 </a>
                 <br />
                 &#8594;
