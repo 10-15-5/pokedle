@@ -37,7 +37,7 @@
             <template #hint1
                 ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <div v-for="(field, i) in hintOne" :key="i" :value="field" class="flex flex-col gap-1">
-                        <span class="card items-center justify-center py-1 sm:py-0">{{ field.title }}</span>
+                        <span class="card items-center justify-center py-1 sm:py-0">{{ getLanguage().guessFieldTitles[field.title] }}</span>
                         <ResultSquare :guessResult="field.guessState" :guessText="field.text" :type="field.type" />
                     </div>
                 </div>
@@ -48,7 +48,6 @@
                         {{ getLanguage().hints.startsWith }}
                         <b class="text-lg text-light-orange dark:!text-dark-orange">
                             {{ secretPokemon.name.charAt(0).toUpperCase() }}</b
-                        
                         >
                     </p>
                 </div>

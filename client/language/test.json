@@ -118,9 +118,9 @@
         "comingSoon": "XXXX"
     },
     "hints": {
-        "guess": "XXXX",
-        "moreTimesForHint": "XXXX",
+        "guessMoreTimesForHint": "XXXX",
         "hint": "XXXX",
+        "hints": "XXXX",
         "startsWith": "XXXX"
 
     },
@@ -135,9 +135,29 @@
         "youGuessed": "XXXX",
         "nextPokemonWillAppearIn": "XXXX"
     },
-    "shortenedFieldTitles": {
+    "guessFieldTitles": {
+        "XXXX": "XXXX",
+        "pokemon": "XXXX",
+        "type1": "XXXX",
+        "type2": "XXXX",
         "evolutionLevel": "XXXX",
         "evolutions": "XXXX",
+        "color": "XXXX",
+        "habitat": "XXXX",
+        "generation": "XXXX",
+        "shape": "XXXX",
+        "evolutionLevelShort": "XXXX",
+        "evolutionsShort": "XXXX",
+        "generationShort": "XXXX"
+    },
+    "guessFieldTooltips": {
+        "pokemon": "",
+        "type1": "XXXX",
+        "type2": "XXXX",
+        "evolutionLevel": "XXXX",
+        "evolutions": "XXXX",
+        "color": "XXXX",
+        "habitat": "XXXX",
         "generation": "XXXX"
     },
     "twitterText": {

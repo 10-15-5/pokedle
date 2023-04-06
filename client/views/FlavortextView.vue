@@ -28,7 +28,7 @@
             <template #hint1
                 ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <div v-for="(field, i) in hintOne" :key="i" :value="field" class="flex flex-col gap-1">
-                        <span class="card items-center justify-center py-1 sm:py-0">{{ field.title }}</span>
+                        <span class="card items-center justify-center py-1 sm:py-0">{{ getLanguage().guessFieldTitles[field.title] }}</span>
                         <ResultSquare
                             :guessResult="field.guessState"
                             :guessText="field.text"
@@ -44,7 +44,7 @@
                         <span
                             class="card items-center justify-center py-1 sm:py-0"
                             :class="getTextSizeShortenedTitle(field.title)"
-                            >{{ field.title }}</span
+                            >{{ getLanguage().guessFieldTitles[field.title] }}</span
                         >
                         <ResultSquare
                             :guessResult="field.guessState"
@@ -58,7 +58,7 @@
             <template #hint3
                 ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <div class="flex flex-col gap-1">
-                        <span class="card items-center justify-center py-1 sm:py-0">Shape</span>
+                        <span class="card items-center justify-center py-1 sm:py-0">{{ getLanguage().guessFieldTitles.shape }}</span>
                         <ResultSquare :pokemon="secretPokemon.name" :type="GuessType.Blackout" />
                     </div></div
             ></template>
@@ -130,9 +130,9 @@ onBeforeMount(async () => {
 
 const getTextSizeShortenedTitle = (shortenedTitle) => {
     switch (shortenedTitle) {
-        case getLanguage().shortenedFieldTitles.evolutionLevel:
+        case getLanguage().guessFieldTitles.evolutionLevel:
             return 'text-[14px] sm:text-[10px]';
-        case getLanguage().shortenedFieldTitles.evolutions:
+        case getLanguage().guessFieldTitles.evolutions:
             return 'text-[13px] sm:text-[10px]';
         default:
             return '';
@@ -167,12 +167,14 @@ const setHints = () => {
         title: GuessFieldTitles[titles.at(i)],
     }));
 
-    correctFieldsWithTitles[3].title = getLanguage().shortenedFieldTitles.evolutionLevel;
-    correctFieldsWithTitles[4].title =  getLanguage().shortenedFieldTitles.evolutions;
-    correctFieldsWithTitles[7].title =  getLanguage().shortenedFieldTitles.generation;
+    correctFieldsWithTitles[3].title = getLanguage().guessFieldTitles.evolutionLevel;
+    correctFieldsWithTitles[4].title =  getLanguage().guessFieldTitles.evolutions;
+    correctFieldsWithTitles[7].title =  getLanguage().guessFieldTitles.generation;
 
     hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2], correctFieldsWithTitles[6]); //Type 1, Type 2, Habitat
     hintTwo.push(correctFieldsWithTitles[3], correctFieldsWithTitles[4], correctFieldsWithTitles[7]); //Evolution lvl, isFullyEvolved, Gen
+
+    console.log(hintTwo);
 };
 
 const updateYesterdaysPokemon = async () => {

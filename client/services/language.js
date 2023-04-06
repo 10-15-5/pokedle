@@ -18,7 +18,13 @@ const getLanguage = () =>  {
     }
 }
 
+const getGuessFieldTooltipsFromIndex = (index) => {
+    const values = Object.values(getLanguage().guessFieldTooltips);
+    return values.at(index);
+};
+
 export {
     setLanguage,
     getLanguage,
+    getGuessFieldTooltipsFromIndex
 }

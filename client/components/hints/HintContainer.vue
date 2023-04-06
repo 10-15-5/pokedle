@@ -5,18 +5,17 @@
     >
         <CornerSpriteAnimation v-if="!isShowHints && isHintOneUnlocked" :isShowNotification="isShowNotification"/>
         <p v-if="!isHintOneUnlocked" class="gap-2 p-2 px-3 sm:p-1 sm:px-2 sm:pt-2">
-            {{ getLanguage().hints.guess }}
+            {{ getLanguage().hints.guessMoreTimesForHint }}
             <b class="text-light-orange dark:text-dark-orange">
                 {{ guessesRemainingForHintOne }}
             </b>
-            {{ getLanguage().hints.moreTimesForHint }}
         </p>
         <div
             v-else-if="!isShowHints"
             class="flex w-full flex-row items-center justify-between gap-2 p-2 px-3 pb-1 sm:pb-1 sm:pt-2"
         >
             <div class="flex flex-row text-base">
-                <p>{{ getLanguage().hints.hint }}{{ isHintTwoUnlocked ? 'S' : '' }}</p>
+                <p>{{ isHintTwoUnlocked ? getLanguage().hints.hint : getLanguage().hints.hints }}</p>
             </div>
             <div>
                 <button class="pi pi-plus" @click="showHints"></button>

@@ -26,13 +26,14 @@
         >
             <template #hint1>
                 <div class="flex flex-col items-center gap-2 sm:gap-1">
-                    <span class="card w-full justify-center py-1 sm:py-0">{{ hintTwo.header }}</span>
+                    <span class="card w-full justify-center py-1 sm:py-0">{{ getLanguage().guessFieldTitles[hintOne.header]
+                     }}</span>
                     <ResultSquare
-                        :color="hintTwo.color"
-                        :guessResult="hintTwo.guessResult"
-                        :guessText="hintTwo.guessText"
-                        :type="hintTwo.type"
-                        :habitat="hintTwo.habitat"
+                        :color="hintOne.color"
+                        :guessResult="hintOne.guessResult"
+                        :guessText="hintOne.guessText"
+                        :type="hintOne.type"
+                        :habitat="hintOne.habitat"
                     />
                 </div>
             </template>
@@ -41,7 +42,8 @@
             </template>
             <template #hint3>
                 <div class="flex flex-col items-center gap-2 sm:gap-1">
-                    <span class="card w-full justify-center py-1 sm:py-0">Shape</span>
+                    <span class="card w-full justify-center py-1 sm:py-0">{{ getLanguage().guessFieldTitles.shape
+                     }}</span>
                     <ResultSquare :pokemon="secretPokemon.name" :type="GuessType.Blackout" />
                 </div>
             </template>
@@ -102,7 +104,7 @@ const isLoaded = ref(false);
 const secretPokemon = reactive({});
 const yesterdaysPokemon = ref('');
 
-const hintTwo = reactive({});
+const hintOne = reactive({});
 
 let colors = [];
 
@@ -172,7 +174,7 @@ const classicTwitterText = () => {
 const setHintOne = () => {
     if (
         componentStore.guesses.length < ClassicGuessesNeededForHintOne ||
-        (hintTwo.header && componentStore.guesses.length > ClassicGuessesNeededForHintOne)
+        (hintOne.header && componentStore.guesses.length > ClassicGuessesNeededForHintOne)
     ) {
         return;
     }
@@ -227,7 +229,9 @@ const setHintOne = () => {
         hint.type = GuessType.Habitat;
     }
 
-    Object.assign(hintTwo, hint);
+    Object.assign(hintOne, hint);
+    console.log(hintOne);
+    console.log(getLanguage().guessFieldTitles);
 };
 
 const updateYesterdaysPokemon = async () => {
