@@ -14,23 +14,19 @@
             <h1 class="mb-2 text-center font-pkmEmerald text-[32px] uppercase">How To Play</h1>
             <p class="my-2">
                 <b>{{ text().infoDialog.howToPlay.guesses[1].title }}</b
-                >{{ text().infoDialog.howToPlay.guesses[1].text
-                }}
+                >{{ text().infoDialog.howToPlay.guesses[1].text }}
             </p>
             <p class="my-2">
                 <b>{{ text().infoDialog.howToPlay.guesses[2].title }}</b
-                >{{ text().infoDialog.howToPlay.guesses[2].text
-                }}
+                >{{ text().infoDialog.howToPlay.guesses[2].text }}
             </p>
             <p class="my-2">
                 <b>{{ text().infoDialog.howToPlay.guesses[3].title }}</b
-                >{{ text().infoDialog.howToPlay.guesses[3].text
-                }}
+                >{{ text().infoDialog.howToPlay.guesses[3].text }}
             </p>
             <p class="my-2">
                 <b>{{ text().infoDialog.howToPlay.guesses[4].title }}</b
-                >{{ text().infoDialog.howToPlay.guesses[4].text
-                }}
+                >{{ text().infoDialog.howToPlay.guesses[4].text }}
             </p>
             <img class="card mx-auto w-[600px]" :src="'./client/assets/game-examples/game-example.png'" />
 
@@ -80,19 +76,21 @@
                 <p class="mb-2">
                     {{ text().infoDialog.credit.inspiredBy }}
                     <a class="link" href="https://loldle.net/">loldle.net</a>,
-                    <a href="https://www.nytimes.com/games/wordle/index.html" class="link">wordle</a
-                    >.
+                    <a href="https://www.nytimes.com/games/wordle/index.html" class="link">wordle</a>.
                 </p>
                 <p>
-                    <span class="font-extrabold">{{ text().infoDialog.credit.backgroundArtists }}</span>
+                    <span class="font-extrabold"> {{ text().infoDialog.credit.credit }} </span>
+                    <br>
+                    <b>- {{ text().infoDialog.credit.germanTranslation }}</b>
+                    {{ text().infoDialog.credit.germanTranslationCreator }}
                     <br />
-                    <b>{{ text().infoDialog.credit.pokemonCollageBG }}</b>
+                    <b>- {{ text().infoDialog.credit.pokemonCollageBG }}</b>
                     {{ text().infoDialog.credit.pokemonCollageBGCreator }}
                     <br />
-                    <b>{{ text().infoDialog.credit.cuboneBG }}</b
+                    <b>- {{ text().infoDialog.credit.cuboneBG }}</b
                     >{{ text().infoDialog.credit.cuboneBGCreator }}
                     <br />
-                    <b>{{ text().infoDialog.credit.mtSilverBG }}</b>
+                    <b>- {{ text().infoDialog.credit.mtSilverBG }}</b>
                     <a class="link" href="https://www.deviantart.com/serain">{{
                         text().infoDialog.credit.mtSilverBGCreator
                     }}</a>

@@ -9,7 +9,6 @@
 
 <script setup>
 import { ref } from 'vue';
-import {getRandomPokemonAnimation} from '../../services/assets.js'
 import SpriteAnimation from './SpriteAnimation.vue';
 
 const props = defineProps({
