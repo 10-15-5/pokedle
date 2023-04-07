@@ -5,7 +5,7 @@
             class="card relative w-[200px] p-4 font-pkmEmerald focus:outline-none"
             type="text"
             :class="filteredPokemons.length && isSearchFieldActive ? ' z-40' : ''"
-            :placeholder="getLanguage().searchField.typePokemon"
+            :placeholder="text().searchField.typePokemon"
             v-model="searchTerm"
             @keypress.enter="submitGuess(filteredPokemons[idx === -1 ? 0 : idx])"
             :onFocus="
@@ -56,7 +56,7 @@
 import { computed, ref, watch } from 'vue';
 import { removeSpecialCharactersExceptDashFromString } from '../services/helpers.js';
 import { useClickOutside } from '../composables/useClickOutside.js';
-import { getLanguage } from '../services/language';
+import { text } from '../services/language';
 
 const itemSize = 52;
 

@@ -2,7 +2,7 @@
     <div
         class="card relative flex w-[180px] flex-row items-center justify-between gap-2 px-2 pt-2 pb-1 !font-pkmEmerald text-2xl transition-all duration-100 ease-linear hover:scale-110 sm:w-[150px] sm:text-xl"
     >
-        <span class="relative">{{ getLanguage().gameModes[gameMode] }}</span>
+        <span class="relative">{{ text().gameModes[gameMode] }}</span>
         <SvgIcon
             v-if="gameMode === GameModes.Classic"
             type="mdi"
@@ -30,7 +30,7 @@ import SvgIcon from '@jamescoyle/vue-icon';
 import { mdiHelpCircle, mdiMessageQuestion, mdiAccountQuestion } from '@mdi/js';
 import { GameModes } from '../../constants';
 import CornerSpriteAnimation from '../animations/CornerSpriteAnimation.vue';
-import { getLanguage } from '../../services/language';
+import { text } from '../../services/language';
 const props = defineProps({
     gameMode: String,
     isAttention: Boolean,

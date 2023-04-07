@@ -1,218 +1,218 @@
 [
     {
-        "name": "normal",
-        "names": [
-            { "name": "노말", "language": "korean" },
-            { "name": "Normal", "language": "french" },
-            { "name": "Normal", "language": "german" },
-            { "name": "Normal", "language": "spanish" },
-            { "name": "Normale", "language": "italian" },
-            { "name": "Normal", "language": "english" },
-            { "name": "ノーマル", "language": "japanese" }
+        "type": "normal",
+        "types": [
+            { "type": "노말", "language":     "korean" },
+            { "type": "Normal", "language":  "french" },
+            { "type": "Normal", "language":  "german" },
+            { "type": "Normal", "language":  "spanish" },
+            { "type": "Normale", "language": "italian" },
+            { "type": "Normal", "language":  "english" },
+            { "type": "ノーマル", "language": "japanese" }
         ]
     },
     {
-        "name": "fighting",
-        "names": [
-            { "name": "격투", "language": "korean" },
-            { "name": "Combat", "language": "french" },
-            { "name": "Kampf", "language": "german" },
-            { "name": "Lucha", "language": "spanish" },
-            { "name": "Lotta", "language": "italian" },
-            { "name": "Fighting", "language": "english" },
-            { "name": "かくとう", "language": "japanese" }
+        "type": "fighting",
+        "types": [
+            { "type": "격투", "language": "korean" },
+            { "type": "Combat", "language": "french" },
+            { "type": "Kampf", "language": "german" },
+            { "type": "Lucha", "language": "spanish" },
+            { "type": "Lotta", "language": "italian" },
+            { "type": "Fighting", "language": "english" },
+            { "type": "かくとう", "language": "japanese" }
         ]
     },
     {
-        "name": "flying",
-        "names": [
-            { "name": "비행", "language": "korean" },
-            { "name": "Vol", "language": "french" },
-            { "name": "Flug", "language": "german" },
-            { "name": "Volador", "language": "spanish" },
-            { "name": "Volante", "language": "italian" },
-            { "name": "Flying", "language": "english" },
-            { "name": "ひこう", "language": "japanese" }
+        "type": "flying",
+        "types": [
+            { "type": "비행", "language": "korean" },
+            { "type": "Vol", "language": "french" },
+            { "type": "Flug", "language": "german" },
+            { "type": "Volador", "language": "spanish" },
+            { "type": "Volante", "language": "italian" },
+            { "type": "Flying", "language": "english" },
+            { "type": "ひこう", "language": "japanese" }
         ]
     },
     {
-        "name": "poison",
-        "names": [
-            { "name": "독", "language": "korean" },
-            { "name": "Poison", "language": "french" },
-            { "name": "Gift", "language": "german" },
-            { "name": "Veneno", "language": "spanish" },
-            { "name": "Veleno", "language": "italian" },
-            { "name": "Poison", "language": "english" },
-            { "name": "どく", "language": "japanese" }
+        "type": "poison",
+        "types": [
+            { "type": "독", "language": "korean" },
+            { "type": "Poison", "language": "french" },
+            { "type": "Gift", "language": "german" },
+            { "type": "Veneno", "language": "spanish" },
+            { "type": "Veleno", "language": "italian" },
+            { "type": "Poison", "language": "english" },
+            { "type": "どく", "language": "japanese" }
         ]
     },
     {
-        "name": "ground",
-        "names": [
-            { "name": "땅", "language": "korean" },
-            { "name": "Sol", "language": "french" },
-            { "name": "Boden", "language": "german" },
-            { "name": "Tierra", "language": "spanish" },
-            { "name": "Terra", "language": "italian" },
-            { "name": "Ground", "language": "english" },
-            { "name": "じめん", "language": "japanese" }
+        "type": "ground",
+        "types": [
+            { "type": "땅", "language": "korean" },
+            { "type": "Sol", "language": "french" },
+            { "type": "Boden", "language": "german" },
+            { "type": "Tierra", "language": "spanish" },
+            { "type": "Terra", "language": "italian" },
+            { "type": "Ground", "language": "english" },
+            { "type": "じめん", "language": "japanese" }
         ]
     },
     {
-        "name": "rock",
-        "names": [
-            { "name": "바위", "language": "korean" },
-            { "name": "Roche", "language": "french" },
-            { "name": "Gestein", "language": "german" },
-            { "name": "Roca", "language": "spanish" },
-            { "name": "Roccia", "language": "italian" },
-            { "name": "Rock", "language": "english" },
-            { "name": "いわ", "language": "japanese" }
+        "type": "rock",
+        "types": [
+            { "type": "바위", "language": "korean" },
+            { "type": "Roche", "language": "french" },
+            { "type": "Gestein", "language": "german" },
+            { "type": "Roca", "language": "spanish" },
+            { "type": "Roccia", "language": "italian" },
+            { "type": "Rock", "language": "english" },
+            { "type": "いわ", "language": "japanese" }
         ]
     },
     {
-        "name": "bug",
-        "names": [
-            { "name": "벌레", "language": "korean" },
-            { "name": "Insecte", "language": "french" },
-            { "name": "Käfer", "language": "german" },
-            { "name": "Bicho", "language": "spanish" },
-            { "name": "Coleottero", "language": "italian" },
-            { "name": "Bug", "language": "english" },
-            { "name": "むし", "language": "japanese" }
+        "type": "bug",
+        "types": [
+            { "type": "벌레", "language": "korean" },
+            { "type": "Insecte", "language": "french" },
+            { "type": "Käfer", "language": "german" },
+            { "type": "Bicho", "language": "spanish" },
+            { "type": "Coleottero", "language": "italian" },
+            { "type": "Bug", "language": "english" },
+            { "type": "むし", "language": "japanese" }
         ]
     },
     {
-        "name": "ghost",
-        "names": [
-            { "name": "고스트", "language": "korean" },
-            { "name": "Spectre", "language": "french" },
-            { "name": "Geist", "language": "german" },
-            { "name": "Fantasma", "language": "spanish" },
-            { "name": "Spettro", "language": "italian" },
-            { "name": "Ghost", "language": "english" },
-            { "name": "ゴースト", "language": "japanese" }
+        "type": "ghost",
+        "types": [
+            { "type": "고스트", "language": "korean" },
+            { "type": "Spectre", "language": "french" },
+            { "type": "Geist", "language": "german" },
+            { "type": "Fantasma", "language": "spanish" },
+            { "type": "Spettro", "language": "italian" },
+            { "type": "Ghost", "language": "english" },
+            { "type": "ゴースト", "language": "japanese" }
         ]
     },
     {
-        "name": "steel",
-        "names": [
-            { "name": "강철", "language": "korean" },
-            { "name": "Acier", "language": "french" },
-            { "name": "Stahl", "language": "german" },
-            { "name": "Acero", "language": "spanish" },
-            { "name": "Acciaio", "language": "italian" },
-            { "name": "Steel", "language": "english" },
-            { "name": "はがね", "language": "japanese" }
+        "type": "steel",
+        "types": [
+            { "type": "강철", "language": "korean" },
+            { "type": "Acier", "language": "french" },
+            { "type": "Stahl", "language": "german" },
+            { "type": "Acero", "language": "spanish" },
+            { "type": "Acciaio", "language": "italian" },
+            { "type": "Steel", "language": "english" },
+            { "type": "はがね", "language": "japanese" }
         ]
     },
     {
-        "name": "fire",
-        "names": [
-            { "name": "불꽃", "language": "korean" },
-            { "name": "Feu", "language": "french" },
-            { "name": "Feuer", "language": "german" },
-            { "name": "Fuego", "language": "spanish" },
-            { "name": "Fuoco", "language": "italian" },
-            { "name": "Fire", "language": "english" },
-            { "name": "ほのお", "language": "japanese" }
+        "type": "fire",
+        "types": [
+            { "type": "불꽃", "language": "korean" },
+            { "type": "Feu", "language": "french" },
+            { "type": "Feuer", "language": "german" },
+            { "type": "Fuego", "language": "spanish" },
+            { "type": "Fuoco", "language": "italian" },
+            { "type": "Fire", "language": "english" },
+            { "type": "ほのお", "language": "japanese" }
         ]
     },
     {
-        "name": "water",
-        "names": [
-            { "name": "물", "language": "korean" },
-            { "name": "Eau", "language": "french" },
-            { "name": "Wasser", "language": "german" },
-            { "name": "Agua", "language": "spanish" },
-            { "name": "Acqua", "language": "italian" },
-            { "name": "Water", "language": "english" },
-            { "name": "みず", "language": "japanese" }
+        "type": "water",
+        "types": [
+            { "type": "물", "language": "korean" },
+            { "type": "Eau", "language": "french" },
+            { "type": "Wasser", "language": "german" },
+            { "type": "Agua", "language": "spanish" },
+            { "type": "Acqua", "language": "italian" },
+            { "type": "Water", "language": "english" },
+            { "type": "みず", "language": "japanese" }
         ]
     },
     {
-        "name": "grass",
-        "names": [
-            { "name": "풀", "language": "korean" },
-            { "name": "Plante", "language": "french" },
-            { "name": "Pflanze", "language": "german" },
-            { "name": "Planta", "language": "spanish" },
-            { "name": "Erba", "language": "italian" },
-            { "name": "Grass", "language": "english" },
-            { "name": "くさ", "language": "japanese" }
+        "type": "grass",
+        "types": [
+            { "type": "풀", "language": "korean" },
+            { "type": "Plante", "language": "french" },
+            { "type": "Pflanze", "language": "german" },
+            { "type": "Planta", "language": "spanish" },
+            { "type": "Erba", "language": "italian" },
+            { "type": "Grass", "language": "english" },
+            { "type": "くさ", "language": "japanese" }
         ]
     },
     {
-        "name": "electric",
-        "names": [
-            { "name": "전기", "language": "korean" },
-            { "name": "Électrik", "language": "french" },
-            { "name": "Elektro", "language": "german" },
-            { "name": "Eléctrico", "language": "spanish" },
-            { "name": "Elettro", "language": "italian" },
-            { "name": "Electric", "language": "english" },
-            { "name": "でんき", "language": "japanese" }
+        "type": "electric",
+        "types": [
+            { "type": "전기", "language": "korean" },
+            { "type": "Électrik", "language": "french" },
+            { "type": "Elektro", "language": "german" },
+            { "type": "Eléctrico", "language": "spanish" },
+            { "type": "Elettro", "language": "italian" },
+            { "type": "Electric", "language": "english" },
+            { "type": "でんき", "language": "japanese" }
         ]
     },
     {
-        "name": "psychic",
-        "names": [
-            { "name": "에스퍼", "language": "korean" },
-            { "name": "Psy", "language": "french" },
-            { "name": "Psycho", "language": "german" },
-            { "name": "Psíquico", "language": "spanish" },
-            { "name": "Psico", "language": "italian" },
-            { "name": "Psychic", "language": "english" },
-            { "name": "エスパー", "language": "japanese" }
+        "type": "psychic",
+        "types": [
+            { "type": "에스퍼", "language": "korean" },
+            { "type": "Psy", "language": "french" },
+            { "type": "Psycho", "language": "german" },
+            { "type": "Psíquico", "language": "spanish" },
+            { "type": "Psico", "language": "italian" },
+            { "type": "Psychic", "language": "english" },
+            { "type": "エスパー", "language": "japanese" }
         ]
     },
     {
-        "name": "ice",
-        "names": [
-            { "name": "얼음", "language": "korean" },
-            { "name": "Glace", "language": "french" },
-            { "name": "Eis", "language": "german" },
-            { "name": "Hielo", "language": "spanish" },
-            { "name": "Ghiaccio", "language": "italian" },
-            { "name": "Ice", "language": "english" },
-            { "name": "こおり", "language": "japanese" }
+        "type": "ice",
+        "types": [
+            { "type": "얼음", "language": "korean" },
+            { "type": "Glace", "language": "french" },
+            { "type": "Eis", "language": "german" },
+            { "type": "Hielo", "language": "spanish" },
+            { "type": "Ghiaccio", "language": "italian" },
+            { "type": "Ice", "language": "english" },
+            { "type": "こおり", "language": "japanese" }
         ]
     },
     {
-        "name": "dragon",
-        "names": [
-            { "name": "드래곤", "language": "korean" },
-            { "name": "Dragon", "language": "french" },
-            { "name": "Drache", "language": "german" },
-            { "name": "Dragón", "language": "spanish" },
-            { "name": "Drago", "language": "italian" },
-            { "name": "Dragon", "language": "english" },
-            { "name": "ドラゴン", "language": "japanese" }
+        "type": "dragon",
+        "types": [
+            { "type": "드래곤", "language": "korean" },
+            { "type": "Dragon", "language": "french" },
+            { "type": "Drache", "language": "german" },
+            { "type": "Dragón", "language": "spanish" },
+            { "type": "Drago", "language": "italian" },
+            { "type": "Dragon", "language": "english" },
+            { "type": "ドラゴン", "language": "japanese" }
         ]
     },
     {
-        "name": "dark",
-        "names": [
-            { "name": "악", "language": "korean" },
-            { "name": "Ténèbres", "language": "french" },
-            { "name": "Unlicht", "language": "german" },
-            { "name": "Siniestro", "language": "spanish" },
-            { "name": "Buio", "language": "italian" },
-            { "name": "Dark", "language": "english" },
-            { "name": "あく", "language": "japanese" }
+        "type": "dark",
+        "types": [
+            { "type": "악", "language": "korean" },
+            { "type": "Ténèbres", "language": "french" },
+            { "type": "Unlicht", "language": "german" },
+            { "type": "Siniestro", "language": "spanish" },
+            { "type": "Buio", "language": "italian" },
+            { "type": "Dark", "language": "english" },
+            { "type": "あく", "language": "japanese" }
         ]
     },
     {
-        "name": "fairy",
-        "names": [
-            { "name": "페어리", "language": "korean" },
-            { "name": "Fée", "language": "french" },
-            { "name": "Fee", "language": "german" },
-            { "name": "Hada", "language": "spanish" },
-            { "name": "Folletto", "language": "italian" },
-            { "name": "Fairy", "language": "english" },
-            { "name": "フェアリー", "language": "japanese" }
+        "type": "fairy",
+        "types": [
+            { "type": "페어리", "language": "korean" },
+            { "type": "Fée", "language": "french" },
+            { "type": "Fee", "language": "german" },
+            { "type": "Hada", "language": "spanish" },
+            { "type": "Folletto", "language": "italian" },
+            { "type": "Fairy", "language": "english" },
+            { "type": "フェアリー", "language": "japanese" }
         ]
     }
 ]

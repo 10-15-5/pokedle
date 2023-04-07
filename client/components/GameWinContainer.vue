@@ -1,10 +1,10 @@
 <template>
     <div class="card flex flex-col items-center justify-center px-5 py-2">
         <p class="fontbo font-pkmEmerald text-[32px] !text-light-emerald dark:!text-dark-emerald sm:text-[28px]">
-            {{ getLanguage().gameWinContainer.victory }}
+            {{ text().gameWinContainer.victory }}
         </p>
         <p class="mb-3 font-pkmEmerald text-[18px] capitalize sm:text-[16px]">
-            {{ getLanguage().gameWinContainer.youGuessed }}
+            {{ text().gameWinContainer.youGuessed }}
             <b class="!text-light-emerald dark:!text-dark-emerald"> {{ pokemon }} </b>
         </p>
         <SquareContent
@@ -14,7 +14,7 @@
             :isLarge="true"
         />
         <p class="mt-3 font-pkmEmerald text-[14px] sm:text-[12px]">
-            {{ getLanguage().gameWinContainer.nextPokemonWillAppearIn }}
+            {{ text().gameWinContainer.nextPokemonWillAppearIn }}
             &nbsp;
             <b class="text-light-orange dark:!text-dark-orange">
                 {{ ' ' + hoursRemaining + ' : ' + minRemaining + ' : ' + secRemaining }}</b
@@ -31,7 +31,7 @@ import { removeSpecialCharactersExceptDashFromString } from '../services/helpers
 import { GuessType } from '../constants';
 import TweetButton from './buttons/TweetButton.vue';
 import moment from 'moment-timezone';
-import { getLanguage } from '../services/language';
+import { text } from '../services/language';
 
 const props = defineProps({
     pokemon: String,

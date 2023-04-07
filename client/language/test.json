@@ -1,5 +1,11 @@
 {
     "test": "TEST TEST",
+    "resultCards": {
+        "none": "XXXX",
+        "yes": "XXXX",
+        "no": "XXXX",
+        "generation": "XXXX"
+    },
     "gameModes": {
         "Classic": "XXXX",
         "Flavortext": "XXXX",
@@ -8,7 +14,7 @@
     "searchField": {
         "typePokemon": "XXXX"
     },
-    "guessType":{
+    "guessType": {
         "pokemon": "XXXX",
         "text": "XXXX",
         "habitat": "XXXX",
@@ -18,7 +24,7 @@
     "infoDialog": {
         "intro": {
             "welcome": "XXXX",
-            "text":"XXXX"
+            "text": "XXXX"
         },
         "howToPlay": {
             "howToPlay": "XXXX",
@@ -92,7 +98,6 @@
         "hint": "XXXX",
         "hints": "XXXX",
         "startsWith": "XXXX"
-
     },
     "dailyGamesWon": {
         "trainersAlreadyFoundOut": "XXXX"
@@ -133,18 +138,18 @@
     "twitterText": {
         "playAt": "XXXX",
         "classic": {
-            "headerFirstTry":"XXXX",
-            "headerXTries":"XXXX",
+            "headerFirstTry": "XXXX",
+            "headerXTries": "XXXX",
             "plusOneMoreGuess": "XXXX",
             "plusXMoreGuesses": "XXXX"
         },
         "flavortext": {
-            "headerFirstTry":"XXXX",
-            "headerXTries":"XXXX"
+            "headerFirstTry": "XXXX",
+            "headerXTries": "XXXX"
         },
         "silhouette": {
-            "headerFirstTry":"XXXX",
-            "headerXTries":"XXXX"
+            "headerFirstTry": "XXXX",
+            "headerXTries": "XXXX"
         }
     }
 }

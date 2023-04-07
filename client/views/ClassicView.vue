@@ -26,7 +26,7 @@
         >
             <template #hint1>
                 <div class="flex flex-col items-center gap-2 sm:gap-1">
-                    <span class="card w-full justify-center py-1 sm:py-0">{{ getLanguage().guessFieldTitles[hintOne.header]
+                    <span class="card w-full justify-center py-1 sm:py-0">{{ text().guessFieldTitles[hintOne.header]
                      }}</span>
                     <ResultSquare
                         :color="hintOne.color"
@@ -38,11 +38,11 @@
                 </div>
             </template>
             <template #hint2>
-                {{ secretPokemon.flavorText }}
+                {{ getFlavortextLanguageFrom(secretPokemon) }}
             </template>
             <template #hint3>
                 <div class="flex flex-col items-center gap-2 sm:gap-1">
-                    <span class="card w-full justify-center py-1 sm:py-0">{{ getLanguage().guessFieldTitles.shape
+                    <span class="card w-full justify-center py-1 sm:py-0">{{ text().guessFieldTitles.shape
                      }}</span>
                     <ResultSquare :pokemon="secretPokemon.name" :type="GuessType.Blackout" />
                 </div>
@@ -89,7 +89,7 @@ import {
 import * as game from '../services/game';
 import * as localStorageService from '../services/localStorage';
 import moment from 'moment-timezone';
-import { getLanguage } from '../services/language';
+import { text,getFlavortextLanguageFrom } from '../services/language';
 
 const store = useStore();
 const GAME_MODE = GameModes.Classic;
@@ -145,7 +145,7 @@ const emojiResults = computed(() => {
 
 const classicTwitterText = () => {
     const initialHeader =
-        componentStore.guesses.length === 1 ? getLanguage().twitterText.classic.headerFirstTry : getLanguage().twitterText.classic.headerXTries;
+        componentStore.guesses.length === 1 ? text().twitterText.classic.headerFirstTry : text().twitterText.classic.headerXTries;
 
     
     const headerWithPokemonNumber = initialHeader.replace("§1§", game.getCurrentPokemonNumber(GAME_MODE, moment()));
@@ -160,13 +160,13 @@ const classicTwitterText = () => {
 
     let moreGuesses = "";
     if(componentStore.guesses.length>4){
-        moreGuesses = componentStore.guesses.length === 5 ? getLanguage().twitterText.classic.plusOneMoreGuess : getLanguage().twitterText.classic.plusXMoreGuesses;
+        moreGuesses = componentStore.guesses.length === 5 ? text().twitterText.classic.plusOneMoreGuess : text().twitterText.classic.plusXMoreGuesses;
         moreGuesses = moreGuesses + "\n";
     }
 
     const moreGuessesWithNumber = moreGuesses.replace("§1§", componentStore.guesses.length - 4);
 
-    const footer = getLanguage().twitterText.playAt;
+    const footer = text().twitterText.playAt;
 
     return headerWithNumberOfGuesses + "\n\n" + emojiBody + "\n"  + moreGuessesWithNumber + footer;
 };
@@ -231,7 +231,7 @@ const setHintOne = () => {
 
     Object.assign(hintOne, hint);
     console.log(hintOne);
-    console.log(getLanguage().guessFieldTitles);
+    console.log(text().guessFieldTitles);
 };
 
 const updateYesterdaysPokemon = async () => {

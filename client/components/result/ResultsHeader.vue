@@ -8,7 +8,7 @@
             :value="fieldTitle"
             class="group !m-0 flex h-[40px] w-[60px] items-center justify-center border-b-2 border-light-border text-center font-pkmEmerald text-sm font-bold leading-4 dark:border-dark-border sm:h-[30px] sm:w-[43px] sm:text-[10px] sm:leading-3"
         >
-        {{ getLanguage().guessFieldTitles[fieldTitle] }}
+        {{ text().guessFieldTitles[fieldTitle] }}
             <div
                 v-if="getGuessFieldTooltipsFromIndex(index)"
                 class="card z-1 absolute mb-[80px] origin-top scale-0 p-2 pb-1 transition-all delay-500 duration-150 group-hover:scale-100 sm:mb-[66px]"
@@ -21,7 +21,7 @@
 
 <script setup>
 import { GuessFieldTitles } from '../../constants.js';
-import { getLanguage, getGuessFieldTooltipsFromIndex} from '../../services/language.js';
+import { text, getGuessFieldTooltipsFromIndex} from '../../services/language.js';
 </script>
 
 <style scoped></style>

@@ -10,7 +10,7 @@
             v-else-if="!store.isFlavortextGameWon && secretPokemon.name"
             class="card w-[450px] p-4 text-justify font-pkmEmerald text-xl italic sm:w-[350px] sm:text-base"
         >
-            "{{ secretPokemon.flavorText }}"
+            "{{ getFlavortextLanguageFrom(secretPokemon) }}"
         </div>
         <SearchField
             v-if="!store.isFlavortextGameWon"
@@ -28,7 +28,7 @@
             <template #hint1
                 ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <div v-for="(field, i) in hintOne" :key="i" :value="field" class="flex flex-col gap-1">
-                        <span class="card items-center justify-center py-1 sm:py-0">{{ getLanguage().guessFieldTitles[field.title] }}</span>
+                        <span class="card items-center justify-center py-1 sm:py-0">{{ text().guessFieldTitles[field.title] }}</span>
                         <ResultSquare
                             :guessResult="field.guessState"
                             :guessText="field.text"
@@ -44,7 +44,7 @@
                         <span
                             class="card items-center justify-center py-1 sm:py-0"
                             :class="getTextSizeShortenedTitle(field.title)"
-                            >{{ getLanguage().guessFieldTitles[field.title] }}</span
+                            >{{ text().guessFieldTitles[field.title] }}</span
                         >
                         <ResultSquare
                             :guessResult="field.guessState"
@@ -58,7 +58,7 @@
             <template #hint3
                 ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <div class="flex flex-col gap-1">
-                        <span class="card items-center justify-center py-1 sm:py-0">{{ getLanguage().guessFieldTitles.shape }}</span>
+                        <span class="card items-center justify-center py-1 sm:py-0">{{ text().guessFieldTitles.shape }}</span>
                         <ResultSquare :pokemon="secretPokemon.name" :type="GuessType.Blackout" />
                     </div></div
             ></template>
@@ -102,7 +102,7 @@ import {
 } from '../constants';
 import * as game from '../services/game';
 import moment from 'moment-timezone';
-import { getLanguage } from '../services/language';
+import { text,getFlavortextLanguageFrom } from '../services/language';
 
 const store = useStore();
 const GAME_MODE = GameModes.Flavortext;
@@ -130,9 +130,9 @@ onBeforeMount(async () => {
 
 const getTextSizeShortenedTitle = (shortenedTitle) => {
     switch (shortenedTitle) {
-        case getLanguage().guessFieldTitles.evolutionLevel:
+        case text().guessFieldTitles.evolutionLevel:
             return 'text-[14px] sm:text-[10px]';
-        case getLanguage().guessFieldTitles.evolutions:
+        case text().guessFieldTitles.evolutions:
             return 'text-[13px] sm:text-[10px]';
         default:
             return '';
@@ -141,14 +141,14 @@ const getTextSizeShortenedTitle = (shortenedTitle) => {
 
 const flavortextTwitterText = () => {
     const initialHeader =
-        componentStore.guesses.length === 1 ? getLanguage().twitterText.flavortext.headerFirstTry : getLanguage().twitterText.flavortext.headerXTries;
+        componentStore.guesses.length === 1 ? text().twitterText.flavortext.headerFirstTry : text().twitterText.flavortext.headerXTries;
 
     
     const headerWithPokemonNumber = initialHeader.replace("§1§", game.getCurrentPokemonNumber(GAME_MODE, moment()));
 
     const headerWithNumberOfGuesses = headerWithPokemonNumber.replace("§2§", componentStore.guesses.length)
 
-    const footer = getLanguage().twitterText.playAt;
+    const footer = text().twitterText.playAt;
 
     return headerWithNumberOfGuesses + "\n\n" + footer;
 };
@@ -167,9 +167,9 @@ const setHints = () => {
         title: GuessFieldTitles[titles.at(i)],
     }));
 
-    correctFieldsWithTitles[3].title = getLanguage().guessFieldTitles.evolutionLevel;
-    correctFieldsWithTitles[4].title =  getLanguage().guessFieldTitles.evolutions;
-    correctFieldsWithTitles[7].title =  getLanguage().guessFieldTitles.generation;
+    correctFieldsWithTitles[3].title = text().guessFieldTitles.evolutionLevel;
+    correctFieldsWithTitles[4].title =  text().guessFieldTitles.evolutions;
+    correctFieldsWithTitles[7].title =  text().guessFieldTitles.generation;
 
     hintOne.push(correctFieldsWithTitles[1], correctFieldsWithTitles[2], correctFieldsWithTitles[6]); //Type 1, Type 2, Habitat
     hintTwo.push(correctFieldsWithTitles[3], correctFieldsWithTitles[4], correctFieldsWithTitles[7]); //Evolution lvl, isFullyEvolved, Gen

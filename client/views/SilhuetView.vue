@@ -10,7 +10,7 @@
             v-else-if="!store.isSilhouetteGameWon && secretPokemon.name"
             class="card relative flex flex-col items-center justify-center gap-3 py-4 px-8 sm:px-4 sm:text-sm"
         >
-            <span class="card py-1 px-2 font-pkmEmerald">{{ getLanguage().silhouette.silhouetteRotated }}</span>
+            <span class="card py-1 px-2 font-pkmEmerald">{{ text().silhouette.silhouetteRotated }}</span>
             <ResultSquare
                 class="md:transform-none"
                 :class="getRotation"
@@ -37,7 +37,7 @@
             <template #hint1
                 ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <div v-for="(field, i) in hintOne" :key="i" :value="field" class="flex flex-col gap-1">
-                        <span class="card items-center justify-center py-1 sm:py-0">{{ getLanguage().guessFieldTitles[field.title] }}</span>
+                        <span class="card items-center justify-center py-1 sm:py-0">{{ text().guessFieldTitles[field.title] }}</span>
                         <ResultSquare :guessResult="field.guessState" :guessText="field.text" :type="field.type" />
                     </div>
                 </div>
@@ -45,7 +45,7 @@
             <template #hint2>
                 <div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <p>
-                        {{ getLanguage().hints.startsWith }}
+                        {{ text().hints.startsWith }}
                         <b class="text-lg text-light-orange dark:!text-dark-orange">
                             {{ secretPokemon.name.charAt(0).toUpperCase() }}</b
                         >
@@ -92,7 +92,7 @@ import {
 } from '../constants';
 import * as game from '../services/game';
 import moment from 'moment-timezone';
-import { getLanguage } from '../services/language';
+import { text } from '../services/language';
 
 const store = useStore();
 const GAME_MODE = GameModes.Silhouette;
@@ -123,14 +123,14 @@ onBeforeMount(async () => {
 
 const silhouetteTwitterText = () => {
     const initialHeader =
-        componentStore.guesses.length === 1 ? getLanguage().twitterText.silhouette.headerFirstTry : getLanguage().twitterText.silhouette.headerXTries;
+        componentStore.guesses.length === 1 ? text().twitterText.silhouette.headerFirstTry : text().twitterText.silhouette.headerXTries;
 
     
     const headerWithPokemonNumber = initialHeader.replace("§1§", game.getCurrentPokemonNumber(GAME_MODE, moment()));
 
     const headerWithNumberOfGuesses = headerWithPokemonNumber.replace("§2§", componentStore.guesses.length)
 
-    const footer = getLanguage().twitterText.playAt;
+    const footer = text().twitterText.playAt;
 
     return headerWithNumberOfGuesses + "\n\n" + footer;
 };

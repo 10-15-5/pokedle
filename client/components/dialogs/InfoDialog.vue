@@ -4,42 +4,42 @@
             <h1 class="mb-2 text-center text-[32px] uppercase">About</h1>
             <div class="relative flex flex-row items-end">
                 <span class="relatives w-fit text-center font-pkmEmerald text-[20px]">
-                    {{ getLanguage().infoDialog.intro.welcome }} </span
+                    {{ text().infoDialog.intro.welcome }} </span
                 ><SpriteAnimation />
             </div>
             <p>
-                {{ getLanguage().infoDialog.intro.text }}
+                {{ text().infoDialog.intro.text }}
             </p>
             <hr class="divider" />
             <h1 class="mb-2 text-center font-pkmEmerald text-[32px] uppercase">How To Play</h1>
             <p class="my-2">
-                <b>{{ getLanguage().infoDialog.howToPlay.guesses[1].title }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guesses[1].text
+                <b>{{ text().infoDialog.howToPlay.guesses[1].title }}</b
+                >{{ text().infoDialog.howToPlay.guesses[1].text
                 }}
             </p>
             <p class="my-2">
-                <b>{{ getLanguage().infoDialog.howToPlay.guesses[2].title }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guesses[2].text
+                <b>{{ text().infoDialog.howToPlay.guesses[2].title }}</b
+                >{{ text().infoDialog.howToPlay.guesses[2].text
                 }}
             </p>
             <p class="my-2">
-                <b>{{ getLanguage().infoDialog.howToPlay.guesses[3].title }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guesses[3].text
+                <b>{{ text().infoDialog.howToPlay.guesses[3].title }}</b
+                >{{ text().infoDialog.howToPlay.guesses[3].text
                 }}
             </p>
             <p class="my-2">
-                <b>{{ getLanguage().infoDialog.howToPlay.guesses[4].title }}</b
-                >{{ getLanguage().infoDialog.howToPlay.guesses[4].text
+                <b>{{ text().infoDialog.howToPlay.guesses[4].title }}</b
+                >{{ text().infoDialog.howToPlay.guesses[4].text
                 }}
             </p>
             <img class="card mx-auto w-[600px]" :src="'./client/assets/game-examples/game-example.png'" />
 
             <hr class="divider" />
             <h1 class="mb-2 text-center font-pkmEmerald text-[32px] uppercase">
-                {{ getLanguage().infoDialog.habitats.habitats }}
+                {{ text().infoDialog.habitats.habitats }}
             </h1>
             <p>
-                {{ getLanguage().infoDialog.habitats.sourcedFrom }}
+                {{ text().infoDialog.habitats.sourcedFrom }}
                 <a class="link" href="https://bulbapedia.bulbagarden.net/wiki/List_of_Pok%C3%A9mon_by_habitat">
                     Bulbapedia
                 </a>
@@ -58,51 +58,51 @@
 
             <hr class="divider" />
             <h1 class="mb-2 text-center font-pkmEmerald text-[32px] uppercase">
-                {{ getLanguage().infoDialog.contribute.contribute }}
+                {{ text().infoDialog.contribute.contribute }}
             </h1>
             <p class="leading-8">
-                {{ getLanguage().infoDialog.contribute.wantToContribute }}
+                {{ text().infoDialog.contribute.wantToContribute }}
                 <br />
-                {{ getLanguage().infoDialog.contribute.helpNeeded }}
+                {{ text().infoDialog.contribute.helpNeeded }}
             </p>
             <ul class="ml-5 list-disc">
-                <li>{{ getLanguage().infoDialog.contribute.animations }}</li>
-                <li>{{ getLanguage().infoDialog.contribute.translation }}</li>
-                <li>{{ getLanguage().infoDialog.contribute.styling }}</li>
-                <li>{{ getLanguage().infoDialog.contribute.features }}</li>
+                <li>{{ text().infoDialog.contribute.animations }}</li>
+                <li>{{ text().infoDialog.contribute.translation }}</li>
+                <li>{{ text().infoDialog.contribute.styling }}</li>
+                <li>{{ text().infoDialog.contribute.features }}</li>
             </ul>
             <hr class="divider" />
             <h1 class="mb-2 text-center font-pkmEmerald text-[32px] uppercase">
-                {{ getLanguage().infoDialog.credit.credit }}
+                {{ text().infoDialog.credit.credit }}
             </h1>
             <div class="w-full leading-8">
-                <p class="mb-2">{{ getLanguage().infoDialog.credit.intro }}</p>
+                <p class="mb-2">{{ text().infoDialog.credit.intro }}</p>
                 <p class="mb-2">
-                    {{ getLanguage().infoDialog.credit.inspiredBy }}
+                    {{ text().infoDialog.credit.inspiredBy }}
                     <a class="link" href="https://loldle.net/">loldle.net</a>,
                     <a href="https://www.nytimes.com/games/wordle/index.html" class="link">wordle</a
                     >.
                 </p>
                 <p>
-                    <span class="font-extrabold">{{ getLanguage().infoDialog.credit.backgroundArtists }}</span>
+                    <span class="font-extrabold">{{ text().infoDialog.credit.backgroundArtists }}</span>
                     <br />
-                    <b>{{ getLanguage().infoDialog.credit.pokemonCollageBG }}</b>
-                    {{ getLanguage().infoDialog.credit.pokemonCollageBGCreator }}
+                    <b>{{ text().infoDialog.credit.pokemonCollageBG }}</b>
+                    {{ text().infoDialog.credit.pokemonCollageBGCreator }}
                     <br />
-                    <b>{{ getLanguage().infoDialog.credit.cuboneBG }}</b
-                    >{{ getLanguage().infoDialog.credit.cuboneBGCreator }}
+                    <b>{{ text().infoDialog.credit.cuboneBG }}</b
+                    >{{ text().infoDialog.credit.cuboneBGCreator }}
                     <br />
-                    <b>{{ getLanguage().infoDialog.credit.mtSilverBG }}</b>
+                    <b>{{ text().infoDialog.credit.mtSilverBG }}</b>
                     <a class="link" href="https://www.deviantart.com/serain">{{
-                        getLanguage().infoDialog.credit.mtSilverBGCreator
+                        text().infoDialog.credit.mtSilverBGCreator
                     }}</a>
                 </p>
-                <p>{{ getLanguage().infoDialog.credit.contactForCreditOrRemoval }}</p>
+                <p>{{ text().infoDialog.credit.contactForCreditOrRemoval }}</p>
             </div>
             <hr class="divider" />
-            <h1 class="mb-2 text-center text-[32px] uppercase">{{ getLanguage().infoDialog.contact.contact }}</h1>
+            <h1 class="mb-2 text-center text-[32px] uppercase">{{ text().infoDialog.contact.contact }}</h1>
             <p>
-                {{ getLanguage().infoDialog.contact.intro }}
+                {{ text().infoDialog.contact.intro }}
                 <br />
                 &#8594;
                 <a class="link ml-2 text-[24px] font-bold" href="mailto: pokedle.contact@gmail.com">
@@ -111,7 +111,7 @@
                 <br />
                 &#8594;
                 <a class="link ml-2 text-[24px] font-bold" href="https://twitter.com/pokedle">
-                    {{ getLanguage().infoDialog.contact.twitter }}
+                    {{ text().infoDialog.contact.twitter }}
                 </a>
             </p>
         </div>
@@ -121,7 +121,7 @@
 <script setup>
 import BaseDialog from './BaseDialog.vue';
 import SpriteAnimation from '../animations/SpriteAnimation.vue';
-import { getLanguage } from '../../services/language';
+import { text } from '../../services/language';
 const props = defineProps({
     isVisible: Boolean,
     onClose: Function,

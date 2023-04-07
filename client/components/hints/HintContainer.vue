@@ -5,7 +5,7 @@
     >
         <CornerSpriteAnimation v-if="!isShowHints && isHintOneUnlocked" :isShowNotification="isShowNotification"/>
         <p v-if="!isHintOneUnlocked" class="gap-2 p-2 px-3 sm:p-1 sm:px-2 sm:pt-2">
-            {{ getLanguage().hints.guessMoreTimesForHint }}
+            {{ text().hints.guessMoreTimesForHint }}
             <b class="text-light-orange dark:text-dark-orange">
                 {{ guessesRemainingForHintOne }}
             </b>
@@ -15,7 +15,7 @@
             class="flex w-full flex-row items-center justify-between gap-2 p-2 px-3 pb-1 sm:pb-1 sm:pt-2"
         >
             <div class="flex flex-row text-base">
-                <p>{{ isHintTwoUnlocked ? getLanguage().hints.hint : getLanguage().hints.hints }}</p>
+                <p>{{ isHintTwoUnlocked ? text().hints.hint : text().hints.hints }}</p>
             </div>
             <div>
                 <button class="pi pi-plus" @click="showHints"></button>
@@ -29,7 +29,7 @@
                     class="hint-tab-header ml-1 flex gap-1"
                     :class="isHintOneSelected ? 'hint-tab-header-active' : ''"
                 >
-                {{ getLanguage().hints.hint }} 1
+                {{ text().hints.hint }} 1
                     <div>
                         <span :class="isHintOneUnlocked ? 'pi pi-lock-open' : 'pi pi-lock'"></span>
                     </div>
@@ -40,7 +40,7 @@
                     class="hint-tab-header flex gap-1"
                     :class="isHintTwoSelected ? 'hint-tab-header-active' : ''"
                 >
-                {{ getLanguage().hints.hint }} 2
+                {{ text().hints.hint }} 2
                     <div>
                         <span :class="isHintTwoUnlocked ? 'pi pi-lock-open' : 'pi pi-lock'"></span>
                     </div>
@@ -51,7 +51,7 @@
                     class="hint-tab-header flex gap-1"
                     :class="isHintThreeSelected ? 'hint-tab-header-active' : ''"
                 >
-                {{ getLanguage().hints.hint }} 3
+                {{ text().hints.hint }} 3
                     <div>
                         <span :class="isHintThreeUnlocked ? 'pi pi-lock-open' : 'pi pi-lock'"></span>
                     </div>
@@ -78,7 +78,7 @@
 <script setup>
 import { computed, ref } from 'vue';
 import CornerSpriteAnimation from '../animations/CornerSpriteAnimation.vue';
-import { getLanguage } from '../../services/language';
+import { text } from '../../services/language';
 
 const props = defineProps({
     numberOfGuesses: {

@@ -1,0 +1,122 @@
+[
+    {
+        "color": "red",
+        "colors": [
+            { "color": "빨간색", "language": "korean" },
+            { "color": "rouge", "language": "french" },
+            { "color": "rot", "language": "german" },
+            { "color": "rojo", "language": "spanish" },
+            { "color": "rosso", "language": "italian" },
+            { "color": "red", "language": "english" },
+            { "color": "赤", "language": "japanese" }
+        ]
+    },
+    {
+        "color": "blue",
+        "colors": [
+            { "color": "파란색", "language": "korean" },
+            { "color": "bleu", "language": "french" },
+            { "color": "blau", "language": "german" },
+            { "color": "azul", "language": "spanish" },
+            { "color": "blu", "language": "italian" },
+            { "color": "blue", "language": "english" },
+            { "color": "青", "language": "japanese" }
+        ]
+    },
+    {
+        "color": "yellow",
+        "colors": [
+            { "color": "노란색", "language": "korean" },
+            { "color": "jaune", "language": "french" },
+            { "color": "gelb", "language": "german" },
+            { "color": "amarillo", "language": "spanish" },
+            { "color": "giallo", "language": "italian" },
+            { "color": "yellow", "language": "english" },
+            { "color": "黄色", "language": "japanese" }
+        ]
+    },
+    {
+        "color": "green",
+        "colors": [
+            { "color": "초록색", "language": "korean" },
+            { "color": "vert", "language": "french" },
+            { "color": "grün", "language": "german" },
+            { "color": "verde", "language": "spanish" },
+            { "color": "verde", "language": "italian" },
+            { "color": "green", "language": "english" },
+            { "color": "緑", "language": "japanese" }
+        ]
+    },
+    {
+        "color": "black",
+        "colors": [
+            { "color": "검정색", "language": "korean" },
+            { "color": "noir", "language": "french" },
+            { "color": "schwarz", "language": "german" },
+            { "color": "negro", "language": "spanish" },
+            { "color": "nero", "language": "italian" },
+            { "color": "black", "language": "english" },
+            { "color": "黒", "language": "japanese" }
+        ]
+    },
+    {
+        "color": "brown",
+        "colors": [
+            { "color": "갈색", "language": "korean" },
+            { "color": "Marron", "language": "french" },
+            { "color": "Braun", "language": "german" },
+            { "color": "Marrón", "language": "spanish" },
+            { "color": "Marrone", "language": "italian" },
+            { "color": "Brown", "language": "english" },
+            { "color": "茶色", "language": "japanese" }
+        ]
+    },
+    {
+        "color": "purple",
+        "colors": [
+            { "color": "보라색", "language": "korean" },
+            { "color": "Violet", "language": "french" },
+            { "color": "Lila", "language": "german" },
+            { "color": "Morado", "language": "spanish" },
+            { "color": "Viola", "language": "italian" },
+            { "color": "Purple", "language": "english" },
+            { "color": "紫色", "language": "japanese" }
+        ]
+    },
+    {
+        "color": "gray",
+        "colors": [
+            { "color": "회색", "language": "korean" },
+            { "color": "Gris", "language": "french" },
+            { "color": "Grau", "language": "german" },
+            { "color": "Gris", "language": "spanish" },
+            { "color": "Grigio", "language": "italian" },
+            { "color": "Gray", "language": "english" },
+            { "color": "灰色", "language": "japanese" }
+        ]
+    },
+    {
+        "color": "white",
+        "colors": [
+            { "color": "흰색", "language": "korean" },
+            { "color": "Blanc", "language": "french" },
+            { "color": "Weiß", "language": "german" },
+            { "color": "Blanco", "language": "spanish" },
+            { "color": "Bianco", "language": "italian" },
+            { "color": "White", "language": "english" },
+            { "color": "白色", "language": "japanese" }
+        ]
+    },
+    {
+        "color": "pink",
+        "colors": [
+            { "color": "분홍색", "language": "korean" },
+            { "color": "Rose", "language": "french" },
+            { "color": "Rosa", "language": "german" },
+            { "color": "Rosa", "language": "spanish" },
+            { "color": "Rosa", "language": "italian" },
+            { "color": "Pink", "language": "english" },
+            { "color": "ピンク", "language": "japanese" }
+        ]
+    }
+]
