@@ -1,4 +1,4 @@
-import allPokemonData from '../../server/data/pokemonData-v5-flavorText.json';
+import allPokemonData from '../../server/data/pokemonData-v6-translations.json';
 import { GuessState, GuessType } from '../constants.js';
 import { getRandomColor } from './game';
 

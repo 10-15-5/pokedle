@@ -23,7 +23,7 @@ ENV VITE_TZ=UTC
 
 # need to make sure relative file paths are correct, could use env to change path 
 #   but this would create discrepency between prod/dev
-COPY /server/data/pokemonData-v5-flavorText.json /app/server/data/
+COPY /server/data/pokemonData-v6-translations.json /app/server/data/
 
 RUN npm i
 

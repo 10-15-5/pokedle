@@ -70,7 +70,7 @@ import HintContainer from '../components/hints/HintContainer.vue';
 import PreviousPokemonCard from '../components/infoCards/PreviousPokemonCard.vue';
 import SearchField from '../components/SearchField.vue';
 import GameModeButton from '../components/buttons/GameModeButton.vue';
-import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
+import pokemonData from '../../server/data/pokemonData-v6-translations.json';
 import DailyGamesWonContainer from '../components/infoCards/DailyGamesWonContainer.vue';
 import { getGuessResults } from '../services/guess';
 import { useStore } from '../stores/store.js';

@@ -79,7 +79,7 @@ import SingeResultContainer from '../components/result/SingeResultContainer.vue'
 import DailyGamesWonContainer from '../components/infoCards/DailyGamesWonContainer.vue';
 import PreviousPokemonCard from '../components/infoCards/PreviousPokemonCard.vue';
 import { reactive, ref, onBeforeMount, computed } from 'vue';
-import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
+import pokemonData from '../../server/data/pokemonData-v6-translations.json';
 import { useStore } from '../stores/store.js';
 import HintContainer from '../components/hints/HintContainer.vue';
 import { isCorrectGuess, getGuessResults } from '../services/guess';
