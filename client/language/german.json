@@ -1,11 +1,9 @@
 {
-    "test": "TEST GERMAN",
     "resultCards": {
         "none": "keiner",
         "yes": "ja",
         "no": "nein",
         "generation": "Gen."
-
     },
     "gameModes": {
         "Classic": "Classic",

@@ -9,6 +9,7 @@ import Dialog from 'primevue/dialog';
 import './style.css';
 import 'primeicons/primeicons.css';
 import moment from 'moment-timezone';
+//import "primevue/resources/themes/tailwind-light/theme.css";
 
 moment.tz.setDefault(import.meta.env.VITE_TZ);
 

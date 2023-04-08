@@ -4,8 +4,13 @@ import * as german from '../language/german.json';
 import types from '../language/types.json';
 import colors from '../language/colors.json';
 
+const languages = ['german','english'];
+
 const setLanguage = (lang) => {
-    localStorage.language = lang;
+    if(lang && typeof lang === "string" && languages.includes(lang.toLowerCase())){
+        localStorage.language = lang;
+        return true;
+    }
 };
 
 const getLanguage = () => localStorage.language || 'english';
@@ -46,5 +51,6 @@ export {
     getFlavortextLanguageFrom,
     translateType,
     translateYesOrNo,
-    translateColor
+    translateColor,
+    languages
 };

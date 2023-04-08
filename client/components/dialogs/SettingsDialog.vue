@@ -42,6 +42,12 @@
                         <SvgIcon type="mdi" :path="mdiVolumeOff" class="h-[30px] w-[30px]" /> </template
                 ></BaseToggle>
             </div>
+            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
+                <p class="font-pkmEmerald text-[24px]">Language:</p>
+                <div class="justify-content-center flex relative">
+                    <Dropdown :selectedItem="selectedLanguage" :items="languages" @onSelectItem="setNewLanguage" />
+                </div>
+            </div>
         </div>
     </BaseDialog>
 </template>
@@ -49,6 +55,7 @@
 <script setup>
 import BaseDialog from './BaseDialog.vue';
 import BaseToggle from '../buttons/BaseToggle.vue';
+import Dropdown from '../dropdowns/Dropdown.vue';
 import SvgIcon from '@jamescoyle/vue-icon';
 import {
     mdiStarOffOutline,
@@ -62,13 +69,20 @@ import {
 } from '@mdi/js';
 import { useStore } from '../../stores/store.js';
 import { text } from '../../services/language';
+import { getLanguage, setLanguage, languages } from '../../services/language';
+import { ref } from 'vue';
 
+const setNewLanguage = (lang) => {
+    if(setLanguage(lang)) {
+        selectedLanguage.value = lang;
+    }
+}
+
+const selectedLanguage = ref(getLanguage());
 const store = useStore();
-
+//'korean', 'french', 'german', 'spanish', 'italian', 'english', 'japanese'
 const props = defineProps({
     isVisible: Boolean,
     onClose: Function,
 });
 </script>
-
-<style></style>
