@@ -44,9 +44,7 @@
             </div>
             <div class="flex w-full flex-row justify-between px-20 sm:px-0">
                 <p class="font-pkmEmerald text-[24px]">Language:</p>
-                <div class="justify-content-center flex relative">
-                    <Dropdown :selectedItem="selectedLanguage" :items="languages" @onSelectItem="setNewLanguage" />
-                </div>
+                <Dropdown :selectedItem="selectedLanguage" :items="languages" @onSelectItem="setNewLanguage" />
             </div>
         </div>
     </BaseDialog>
@@ -73,10 +71,10 @@ import { getLanguage, setLanguage, languages } from '../../services/language';
 import { ref } from 'vue';
 
 const setNewLanguage = (lang) => {
-    if(setLanguage(lang)) {
+    if (setLanguage(lang)) {
         selectedLanguage.value = lang;
     }
-}
+};
 
 const selectedLanguage = ref(getLanguage());
 const store = useStore();

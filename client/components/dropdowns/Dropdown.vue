@@ -1,13 +1,13 @@
 <template>
     <div class="relative font-pkmEmerald">
         <button
-            class="card flex items-center justify-center !h-10 !w-20 capitalize"
+            class="card flex items-center justify-center !h-10 !w-20 capitalize text-lg"
             type="button"
             @click="show = !show"
         >
             {{ selectedItem }}
             <svg
-                class="ml-2 h-4 w-4"
+                class="ml-1 h-4 w-4"
                 aria-hidden="true"
                 fill="none"
                 stroke="currentColor"
@@ -23,7 +23,7 @@
                 v-for="(item, k) in items"
                 :key="k"
                 :value="item"
-                class="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white capitalize pl-1 py-1 cursor-pointer"
+                class="hover:bg-gray-100 dark:hover:bg-gray-600 dark:hover:text-white capitalize pl-1 py-1 cursor-pointer text-lg"
                 @click="selectItem(item)"
                 >{{ item }}</span
             >
