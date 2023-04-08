@@ -4,10 +4,10 @@ import * as german from '../language/german.json';
 import types from '../language/types.json';
 import colors from '../language/colors.json';
 
-const languages = ['german','english'];
+const languages = ['german', 'english'];
 
 const setLanguage = (lang) => {
-    if(lang && typeof lang === "string" && languages.includes(lang.toLowerCase())){
+    if (lang && typeof lang === 'string' && languages.includes(lang.toLowerCase())) {
         localStorage.language = lang;
         return true;
     }
@@ -36,12 +36,16 @@ const getFlavortextLanguageFrom = (secretPokemon) =>
 
 const translateType = (type) => types.find((e) => e.type === type).types.find((t) => t.language === getLanguage()).type;
 
-const translateColor = (color) => colors.find((e) => e.color === color).colors.find((c) => c.language === getLanguage()).color;
+const translateColor = (color) =>
+    colors.find((e) => e.color === color).colors.find((c) => c.language === getLanguage()).color;
 
 const getGuessFieldTooltipsFromIndex = (index) => {
     const values = Object.values(text().guessFieldTooltips);
     return values.at(index);
 };
+
+const getTranslatedName = (names) => 
+    names.find((e) => e.language === getLanguage()).name;
 
 export {
     setLanguage,
@@ -52,5 +56,6 @@ export {
     translateType,
     translateYesOrNo,
     translateColor,
-    languages
+    languages,
+    getTranslatedName
 };
