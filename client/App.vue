@@ -72,12 +72,14 @@ import {
 import { clearLocalStorageGameMode } from './services/localStorage';
 import { playWinnerSound } from './services/sound';
 import { GameModes, DateOfFirstPokeldeGameClassic } from './constants';
+import { setLanguageFromLanguageCode } from './services/language.js';
 
 const store = useStore();
 const isLoaded = ref(false);
 const isDevelopment = computed(() => ENVIRONMENT === 'development');
 
 onBeforeMount(async () => {
+    setLanguageFromLanguageCode();
     store.loadTheme();
     loadIsHintMode();
     loadIsShiny();

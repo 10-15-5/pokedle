@@ -7,16 +7,39 @@ import colors from '../language/colors.json';
 const languages = ['german', 'english'];
 
 const setLanguage = (lang) => {
+
     if (lang && typeof lang === 'string' && languages.includes(lang.toLowerCase())) {
         localStorage.language = lang;
         return true;
     }
 };
 
+function setLanguageFromLanguageCode() {
+
+    if (localStorage.language) return;
+
+    const preferredLanguages = navigator.languages || [navigator.language];
+    // Use the first preferred language as the user's language
+    const userLanguage = preferredLanguages[0];
+
+    const languageMap = {
+        de: languages[0],
+        en: languages[1],
+    };
+
+    const mappedLanguage = languageMap[userLanguage.substr(0, 2)];
+
+    const lang = languages.includes(mappedLanguage) ? mappedLanguage : 'english'
+
+    setLanguage(lang)
+}
+
 const getLanguage = () => localStorage.language || 'english';
 
 const text = () => {
-    localStorage.getItem('language') == null ? setLanguage('english') : false;
+
+    !(localStorage.language) ? setLanguage('english') : false;
+
     switch (localStorage.language) {
         case 'english':
             return english;
@@ -44,8 +67,7 @@ const getGuessFieldTooltipsFromIndex = (index) => {
     return values.at(index);
 };
 
-const getTranslatedName = (names) => 
-    names.find((e) => e.language === getLanguage()).name;
+const getTranslatedName = (names) => names.find((e) => e.language === getLanguage()).name;
 
 export {
     setLanguage,
@@ -57,5 +79,6 @@ export {
     translateYesOrNo,
     translateColor,
     languages,
-    getTranslatedName
+    getTranslatedName,
+    setLanguageFromLanguageCode,
 };
