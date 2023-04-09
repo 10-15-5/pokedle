@@ -64,7 +64,7 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
             type: GuessType.Habitat,
         },
         generation: {
-            text: text().resultCards.generation + ' ' + pokemonData.generation,
+            text: pokemonData.generation,
             guessState:
                 pokemonData.generation === secretPokemon.generation
                     ? GuessState.CorrectGuess
