@@ -32,7 +32,7 @@
 </template>
 
 <script setup>
-import { onMounted, ref } from 'vue';
+import { ref } from 'vue';
 const emit = defineEmits(['onSelectItem']);
 
 const show = ref(false);
@@ -44,6 +44,6 @@ const selectItem = (item) => {
 
 const props = defineProps({
     selectedItem: String,
-    items: [],
+    items: Array
 });
 </script>
