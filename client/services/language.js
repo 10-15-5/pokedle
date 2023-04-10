@@ -1,13 +1,18 @@
 import * as test from '../language/test.json';
 import * as english from '../language/english.json';
 import * as german from '../language/german.json';
+import * as spanish from '../language/spanish.json';
+import * as korean from '../language/korean.json';
+import * as italian from '../language/italian.json';
+import * as french from '../language/french.json';
+import * as japanese from '../language/japanese.json';
+
 import types from '../language/types.json';
 import colors from '../language/colors.json';
 
-const languages = ['german', 'english'];
+const languages = ['german', 'english', 'french', 'italian', 'japanese', 'korean', 'spanish'];
 
 const setLanguage = (lang) => {
-
     if (lang && typeof lang === 'string' && languages.includes(lang.toLowerCase())) {
         localStorage.language = lang;
         return true;
@@ -15,7 +20,6 @@ const setLanguage = (lang) => {
 };
 
 function setLanguageFromLanguageCode() {
-
     if (localStorage.language) return;
 
     const preferredLanguages = navigator.languages || [navigator.language];
@@ -29,22 +33,31 @@ function setLanguageFromLanguageCode() {
 
     const mappedLanguage = languageMap[userLanguage.substr(0, 2)];
 
-    const lang = languages.includes(mappedLanguage) ? mappedLanguage : 'english'
+    const lang = languages.includes(mappedLanguage) ? mappedLanguage : 'english';
 
-    setLanguage(lang)
+    setLanguage(lang);
 }
 
 const getLanguage = () => localStorage.language || 'english';
 
 const text = () => {
-
-    !(localStorage.language) ? setLanguage('english') : false;
+    !localStorage.language ? setLanguage('english') : false;
 
     switch (localStorage.language) {
         case 'english':
             return english;
         case 'german':
             return german;
+        case 'spanish':
+            return spanish;
+        case 'korean':
+            return korean;
+        case 'japanese':
+            return japanese;
+        case 'italian':
+            return italian;
+        case 'french':
+            return french;
         case 'test':
             return test;
         default:

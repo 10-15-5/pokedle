@@ -1,79 +1,79 @@
 {
     "resultCards": {
-        "none": "Keine",
-        "yes": "Ja",
-        "no": "Nein",
-        "generation": "Gen."
+        "none": "aucun",
+        "yes": "oui",
+        "no": "non",
+        "generation": "Gén."
     },
     "gameModes": {
-        "Classic": "Klassisch",
-        "Flavortext": "Fließtext",
+        "Classic": "Classique",
+        "Flavortext": "Texte de saveur",
         "Silhouette": "Silhouette"
     },
     "searchField": {
-        "typePokemon": "Typ des Pokemons..."
+        "typePokemon": "Type de Pokemon..."
     },
     "guessType": {
         "pokemon": "Pokemon",
-        "text": "Text",
-        "habitat": "Lebensraum",
+        "text": "Texte",
+        "habitat": "Habitat",
         "blackout": "Blackout"
     },
-    "close": "Schließen",
+    "close": "Fermer",
     "silhouette": {
-        "silhouetteRotated": "Silhouette, gedreht"
+        "silhouetteRotated": "Silhouette, Tournée"
     },
     "settingsDialog": {
-        "settings": "EINSTELLUNGEN",
-        "darkMode": "Dunkelmodus",
-        "shinyOnly": "Nur schillernde Pokémon",
-        "hintMode": "Hinweis-Modus",
-        "sound": "Ton"
+        "settings": "PARAMÈTRES",
+        "darkMode": "Mode sombre",
+        "shinyOnly": "Uniquement brillant",
+        "hintMode": "Mode indice",
+        "sound": "Son"
     },
     "statisticsDialog": {
-        "statistics": "STATISTIKEN",
-        "comingSoon": "Demnächst...."
+        "statistics": "STATISTIQUES",
+        "comingSoon": "Prochainement..."
     },
     "hints": {
-        "guessMoreTimesForHint": "Verbleibende Hinweis-Versuche: ",
-        "hint": "Hinweis",
-        "hints": "Hinweise",
-        "startsWith": "Geheimes Pokémon beginnt mit dem Buchstaben: "
+        "guessMoreTimesForHint": "Essais restants pour l'INDICE: ",
+        "hint": "INDICE",
+        "hints": "INDICES",
+        "startsWith": "Le Pokemon secret commence par la lettre: "
     },
     "dailyGamesWon": {
-        "trainersAlreadyFoundOut": " Trainer bereits entdeckt!"
+        "trainersAlreadyFoundOut": " Dresseurs trouvés !"
     },
     "previousPokemon": {
-        "yesterdaysPokemonWas": "Das gestrige Pokémon war "
+        "yesterdaysPokemonWas": "Le Pokemon d'hier était "
     },
     "gameWinContainer": {
-        "victory": "SIEG!",
-        "youGuessed": "Du hast geraten: ",
-        "nextPokemonWillAppearIn": "Das nächste Pokémon erscheint in: "
+        "victory": "VICTOIRE!",
+        "youGuessed": "Tu as deviné: ",
+        "nextPokemonWillAppearIn": "Le prochain Pokemon apparaîtra dans :"
     },
     "guessFieldTitles": {
         "pokemon": "Pokemon",
-        "type1": "Typ 1",
-        "type2": "Typ 2",
-        "evolutionLevel": "Entwicklungsstufe",
-        "evolutions": "Voll entwickelt",
-        "color": "Farbe",
-        "habitat": "Lebensraum",
-        "generation": "Generation",
-        "shape": "Form",
-        "evolutionLevelShort": "Entwick. Stufe",
-        "evolutionsShort": "Voll entwick.",
-        "generationShort": "Gen."
+        "type1": "Type 1",
+        "type2": "Type 2",
+        "evolutionLevel": "Niveau d'évolution",
+        "evolutions": "Entièrement évolué",
+        "color": "Couleur",
+        "habitat": "Habitat",
+        "generation": "Génération",
+        "shape": "Forme",
+        "evolutionLevelShort": "Niv. Évol.",
+        "evolutionsShort": "Evol. Compl.",
+        "generationShort": "Gén."
     },
     "guessFieldTooltips": {
         "pokemon": "",
-        "type1": "Primärer Typ",
-        "type2": "Sekundärer Typ",
-        "evolutionLevel": "Aktuelle Entwicklungsstufe; 1, 2 oder 3",
-        "evolutions": "Ja oder Nein",
-        "color": "Rot, Grün, Blau usw.",
-        "habitat": "Meer, Höhle, Grasland usw.",
-        "generation": "Generation 1, 2 oder 3"
+        "type1": "Type principal",
+        "type2": "Type secondaire",
+        "evolutionLevel": "Étape d'évolution actuelle; 1, 2 ou 3",
+        "evolutions": "Oui ou non",
+        "color": "Rouge, Vert, Bleu, etc.",
+        "habitat": "Mer, Grotte, Prairies, etc.",
+        "generation": "Génération 1, 2 ou 3"
     },
     "infoDialog": {
         "intro": {

@@ -20,6 +20,61 @@
         "blackout": "Blackout"
     },
     "close": "Close",
+    "silhouette": {
+        "silhouetteRotated": "Silhouette, Rotated"
+    },
+    "settingsDialog": {
+        "settings": "SETTINGS",
+        "darkMode": "DarkMode",
+        "shinyOnly": "Shiny Only",
+        "hintMode": "Hint Mode",
+        "sound": "Sound"
+    },
+    "statisticsDialog": {
+        "statistics": "STATISTICS",
+        "comingSoon": "Coming Soon...."
+    },
+    "hints": {
+        "guessMoreTimesForHint": "Guesses left for HINT: ",
+        "hint": "HINT",
+        "hints": "HINTS",
+        "startsWith": "Secret Pokemon Starts With The Letter: "
+    },
+    "dailyGamesWon": {
+        "trainersAlreadyFoundOut": " Trainers Already Found Out!"
+    },
+    "previousPokemon": {
+        "yesterdaysPokemonWas": "Yesterdays Pokemon Was "
+    },
+    "gameWinContainer": {
+        "victory": "VICTORY!",
+        "youGuessed": "You Guessed: ",
+        "nextPokemonWillAppearIn": "Next Pokemon Will Appear In :"
+    },
+    "guessFieldTitles": {
+        "pokemon": "Pokemon",
+        "type1": "Type 1",
+        "type2": "Type 2",
+        "evolutionLevel": "Evolution Level",
+        "evolutions": "Fully Evolved",
+        "color": "Color",
+        "habitat": "Habitat",
+        "generation": "Generation",
+        "shape": "Shape",
+        "evolutionLevelShort": "Evol. Lvl.",
+        "evolutionsShort": "Fully Evol.",
+        "generationShort": "Gen."
+    },
+    "guessFieldTooltips": {
+        "pokemon": "",
+        "type1": "Primary Type",
+        "type2": "Secondary Type",
+        "evolutionLevel": "Current Evolution Stage; 1, 2 or 3",
+        "evolutions": "Yes or No",
+        "color": "Red, Green, Blue etc.",
+        "habitat": "Sea, Cave, Grasslands etc.",
+        "generation": "Generation 1, 2 or 3"
+    },
     "infoDialog": {
         "intro": {
             "welcome": "Welcome to the world of POKéMON!",
@@ -78,61 +133,6 @@
             "intro": "If you have any questions/feedback/bug reports feel free to contact me on one of the following below:",
             "twitter": "Twitter"
         }
-    },
-    "silhouette": {
-        "silhouetteRotated": "Silhouette, Rotated"
-    },
-    "settingsDialog": {
-        "settings": "SETTINGS",
-        "darkMode": "DarkMode",
-        "shinyOnly": "Shiny Only",
-        "hintMode": "Hint Mode",
-        "sound": "Sound"
-    },
-    "statisticsDialog": {
-        "statistics": "STATISTICS",
-        "comingSoon": "Coming Soon...."
-    },
-    "hints": {
-        "guessMoreTimesForHint": "Guesses left for HINT: ",
-        "hint": "HINT",
-        "hints": "HINTS",
-        "startsWith": "Secret Pokemon Starts With The Letter: "
-    },
-    "dailyGamesWon": {
-        "trainersAlreadyFoundOut": " Trainers Already Found Out!"
-    },
-    "previousPokemon": {
-        "yesterdaysPokemonWas": "Yesterdays Pokemon Was "
-    },
-    "gameWinContainer": {
-        "victory": "VICTORY!",
-        "youGuessed": "You Guessed: ",
-        "nextPokemonWillAppearIn": "Next Pokemon Will Appear In :"
-    },
-    "guessFieldTitles": {
-        "pokemon": "Pokemon",
-        "type1": "Type 1",
-        "type2": "Type 2",
-        "evolutionLevel": "Evolution Level",
-        "evolutions": "Fully Evolved",
-        "color": "Color",
-        "habitat": "Habitat",
-        "generation": "Generation",
-        "shape": "Shape",
-        "evolutionLevelShort": "Evol. Lvl.",
-        "evolutionsShort": "Fully Evol.",
-        "generationShort": "Gen."
-    },
-    "guessFieldTooltips": {
-        "pokemon": "",
-        "type1": "Primary Type",
-        "type2": "Secondary Type",
-        "evolutionLevel": "Current Evolution Stage; 1, 2 or 3",
-        "evolutions": "Yes or No",
-        "color": "Red, Green, Blue etc.",
-        "habitat": "Sea, Cave, Grasslands etc.",
-        "generation": "Generation 1, 2 or 3"
     },
     "twitterText": {
         "playAt": "Play at pokedle.gg 🎮!",

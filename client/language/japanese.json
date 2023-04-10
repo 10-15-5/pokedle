@@ -1,79 +1,79 @@
 {
     "resultCards": {
-        "none": "Keine",
-        "yes": "Ja",
-        "no": "Nein",
-        "generation": "Gen."
+        "none": "なし",
+        "yes": "はい",
+        "no": "いいえ",
+        "generation": "第"
     },
     "gameModes": {
-        "Classic": "Klassisch",
-        "Flavortext": "Fließtext",
-        "Silhouette": "Silhouette"
+        "Classic": "クラシック",
+        "Flavortext": "フレーバーテキスト",
+        "Silhouette": "シルエット"
     },
     "searchField": {
-        "typePokemon": "Typ des Pokemons..."
+        "typePokemon": "タイプで検索..."
     },
     "guessType": {
-        "pokemon": "Pokemon",
-        "text": "Text",
-        "habitat": "Lebensraum",
-        "blackout": "Blackout"
+        "pokemon": "ポケモン",
+        "text": "テキスト",
+        "habitat": "生息地",
+        "blackout": "ブラックアウト"
     },
-    "close": "Schließen",
+    "close": "閉じる",
     "silhouette": {
-        "silhouetteRotated": "Silhouette, gedreht"
+        "silhouetteRotated": "シルエット、回転"
     },
     "settingsDialog": {
-        "settings": "EINSTELLUNGEN",
-        "darkMode": "Dunkelmodus",
-        "shinyOnly": "Nur schillernde Pokémon",
-        "hintMode": "Hinweis-Modus",
-        "sound": "Ton"
+        "settings": "設定",
+        "darkMode": "ダークモード",
+        "shinyOnly": "輝くポケモンのみ",
+        "hintMode": "ヒントモード",
+        "sound": "サウンド"
     },
     "statisticsDialog": {
-        "statistics": "STATISTIKEN",
-        "comingSoon": "Demnächst...."
+        "statistics": "統計",
+        "comingSoon": "近日公開...."
     },
     "hints": {
-        "guessMoreTimesForHint": "Verbleibende Hinweis-Versuche: ",
-        "hint": "Hinweis",
-        "hints": "Hinweise",
-        "startsWith": "Geheimes Pokémon beginnt mit dem Buchstaben: "
+        "guessMoreTimesForHint": "ヒントまであと",
+        "hint": "ヒント",
+        "hints": "ヒント",
+        "startsWith": "秘密のポケモンは以下の文字で始まります: "
     },
     "dailyGamesWon": {
-        "trainersAlreadyFoundOut": " Trainer bereits entdeckt!"
+        "trainersAlreadyFoundOut": " トレーナー発見済み！"
     },
     "previousPokemon": {
-        "yesterdaysPokemonWas": "Das gestrige Pokémon war "
+        "yesterdaysPokemonWas": "昨日のポケモンは"
     },
     "gameWinContainer": {
-        "victory": "SIEG!",
-        "youGuessed": "Du hast geraten: ",
-        "nextPokemonWillAppearIn": "Das nächste Pokémon erscheint in: "
+        "victory": "勝利！",
+        "youGuessed": "あなたが当てたのは: ",
+        "nextPokemonWillAppearIn": "次のポケモンまであと:"
     },
     "guessFieldTitles": {
-        "pokemon": "Pokemon",
-        "type1": "Typ 1",
-        "type2": "Typ 2",
-        "evolutionLevel": "Entwicklungsstufe",
-        "evolutions": "Voll entwickelt",
-        "color": "Farbe",
-        "habitat": "Lebensraum",
-        "generation": "Generation",
-        "shape": "Form",
-        "evolutionLevelShort": "Entwick. Stufe",
-        "evolutionsShort": "Voll entwick.",
-        "generationShort": "Gen."
+        "pokemon": "ポケモン",
+        "type1": "タイプ1",
+        "type2": "タイプ2",
+        "evolutionLevel": "進化段階",
+        "evolutions": "最終進化形態",
+        "color": "色",
+        "habitat": "生息地",
+        "generation": "世代",
+        "shape": "形状",
+        "evolutionLevelShort": "進化",
+        "evolutionsShort": "最終",
+        "generationShort": "第"
     },
     "guessFieldTooltips": {
         "pokemon": "",
-        "type1": "Primärer Typ",
-        "type2": "Sekundärer Typ",
-        "evolutionLevel": "Aktuelle Entwicklungsstufe; 1, 2 oder 3",
-        "evolutions": "Ja oder Nein",
-        "color": "Rot, Grün, Blau usw.",
-        "habitat": "Meer, Höhle, Grasland usw.",
-        "generation": "Generation 1, 2 oder 3"
+        "type1": "主タイプ",
+        "type2": "副タイプ",
+        "evolutionLevel": "現在の進化段階; 1, 2, 3",
+        "evolutions": "はいまたはいいえ",
+        "color": "赤、緑、青など",
+        "habitat": "海、洞窟、草原など",
+        "generation": "第1、2、3世代"
     },
     "infoDialog": {
         "intro": {

@@ -1,79 +1,79 @@
 {
     "resultCards": {
-        "none": "Keine",
-        "yes": "Ja",
-        "no": "Nein",
-        "generation": "Gen."
+        "none": "없음",
+        "yes": "예",
+        "no": "아니오",
+        "generation": "제."
     },
     "gameModes": {
-        "Classic": "Klassisch",
-        "Flavortext": "Fließtext",
-        "Silhouette": "Silhouette"
+        "Classic": "클래식",
+        "Flavortext": "맛보기",
+        "Silhouette": "실루엣"
     },
     "searchField": {
-        "typePokemon": "Typ des Pokemons..."
+        "typePokemon": "포켓몬 타입..."
     },
     "guessType": {
-        "pokemon": "Pokemon",
-        "text": "Text",
-        "habitat": "Lebensraum",
-        "blackout": "Blackout"
+        "pokemon": "포켓몬",
+        "text": "텍스트",
+        "habitat": "서식지",
+        "blackout": "블랙아웃"
     },
-    "close": "Schließen",
+    "close": "닫기",
     "silhouette": {
-        "silhouetteRotated": "Silhouette, gedreht"
+        "silhouetteRotated": "실루엣, 회전"
     },
     "settingsDialog": {
-        "settings": "EINSTELLUNGEN",
-        "darkMode": "Dunkelmodus",
-        "shinyOnly": "Nur schillernde Pokémon",
-        "hintMode": "Hinweis-Modus",
-        "sound": "Ton"
+        "settings": "설정",
+        "darkMode": "다크 모드",
+        "shinyOnly": "빛나는 포켓몬만",
+        "hintMode": "힌트 모드",
+        "sound": "소리"
     },
     "statisticsDialog": {
-        "statistics": "STATISTIKEN",
-        "comingSoon": "Demnächst...."
+        "statistics": "통계",
+        "comingSoon": "곧 출시 예정입니다...."
     },
     "hints": {
-        "guessMoreTimesForHint": "Verbleibende Hinweis-Versuche: ",
-        "hint": "Hinweis",
-        "hints": "Hinweise",
-        "startsWith": "Geheimes Pokémon beginnt mit dem Buchstaben: "
+        "guessMoreTimesForHint": "남은 힌트 시도 횟수: ",
+        "hint": "힌트",
+        "hints": "힌트",
+        "startsWith": "비밀 포켓몬의 이름 첫 글자: "
     },
     "dailyGamesWon": {
-        "trainersAlreadyFoundOut": " Trainer bereits entdeckt!"
+        "trainersAlreadyFoundOut": " 트레이너를 이미 찾았습니다!"
     },
     "previousPokemon": {
-        "yesterdaysPokemonWas": "Das gestrige Pokémon war "
+        "yesterdaysPokemonWas": "어제의 포켓몬은 "
     },
     "gameWinContainer": {
-        "victory": "SIEG!",
-        "youGuessed": "Du hast geraten: ",
-        "nextPokemonWillAppearIn": "Das nächste Pokémon erscheint in: "
+        "victory": "승리!",
+        "youGuessed": "당신이 추측한 것은: ",
+        "nextPokemonWillAppearIn": "다음 포켓몬이 나타날 시간: "
     },
     "guessFieldTitles": {
-        "pokemon": "Pokemon",
-        "type1": "Typ 1",
-        "type2": "Typ 2",
-        "evolutionLevel": "Entwicklungsstufe",
-        "evolutions": "Voll entwickelt",
-        "color": "Farbe",
-        "habitat": "Lebensraum",
-        "generation": "Generation",
-        "shape": "Form",
-        "evolutionLevelShort": "Entwick. Stufe",
-        "evolutionsShort": "Voll entwick.",
-        "generationShort": "Gen."
+        "pokemon": "포켓몬",
+        "type1": "타입 1",
+        "type2": "타입 2",
+        "evolutionLevel": "진화 단계",
+        "evolutions": "완전 진화",
+        "color": "색깔",
+        "habitat": "서식지",
+        "generation": "세대",
+        "shape": "모양",
+        "evolutionLevelShort": "진화",
+        "evolutionsShort": "완전 진화",
+        "generationShort": "제."
     },
     "guessFieldTooltips": {
         "pokemon": "",
-        "type1": "Primärer Typ",
-        "type2": "Sekundärer Typ",
-        "evolutionLevel": "Aktuelle Entwicklungsstufe; 1, 2 oder 3",
-        "evolutions": "Ja oder Nein",
-        "color": "Rot, Grün, Blau usw.",
-        "habitat": "Meer, Höhle, Grasland usw.",
-        "generation": "Generation 1, 2 oder 3"
+        "type1": "기본 타입",
+        "type2": "보조 타입",
+        "evolutionLevel": "현재 진화 단계; 1, 2 또는 3",
+        "evolutions": "예 또는 아니오",
+        "color": "빨강, 초록, 파랑 등",
+        "habitat": "바다",
+        "generation": "1세대, 2세대, 또는 3세대"
     },
     "infoDialog": {
         "intro": {
