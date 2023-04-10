@@ -10,7 +10,7 @@
             v-else-if="!store.isSilhouetteGameWon && secretPokemon.name"
             class="card relative flex flex-col items-center justify-center gap-3 py-4 px-8 sm:px-4 sm:text-sm"
         >
-            <span class="card py-1 px-2 font-pkmEmerald">Silhouette, Rotated</span>
+            <span class="card py-1 px-2 font-pkmEmerald">{{ text().silhouette.silhouetteRotated }}</span>
             <ResultSquare
                 class="md:transform-none"
                 :class="getRotation"
@@ -37,7 +37,9 @@
             <template #hint1
                 ><div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <div v-for="(field, i) in hintOne" :key="i" :value="field" class="flex flex-col gap-1">
-                        <span class="card items-center justify-center py-1 sm:py-0">{{ field.title }}</span>
+                        <span class="card items-center justify-center py-1 sm:py-0">{{
+                            text().guessFieldTitles[field.title]
+                        }}</span>
                         <ResultSquare :guessResult="field.guessState" :guessText="field.text" :type="field.type" />
                     </div>
                 </div>
@@ -45,9 +47,9 @@
             <template #hint2>
                 <div class="flex flex-row items-center justify-center gap-6 sm:gap-2">
                     <p>
-                        Secret Pokemon Starts With The Letter:
+                        {{ text().hints.startsWith }}
                         <b class="text-lg text-light-orange dark:!text-dark-orange">
-                            {{ secretPokemon.name.charAt(0).toUpperCase() }}</b
+                            {{ getTranslatedName(secretPokemon.names).charAt(0) }}</b
                         >
                     </p>
                 </div>
@@ -55,7 +57,7 @@
         </HintContainer>
         <DailyGamesWonContainer v-if="!componentStore.guesses.length" :dailyGamesWon="store.dailySilhouetteGamesWon" />
         <div v-if="componentStore.guesses.length" class="flex flex-col gap-1">
-            <SingleResultHeader :headerText="GuessType.Pokemon" />
+            <SingleResultHeader />
             <SingeResultContainer
                 v-for="(guess, i) in componentStore.guesses"
                 :key="guess"
@@ -65,7 +67,7 @@
                 :isCorrect="isCorrectGuess(guess, secretPokemon.name)"
             />
         </div>
-        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
+        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.names" />
     </div>
 </template>
 
@@ -79,7 +81,7 @@ import SingeResultContainer from '../components/result/SingeResultContainer.vue'
 import DailyGamesWonContainer from '../components/infoCards/DailyGamesWonContainer.vue';
 import PreviousPokemonCard from '../components/infoCards/PreviousPokemonCard.vue';
 import { reactive, ref, onBeforeMount, computed } from 'vue';
-import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
+import pokemonData from '../../server/data/pokemonData-v6-translations.json';
 import { useStore } from '../stores/store.js';
 import HintContainer from '../components/hints/HintContainer.vue';
 import { isCorrectGuess, getGuessResults } from '../services/guess';
@@ -92,6 +94,7 @@ import {
 } from '../constants';
 import * as game from '../services/game';
 import moment from 'moment-timezone';
+import { getTranslatedName, text } from '../services/language';
 
 const store = useStore();
 const GAME_MODE = GameModes.Silhouette;
@@ -116,21 +119,27 @@ const rotate = ['!rotate-90', '!rotate-180', '!-rotate-90'];
 const getRotation = computed(() => rotate[Math.floor(Math.random() * rotate.length)]);
 
 onBeforeMount(async () => {
-    await Promise.all([game.loadGameData(GAME_MODE,setHintOne, secretPokemon,componentStore), game.setDailyGamesWonCount(GAME_MODE), updateYesterdaysPokemon()]);
+    await Promise.all([
+        game.loadGameData(GAME_MODE, setHintOne, secretPokemon, componentStore),
+        game.setDailyGamesWonCount(GAME_MODE),
+        updateYesterdaysPokemon(),
+    ]);
     isLoaded.value = true;
 });
 
 const silhouetteTwitterText = () => {
-    const sub1 =
+    const initialHeader =
         componentStore.guesses.length === 1
-            ? 'FIRST TRY 🎰🍀🥳🤩'
-            : `in ${componentStore.guesses.length} tries!🍇🥭🍒💖`;
+            ? text().twitterText.silhouette.headerFirstTry
+            : text().twitterText.silhouette.headerXTries;
 
-    const header = `I guessed the #${game.getCurrentPokemonNumber(GAME_MODE, moment())} silhouette #Pokedle Pokémon ${sub1}\n\n`;
+    const headerWithPokemonNumber = initialHeader.replace('§1§', game.getCurrentPokemonNumber(GAME_MODE, moment()));
 
-    const footer = `Play at pokedle.gg 🎮!`;
+    const headerWithNumberOfGuesses = headerWithPokemonNumber.replace('§2§', componentStore.guesses.length);
 
-    return header + footer;
+    const footer = text().twitterText.playAt;
+
+    return headerWithNumberOfGuesses + '\n\n' + footer;
 };
 
 const setHintOne = () => {

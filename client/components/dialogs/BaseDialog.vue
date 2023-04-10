@@ -13,13 +13,14 @@
         >
             <div class="dialog-card" v-on:click.stop>
                 <slot></slot>
-                <button class="dialog-close" block @click="onClose">Close</button>
+                <button class="dialog-close" block @click="onClose">{{ text().close }}</button>
             </div>
         </div>
     </Dialog>
 </template>
 
 <script setup>
+import { text } from '../../services/language';
 const props = defineProps({
     isVisible: Boolean,
     onClose: Function,

@@ -26,22 +26,24 @@
         >
             <template #hint1>
                 <div class="flex flex-col items-center gap-2 sm:gap-1">
-                    <span class="card w-full justify-center py-1 sm:py-0">{{ hintTwo.header }}</span>
+                    <span class="card w-full justify-center py-1 sm:py-0">{{ text().guessFieldTitles[hintOne.header]
+                     }}</span>
                     <ResultSquare
-                        :color="hintTwo.color"
-                        :guessResult="hintTwo.guessResult"
-                        :guessText="hintTwo.guessText"
-                        :type="hintTwo.type"
-                        :habitat="hintTwo.habitat"
+                        :color="hintOne.color"
+                        :guessResult="hintOne.guessResult"
+                        :guessText="hintOne.guessText"
+                        :type="hintOne.type"
+                        :habitat="hintOne.habitat"
                     />
                 </div>
             </template>
             <template #hint2>
-                {{ secretPokemon.flavorText }}
+                {{ getFlavortextLanguageFrom(secretPokemon) }}
             </template>
             <template #hint3>
                 <div class="flex flex-col items-center gap-2 sm:gap-1">
-                    <span class="card w-full justify-center py-1 sm:py-0">Shape</span>
+                    <span class="card w-full justify-center py-1 sm:py-0">{{ text().guessFieldTitles.shape
+                     }}</span>
                     <ResultSquare :pokemon="secretPokemon.name" :type="GuessType.Blackout" />
                 </div>
             </template>
@@ -56,7 +58,7 @@
                 :guessResult="getGuessResults(guess, secretPokemon, colors[componentStore.guesses.length - 1 - i])"
             />
         </div>
-        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
+        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.names" />
     </div>
 </template>
 
@@ -68,7 +70,7 @@ import HintContainer from '../components/hints/HintContainer.vue';
 import PreviousPokemonCard from '../components/infoCards/PreviousPokemonCard.vue';
 import SearchField from '../components/SearchField.vue';
 import GameModeButton from '../components/buttons/GameModeButton.vue';
-import pokemonData from '../../server/data/pokemonData-v5-flavorText.json';
+import pokemonData from '../../server/data/pokemonData-v6-translations.json';
 import DailyGamesWonContainer from '../components/infoCards/DailyGamesWonContainer.vue';
 import { getGuessResults } from '../services/guess';
 import { useStore } from '../stores/store.js';
@@ -87,6 +89,7 @@ import {
 import * as game from '../services/game';
 import * as localStorageService from '../services/localStorage';
 import moment from 'moment-timezone';
+import { text,getFlavortextLanguageFrom } from '../services/language';
 
 const store = useStore();
 const GAME_MODE = GameModes.Classic;
@@ -101,7 +104,7 @@ const isLoaded = ref(false);
 const secretPokemon = reactive({});
 const yesterdaysPokemon = ref('');
 
-const hintTwo = reactive({});
+const hintOne = reactive({});
 
 let colors = [];
 
@@ -141,10 +144,13 @@ const emojiResults = computed(() => {
 });
 
 const classicTwitterText = () => {
-    const sub1 =
-        componentStore.guesses.length === 1 ? 'FIRST TRY 🌟🥳🌠🏆' : `in ${componentStore.guesses.length} tries!🕵️🔎`;
+    const initialHeader =
+        componentStore.guesses.length === 1 ? text().twitterText.classic.headerFirstTry : text().twitterText.classic.headerXTries;
 
-    const header = `I guessed the #${game.getCurrentPokemonNumber(GAME_MODE, moment())} classic hidden #Pokedle Pokémon ${sub1}\n`;
+    
+    const headerWithPokemonNumber = initialHeader.replace("§1§", game.getCurrentPokemonNumber(GAME_MODE, moment()));
+
+    const headerWithNumberOfGuesses = headerWithPokemonNumber.replace("§2§", componentStore.guesses.length)
 
     var emojiBody = '';
 
@@ -152,22 +158,23 @@ const classicTwitterText = () => {
         emojiBody = emojiBody.concat(res + '\n');
     });
 
-    const moreGuesses =
-        componentStore.guesses.length > 4
-            ? `＋ ${componentStore.guesses.length - 4} more ${
-                  componentStore.guesses.length === 5 ? 'guess.' : 'guesses...'
-              }\n\n`
-            : '\n';
+    let moreGuesses = "";
+    if(componentStore.guesses.length>4){
+        moreGuesses = componentStore.guesses.length === 5 ? text().twitterText.classic.plusOneMoreGuess : text().twitterText.classic.plusXMoreGuesses;
+        moreGuesses = moreGuesses + "\n";
+    }
 
-    const footer = `Play at pokedle.gg 🎮!`;
+    const moreGuessesWithNumber = moreGuesses.replace("§1§", componentStore.guesses.length - 4);
 
-    return header + emojiBody + moreGuesses + footer;
+    const footer = text().twitterText.playAt;
+
+    return headerWithNumberOfGuesses + "\n\n" + emojiBody + "\n"  + moreGuessesWithNumber + footer;
 };
 
 const setHintOne = () => {
     if (
         componentStore.guesses.length < ClassicGuessesNeededForHintOne ||
-        (hintTwo.header && componentStore.guesses.length > ClassicGuessesNeededForHintOne)
+        (hintOne.header && componentStore.guesses.length > ClassicGuessesNeededForHintOne)
     ) {
         return;
     }
@@ -222,7 +229,9 @@ const setHintOne = () => {
         hint.type = GuessType.Habitat;
     }
 
-    Object.assign(hintTwo, hint);
+    Object.assign(hintOne, hint);
+    console.log(hintOne);
+    console.log(text().guessFieldTitles);
 };
 
 const updateYesterdaysPokemon = async () => {

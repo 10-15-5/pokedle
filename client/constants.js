@@ -15,30 +15,14 @@ const GuessType = {
 };
 
 const GuessFieldTitles = {
-    Pokemon: 'Pokemon',
-    Type1: 'Type 1',
-    Type2: 'Type 2',
-    EvolutionLevel: 'Evolution Level',
-    Evolutions: 'Fully Evolved',
-    Color: 'Color',
-    Habitat: 'Habitat',
-    Generation: 'Generation',
-};
-
-const GuessFieldTooltips = {
-    Pokemon: '',
-    Type1: 'Primary Type',
-    Type2: 'Secondary Type',
-    EvolutionLevel: 'Current Evolution Stage; 1, 2 or 3',
-    Evolutions: 'Yes or No',
-    Color: 'Red, Green, Blue etc.',
-    Habitat: 'Sea, Cave, Grasslands etc.',
-    Generation: 'Generation 1, 2 or 3',
-};
-
-const getGuessFieldTooltipsFromIndex = (index) => {
-    const values = Object.values(GuessFieldTooltips);
-    return values.at(index);
+    Pokemon: 'pokemon',
+    Type1: 'type1',
+    Type2: 'type2',
+    EvolutionLevel: 'evolutionLevel',
+    Evolutions: 'evolutions',
+    Color: 'color',
+    Habitat: 'habitat',
+    Generation: 'generation',
 };
 
 const Habitats = {
@@ -80,10 +64,8 @@ export {
     GuessState,
     GuessFieldTitles,
     Habitats,
-    GuessFieldTooltips,
     GuessType,
     TotalResultCardFlipDelay,
-    getGuessFieldTooltipsFromIndex,
     DateOfFirstPokeldeGameClassic,
     DateOfFirstPokeldeGameFlavortext,
     ClassicGuessesNeededForHintOne,

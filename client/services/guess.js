@@ -1,6 +1,7 @@
-import allPokemonData from '../../server/data/pokemonData-v5-flavorText.json';
+import allPokemonData from '../../server/data/pokemonData-v6-translations.json';
 import { GuessState, GuessType } from '../constants.js';
 import { getRandomColor } from './game';
+import { translateType, text, translateYesOrNo, translateColor } from './language';
 
 const getGuessResults = (pokemonName, secretPokemon, color) => {
 
@@ -15,7 +16,7 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
             type: GuessType.Pokemon,
         },
         type1: {
-            text: pokemonData.type1,
+            text: translateType(pokemonData.type1),
             guessState:
                 pokemonData.type1 === secretPokemon.type1
                     ? GuessState.CorrectGuess
@@ -23,7 +24,7 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
             type: GuessType.Text,
         },
         type2: {
-            text: !pokemonData.type2 ? 'None' : pokemonData.type2,
+            text: !pokemonData.type2 ? text().resultCards.none : translateType(pokemonData.type2),
             guessState:
                 pokemonData.type2 === secretPokemon.type2
                     ? GuessState.CorrectGuess
@@ -39,7 +40,7 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
             type: GuessType.Text,
         },
         isFullyEvolved: {
-            text: '' + pokemonData.isFullyEvolved,
+            text: translateYesOrNo(pokemonData.isFullyEvolved),
             guessState:
                 pokemonData.isFullyEvolved === secretPokemon.isFullyEvolved
                     ? GuessState.CorrectGuess
@@ -47,7 +48,7 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
             type: GuessType.Text,
         },
         color: {
-            text: pokemonData.color,
+            text: translateColor(pokemonData.color),
             guessState:
                 pokemonData.color === secretPokemon.color
                     ? GuessState.CorrectGuess
@@ -63,7 +64,7 @@ const getGuessResults = (pokemonName, secretPokemon, color) => {
             type: GuessType.Habitat,
         },
         generation: {
-            text: 'Gen ' + pokemonData.generation,
+            text: `${pokemonData.generation}`,
             guessState:
                 pokemonData.generation === secretPokemon.generation
                     ? GuessState.CorrectGuess

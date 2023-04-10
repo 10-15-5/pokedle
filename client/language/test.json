@@ -1,0 +1,156 @@
+{
+    "test": "TEST TEST",
+    "resultCards": {
+        "none": "XXXX",
+        "yes": "XXXX",
+        "no": "XXXX",
+        "generation": "XXXX"
+    },
+    "gameModes": {
+        "Classic": "XXXX",
+        "Flavortext": "XXXX",
+        "Silhouette": "XXXX"
+    },
+    "searchField": {
+        "typePokemon": "XXXX"
+    },
+    "guessType": {
+        "pokemon": "XXXX",
+        "text": "XXXX",
+        "habitat": "XXXX",
+        "blackout": "XXXX"
+    },
+    "close": "XXXX",
+    "infoDialog": {
+        "intro": {
+            "welcome": "XXXX",
+            "text": "XXXX"
+        },
+        "howToPlay": {
+            "howToPlay": "XXXX",
+            "guesses": {
+                "1": {
+                    "title": "XXXX",
+                    "text": "XXXX"
+                },
+                "2": {
+                    "title": "XXXX",
+                    "text": "XXXX"
+                },
+                "3": {
+                    "title": "XXXX",
+                    "text": "XXXX"
+                },
+                "4": {
+                    "title": "XXXX",
+                    "text": "XXXX"
+                }
+            }
+        },
+        "habitats": {
+            "habitats": "XXXX",
+            "takenFrom": "XXXX"
+        },
+        "contribute": {
+            "contribute": "XXXX",
+            "wantToContribute": "XXXX",
+            "helpNeeded": "XXXX",
+            "animations": "XXXX 🎥",
+            "translation": "XXXX 🇯🇵 🇪🇸 🇮🇳 🇨🇳 🇫🇷",
+            "styling": "XXXX 🧑‍🎨 🎨",
+            "features": "XXXX 👷‍♂️"
+        },
+        "credit": {
+            "credit": "XXXX",
+            "intro": "XXXX 😊🎮!",
+            "inspiredBy": "XXXX",
+            "germanTranslation": "XXXX",
+            "germanTranslationCreator": "XXXX",
+            "pokemonCollageBG": "XXXX",
+            "pokemonCollageBGCreator": "XXXX",
+            "cuboneBG": "XXXX",
+            "cuboneBGCreator": "XXXX",
+            "mtSilverBG": "XXXX",
+            "mtSilverBGCreator": "XXXX",
+            "contactForCreditOrRemoval": "XXXX"
+        },
+        "contact": {
+            "contact": "XXXX",
+            "intro": "XXXX",
+            "twitter": "XXXX"
+        }
+    },
+    "silhouette": {
+        "silhouetteRotated": "XXXX"
+    },
+    "settingsDialog": {
+        "settings": "XXXX",
+        "darkMode": "XXXX",
+        "shinyOnly": "XXXX",
+        "hintMode": "XXXX",
+        "sound": "XXXX"
+    },
+    "statisticsDialog": {
+        "statistics": "XXXX",
+        "comingSoon": "XXXX"
+    },
+    "hints": {
+        "guessMoreTimesForHint": "XXXX",
+        "hint": "XXXX",
+        "hints": "XXXX",
+        "startsWith": "XXXX"
+    },
+    "dailyGamesWon": {
+        "trainersAlreadyFoundOut": "XXXX"
+    },
+    "previousPokemon": {
+        "yesterdaysPokemonWas": "XXXX"
+    },
+    "gameWinContainer": {
+        "victory": "XXXX",
+        "youGuessed": "XXXX",
+        "nextPokemonWillAppearIn": "XXXX"
+    },
+    "guessFieldTitles": {
+        "XXXX": "XXXX",
+        "pokemon": "XXXX",
+        "type1": "XXXX",
+        "type2": "XXXX",
+        "evolutionLevel": "XXXX",
+        "evolutions": "XXXX",
+        "color": "XXXX",
+        "habitat": "XXXX",
+        "generation": "XXXX",
+        "shape": "XXXX",
+        "evolutionLevelShort": "XXXX",
+        "evolutionsShort": "XXXX",
+        "generationShort": "XXXX"
+    },
+    "guessFieldTooltips": {
+        "pokemon": "",
+        "type1": "XXXX",
+        "type2": "XXXX",
+        "evolutionLevel": "XXXX",
+        "evolutions": "XXXX",
+        "color": "XXXX",
+        "habitat": "XXXX",
+        "generation": "XXXX"
+    },
+    "twitterText": {
+        "playAt": "XXXX",
+        "classic": {
+            "headerFirstTry": "XXXX",
+            "headerXTries": "XXXX",
+            "plusOneMoreGuess": "XXXX",
+            "plusXMoreGuesses": "XXXX"
+        },
+        "flavortext": {
+            "headerFirstTry": "XXXX",
+            "headerXTries": "XXXX"
+        },
+        "silhouette": {
+            "headerFirstTry": "XXXX",
+            "headerXTries": "XXXX"
+        }
+    }
+}

@@ -1,0 +1,154 @@
+{
+    "resultCards": {
+        "none": "없음",
+        "yes": "예",
+        "no": "아니오",
+        "generation": "제."
+    },
+    "gameModes": {
+        "Classic": "클래식",
+        "Flavortext": "맛보기",
+        "Silhouette": "실루엣"
+    },
+    "searchField": {
+        "typePokemon": "포켓몬 타입..."
+    },
+    "guessType": {
+        "pokemon": "포켓몬",
+        "text": "텍스트",
+        "habitat": "서식지",
+        "blackout": "블랙아웃"
+    },
+    "close": "닫기",
+    "silhouette": {
+        "silhouetteRotated": "실루엣, 회전"
+    },
+    "settingsDialog": {
+        "settings": "설정",
+        "darkMode": "다크 모드",
+        "shinyOnly": "빛나는 포켓몬만",
+        "hintMode": "힌트 모드",
+        "sound": "소리"
+    },
+    "statisticsDialog": {
+        "statistics": "통계",
+        "comingSoon": "곧 출시 예정입니다...."
+    },
+    "hints": {
+        "guessMoreTimesForHint": "남은 힌트 시도 횟수: ",
+        "hint": "힌트",
+        "hints": "힌트",
+        "startsWith": "비밀 포켓몬의 이름 첫 글자: "
+    },
+    "dailyGamesWon": {
+        "trainersAlreadyFoundOut": " 트레이너를 이미 찾았습니다!"
+    },
+    "previousPokemon": {
+        "yesterdaysPokemonWas": "어제의 포켓몬은 "
+    },
+    "gameWinContainer": {
+        "victory": "승리!",
+        "youGuessed": "당신이 추측한 것은: ",
+        "nextPokemonWillAppearIn": "다음 포켓몬이 나타날 시간: "
+    },
+    "guessFieldTitles": {
+        "pokemon": "포켓몬",
+        "type1": "타입 1",
+        "type2": "타입 2",
+        "evolutionLevel": "진화 단계",
+        "evolutions": "완전 진화",
+        "color": "색깔",
+        "habitat": "서식지",
+        "generation": "세대",
+        "shape": "모양",
+        "evolutionLevelShort": "진화",
+        "evolutionsShort": "완전 진화",
+        "generationShort": "제."
+    },
+    "guessFieldTooltips": {
+        "pokemon": "",
+        "type1": "기본 타입",
+        "type2": "보조 타입",
+        "evolutionLevel": "현재 진화 단계; 1, 2 또는 3",
+        "evolutions": "예 또는 아니오",
+        "color": "빨강, 초록, 파랑 등",
+        "habitat": "바다",
+        "generation": "1세대, 2세대, 또는 3세대"
+    },
+    "infoDialog": {
+        "intro": {
+            "welcome": "Welcome to the world of POKéMON!",
+            "text": "Every day a wild POKéMON from gen 1-3 will be hiding and its your job as a POKéMON TRAINER to catch (guess) it!"
+        },
+        "howToPlay": {
+            "howToPlay": "How To Play",
+            "guesses": {
+                "1": {
+                    "title": "Guess One: ",
+                    "text": "Guess any random POKéMON from gen 1-3 , since we currently have no clues. We will guess SQUIRTLE."
+                },
+                "2": {
+                    "title": "2. Guess: ",
+                    "text": "We now know that we are looking for a BLUE POKéMON. Furthermore the POKéMON has to be in its final evolution stage. Lastly, the POKéMON is NOT  from gen 1. Let's guess HERACROSS since it matches these characteristics."
+                },
+                "3": {
+                    "title": "3. Guess: ",
+                    "text": "Now we know the hidden POKéMON MUST be from gen 3. Since the hidden POKéMON cannot be a WATER TYPE, this leaves only a couple of possible options Let's guess SALAMANCE"
+                },
+                "4": {
+                    "title": "4. Guess: ",
+                    "text": "We now know that the POKéMON lives in ROUGH TERRAIN and is in evolution stage 3. This leaves only one POKéMON; METAGROSS."
+                }
+            }
+        },
+        "habitats": {
+            "habitats": "Habitats",
+            "sourcedFrom": "all Habitats are sourced from "
+        },
+        "contribute": {
+            "contribute": "Contribute",
+            "wantToContribute": "Willing to contribute? Thats great! 🥳 You can find info on how to reach me at the bottom of this card.",
+            "helpNeeded": "At the time of this writing, some of the things I could use help with are:",
+            "animations": "Animations 🎥",
+            "translation": "Translation 🇯🇵 🇪🇸 🇮🇳 🇨🇳 🇫🇷",
+            "styling": "Design / Styling 🧑‍🎨 🎨",
+            "features": "Feature Development 👷‍♂️"
+        },
+        "credit": {
+            "credit": "Credit",
+            "intro": "Pokédle is created by Gabriel Haugbøl. I hope you enjoy playing along 😊🎮!",
+            "inspiredBy": "Pokédle is heavily inspired by the following sites: ",
+            "germanTranslation": "German Translation 🇩🇪: ",
+            "germanTranslationCreator": "Tatsu Tiedemann",
+            "pokemonCollageBG": "Gen 1-3 Collage black/white bg:",
+            "pokemonCollageBGCreator": "u/ZaryXYZ (reddit)",
+            "cuboneBG": "Cubone Background:",
+            "cuboneBGCreator": " u/blizard72 (reddit)",
+            "mtSilverBG": "Mt. Silver Battle Background: ",
+            "mtSilverBGCreator": "Serian",
+            "contactForCreditOrRemoval": "Original artist/creator of image(s), please DM for removal or credit."
+        },
+        "contact": {
+            "contact": "contact",
+            "intro": "If you have any questions/feedback/bug reports feel free to contact me on one of the following below:",
+            "twitter": "Twitter"
+        }
+    },
+    "twitterText": {
+        "playAt": "Play at pokedle.gg 🎮!",
+        "classic": {
+            "headerFirstTry": "I guessed the #§1§ classic hidden #Pokedle Pokémon FIRST TRY 🌟🥳🌠🏆",
+            "headerXTries": "I guessed the #§1§ classic hidden #Pokedle Pokémon in §2§ tries!🕵️🔎",
+            "plusOneMoreGuess": "＋ 1 more guess.",
+            "plusXMoreGuesses": "＋ §1§ more guesses..."
+        },
+        "flavortext": {
+            "headerFirstTry": "I guessed the #§1§ flavortext hidden #Pokedle Pokémon FIRST TRY 🤯🤩⚡️✨",
+            "headerXTries": "I guessed the #§1§ flavortext hidden #Pokedle Pokémon in §2§ tries!🍉🍓🫧"
+        },
+        "silhouette": {
+            "headerFirstTry": "I guessed the #§1§ silhouette hidden #Pokedle Pokémon FIRST TRY 🎰🍀🥳🤩",
+            "headerXTries": "I guessed the #§1§ silhouette hidden #Pokedle Pokémon in §2§ tries!🍇🥭🍒💖"
+        }
+    }
+}
