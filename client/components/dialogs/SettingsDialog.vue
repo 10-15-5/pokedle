@@ -3,6 +3,20 @@
         <h1 class="text-center font-pkmEmerald text-[32px] uppercase">{{ text().settingsDialog.settings }}</h1>
         <div class="flex flex-col items-center gap-y-4 sm:gap-x-0">
             <div class="flex w-full flex-row justify-between px-20 sm:px-0">
+                <p class="font-pkmEmerald text-[24px]">Language:</p>
+                <Dropdown :selectedItem="selectedLanguage" :items="languages" @onSelectItem="setNewLanguage" />
+            </div>
+            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
+                <p class="font-pkmEmerald text-[24px]">{{ text().settingsDialog.sound }}:</p>
+                <BaseToggle :isEnabled="store.isSound" :toggle="store.toggleSound">
+                    <template #leftIcon>
+                        <SvgIcon type="mdi" :path="mdiVolumeHigh" class="h-[30px] w-[30px]" />
+                    </template>
+                    <template #rightIcon>
+                        <SvgIcon type="mdi" :path="mdiVolumeOff" class="h-[30px] w-[30px]" /> </template
+                ></BaseToggle>
+            </div>
+            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
                 <p class="font-pkmEmerald text-[24px]">{{ text().settingsDialog.darkMode }}:</p>
                 <BaseToggle :isEnabled="store.isDark" :toggle="store.toggleTheme">
                     <template #leftIcon>
@@ -31,20 +45,6 @@
                     <template #rightIcon>
                         <SvgIcon type="mdi" :path="mdiSwordCross" class="h-[30px] w-[30px]" /> </template
                 ></BaseToggle>
-            </div>
-            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
-                <p class="font-pkmEmerald text-[24px]">{{ text().settingsDialog.sound }}:</p>
-                <BaseToggle :isEnabled="store.isSound" :toggle="store.toggleSound">
-                    <template #leftIcon>
-                        <SvgIcon type="mdi" :path="mdiVolumeHigh" class="h-[30px] w-[30px]" />
-                    </template>
-                    <template #rightIcon>
-                        <SvgIcon type="mdi" :path="mdiVolumeOff" class="h-[30px] w-[30px]" /> </template
-                ></BaseToggle>
-            </div>
-            <div class="flex w-full flex-row justify-between px-20 sm:px-0">
-                <p class="font-pkmEmerald text-[24px]">Language:</p>
-                <Dropdown :selectedItem="selectedLanguage" :items="languages" @onSelectItem="setNewLanguage" />
             </div>
         </div>
     </BaseDialog>
