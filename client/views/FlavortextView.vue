@@ -75,7 +75,7 @@
                 :isCorrect="isCorrectGuess(guess, secretPokemon.name)"
             />
         </div>
-        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
+        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.names" />
     </div>
 </template>
 

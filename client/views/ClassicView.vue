@@ -58,7 +58,7 @@
                 :guessResult="getGuessResults(guess, secretPokemon, colors[componentStore.guesses.length - 1 - i])"
             />
         </div>
-        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.name" />
+        <PreviousPokemonCard v-else-if="yesterdaysPokemon.name" :pokemonName="yesterdaysPokemon.names" />
     </div>
 </template>
 
