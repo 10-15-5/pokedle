@@ -17,7 +17,7 @@ RUN cd /app/server && go build -o /app/out
 
 ENV CLIENT_URL=https://dev.pokedle.gg
 ENV DOMAIN=https://dev.pokedle.gg
-ENV MONGODB_URI=mongodb+srv://development:AXQiInOcUK9PrVSS@pokedlev1.a0jr10a.mongodb.net/test
+ENV MONGODB_URI=
 ENV DATABASE=Dev
 ENV ENVIRONMENT=development
 ENV SERVER_PORT=3000
