@@ -18,6 +18,7 @@ coverage
 /cypress/screenshots/
 server/temp/*
 server/tmp/main
+docker/*
 
 # Editor directories and files
 .vscode/*
