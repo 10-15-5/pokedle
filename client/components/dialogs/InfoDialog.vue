@@ -81,9 +81,6 @@
                 <p>
                     <span class="font-extrabold"> {{ text().infoDialog.credit.credit }} </span>
                     <br>
-                    <b>- {{ text().infoDialog.credit.germanTranslation }}</b>
-                    {{ text().infoDialog.credit.germanTranslationCreator }}
-                    <br />
                     <b>- {{ text().infoDialog.credit.pokemonCollageBG }}</b>
                     {{ text().infoDialog.credit.pokemonCollageBGCreator }}
                     <br />
