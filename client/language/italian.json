@@ -25,6 +25,7 @@
     },
     "settingsDialog": {
         "settings": "IMPOSTAZIONI",
+        "language": "Lingua",
         "darkMode": "Modalità scura",
         "shinyOnly": "Solo Shiny",
         "hintMode": "Modalità suggerimenti",

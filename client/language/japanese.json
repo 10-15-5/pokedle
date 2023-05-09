@@ -25,6 +25,7 @@
     },
     "settingsDialog": {
         "settings": "設定",
+        "language": "言語",
         "darkMode": "ダークモード",
         "shinyOnly": "輝くポケモンのみ",
         "hintMode": "ヒントモード",

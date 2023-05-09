@@ -25,6 +25,7 @@
     },
     "settingsDialog": {
         "settings": "설정",
+        "language": "언어",
         "darkMode": "다크 모드",
         "shinyOnly": "빛나는 포켓몬만",
         "hintMode": "힌트 모드",

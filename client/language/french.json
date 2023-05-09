@@ -25,6 +25,7 @@
     },
     "settingsDialog": {
         "settings": "PARAMÈTRES",
+        "language": "Langue",
         "darkMode": "Mode sombre",
         "shinyOnly": "Uniquement brillant",
         "hintMode": "Mode indice",

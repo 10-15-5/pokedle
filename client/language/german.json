@@ -25,6 +25,7 @@
     },
     "settingsDialog": {
         "settings": "EINSTELLUNGEN",
+        "language": "Sprache",
         "darkMode": "Dunkelmodus",
         "shinyOnly": "Nur schillernde Pokémon",
         "hintMode": "Hinweis-Modus",

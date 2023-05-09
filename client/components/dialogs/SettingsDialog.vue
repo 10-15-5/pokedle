@@ -3,7 +3,7 @@
         <h1 class="text-center font-pkmEmerald text-[32px] uppercase">{{ text().settingsDialog.settings }}</h1>
         <div class="flex flex-col items-center gap-y-4 sm:gap-x-0">
             <div class="flex w-full flex-row justify-between px-20 sm:px-0">
-                <p class="font-pkmEmerald text-[24px]">Language:</p>
+                <p class="font-pkmEmerald text-[24px]">{{ text().settingsDialog.language }}:</p>
                 <Dropdown :selectedItem="selectedLanguage" :items="languages" @onSelectItem="setNewLanguage" />
             </div>
             <div class="flex w-full flex-row justify-between px-20 sm:px-0">

@@ -25,6 +25,7 @@
     },
     "settingsDialog": {
         "settings": "AJUSTES",
+        "language": "Idioma",
         "darkMode": "Modo Oscuro",
         "shinyOnly": "Solo Variantes de Color",
         "hintMode": "Modo Pista",
