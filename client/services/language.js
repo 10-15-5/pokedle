@@ -20,49 +20,54 @@ const setLanguage = (lang) => {
 };
 
 function setLanguageFromLanguageCode() {
-    if (localStorage.language) return;
+    return 'english';
 
-    const preferredLanguages = navigator.languages || [navigator.language];
-    // Use the first preferred language as the user's language
-    const userLanguage = preferredLanguages[0];
+    // if (localStorage.language) return;
 
-    const languageMap = {
-        de: languages[0],
-        en: languages[1],
-    };
+    // const preferredLanguages = navigator.languages || [navigator.language];
+    // // Use the first preferred language as the user's language
+    // const userLanguage = preferredLanguages[0];
 
-    const mappedLanguage = languageMap[userLanguage.substr(0, 2)];
+    // const languageMap = {
+    //     de: languages[0],
+    //     en: languages[1],
+    // };
 
-    const lang = languages.includes(mappedLanguage) ? mappedLanguage : 'english';
+    // const mappedLanguage = languageMap[userLanguage.substr(0, 2)];
 
-    setLanguage(lang);
+    // const lang = languages.includes(mappedLanguage) ? mappedLanguage : 'english';
+
+    // setLanguage(lang);
 }
 
-const getLanguage = () => localStorage.language || 'english';
+const getLanguage = () => 'english'; //localStorage.language || 'english';
 
 const text = () => {
-    !localStorage.language ? setLanguage('english') : false;
 
-    switch (localStorage.language) {
-        case 'english':
-            return english;
-        case 'german':
-            return german;
-        case 'spanish':
-            return spanish;
-        case 'korean':
-            return korean;
-        case 'japanese':
-            return japanese;
-        case 'italian':
-            return italian;
-        case 'french':
-            return french;
-        case 'test':
-            return test;
-        default:
-            throw new Error('This should never happen');
-    }
+    return english;
+
+    // !localStorage.language ? setLanguage('english') : false;
+
+    // switch (localStorage.language) {
+    //     case 'english':
+    //         return english;
+    //     case 'german':
+    //         return german;
+    //     case 'spanish':
+    //         return spanish;
+    //     case 'korean':
+    //         return korean;
+    //     case 'japanese':
+    //         return japanese;
+    //     case 'italian':
+    //         return italian;
+    //     case 'french':
+    //         return french;
+    //     case 'test':
+    //         return test;
+    //     default:
+    //         throw new Error('This should never happen');
+    // }
 };
 
 const translateYesOrNo = (x) => (x === 'yes' ? text().resultCards.yes : text().resultCards.no);
